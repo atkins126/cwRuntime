@@ -7,11 +7,16 @@
 /// <summary>
 ///   Sample application to demonstrate loading a dynamic library with cwDynLib.
 /// </summary>
-program LoadLibSample;
+program cwDynLib_LoadLibSample;
 uses
-  cwDynLib
-, cwDynLib.Standard
-;
+  cwDynLib,
+  cwDynLib.Standard;
+
+{$ifdef fpc}
+  {$mode delphiunicode}
+{$else}
+  {$R *.res}
+{$endif}
 
 const
   {$ifdef MSWINDOWS}
@@ -34,7 +39,7 @@ begin
       Writeln('Failed to load library');
       exit;
     end;
-    if not DynLib.GetProcAddress('Add',pointer(Add)) then begin
+    if not DynLib.GetProcAddress('Add',pointer(@Add)) then begin
       Writeln('Failed to load ''Add'' entry point');
       exit;
     end;

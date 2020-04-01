@@ -506,7 +506,7 @@ type
   TArrayOfStringHelper = record helper for TArrayOfString
   public
     procedure AssignArray(const value: array of string );
-    function Find( const value: string; out FoundIdx: uint64; const CaseInsensitive: boolean = False ): boolean;
+    function Find( const value: string; out FoundIdx: nativeuint; const CaseInsensitive: boolean = False ): boolean;
     function RemoveDuplicates( const CaseInsensitive: boolean = false ): TArrayOfString;
     procedure Remove( const item: string; const CaseInsensitive: boolean = false );
   end;
@@ -672,10 +672,8 @@ begin
 end;
 
 function TStringHelper.AsUInt16: uint16;
-{$ifdef fpc}
 var
-  D: DWORD;
-{$endif}
+  D: uint32;
 begin
   {$ifndef fpc}
   D := SysUtils.StrToUInt(Self);
@@ -705,10 +703,8 @@ begin
 end;
 
 function TStringHelper.AsUInt8: uint8;
-{$ifdef fpc}
 var
-  D: DWORD;
-{$endif}
+  D: uint32;
 begin
   {$ifndef fpc}
   D := SysUtils.StrToUInt(Self);
@@ -1314,7 +1310,7 @@ begin
   end;
 end;
 
-function TArrayOfStringHelper.Find(const value: string; out FoundIdx: uint64; const CaseInsensitive: boolean): boolean;
+function TArrayOfStringHelper.Find(const value: string; out FoundIdx: nativeuint; const CaseInsensitive: boolean): boolean;
 var
   idx: nativeuint;
   SearchStr: string;

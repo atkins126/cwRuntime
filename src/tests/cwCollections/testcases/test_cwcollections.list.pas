@@ -17,7 +17,6 @@ uses
 
 type
   TTest_cwCollectionsList = class(TTestCase)
-  private
   published
     procedure ForEach;
     procedure getCount;
@@ -86,6 +85,18 @@ procedure TCollectionItem.setValue(value: uint32);
 begin
   fValue := Value;
 end;
+
+function CompareICollectionItem( const AValue: ICollectionItem; const BValue: ICollectionItem ): TComparisonResult;
+begin
+  if AValue=BValue then begin
+    Result := crAEqualToB;
+  end else if nativeuint(pointer(AValue))>nativeuint(pointer(BValue)) then begin //- doesn't mean anything, but provides a sorting order should it be needed
+    Result := crAGreaterThanB;
+  end else begin
+    Result := crBGreaterThanA;
+  end;
+end;
+
 //------------------------------------------------------------------------------
 
 var
@@ -240,7 +251,7 @@ begin
     // impact on the use of the class, however, for the sake of testing this
     // extra reference is required in order that the test succeed.
     Item := Cut.Items[idx];
-    CUT.Remove( Item );
+    CUT.Remove( Item, TCompare<ICollectionItem>.Create( CompareICollectionItem ) );
     Item := nil;
 
     TTest.Expect(TRUE,DisposedFlag);

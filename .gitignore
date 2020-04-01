@@ -71,3 +71,5 @@ modules/
 *.compiled
 *.rsj
 *.lps
+*.res
+*.dproj
