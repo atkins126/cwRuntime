@@ -89,8 +89,14 @@ type
     ///   dictionary. If set false, all memory allocated is retained until the
     ///   dictionary is disposed.
     /// </param>
-    class function Create( const KeyCompare: TCompare<K>; const Granularity: nativeuint = 32; const isOrdered: boolean = false; const isPruned: boolean = false ): IDictionary<K,V>; static;
+    {$ifdef fpc}
+    class function Create( const KeyCompare: TCompareGlobalHandler<K>; const Granularity: nativeuint = 32; const isOrdered: boolean = false; const isPruned: boolean = false ): IDictionary<K,V>; static; overload;
+    class function Create( const KeyCompare: TCompareOfObjectHandler<K>; const Granularity: nativeuint = 32; const isOrdered: boolean = false; const isPruned: boolean = false ): IDictionary<K,V>; static; overload;
+    {$else}
+    class function Create( const KeyCompare: TCompareReferenceHandler<K>; const Granularity: nativeuint = 32; const isOrdered: boolean = false; const isPruned: boolean = false ): IDictionary<K,V>; static;
+    {$endif}
   end;
+
 {$endregion}
 
 {$region ' TRingBuffer<T>'}
@@ -188,10 +194,28 @@ end;
 {$endregion}
 
 {$region ' TDictionary<K,V>'}
-class function TDictionary<K, V>.Create( const KeyCompare: TCompare<K>; const Granularity: nativeuint; const isOrdered: boolean; const isPruned: boolean ): IDictionary<K, V>;
+
+{$ifdef fpc}
+class function TDictionary<K,V>.Create( const KeyCompare: TCompareGlobalHandler<K>; const Granularity: nativeuint = 32; const isOrdered: boolean = false; const isPruned: boolean = false ): IDictionary<K,V>; static; overload;
 begin
   Result := TStandardDictionary<K,V>.Create( KeyCompare, Granularity, isOrdered, isPruned );
 end;
+{$endif}
+
+{$ifdef fpc}
+class function TDictionary<K,V>.Create( const KeyCompare: TCompareOfObjectHandler<K>; const Granularity: nativeuint = 32; const isOrdered: boolean = false; const isPruned: boolean = false ): IDictionary<K,V>; static; overload;
+begin
+  Result := TStandardDictionary<K,V>.Create( KeyCompare, Granularity, isOrdered, isPruned );
+end;
+{$endif}
+
+{$ifndef fpc}
+class function TDictionary<K,V>.Create( const KeyCompare: TCompareReferenceHandler<K>; const Granularity: nativeuint = 32; const isOrdered: boolean = false; const isPruned: boolean = false ): IDictionary<K,V>; static;
+begin
+  Result := TStandardDictionary<K,V>.Create( KeyCompare, Granularity, isOrdered, isPruned );
+end;
+{$endif}
+
 {$endregion}
 
 {$region ' TRingBuffer<T>'}

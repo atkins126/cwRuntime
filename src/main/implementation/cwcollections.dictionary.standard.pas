@@ -16,7 +16,12 @@ uses
 type
   TStandardDictionary<K,V> = class( TInterfacedObject, ICollection, IReadOnlyDictionary<K,V>, IDictionary<K,V> )
   private
-    fKeyCompare: TCompare<K>;
+    {$ifdef fpc}
+    fKeyCompareG: TCompareGlobalHandler<K>;
+    fKeyCompareO: TCompareOfObjectHandler<K>;
+    {$else}
+    fKeyCompareR: TCompareReferenceHandler<K>;
+    {$endif}
     fKeys: array of K;
     fItems: array of V;
     fCapacity: nativeuint;
@@ -24,9 +29,12 @@ type
     fGranularity: nativeuint;
     fPruned: boolean;
     fOrdered: boolean;
+  private
     function OrderedRemoveItem( const idx: nativeuint ): boolean;
     function UnorderedRemoveItem( const idx: nativeuint ): boolean;
     procedure PruneCapacity;
+    function CompareKeys( const KeyA: K; const KeyB: K ): TComparisonResult;
+    procedure Initialize(const Granularity: nativeuint = 32; const isOrdered: boolean = false; const isPruned: boolean = false);
   private //- IReadOnlyDictionary<K,V> -//
     function getCount: nativeuint;
     function getKeyByIndex( const idx: nativeuint ): K;
@@ -34,23 +42,31 @@ type
     function getKeyExists( const key: K ): boolean;
     function getValueByKey( const key: K ): V;
     procedure setValueByIndex( const idx: nativeuint; const value: V );
-    procedure ForEach( const Enumerate: TEnumeratePair<K,V> ); overload;
+    {$ifdef fpc}
+    procedure ForEach( const Enumerate: TEnumeratePairGlobalHandler<K,V> ); overload;
+    procedure ForEach( const Enumerate: TEnumeratePairOfObjectHandler<K,V> ); overload;
+    {$else}
+    procedure ForEach( const Enumerate: TEnumeratePairReferenceHandler<K,V> ); overload;
+    {$endif}
     function getAsReadOnly: IReadOnlyDictionary<K,V>;
   strict private //- IDictionary<K,V> -//
     procedure setValueByKey( const key: K; const value: V );
     procedure removeByIndex( const idx: nativeuint );
     procedure clear;
   public
-    constructor Create( const KeyCompare: TCompare<K>; const Granularity: nativeuint = 32; const isOrdered: boolean = false; const isPruned: boolean = false ); reintroduce;
+    {$ifdef fpc}
+    constructor Create( const KeyCompare: TCompareGlobalHandler<K>; const Granularity: nativeuint = 32; const isOrdered: boolean = false; const isPruned: boolean = false ); reintroduce; overload;
+    constructor Create( const KeyCompare: TCompareOfObjectHandler<K>; const Granularity: nativeuint = 32; const isOrdered: boolean = false; const isPruned: boolean = false ); reintroduce; overload;
+    {$else}
+    constructor Create( const KeyCompare: TCompareReferenceHandler<K>; const Granularity: nativeuint = 32; const isOrdered: boolean = false; const isPruned: boolean = false ); reintroduce; overload;
+    {$endif}
     destructor Destroy; override;
   end;
 
 implementation
 
-constructor TStandardDictionary<K,V>.Create( const KeyCompare: TCompare<K>; const Granularity: nativeuint; const isOrdered: boolean; const isPruned: boolean );
+procedure TStandardDictionary<K,V>.Initialize(const Granularity: nativeuint = 32; const isOrdered: boolean = false; const isPruned: boolean = false);
 begin
-  inherited Create;
-  fKeyCompare := KeyCompare;
   // Set granularity control
   if Granularity>0 then begin
     fGranularity := Granularity;
@@ -66,6 +82,35 @@ begin
   SetLength( fItems, fCapacity );
 end;
 
+{$ifdef fpc}
+constructor TStandardDictionary<K,V>.Create( const KeyCompare: TCompareGlobalHandler<K>; const Granularity: nativeuint = 32; const isOrdered: boolean = false; const isPruned: boolean = false );
+begin
+  inherited Create;
+  fKeyCompareG := KeyCompare;
+  fKeyCompareO := nil;
+  Initialize(Granularity,isOrdered,isPruned);
+end;
+{$endif}
+
+{$ifdef fpc}
+constructor TStandardDictionary<K,V>.Create( const KeyCompare: TCompareOfObjectHandler<K>; const Granularity: nativeuint = 32; const isOrdered: boolean = false; const isPruned: boolean = false );
+begin
+  inherited Create;
+  fKeyCompareO := KeyCompare;
+  fKeyCompareG := nil;
+  Initialize(Granularity,isOrdered,isPruned);
+end;
+{$endif}
+
+{$ifndef fpc}
+constructor TStandardDictionary<K,V>.Create( const KeyCompare: TCompareReferenceHandler<T>; const Granularity: nativeuint = 32; const isOrdered: boolean = false; const isPruned: boolean = false );
+begin
+  inherited Create;
+  fKeyCompareR := KeyCompare;
+  Initialize(Granularity,isOrdered,isPruned);
+end;
+{$endif}
+
 destructor TStandardDictionary<K,V>.Destroy;
 begin
   SetLength( fKeys, 0 );
@@ -78,7 +123,8 @@ begin
   Result := fCount;
 end;
 
-procedure TStandardDictionary<K,V>.ForEach( const Enumerate: TEnumeratePair<K, V> );
+{$ifdef fpc}
+procedure TStandardDictionary<K,V>.ForEach( const Enumerate: TEnumeratePairGlobalHandler<K,V> );
 var
   idx: nativeuint;
 begin
@@ -86,9 +132,38 @@ begin
     exit;
   end;
   for idx := 0 to pred(getCount) do begin
-    Enumerate.EnumeratePair(getKeyByIndex(idx),getValueByIndex(idx));
+    Enumerate(getKeyByIndex(idx),getValueByIndex(idx));
   end;
 end;
+{$endif}
+
+{$ifdef fpc}
+procedure TStandardDictionary<K,V>.ForEach( const Enumerate: TEnumeratePairOfObjectHandler<K,V> );
+var
+  idx: nativeuint;
+begin
+  if getCount=0 then begin
+    exit;
+  end;
+  for idx := 0 to pred(getCount) do begin
+    Enumerate(getKeyByIndex(idx),getValueByIndex(idx));
+  end;
+end;
+{$endif}
+
+{$ifndef fpc}
+procedure TStandardDictionary<K,V>.ForEach( const Enumerate: TEnumeratePairReferenceHandler<K,V> );
+var
+  idx: nativeuint;
+begin
+  if getCount=0 then begin
+    exit;
+  end;
+  for idx := 0 to pred(getCount) do begin
+    Enumerate(getKeyByIndex(idx),getValueByIndex(idx));
+  end;
+end;
+{$endif}
 
 function TStandardDictionary<K,V>.getKeyByIndex( const idx: nativeuint ): K;
 begin
@@ -96,6 +171,26 @@ begin
   if idx<getCount then begin
     Result := fKeys[idx];
   end;
+end;
+
+function TStandardDictionary<K,V>.CompareKeys( const KeyA: K; const KeyB: K ): TComparisonResult;
+begin
+  Result := TComparisonResult.crErrorNotCompared;
+  {$ifdef fpc}
+  if (not assigned(fKeyCompareG)) and (not assigned(fKeyCompareO)) then begin
+    exit;
+  end;
+  if assigned(fKeyCompareG) then begin
+    Result := fKeyCompareG( KeyA, KeyB );
+  end else begin
+    Result := fKeyCompareO( KeyA, KeyB );
+  end;
+  {$else}
+  if not assigned(fKeyCompareR) then begin
+    exit;
+  end;
+  Result := fKeyCompareR( KeyA, KeyB );
+  {$endif}
 end;
 
 function TStandardDictionary<K,V>.getKeyExists( const key: K ): boolean;
@@ -107,7 +202,7 @@ begin
     exit;
   end;
   for idx := 0 to pred(getCount) do begin
-    if fKeyCompare.Compare(fKeys[idx],key)=crAEqualToB then begin
+    if CompareKeys(fKeys[idx],key)=crAEqualToB then begin
       Result := True;
       Exit;
     end;
@@ -136,7 +231,7 @@ begin
     exit;
   end;
   for idx := 0 to pred(getCount) do begin
-    if fKeyCompare.Compare(fKeys[idx],key)=crAEqualToB then begin
+    if CompareKeys(fKeys[idx],key)=crAEqualToB then begin
       Result := fItems[idx];
       Exit;
     end;
@@ -243,7 +338,7 @@ var
 begin
   if getCount>0 then begin //- Craig! Don't change this!
     for idx := 0 to pred(getCount) do begin
-      if fKeyCompare.Compare(fKeys[idx],key)=crAEqualToB then begin
+      if CompareKeys(fKeys[idx],key)=crAEqualToB then begin
         fItems[idx] := value;
         exit;
       end;

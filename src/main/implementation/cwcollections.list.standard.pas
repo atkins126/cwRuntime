@@ -24,7 +24,12 @@ type
   private //- IReadOnlyList<T> -//
     function getCount: nativeuint;
     function getItem( const idx: nativeuint ): T;
-    procedure ForEach( const Enumerate: TEnumerate<T> ); overload;
+    {$ifdef fpc}
+    procedure ForEach( const Enumerate: TEnumerateGlobalHandler<T> ); overload;
+    procedure ForEach( const Enumerate: TEnumerateOfObjectHandler<T> ); overload;
+    {$else}
+    procedure ForEach( const Enumerate: TEnumerateReferenceHandler<T> ); overload;
+    {$endif}
     function getAsReadOnly: IReadOnlyList<T>;
   private //- IList<T> -/
     procedure Clear;
@@ -85,7 +90,8 @@ begin
   inherited Destroy;
 end;
 
-procedure TStandardList<T>.ForEach( const Enumerate: TEnumerate<T> );
+{$ifdef fpc}
+procedure TStandardList<T>.ForEach( const Enumerate: TEnumerateOfObjectHandler<T> ); overload;
 var
   idx: nativeuint;
 begin
@@ -93,9 +99,38 @@ begin
     exit;
   end;
   for idx := 0 to pred(getCount) do begin
-    Enumerate.Enumerate(getItem(idx));
+    Enumerate(getItem(idx));
   end;
 end;
+{$endif}
+
+{$ifdef fpc}
+procedure TStandardList<T>.ForEach( const Enumerate: TEnumerateGlobalHandler<T> ); overload;
+var
+  idx: nativeuint;
+begin
+  if getCount=0 then begin
+    exit;
+  end;
+  for idx := 0 to pred(getCount) do begin
+    Enumerate(getItem(idx));
+  end;
+end;
+{$endif}
+
+{$ifndef fpc}
+procedure TStandardList<T>.ForEach( const Enumerate: TEnumerateReferenceHandler<T> );
+var
+  idx: nativeuint;
+begin
+  if getCount=0 then begin
+    exit;
+  end;
+  for idx := 0 to pred(getCount) do begin
+    Enumerate(getItem(idx));
+  end;
+end;
+{$endif}
 
 function TStandardList<T>.getCount: nativeuint;
 begin

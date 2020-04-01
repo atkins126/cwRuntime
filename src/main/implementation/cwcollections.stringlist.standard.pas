@@ -18,7 +18,12 @@ type
   private
     fStrings: IList<string>;
   strict private //- IReadOnlyStringList -//
-    procedure ForEach( const Enumerate: TEnumerate<string> ); overload;
+    {$ifdef fpc}
+    procedure ForEach( const Enumerate: TEnumerateGlobalHandler<string> ); overload;
+    procedure ForEach( const Enumerate: TEnumerateOfObjectHandler<string> ); overload;
+    {$else}
+    procedure ForEach( const Enumerate: TEnumerateReferenceHandler<string> ); overload;
+    {$endif}
     function getCount: nativeuint;
     function getString( const idx: nativeuint ): string;
     function getAsReadOnly: IReadOnlyStringList;
@@ -87,10 +92,27 @@ begin
   inherited Destroy;
 end;
 
-procedure TStandardStringList.ForEach(const Enumerate: TEnumerate<string>);
+{$ifdef fpc}
+procedure TStandardStringList.ForEach(const Enumerate: TEnumerateGlobalHandler<string>);
 begin
   fStrings.ForEach(Enumerate);
 end;
+{$endif}
+
+{$ifdef fpc}
+procedure TStandardStringList.ForEach(const Enumerate: TEnumerateOfObjectHandler<string>);
+begin
+  fStrings.ForEach(Enumerate);
+end;
+{$endif}
+
+{$ifndef fpc}
+procedure TStandardStringList.ForEach(const Enumerate: TEnumerateReferenceHandler<string>);
+begin
+  fStrings.ForEach(Enumerate);
+end;
+{$endif}
+
 
 function TStandardStringList.getAsReadOnly: IReadOnlyStringList;
 begin

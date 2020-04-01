@@ -8,14 +8,13 @@ program test_cwIO;
 uses
   cwTest
 , cwTest.Standard
-, test_cwtest.sampletest
 ;
 
 var
   R: nativeuint;
 
 begin
-  R := TestSuite.Run( 'cwTest', [TConsoleReport.Create] );
+  R := TestSuite.Run( 'cwIO', [TConsoleReport.Create] );
   if ParamStr(1)='ide' then begin
     Readln;
   end;

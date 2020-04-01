@@ -15,55 +15,18 @@ interface
 type
 
 {$region ' TEnumerate<T>'}
-
   {$ifdef fpc}
-  /// <excluide/>
+  /// <exclude/>
   TEnumerateGlobalHandler<T> = procedure( const item : T );
-  /// <excluide/>
+  /// <exclude/>
   TEnumerateOfObjectHandler<T> = procedure( const item : T ) of object;
   {$else}
   /// <excluide/>
   TEnumerateReferenceHandler<T> = reference to procedure( const item : T );
   {$endif}
-
-  ///  <summary>
-  ///    TEnumerate<T> represents an event call-back of the form:
-  ///
-  ///      procedure( const item: T );
-  ///
-  ///    Where T represents the data-type to be passed to the call-back.
-  ///    Passing the call-back method to an enumerator may be done as in the
-  ///    following example...
-  ///
-  ///      Collection.ForEach( TEnumerate<integer>.Create( PerInteger ) );
-  ///
-  ///    The PerInteger() method in the example above may be a global procedure,
-  ///    method, or in the case of the Delphi compiler, a nested or anonymous
-  ///    method.
-  ///  </summary>
-  TEnumerate<T> = record
-  private
-    {$ifdef fpc}
-    fGlobalHandler: TEnumerateGlobalHandler<T>;
-    fObjectHandler: TEnumerateOfObjectHandler<T>;
-    {$else}
-    fReferenceHandler: TEnumerateReferenceHandler<T>;
-    {$endif}
-  public
-    procedure Enumerate( const Item: T );
-    class function Create: TEnumerate<T>; overload static;
-    {$ifdef fpc}
-    class function Create(const Handler: TEnumerateGlobalHandler<T>): TEnumerate<T>; overload; static;
-    class function Create(const Handler: TEnumerateOfObjectHandler<T>): TEnumerate<T>; overload; static;
-    {$else}
-    class function Create(const Handler: TEnumerateReferenceHandler<T>): TEnumerate<T>; overload; static;
-    {$endif}
-  end;
-
 {$endregion}
 
 {$region ' TEnumeratePair<K,V>'}
-
   {$ifdef fpc}
   /// <excluide/>
   TEnumeratePairGlobalHandler<K,V> = procedure( const key: K; const value: V );
@@ -73,42 +36,6 @@ type
   /// <excluide/>
   TEnumeratePairReferenceHandler<K,V> = reference to procedure( const key: K; const value: V );
   {$endif}
-
-  ///  <summary>
-  ///    TEnumeratePair<K,V> represents an event call-back of the form:
-  ///
-  ///      procedure( const key: K; const value: V );
-  ///
-  ///    Where K represents the data-type of the key component of a key-value
-  ///    pair, and V represents the data-type of the value component.
-  ///    TEnumeratePair<K,V> may be passed to a key/value enumeration method
-  ///    as in the following example...
-  ///
-  ///      Dictionary.ForEach( TEnumeratePair<string,integer>.Create( PerKeyValuePair ) );
-  ///
-  ///    The PerKeyValuePair() method in the example above may be a
-  ///    global procedure, method, or in the case of the Delphi compiler,
-  ///    a nested or anonymous method.
-  ///  </summary>
-  TEnumeratePair<K,V> = record
-  private
-    {$ifdef fpc}
-    fGlobalHandler: TEnumeratePairGlobalHandler<K,V>;
-    fObjectHandler: TEnumeratePairOfObjectHandler<K,V>;
-    {$else}
-    fReferenceHandler: TEnumeratePairReferenceHandler<K,V>;
-    {$endif}
-  public
-    procedure EnumeratePair( const Key: K; const Value: V );
-    class function Create: TEnumeratePair<K,V>; overload static;
-   {$ifdef fpc}
-    class function Create(const Handler: TEnumeratePairGlobalHandler<K,V>): TEnumeratePair<K,V>; overload; static;
-    class function Create(const Handler: TEnumeratePairOfObjectHandler<K,V>): TEnumeratePair<K,V>; overload; static;
-    {$else}
-    class function Create(const Handler: TEnumeratePairReferenceHandler<K,V>): TEnumeratePair<K,V>; overload; static;
-    {$endif}
-  end;
-
 {$endregion}
 
 {$region ' TCompare<A,B>'}
@@ -133,82 +60,6 @@ type
   /// <excluide/>
   TCompareReferenceHandler<T> = reference to procedure( const AValue: T; const BValue: T ): TComparisonResult;
   {$endif}
-
-  ///  <summary>
-  ///    TCompare<T> represents an event call-back of the form:
-  ///
-  ///      function( const AValue: T; const BValue: T ): TComparisonResult;
-  ///
-  ///    Where T represents the data-type of both the AValue and BValue items
-  ///    to be compared.
-  ///    TCompare<T> may be passed to a comparison method as in the following
-  ///    example...
-  ///
-  ///      TList.Find( TCompare<TMyDataType>.Create( CompareMyDatatype ) );
-  ///
-  ///    The CompareMyDatatype() method in the example above may be a
-  ///    global procedure, method, or in the case of the Delphi compiler,
-  ///    a nested or anonymous method.
-  ///  </summary>
-  TCompare<T> = record
-  private
-    {$ifdef fpc}
-    fGlobalHandler: TCompareGlobalHandler<T>;
-    fObjectHandler: TCompareOfObjectHandler<T>;
-    {$else}
-    fReferenceHandler: TCompareReferenceHandler<T>;
-    {$endif}
-  public
-    function Compare(const AValue: T; const BValue: T): TComparisonResult;
-    class function Create: TCompare<T>; overload static;
-   {$ifdef fpc}
-    class function Create(const Handler: TCompareGlobalHandler<T>): TCompare<T>; overload; static;
-    class function Create(const Handler: TCompareOfObjectHandler<T>): TCompare<T>; overload; static;
-    {$else}
-    class function Create(const Handler: TCompareReferenceHandler<T>): TCompare<T>; overload; static;
-    {$endif}
-  end;
-
-  /// <summary>
-  ///   TCompare is a namespace representing several pre-declared TCompare<T>
-  ///   call-back handlers
-  /// </summary>
-  TCompare = record
-  private
-    class function CmpChar( const ValueA: char; const ValueB: char ): TComparisonResult; static;
-    class function CmpString( const ValueA: string; const ValueB: string ): TComparisonResult; static;
-    class function CmpUInt8( const ValueA: uint8; const ValueB: uint8 ): TComparisonResult; static;
-    class function CmpUInt16( const ValueA: uint16; const ValueB: uint16 ): TComparisonResult; static;
-    class function CmpUInt32( const ValueA: uint32; const ValueB: uint32 ): TComparisonResult; static;
-    class function CmpUInt64( const ValueA: uint64; const ValueB: uint64 ): TComparisonResult; static;
-    class function CmpNativeUInt( const ValueA: nativeuint; const ValueB: nativeuint ): TComparisonResult; static;
-    class function CmpInt8( const ValueA: int8; const ValueB: int8  ): TComparisonResult; static;
-    class function CmpInt16( const ValueA: int16; const ValueB: int16  ): TComparisonResult; static;
-    class function CmpInt32( const ValueA: int32; const ValueB: int32 ): TComparisonResult; static;
-    class function CmpInt64( const ValueA: int64; const ValueB: int64 ): TComparisonResult; static;
-    class function CmpNativeInt( const ValueA: nativeint; const ValueB: nativeint ): TComparisonResult; static;
-    class function CmpGUID( const ValueA: TGUID; const ValueB: TGUID ): TComparisonResult; static;
-    class function CmpInterface( const ValueA: IInterface; const ValueB: IInterface ): TComparisonResult; static;
-    class function CmpObject( const ValueA: TObject; const ValueB: TObject ): TComparisonResult; static;
-  public
-    //- Some pre-defined comparison methods.
-    class function CompareChar: TCompare<char>; static;
-    class function CompareString: TCompare<string>; static;
-    class function CompareUInt8: TCompare<uint8>; static;
-    class function CompareUInt16: TCompare<uint16>; static;
-    class function CompareUInt32: TCompare<uint32>; static;
-    class function CompareUInt64: TCompare<uint64>; static;
-    class function CompareNativeUInt: TCompare<nativeuint>; static;
-    class function CompareInt8: TCompare<int8>; static;
-    class function CompareInt16: TCompare<int16>; static;
-    class function CompareInt32: TCompare<int32>; static;
-    class function CompareInt64: TCompare<int64>; static;
-    class function CompareNativeInt: TCompare<nativeint>; static;
-    class function CompareGUID: TCompare<TGUID>; static;
-    class function CompareInterface: TCompare<IInterface>; static;
-    class function CompareObject: TCompare<TObject>; static;
-  end;
-
 {$endregion}
 
 {$region ' ICollection'}
@@ -354,7 +205,12 @@ type
     ///    Calls the Enumerate callback for each key-value pair in the
     ///    dictionary.
     ///  </summary>
-    procedure ForEach( const Enumerate: TEnumeratePair<K,V> ); overload;
+    {$ifdef fpc}
+    procedure ForEach( const Enumerate: TEnumeratePairGlobalHandler<K,V> ); overload;
+    procedure ForEach( const Enumerate: TEnumeratePairOfObjectHandler<K,V> ); overload;
+    {$else}
+    procedure ForEach( const Enumerate: TEnumeratePairReferenceHandler<K,V> ); overload;
+    {$endif}
 
     /// <summary>
     ///   Returns the total number of items in the dictionary.
@@ -593,7 +449,13 @@ type
     ///   as the enumeration call back. As FPC does not currently support
     ///   anonymous methods however, doing so will break FPC compatibility.
     /// </remarks>
-    procedure ForEach( const Enumerate: TEnumerate<T> ); overload;
+   {$ifdef fpc}
+    procedure ForEach( const Enumerate: TEnumerateGlobalHandler<T> ); overload;
+    /// <exclude/>
+    procedure ForEach( const Enumerate: TEnumerateOfObjectHandler<T> ); overload;
+    {$else}
+    procedure ForEach( const Enumerate: TEnumerateReferenceHandler<T> ); overload;
+    {$endif}
 
     /// <summary>
     ///   Returns the number of items currently stored in the list.
@@ -743,7 +605,13 @@ type
     ///   as the enumerate callback. As the FPC compiler does not currently
     ///   support anonymous methods, doing so will break FPC compatibility.
     /// </remarks>
-    procedure ForEach( const Enumerate: TEnumerate<string> ); overload;
+    {$ifdef fpc}
+    procedure ForEach( const Enumerate: TEnumerateGlobalHandler<string> ); overload;
+    /// <exclude/>
+    procedure ForEach( const Enumerate: TEnumerateOfObjectHandler<string> ); overload;
+    {$else}
+    procedure ForEach( const Enumerate: TEnumerateReferenceHandler<string> ); overload;
+    {$endif}
 
     /// <summary>
     ///   Returns the number of strings currently stored in the list.
@@ -871,419 +739,5 @@ type
 {$endregion}
 
 implementation
-uses
-  sysutils //[RTL] for guid / IsEqualGUID
-;
-
-{$region 'TEnumerate<T> Implementation'}
-
-procedure TEnumerate<T>.Enumerate(const Item: T);
-begin
-  {$ifdef fpc}
-  if assigned(fGlobalHandler) then begin
-    fGlobalHandler(Item);
-  end else begin
-    if assigned(fObjectHandler) then begin
-      fObjectHandler(Item);
-    end;
-  end;
-  {$else}
-  if assigned(fReferenceHandler) then begin
-    fReferenceHandler(Item);
-  end;
-  {$endif}
-end;
-
-class function TEnumerate<T>.Create: TEnumerate<T>;
-begin
-  {$ifdef fpc}
-  Result.fGlobalHandler := nil;
-  Result.fObjectHandler := nil;
-  {$else}
-  Result.fReferenceHandler := nil;
-  {$endif}
-end;
-
-{$ifdef fpc}
-class function TEnumerate<T>.Create(const Handler: TEnumerateGlobalHandler<T>): TEnumerate<T>;
-begin
-  Result.fGlobalHandler := Handler;
-  Result.fObjectHandler := nil;
-end;
-{$endif}
-
-{$ifdef fpc}
-class function TEnumerate<T>.Create(const Handler: TEnumerateOfObjectHandler<T>): TEnumerate<T>;
-begin
-  Result.fGlobalHandler := nil;
-  Result.fObjectHandler := Handler;
-end;
-{$endif}
-
-{$ifndef fpc}
-class function TEnumerate<T>.Create(const Handler: TEnumerateReferenceHandler<T>): TEnumerate<T>; overload; static;
-begin
-  Result.fReferenceHandler := Handler;
-end;
-{$endif}
-
-{$endregion}
-
-{$region ' TEnumeratePair<K,V> implementation'}
-
-procedure TEnumeratePair<K,V>.EnumeratePair(const Key: K; const Value: V);
-begin
-  {$ifdef fpc}
-  if assigned(fGlobalHandler) then begin
-    fGlobalHandler(Key,Value);
-  end else begin
-    if assigned(fObjectHandler) then begin
-      fObjectHandler(Key,Value);
-    end;
-  end;
-  {$else}
-  if assigned(fReferenceHandler) then begin
-    fReferenceHandler(Key,Value);
-  end;
-  {$endif}
-end;
-
-class function TEnumeratePair<K,V>.Create: TEnumeratePair<K,V>;
-begin
-  {$ifdef fpc}
-  Result.fGlobalHandler := nil;
-  Result.fObjectHandler := nil;
-  {$else}
-  Result.fReferenceHandler := nil;
-  {$endif}
-end;
-
-{$ifdef fpc}
-class function TEnumeratePair<K,V>.Create(const Handler: TEnumeratePairGlobalHandler<K,V>): TEnumeratePair<K,V>;
-begin
-  Result.fGlobalHandler := Handler;
-  Result.fObjectHandler := nil;
-end;
-{$endif}
-
-{$ifdef fpc}
-class function TEnumeratePair<K,V>.Create(const Handler: TEnumeratePairOfObjectHandler<K,V>): TEnumeratePair<K,V>;
-begin
-  Result.fGlobalHandler := nil;
-  Result.fObjectHandler := Handler;
-end;
-{$endif}
-
-{$ifndef fpc}
-class function TEnumeratePair<L,V>.Create(const Handler: TEnumeratePairReferenceHandler<K,V>): TEnumeratePair<K,V>; overload; static;
-begin
-  Result.fReferenceHandler := Handler;
-end;
-{$endif}
-
-{$endregion}
-
-{$region ' TCompare<T> implementation'}
-
-function TCompare<T>.Compare(const AValue: T; const BValue: T): TComparisonResult;
-begin
-  Result := TComparisonResult.crErrorNotCompared;
-  {$ifdef fpc}
-  if assigned(fGlobalHandler) then begin
-    Result := fGlobalHandler(AValue,BValue);
-  end else begin
-    if assigned(fObjectHandler) then begin
-      Result := fObjectHandler(AValue,BValue);
-    end;
-  end;
-  {$else}
-  if assigned(fReferenceHandler) then begin
-    Result := fReferenceHandler(AValue,BValue);
-  end;
-  {$endif}
-end;
-
-class function TCompare<T>.Create: TCompare<T>;
-begin
-  {$ifdef fpc}
-  Result.fGlobalHandler := nil;
-  Result.fObjectHandler := nil;
-  {$else}
-  Result.fReferenceHandler := nil;
-  {$endif}
-end;
-
-{$ifdef fpc}
-class function TCompare<T>.Create(const Handler: TCompareGlobalHandler<T>): TCompare<T>;
-begin
-  Result.fGlobalHandler := Handler;
-  Result.fObjectHandler := nil;
-end;
-{$endif}
-
-{$ifdef fpc}
-class function TCompare<T>.Create(const Handler: TCompareOfObjectHandler<T>): TCompare<T>;
-begin
-  Result.fGlobalHandler := nil;
-  Result.fObjectHandler := Handler;
-end;
-
-{$ifndef fpc}
-class function TCompare<T>.Create(const Handler: TCompareReferenceHandler<T>): TCompare<T>; overload; static;
-begin
-  Result.fReferenceHandler := Handler;
-end;
-{$endif}
-
-{$endregion}
-
-{$region ' TCompare namespace for pre-defined TCompare<T>'}
-
-class function TCompare.CmpChar( const ValueA: char; const ValueB: char ): TComparisonResult; static;
-begin
-  if ValueA=ValueB then begin
-    Result := crAEqualToB;
-  end else if ValueA>ValueB then begin
-    Result := crAGreaterThanB;
-  end else begin
-    Result := crBGreaterThanA;
-  end;
-end;
-
-class function TCompare.CompareChar: TCompare<char>; static;
-begin
-  Result := TCompare<char>.Create(@CmpChar);
-end;
-
-class function TCompare.CmpString( const ValueA: string; const ValueB: string ): TComparisonResult; static;
-begin
-  if ValueA=ValueB then begin
-    Result := crAEqualToB;
-  end else if ValueA>ValueB then begin
-    Result := crAGreaterThanB;
-  end else begin
-    Result := crBGreaterThanA;
-  end;
-end;
-
-class function TCompare.CompareString: TCompare<string>; static;
-begin
-  Result := TCompare<string>.Create(@CmpString);
-end;
-
-class function TCompare.CmpUInt8( const ValueA: uint8; const ValueB: uint8 ): TComparisonResult; static;
-begin
-  if ValueA=ValueB then begin
-    Result := crAEqualToB;
-  end else if ValueA>ValueB then begin
-    Result := crAGreaterThanB;
-  end else begin
-    Result := crBGreaterThanA;
-  end;
-end;
-
-class function TCompare.CompareUInt8: TCompare<uint8>; static;
-begin
-  Result := TCompare<uint8>.Create(@CmpUInt8);
-end;
-
-class function TCompare.CmpUInt16( const ValueA: uint16; const ValueB: uint16 ): TComparisonResult; static;
-begin
-  if ValueA=ValueB then begin
-    Result := crAEqualToB;
-  end else if ValueA>ValueB then begin
-    Result := crAGreaterThanB;
-  end else begin
-    Result := crBGreaterThanA;
-  end;
-end;
-
-class function TCompare.CompareUInt16: TCompare<uint16>; static;
-begin
-  Result := TCompare<uint16>.Create(@CmpUInt16);
-end;
-
-class function TCompare.CmpUInt32( const ValueA: uint32; const ValueB: uint32 ): TComparisonResult; static;
-begin
-  if ValueA=ValueB then begin
-    Result := crAEqualToB;
-  end else if ValueA>ValueB then begin
-    Result := crAGreaterThanB;
-  end else begin
-    Result := crBGreaterThanA;
-  end;
-end;
-
-class function TCompare.CompareUInt32: TCompare<uint32>; static;
-begin
-  Result := TCompare<uint32>.Create(@CmpUInt32);
-end;
-
-class function TCompare.CmpUInt64( const ValueA: uint64; const ValueB: uint64 ): TComparisonResult; static;
-begin
-  if ValueA=ValueB then begin
-    Result := crAEqualToB;
-  end else if ValueA>ValueB then begin
-    Result := crAGreaterThanB;
-  end else begin
-    Result := crBGreaterThanA;
-  end;
-end;
-
-class function TCompare.CompareUInt64: TCompare<uint64>; static;
-begin
-  Result := TCompare<uint64>.Create(@CmpUInt64);
-end;
-
-class function TCompare.CmpNativeUInt( const ValueA: nativeuint; const ValueB: nativeuint ): TComparisonResult; static;
-begin
-  if ValueA=ValueB then begin
-    Result := crAEqualToB;
-  end else if ValueA>ValueB then begin
-    Result := crAGreaterThanB;
-  end else begin
-    Result := crBGreaterThanA;
-  end;
-end;
-
-class function TCompare.CompareNativeUInt: TCompare<nativeuint>; static;
-begin
-  Result := TCompare<nativeuint>.Create(@CmpNativeUInt);
-end;
-
-class function TCompare.CmpInt8( const ValueA: int8; const ValueB: int8  ): TComparisonResult; static;
-begin
-  if ValueA=ValueB then begin
-    Result := crAEqualToB;
-  end else if ValueA>ValueB then begin
-    Result := crAGreaterThanB;
-  end else begin
-    Result := crBGreaterThanA;
-  end;
-end;
-
-class function TCompare.CompareInt8: TCompare<int8>; static;
-begin
-  Result := TCompare<int8>.Create(@CmpInt8);
-end;
-
-class function TCompare.CmpInt16( const ValueA: int16; const ValueB: int16  ): TComparisonResult; static;
-begin
-  if ValueA=ValueB then begin
-    Result := crAEqualToB;
-  end else if ValueA>ValueB then begin
-    Result := crAGreaterThanB;
-  end else begin
-    Result := crBGreaterThanA;
-  end;
-end;
-
-class function TCompare.CompareInt16: TCompare<int16>; static;
-begin
-  Result := TCompare<int16>.Create(@CmpInt16);
-end;
-
-class function TCompare.CmpInt32( const ValueA: int32; const ValueB: int32 ): TComparisonResult; static;
-begin
-  if ValueA=ValueB then begin
-    Result := crAEqualToB;
-  end else if ValueA>ValueB then begin
-    Result := crAGreaterThanB;
-  end else begin
-    Result := crBGreaterThanA;
-  end;
-end;
-
-class function TCompare.CompareInt32: TCompare<int32>; static;
-begin
-  Result := TCompare<int32>.Create(@CmpInt32);
-end;
-
-class function TCompare.CmpInt64( const ValueA: int64; const ValueB: int64 ): TComparisonResult; static;
-begin
-  if ValueA=ValueB then begin
-    Result := crAEqualToB;
-  end else if ValueA>ValueB then begin
-    Result := crAGreaterThanB;
-  end else begin
-    Result := crBGreaterThanA;
-  end;
-end;
-
-class function TCompare.CompareInt64: TCompare<int64>; static;
-begin
-  Result := TCompare<int64>.Create(@CmpInt64);
-end;
-
-class function TCompare.CmpNativeInt( const ValueA: nativeint; const ValueB: nativeint ): TComparisonResult; static;
-begin
-  if ValueA=ValueB then begin
-    Result := crAEqualToB;
-  end else if ValueA>ValueB then begin
-    Result := crAGreaterThanB;
-  end else begin
-    Result := crBGreaterThanA;
-  end;
-end;
-
-class function TCompare.CompareNativeInt: TCompare<nativeint>; static;
-begin
-  Result := TCompare<nativeint>.Create(@CmpNativeInt);
-end;
-
-class function TCompare.CmpGUID( const ValueA: TGUID; const ValueB: TGUID ): TComparisonResult; static;
-type
-  QUID = record A: qword; b: qword; end;
-begin
-  if IsEqualGUID(ValueA,ValueB) then begin
-    Result := crAEqualToB;
-  end else if (QUID(ValueA).A>QUID(ValueB).A) and (QUID(ValueA).B>QUID(ValueB).B) then begin //- doesn't mean anything, but provides a sorting order should it be needed
-    Result := crAGreaterThanB;
-  end else begin
-    Result := crBGreaterThanA;
-  end;
-end;
-
-class function TCompare.CompareGUID: TCompare<TGUID>; static;
-begin
-  Result := TCompare<TGUID>.Create(@CmpGUID);
-end;
-
-class function TCompare.CmpInterface( const ValueA: IInterface; const ValueB: IInterface ): TComparisonResult; static;
-begin
-  if ValueA=ValueB then begin
-    Result := crAEqualToB;
-  end else if nativeuint(pointer(ValueA))>nativeuint(pointer(ValueB)) then begin //- doesn't mean anything, but provides a sorting order should it be needed
-    Result := crAGreaterThanB;
-  end else begin
-    Result := crBGreaterThanA;
-  end;
-end;
-
-class function TCompare.CompareInterface: TCompare<IInterface>; static;
-begin
-  Result := TCompare<IInterface>.Create(@CmpInterface);
-end;
-
-class function TCompare.CmpObject( const ValueA: TObject; const ValueB: TObject ): TComparisonResult; static;
-begin
-  if ValueA=ValueB then begin
-    Result := crAEqualToB;
-  end else if nativeuint(pointer(ValueA))>nativeuint(pointer(ValueB)) then begin //- doesn't mean anything, but provides a sorting order should it be needed
-    Result := crAGreaterThanB;
-  end else begin
-    Result := crBGreaterThanA;
-  end;
-end;
-
-class function TCompare.CompareObject: TCompare<TObject>; static;
-begin
-  Result := TCompare<TObject>.Create(@CmpObject);
-end;
-
-{$endif}
-
-
-{$endregion}
 
 end.
