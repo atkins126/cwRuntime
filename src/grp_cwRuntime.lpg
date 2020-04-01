@@ -53,6 +53,11 @@
           <Mode Name="Default"/>
         </BuildModes>
       </Target>
+      <Target FileName="tests\cwIO\test_cwIO.lpi">
+        <BuildModes>
+          <Mode Name="Default"/>
+        </BuildModes>
+      </Target>
     </Targets>
   </ProjectGroup>
 </CONFIG>

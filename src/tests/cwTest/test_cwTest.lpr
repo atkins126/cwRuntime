@@ -4,48 +4,20 @@
   All Rights Reserved.
 *)
 {$endif}
-/// <exclude/>
-unit test_cwtest.sampletest;
-{$ifdef fpc}{$mode delphiunicode}{$M+}{$endif}
-
-interface
+program test_cwIO;
 uses
   cwTest
 , cwTest.Standard
+, test_cwtest.sampletest
 ;
 
-type
-  TSampleTest = class( TTestCase )
-  published
-    procedure SucceedSample;
-    procedure FailSample;
-    procedure ErrorSample;
-  end;
-
-implementation
-
-procedure TSampleTest.ErrorSample;
 var
-  R: single;
+  R: nativeuint;
+
 begin
-  //- Attempt to divide by zero to raise an exception.
-  R := 3;
-  R := R / 0;
-end;
-
-procedure TSampleTest.FailSample;
-begin
-  TTest.Fail('Sample method "FailSample" failed.');
-end;
-
-procedure TSampleTest.SucceedSample;
-begin
-  //- Do nothing and this test succeeds.
-end;
-
-initialization
-  TestSuite.RegisterTestCase( TSampleTest );
-
+  R := TestSuite.Run( 'cwTest', [TConsoleReport.Create] );
+  if ParamStr(1)='ide' then begin
+    Readln;
+  end;
+  Halt(R);
 end.
-
-

@@ -28,11 +28,11 @@
       <Unit>
         <Filename Value="test_cwTest.lpr"/>
         <IsPartOfProject Value="True"/>
+        <UnitName Value="test_cwIO"/>
       </Unit>
       <Unit>
-        <Filename Value="test_cwTest.lpr"/>
+        <Filename Value="testcases\test_cwtest.sampletest.pas"/>
         <IsPartOfProject Value="True"/>
-        <UnitName Value="test_cwtest.sampletest"/>
       </Unit>
     </Units>
   </ProjectOptions>
@@ -44,7 +44,7 @@
     </Target>
     <SearchPaths>
       <IncludeFiles Value="$(ProjOutDir)"/>
-      <OtherUnitFiles Value="..\..\main\api;..\..\main\implementation;..\cwTests\testcases"/>
+      <OtherUnitFiles Value="..\..\main\api;..\..\main\implementation;..\cwTests\testcases;testcases"/>
       <UnitOutputDirectory Value="..\..\..\out\lib\$(TargetCPU)-$(TargetOS)"/>
     </SearchPaths>
   </CompilerOptions>
