@@ -1,0 +1,302 @@
+{$ifdef license}
+(*
+  Copyright 2020 ChapmanWorld LLC ( https://chapmanworld.com )
+  All Rights Reserved.
+*)
+{$endif}
+unit test_cwCollections.List;
+{$ifdef fpc} {$mode delphiunicode} {$endif}
+{$M+}
+
+interface
+uses
+  cwTest
+, cwCollections
+, cwCollections.Standard
+;
+
+type
+  TTest_cwCollectionsList = class(TTestCase)
+  private
+  published
+    procedure ForEach;
+    procedure getCount;
+    procedure getItem;
+    procedure getAsReadOnly;
+    procedure Clear;
+    procedure Add;
+    procedure setItem;
+    procedure Remove;
+    procedure RemoveItem;
+    procedure RemoveItemOrdered;
+  end;
+
+implementation
+uses
+  cwTest.Standard
+;
+
+var
+  Allocations: uint32 = 0;
+  DisposedFlag: boolean;
+  DisposedValue: uint32;
+
+//------------------------------------------------------------------------------
+// A simple collection item for testing the stack.
+//------------------------------------------------------------------------------
+type
+  ICollectionItem = interface
+    function getValue: uint32;
+    procedure setValue( value: uint32 );
+    property Value: uint32 read getValue write setValue;
+  end;
+
+  TCollectionItem = class( TInterfacedObject, ICollectionItem )
+  private
+    fValue: uint32;
+  private
+    function getValue: uint32;
+    procedure setValue( value: uint32 );
+  public
+    constructor create( value: uint32 = 0 ); reintroduce;
+    destructor destroy; override;
+  end;
+
+constructor TCollectionItem.create(value: uint32);
+begin
+  inherited create;
+  fValue := Value;
+  inc(Allocations);
+end;
+
+destructor TCollectionItem.destroy;
+begin
+  DisposedFlag := True;
+  DisposedValue := fValue;
+  Dec(Allocations);
+  inherited destroy;
+end;
+
+function TCollectionItem.getValue: uint32;
+begin
+  Result := fValue;
+end;
+
+procedure TCollectionItem.setValue(value: uint32);
+begin
+  fValue := Value;
+end;
+//------------------------------------------------------------------------------
+
+var
+  fSum: uint32; // for ForEach test.
+
+procedure EnumerateHandler( const Item: ICollectionItem );
+begin
+  fSum := fSum + Item.Value;
+end;
+
+procedure TTest_cwCollectionsList.ForEach;
+var
+  CUT: IList<ICollectionItem>;
+begin
+  // Arrange:
+  fSum := 0;
+  CUT := TList<ICollectionItem>.Create;
+  CUT.Add( TCollectionItem.Create(1) );
+  CUT.Add( TCollectionItem.Create(2) );
+  CUT.Add( TCollectionItem.Create(3) );
+  CUT.Add( TCollectionItem.Create(4) );
+  CUT.Add( TCollectionItem.Create(5) );
+  // Act:
+  CUT.ForEach(TEnumerate<ICollectionItem>.Create(EnumerateHandler));
+  // Assert:
+  TTest.Expect(15,fSum);
+end;
+
+procedure TTest_cwCollectionsList.getCount;
+var
+  CUT: IList<ICollectionItem>;
+  idx: nativeuint;
+begin
+  // Arrange:
+  CUT := TList<ICollectionItem>.Create;
+  // Act & Assert:
+  // Add 1k items to list and ensure count remains consistent.
+  for idx := 0 to 999 do begin
+    CUT.Add( TCollectionItem.Create(idx) );
+    TTest.Expect(succ(idx),CUT.getCount);
+  end;
+end;
+
+procedure TTest_cwCollectionsList.getItem;
+var
+  CUT: IList<ICollectionItem>;
+  idx: nativeuint;
+begin
+  // Arrange:
+  CUT := TList<ICollectionItem>.Create;
+  for idx := 0 to 999 do begin
+    CUT.Add( TCollectionItem.Create(idx) );
+  end;
+  // Act & Assert:
+  for idx := 0 to 999 do begin
+    TTest.Expect( idx, CUT.Items[idx].Value );
+  end;
+end;
+
+procedure TTest_cwCollectionsList.getAsReadOnly;
+var
+  CUT: IList<ICollectionItem>;
+  ROCUT: IReadOnlyList<ICollectionItem>;
+begin
+  // Arrange:
+  CUT := TList<ICollectionItem>.Create;
+  // Act:
+  ROCUT := CUT.getAsReadOnly;
+  // Assert:
+  TTest.Expect( nativeuint(pointer(ROCUT)), nativeuint(pointer(CUT)) );
+end;
+
+procedure TTest_cwCollectionsList.Clear;
+var
+  CUT: IList<ICollectionItem>;
+  idx: nativeuint;
+begin
+  // Arrange:
+  CUT := TList<ICollectionItem>.Create;
+  // Add 1k items to list and ensure count remains consistent.
+  for idx := 0 to 999 do begin
+    CUT.Add( TCollectionItem.Create(idx) );
+  end;
+  //- Act
+  CUT.Clear;
+  //- Assert
+  TTest.Expect(CUT.Count,0);
+  TTest.Expect(Allocations,0); // Extra test to ensure everything is disposed.
+end;
+
+procedure TTest_cwCollectionsList.Add;
+var
+  CUT: IList<ICollectionItem>;
+  idx: nativeuint;
+begin
+  //- same test as getCount.
+  // Arrange:
+  CUT := TList<ICollectionItem>.Create;
+  // Act & Assert:
+  // Add 1k items to list and ensure count remains consistent.
+  for idx := 0 to 999 do begin
+    CUT.Add( TCollectionItem.Create(idx) );
+    TTest.Expect(succ(idx),CUT.getCount);
+  end;
+end;
+
+procedure TTest_cwCollectionsList.setItem;
+var
+  Temp: ICollectionItem;
+  CUT: IList<ICollectionItem>;
+begin
+  // Arrange:
+  CUT := TList<ICollectionItem>.Create;
+  CUT.Add( TCollectionItem.Create(0) );
+  CUT.Add( TCollectionItem.Create(1) );
+  // Act: swap items
+  Temp := CUT.Items[0];
+  CUT.Items[0] := CUT.Items[1];
+  CUT.Items[1] := Temp;
+  // Assert.
+  TTest.Expect( 1, CUT.Items[0].Value );
+  TTest.Expect( 0, CUT.Items[1].Value );
+end;
+
+procedure TTest_cwCollectionsList.Remove;
+var
+  Item: ICollectionItem;
+  CUT: IList<ICollectionItem>;
+  idx: nativeuint;
+begin
+  // Arrange:
+  CUT := TList<ICollectionItem>.Create;
+  // Add 1k items to list
+  for idx := 0 to 999 do begin
+    CUT.Add( TCollectionItem.Create(idx) );
+  end;
+  // Act & Assert:
+  // Remove 1k items from list, checking that count decrements and that
+  // the dispose flag is set for each.
+  for idx := 999 downto 0 do begin
+    DisposedFlag := False;
+    DisposedValue := 10000;
+
+    // Note: We remove the item from the list, but it is not immediately
+    // disposed under the FPC compiler (Delphi may/may not be the same) because
+    // the class is still referenced by the 'hidden variable' generated to call
+    // the Remove() method, therefore the dispose method has not been called.
+    // To work around this, we use an intermediate copy of the item being
+    // removed for this test. By the time we set the intermediate item
+    // reference to nil, the hidden reference has also been cleaned up and so
+    // disposal occurs as expected.  In normal operation this should not have
+    // impact on the use of the class, however, for the sake of testing this
+    // extra reference is required in order that the test succeed.
+    Item := Cut.Items[idx];
+    CUT.Remove( Item );
+    Item := nil;
+
+    TTest.Expect(TRUE,DisposedFlag);
+    TTest.Expect(DisposedValue,idx);
+    TTest.Expect(CUT.getCount,idx);
+  end;
+end;
+
+procedure TTest_cwCollectionsList.RemoveItem;
+var
+  CUT: IList<ICollectionItem>;
+  idx: nativeuint;
+begin
+  // Arrange:
+  CUT := TList<ICollectionItem>.Create;
+  // Add 1k items to list
+  for idx := 0 to 999 do begin
+    CUT.Add( TCollectionItem.Create(idx) );
+  end;
+  // Act & Assert:
+  // Remove 1k items from list, checking that count decrements and that
+  // the dispose flag is set for each.
+  for idx := 999 downto 0 do begin
+    DisposedFlag := False;
+    DisposedValue := 10000;
+    CUT.RemoveItem( idx );
+    TTest.Expect(TRUE,DisposedFlag);
+    TTest.Expect(DisposedValue,idx);
+    TTest.Expect(CUT.getCount,idx);
+  end;
+end;
+
+procedure TTest_cwCollectionsList.RemoveItemOrdered;
+var
+  CUT: IList<ICollectionItem>;
+  idx: uint32;
+begin
+  CUT := TList<ICollectionItem>.Create(8,true,false);
+  // Arrange:
+  for idx := 0 to 12 do begin
+    CUT.Add( TCollectionItem.Create(idx));
+    CUT.Add( TCollectionItem.Create(succ(idx)));
+  end;
+  // Act:
+  for idx := 0 to 12 do begin
+    CUT.RemoveItem( succ(idx) );
+  end;
+  // Assert:
+  for idx := 0 to 12 do begin
+    TTest.Expect( idx, CUT.Items[idx].Value );
+  end;
+end;
+
+initialization
+  TestSuite.RegisterTestCase(TTest_cwCollectionsList)
+
+end.
+
+

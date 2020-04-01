@@ -1,0 +1,262 @@
+{$ifdef license}
+(*  Copyright 2020 ChapmanWorld LLC ( https://chapmanworld.com )
+    All Rights Reserved.
+*)
+{$endif}
+/// <summary>
+///   The standard implementation of cwTest.
+/// </summary>
+unit cwTest.Standard;
+{$ifdef fpc}{$mode delphiunicode}{$endif}
+
+interface
+uses
+  cwTest
+;
+
+/// <summary>
+///   Returns the singleton instance of ITestSuite which may be used to
+///   register and execute test cases.
+/// </summary>
+function TestSuite(): ITestSuite;
+
+type
+  /// <summary>
+  ///   Provides utility methods for checking the results of operations
+  ///   performed during testing. For example, in order to fail a test you may
+  ///   call TTest.Fail( ' &lt;reason string&gt; '); from within the test
+  ///   procedure.
+  /// </summary>
+  TTest = record
+
+    ///  <summary>
+    ///    Causes the test to fail with the provided reason string.
+    ///  </summary>
+    class procedure Fail( const ReasonString: string ); static;
+
+    ///  <summary>
+    ///    Compares the expected value to the got value and fails the test if the
+    ///    two values do not match.  There are many overloads of this method for
+    ///    comparison of different types. Each overload has the same two parameters
+    ///    except for those which compare floating-points, which add a third parameter
+    ///    to indicate the level of precision to be used in the comparison.
+    ///  </summary>
+    class procedure Expect( const ExpectedValue: string;   const GotValue: string ); overload; static;
+    ///  <exclude/>
+    class procedure Expect( const ExpectedValue: char;     const GotValue: char ); overload; static;
+    ///  <exclude/>
+    class procedure Expect( const ExpectedValue: boolean;  const GotValue: boolean ); overload; static;
+    ///  <exclude/>
+    class procedure Expect( const ExpectedValue: uint8;    const GotValue: uint8 ); overload; static;
+    ///  <exclude/>
+    class procedure Expect( const ExpectedValue: uint16;   const GotValue: uint16 ); overload; static;
+    ///  <exclude/>
+    class procedure Expect( const ExpectedValue: uint32;   const GotValue: uint32 ); overload; static;
+    ///  <exclude/>
+    class procedure Expect( const ExpectedValue: uint64;   const GotValue: uint64 ); overload; static;
+    ///  <exclude/>
+    class procedure Expect( const ExpectedValue: int8;     const GotValue: int8 ); overload; static;
+    ///  <exclude/>
+    class procedure Expect( const ExpectedValue: int16;    const GotValue: int16 ); overload; static;
+    ///  <exclude/>
+    class procedure Expect( const ExpectedValue: int32;    const GotValue: int32 ); overload; static;
+    ///  <exclude/>
+    class procedure Expect( const ExpectedValue: int64;    const GotValue: int64 ); overload; static;
+    ///  <exclude/>
+    class procedure Expect( const ExpectedValue: single;   const GotValue: single;   const precision: single ); overload; static;
+    ///  <exclude/>
+    class procedure Expect( const ExpectedValue: double;   const GotValue: double;   const precision: double ); overload; static;
+    ///  <exclude/>
+    class procedure Compare( const SourceData: pointer; const TargetData: pointer; const ByteCount: nativeuint; const FailMessage: string = '' ); static;
+  end;
+
+  /// <summary>
+  ///   A factory record for creating instances of ITestReport using the
+  ///   standard console implementation. <br />(Test results are printed to the
+  ///   console)
+  /// </summary>
+  TConsoleReport = record
+
+    /// <summary>
+    ///   Factory method for creating instances of ITestReport, to appear as a
+    ///   constructor and may be used in place of a constructor for the console
+    ///   implementation.
+    /// </summary>
+    class function Create: ITestReport; static;
+  end;
+
+implementation
+uses
+  sysutils //[RTL] for Format()
+{$ifdef fpc}
+, cwTest.TestSuite.Fpc
+{$else}
+, cwTest.TestSuite.Delphi
+{$endif}
+, cwTest.TestReport.Console
+;
+
+const
+  cExpected = 'Expected %s but got %s';
+
+var
+  SingletonTestSuite: ITestSuite = nil;
+
+function TestSuite(): ITestSuite;
+begin
+  if not assigned(SingletonTestSuite) then begin
+    SingletonTestSuite := TTestSuite.Create;
+  end;
+  Result := SingletonTestSuite;
+end;
+
+{ TConsoleReport }
+
+class function TConsoleReport.Create: ITestReport;
+begin
+  Result := TStandardConsoleReport.Create;
+end;
+
+{ TTest }
+
+class procedure TTest.Fail(const ReasonString: string);
+begin
+  raise
+    {$ifdef fpc}
+    EFailedTest.Create(AnsiString(ReasonString));
+    {$else}
+    EFailedTest.Create(ReasonString);
+    {$endif}
+end;
+
+class procedure TTest.Expect(const ExpectedValue: string; const GotValue: string);
+begin
+  if ExpectedValue=GotValue then begin
+    exit;
+  end;
+  Fail( string(Format(cExpected,[ExpectedValue,GotValue])) );
+end;
+
+class procedure TTest.Expect(const ExpectedValue: char; const GotValue: char);
+begin
+  if ExpectedValue=GotValue then begin
+    exit;
+  end;
+  Fail( string(Format(cExpected,[ExpectedValue,GotValue])) );
+end;
+
+class procedure TTest.Expect(const ExpectedValue: boolean; const GotValue: boolean);
+begin
+  if ExpectedValue=GotValue then begin
+    exit;
+  end;
+  Fail( string(Format(cExpected,[ExpectedValue,GotValue])) );
+end;
+
+class procedure TTest.Expect(const ExpectedValue: uint8; const GotValue: uint8);
+begin
+  if ExpectedValue=GotValue then begin
+    exit;
+  end;
+  Fail( string(Format(cExpected,[ExpectedValue,GotValue])) );
+end;
+
+class procedure TTest.Expect(const ExpectedValue: uint16; const GotValue: uint16);
+begin
+  if ExpectedValue=GotValue then begin
+    exit;
+  end;
+  Fail( string(Format(cExpected,[ExpectedValue,GotValue])) );
+end;
+
+class procedure TTest.Expect(const ExpectedValue: uint32; const GotValue: uint32);
+begin
+  if ExpectedValue=GotValue then begin
+    exit;
+  end;
+  Fail( string(Format(cExpected,[ExpectedValue,GotValue])) );
+end;
+
+class procedure TTest.Expect(const ExpectedValue: uint64; const GotValue: uint64);
+begin
+  if ExpectedValue=GotValue then begin
+    exit;
+  end;
+  Fail( string(Format(cExpected,[ExpectedValue,GotValue])) );
+end;
+
+class procedure TTest.Expect(const ExpectedValue: int8; const GotValue: int8);
+begin
+  if ExpectedValue=GotValue then begin
+    exit;
+  end;
+  Fail( string(Format(cExpected,[ExpectedValue,GotValue])) );
+end;
+
+class procedure TTest.Expect(const ExpectedValue: int16; const GotValue: int16);
+begin
+  if ExpectedValue=GotValue then begin
+    exit;
+  end;
+  Fail( string(Format(cExpected,[ExpectedValue,GotValue])) );
+end;
+
+class procedure TTest.Expect(const ExpectedValue: int32; const GotValue: int32);
+begin
+  if ExpectedValue=GotValue then begin
+    exit;
+  end;
+  Fail( string(Format(cExpected,[ExpectedValue,GotValue])) );
+end;
+
+class procedure TTest.Expect(const ExpectedValue: int64; const GotValue: int64);
+begin
+  if ExpectedValue=GotValue then begin
+    exit;
+  end;
+  Fail( string(Format(cExpected,[ExpectedValue,GotValue])) );
+end;
+
+class procedure TTest.Expect(const ExpectedValue: single; const GotValue: single; const precision: single);
+begin
+  if (GotValue>(ExpectedValue-Precision)) or (GotValue<(ExpectedValue+Precision)) then begin
+    exit;
+  end;
+  Fail( string(Format(cExpected,[ExpectedValue,GotValue])) );
+end;
+
+class procedure TTest.Expect(const ExpectedValue: double; const GotValue: double; const precision: double);
+begin
+  if (GotValue>(ExpectedValue-Precision)) or (GotValue<(ExpectedValue+Precision)) then begin
+    exit;
+  end;
+  Fail( string(Format(cExpected,[ExpectedValue,GotValue])) );
+end;
+
+class procedure TTest.Compare(const SourceData: pointer; const TargetData: pointer; const ByteCount: nativeuint; const FailMessage: string);
+var
+  Counter: nativeuint;
+  ptrSource: ^uint8;
+  ptrTarget: ^uint8;
+begin
+  Counter := ByteCount;
+  ptrSource := SourceData;
+  ptrTarget := TargetData;
+  while Counter>0 do begin
+    if ptrSource^<>ptrTarget^ then begin
+      Fail(FailMessage);
+      exit;
+    end;
+    inc(ptrSource);
+    inc(ptrTarget);
+    dec(Counter);
+  end;
+end;
+
+initialization
+  SingletonTestSuite := nil;
+
+finalization
+  SingletonTestSuite := nil;
+
+end.

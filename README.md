@@ -1,2 +1,3 @@
 # cwRuntime
-Compiler agnostic runtime library for Delphi and FreePascal
+Compiler agnostic collection of utility libraries for Delphi and Freepascal
+
