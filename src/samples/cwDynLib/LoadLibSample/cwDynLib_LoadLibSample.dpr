@@ -15,6 +15,7 @@ uses
 {$ifdef fpc}
   {$mode delphiunicode}
 {$else}
+  {$APPTYPE CONSOLE}
   {$R *.res}
 {$endif}
 

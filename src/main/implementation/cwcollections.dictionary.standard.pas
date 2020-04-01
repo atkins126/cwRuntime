@@ -103,7 +103,7 @@ end;
 {$endif}
 
 {$ifndef fpc}
-constructor TStandardDictionary<K,V>.Create( const KeyCompare: TCompareReferenceHandler<T>; const Granularity: nativeuint = 32; const isOrdered: boolean = false; const isPruned: boolean = false );
+constructor TStandardDictionary<K,V>.Create( const KeyCompare: TCompareReferenceHandler<K>; const Granularity: nativeuint = 32; const isOrdered: boolean = false; const isPruned: boolean = false );
 begin
   inherited Create;
   fKeyCompareR := KeyCompare;

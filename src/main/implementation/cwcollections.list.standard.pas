@@ -35,7 +35,11 @@ type
     procedure Clear;
     function Add( const Item: T ): nativeuint;
     procedure setItem( const idx: nativeuint; const item: T );
+    {$ifdef fpc}
     procedure Remove( const Item: T );
+    {$else}
+    procedure Remove( const Item: T; const Compare: TCompareReferenceHandler<T> );
+    {$endif}
     function RemoveItem( const idx: nativeuint ): boolean;
   private
     function OrderedRemoveItem( const idx: nativeuint ): boolean;
@@ -204,6 +208,7 @@ begin
   end;
 end;
 
+{$ifdef fpc}
 procedure TStandardList<T>.Remove(const Item: T);
 var
   idx: nativeuint;
@@ -217,6 +222,23 @@ begin
     end;
   end;
 end;
+{$endif}
+
+{$ifndef fpc}
+procedure TStandardList<T>.Remove( const Item: T; const Compare: TCompareReferenceHandler<T> );
+var
+  idx: nativeuint;
+begin
+  if getCount=0 then begin
+    exit;
+  end;
+  for idx := pred(getCount) downto 0 do begin
+    if Compare(getItem(idx),Item)=crAEqualToB then begin
+      RemoveItem(idx);
+    end;
+  end;
+end;
+{$endif}
 
 function TStandardList<T>.RemoveItem( const idx: nativeuint ): boolean;
 begin

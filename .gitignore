@@ -73,3 +73,5 @@ modules/
 *.lps
 *.res
 *.dproj
+src/projects/pkg_cwRuntime.otares
+*.otares

@@ -58,7 +58,7 @@ type
   TCompareOfObjectHandler<T> = function( const AValue: T; const BValue: T ): TComparisonResult of object;
   {$else}
   /// <excluide/>
-  TCompareReferenceHandler<T> = reference to procedure( const AValue: T; const BValue: T ): TComparisonResult;
+  TCompareReferenceHandler<T> = reference to function( const AValue: T; const BValue: T ): TComparisonResult;
   {$endif}
 {$endregion}
 
@@ -549,7 +549,11 @@ type
     ///  <summary>
     ///    Removes and item from the list by reference.
     ///  </summary>
+    {$ifdef fpc}
     procedure Remove( const Item: T );
+    {$else}
+    procedure Remove( const Item: T; const Compare: TCompareReferenceHandler<T> );
+    {$endif}
 
     /// <summary>
     ///   Removes an item from the list as specified by it's index.
