@@ -52,7 +52,7 @@ type
     //- For translation to other compilers, this is a simple pointer and can
     //- thus be represented as f.x 'void *reserved;'
     fInitialized: IInterface;
-    procedure EnsureInitialized; inline;
+    procedure EnsureInitialized; {$ifdef fpc} inline; {$endif}
     {$endregion}
   private
     //- When given a pointer to a unicode string, these methods measure
@@ -67,21 +67,21 @@ type
     //- determine the number of bytes it would require to store the string
     //- in another format. The string must be zero terminated with an
     //- appropriate number of zero bytes.
-    class function MeasureConvertedString(const lpszUTFString: pointer; const SourceFormat: TUnicodeFormat; const TargetFormat: TUnicodeFormat; out CodePoints: nativeuint ): nativeuint; overload; static; inline;
-    class function MeasureConvertedString(const value: string; const TargetFormat: TUnicodeFormat ): nativeuint; overload; static; inline;
+    class function MeasureConvertedString(const lpszUTFString: pointer; const SourceFormat: TUnicodeFormat; const TargetFormat: TUnicodeFormat; out CodePoints: nativeuint ): nativeuint; overload; static; {$ifdef fpc} inline; {$endif}
+    class function MeasureConvertedString(const value: string; const TargetFormat: TUnicodeFormat ): nativeuint; overload; static; {$ifdef fpc} inline; {$endif}
     //- Converts one unicode format string into another.
     //- Cares only about codepoints up until the terminator, the target buffer
     //- should be large enough to recieve the data including terminator, and
     //- already be initialized zero for the termination.
-    class procedure ConvertUTFString( const srcPtr: pointer; const srcFormat: TUnicodeFormat; const tgtPtr: pointer; const tgtFormat: TUnicodeFormat ); overload; static; inline;
-    class function ConvertUTFString( const srcPtr: pointer; const srcFormat: TUnicodeFormat ): string; overload; static; inline;
-    class procedure ConvertUTFString( const value: string; const tgtPtr: pointer; const tgtFormat: TUnicodeFormat ); overload; static; inline;
+    class procedure ConvertUTFString( const srcPtr: pointer; const srcFormat: TUnicodeFormat; const tgtPtr: pointer; const tgtFormat: TUnicodeFormat ); overload; static; {$ifdef fpc} inline; {$endif}
+    class function ConvertUTFString( const srcPtr: pointer; const srcFormat: TUnicodeFormat ): string; overload; static; {$ifdef fpc} inline; {$endif}
+    class procedure ConvertUTFString( const value: string; const tgtPtr: pointer; const tgtFormat: TUnicodeFormat ); overload; static; {$ifdef fpc} inline; {$endif}
     //- Set from zero-terminated pointers to utf strings.
-    procedure setAsPtrUTF8(const value: pointer); inline;
-    procedure setAsPtrUTF16BE(const value: pointer); inline;
-    procedure setAsPtrUTF16LE(const value: pointer); inline;
-    procedure setAsPtrUTF32BE(const value: pointer); inline;
-    procedure setAsPtrUTF32LE(const value: pointer); inline;
+    procedure setAsPtrUTF8(const value: pointer); {$ifdef fpc} inline; {$endif}
+    procedure setAsPtrUTF16BE(const value: pointer); {$ifdef fpc} inline; {$endif}
+    procedure setAsPtrUTF16LE(const value: pointer); {$ifdef fpc} inline; {$endif}
+    procedure setAsPtrUTF32BE(const value: pointer); {$ifdef fpc} inline; {$endif}
+    procedure setAsPtrUTF32LE(const value: pointer); {$ifdef fpc} inline; {$endif}
     //- Getter / Setters
     function getDataSize: nativeuint;
     function getDataPtr: pointer;
@@ -247,7 +247,7 @@ end;
 
 {$region ' TUnicodeString'}
 
-procedure TUnicodeString.EnsureInitialized; inline;
+procedure TUnicodeString.EnsureInitialized; {$ifdef fpc} inline; {$endif}
 begin
   if assigned(fInitialized) then begin
     exit;
@@ -255,7 +255,7 @@ begin
   fInitialized := TUTFStringData.Create;
 end;
 
-class function TUnicodeString.MeasureConvertedString(const lpszUTFString: pointer; const SourceFormat: TUnicodeFormat; const TargetFormat: TUnicodeFormat; out CodePoints: nativeuint): nativeuint; overload; static; inline;
+class function TUnicodeString.MeasureConvertedString(const lpszUTFString: pointer; const SourceFormat: TUnicodeFormat; const TargetFormat: TUnicodeFormat; out CodePoints: nativeuint): nativeuint; {$ifdef fpc} inline; {$endif}
 var
   lpSrc: pointer;
   CP: TUnicodeCodepoint;
@@ -344,7 +344,7 @@ begin
   until BreakOut;
 end;
 
-class function TUnicodeString.MeasureConvertedString(const value: string; const TargetFormat: TUnicodeFormat): nativeuint; overload; static; inline;
+class function TUnicodeString.MeasureConvertedString(const value: string; const TargetFormat: TUnicodeFormat): nativeuint; {$ifdef fpc} inline; {$endif}
 var
   Start: int32;
   Stop: int32;
@@ -378,7 +378,7 @@ begin
   until Cursor>Stop;
 end;
 
-class procedure TUnicodeString.ConvertUTFString(const srcPtr: pointer; const srcFormat: TUnicodeFormat; const tgtPtr: pointer; const tgtFormat: TUnicodeFormat); overload; static; inline;
+class procedure TUnicodeString.ConvertUTFString(const srcPtr: pointer; const srcFormat: TUnicodeFormat; const tgtPtr: pointer; const tgtFormat: TUnicodeFormat); {$ifdef fpc} inline; {$endif}
 var
   lpSrc: pointer;
   lpTgt: pointer;
@@ -451,7 +451,7 @@ begin
   until BreakOut;
 end;
 
-class function TUnicodeString.ConvertUTFString(const srcPtr: pointer; const srcFormat: TUnicodeFormat): string; overload; static; inline;
+class function TUnicodeString.ConvertUTFString(const srcPtr: pointer; const srcFormat: TUnicodeFormat): string; {$ifdef fpc} inline; {$endif}
 var
   lpSrc: pointer;
   TempBuffer: uint32;
@@ -514,7 +514,7 @@ begin
   until BreakOut;
 end;
 
-class procedure TUnicodeString.ConvertUTFString( const value: string; const tgtPtr: pointer; const tgtFormat: TUnicodeFormat ); overload; static; inline;
+class procedure TUnicodeString.ConvertUTFString( const value: string; const tgtPtr: pointer; const tgtFormat: TUnicodeFormat ); {$ifdef fpc} inline; {$endif}
 var
   Start: int32;
   Stop: int32;
@@ -564,7 +564,7 @@ begin
   end;
 end;
 
-class function TUnicodeString.MeasureUTF16LEString(const lpszUTF16LE: pointer): nativeuint; static; inline;
+class function TUnicodeString.MeasureUTF16LEString(const lpszUTF16LE: pointer): nativeuint; {$ifdef fpc} inline; {$endif}
 var
   ptrUTF16LE: ^uint16;
   CPLen: uint8;
@@ -581,7 +581,7 @@ begin
   end;
 end;
 
-class function TUnicodeString.MeasureUTF16BEString(const lpszUTF16BE: pointer): nativeuint; static; inline;
+class function TUnicodeString.MeasureUTF16BEString(const lpszUTF16BE: pointer): nativeuint; {$ifdef fpc} inline; {$endif}
 var
   ptrUTF16BE: ^uint16;
   CPLen: uint8;
@@ -598,7 +598,7 @@ begin
   end;
 end;
 
-class function TUnicodeString.MeasureUTF32LEString(const lpszUTF32LE: pointer): nativeuint; static; inline;
+class function TUnicodeString.MeasureUTF32LEString(const lpszUTF32LE: pointer): nativeuint; {$ifdef fpc} inline; {$endif}
 var
   ptrUTF32LE: ^uint32;
   CPLen: uint8;
@@ -612,7 +612,7 @@ begin
   end;
 end;
 
-class function TUnicodeString.MeasureUTF32BEString(const lpszUTF32BE: pointer): nativeuint; static; inline;
+class function TUnicodeString.MeasureUTF32BEString(const lpszUTF32BE: pointer): nativeuint; {$ifdef fpc} inline; {$endif}
 var
   ptrUTF32BE: ^uint32;
   CPLen: uint8;
@@ -765,7 +765,7 @@ begin
   Result.AsPtr := value;
 end;
 
-procedure TUnicodeString.setAsPtrUTF8(const value: pointer); inline;
+procedure TUnicodeString.setAsPtrUTF8(const value: pointer); {$ifdef fpc} inline; {$endif}
 var
   Measure: nativeuint;
 begin
@@ -777,7 +777,7 @@ begin
   Move(Value^,(fInitialized as IUTFStringData).Data^,Measure);
 end;
 
-procedure TUnicodeString.setAsPtrUTF16LE(const value: pointer); inline;
+procedure TUnicodeString.setAsPtrUTF16LE(const value: pointer); {$ifdef fpc} inline; {$endif}
 var
   Measure: nativeuint;
 begin
@@ -789,7 +789,7 @@ begin
   Move(Value^,(fInitialized as IUTFStringData).Data^,Measure);
 end;
 
-procedure TUnicodeString.setAsPtrUTF16BE(const value: pointer); inline;
+procedure TUnicodeString.setAsPtrUTF16BE(const value: pointer); {$ifdef fpc} inline; {$endif}
 var
   Measure: nativeuint;
 begin
@@ -801,7 +801,7 @@ begin
   Move(Value^,(fInitialized as IUTFStringData).Data^,Measure);
 end;
 
-procedure TUnicodeString.setAsPtrUTF32LE(const value: pointer); inline;
+procedure TUnicodeString.setAsPtrUTF32LE(const value: pointer); {$ifdef fpc} inline; {$endif}
 var
   Measure: nativeuint;
 begin
@@ -819,7 +819,7 @@ begin
   Result := (fInitialized as IUTFStringData).DataSize;
 end;
 
-procedure TUnicodeString.setAsPtrUTF32BE(const value: pointer); inline;
+procedure TUnicodeString.setAsPtrUTF32BE(const value: pointer); {$ifdef fpc} inline; {$endif}
 var
   Measure: nativeuint;
 begin

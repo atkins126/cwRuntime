@@ -32,9 +32,9 @@ type
 implementation
 uses
   sysutils
-  {$ifdef MSWINDOWS}
+  {$ifndef MSWINDOWS}
   {$ifndef fpc}
-  , Posix.errno
+  , posix.errno
   {$endif}
   {$endif}
 ;
