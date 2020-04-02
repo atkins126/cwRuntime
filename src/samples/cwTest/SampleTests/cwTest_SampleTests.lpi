@@ -29,6 +29,21 @@
         <Filename Value="cwTest_SampleTests.lpr"/>
         <IsPartOfProject Value="True"/>
       </Unit>
+      <Unit>
+        <Filename Value="testcases\testcase.sampletest.pas"/>
+        <IsPartOfProject Value="True"/>
+        <UnitName Value="TestCase.SampleTest"/>
+      </Unit>
+      <Unit>
+        <Filename Value="testcases\testcase.setupfails.pas"/>
+        <IsPartOfProject Value="True"/>
+        <UnitName Value="TestCase.SetupFails"/>
+      </Unit>
+      <Unit>
+        <Filename Value="testcases\testcase.teardownfails.pas"/>
+        <IsPartOfProject Value="True"/>
+        <UnitName Value="TestCase.TearDownFails"/>
+      </Unit>
     </Units>
   </ProjectOptions>
   <CompilerOptions>

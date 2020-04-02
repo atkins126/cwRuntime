@@ -26,54 +26,56 @@
   IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 *)
 {$endif}
-unit test_cwTypes.Uint32Helper;
-{$ifdef fpc} {$mode delphiunicode} {$endif}
+unit test_cwtest.SetupFails;
+{$ifdef fpc}{$mode delphiunicode}{$endif}
 {$M+}
 
 interface
 uses
   cwTest
 , cwTest.Standard
-, cwTypes
 ;
 
 type
-  TTestUint32Helper = class(TTestCase)
-  private
+  TSetupFailTest = class( TTestCase )
   published
-    procedure AsString;
-    procedure AsHex;
+    ///  <summary>
+    ///    Setup method will fail by raising exception.
+    ///  </summary>
+    procedure Setup;
+
+    ///  <summary>
+    ///    No issue with this tear-down, but it should be called regardless of failing setup.
+    ///  </summary>
+    procedure TearDown;
+
+    /// <summary>
+    ///   This test would succeed if it weren't for the setup method failing.
+    /// </summary>
+    procedure Sample;
   end;
 
 implementation
+uses
+  sysutils
+;
 
-procedure TTestUint32Helper.AsHex;
-var
-  I: uint32;
-  S: string;
+procedure TSetupFailTest.Setup;
 begin
-  // Arrange:
-  I := 12;
-  // Act:
-  S := I.AsHex(2);
-  // Assert:
-  TTest.Expect('0C',S);
+  raise
+    Exception.Create('Oh no! Setup failed!');
 end;
 
-procedure TTestUint32Helper.AsString;
-var
-  I: uint32;
-  S: string;
+procedure TSetupFailTest.TearDown;
 begin
-  // Arrange:
-  I := 12;
-  // Act:
-  S := I.AsString;
-  // Assert:
-  TTest.Expect('12',S);
+  //-
+end;
+
+procedure TSetupFailTest.Sample;
+begin
 end;
 
 initialization
-  TestSuite.RegisterTestCase(TTestUint32Helper);
+  TestSuite.RegisterTestCase( TSetupFailTest );
 
 end.

@@ -32,10 +32,12 @@
       <Unit>
         <Filename Value="testcases\test_cwcollections.ringbuffer.pas"/>
         <IsPartOfProject Value="True"/>
+        <UnitName Value="test_cwCollections.RingBuffer"/>
       </Unit>
       <Unit>
         <Filename Value="testcases\test_cwcollections.stack.pas"/>
         <IsPartOfProject Value="True"/>
+        <UnitName Value="test_cwCollections.Stack"/>
       </Unit>
       <Unit>
         <Filename Value="testcases\test_cwcollections.dictionary.pas"/>

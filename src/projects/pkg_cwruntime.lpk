@@ -96,10 +96,6 @@
         <UnitName Value="cwLog.LogTarget.Console"/>
       </Item>
       <Item>
-        <Filename Value="..\main\implementation\cwlog.standard.pas"/>
-        <UnitName Value="cwLog.Standard"/>
-      </Item>
-      <Item>
         <Filename Value="..\main\implementation\cwtest.testcase.console.pas"/>
         <UnitName Value="cwTest.TestCase.Console"/>
       </Item>
@@ -166,6 +162,10 @@
       <Item>
         <Filename Value="..\main\api\cwio.standard.pas"/>
         <UnitName Value="cwio.standard"/>
+      </Item>
+      <Item>
+        <Filename Value="..\main\api\cwlog.standard.pas"/>
+        <UnitName Value="cwLog.Standard"/>
       </Item>
       <Item>
         <Filename Value="..\main\implementation\cwruntime.logentries.pas"/>

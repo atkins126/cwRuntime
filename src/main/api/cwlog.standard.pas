@@ -26,54 +26,42 @@
   IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 *)
 {$endif}
-unit test_cwTypes.Uint32Helper;
-{$ifdef fpc} {$mode delphiunicode} {$endif}
-{$M+}
+unit cwLog.Standard;
+{$ifdef fpc}{$mode delphiunicode}{$endif}
 
 interface
 uses
-  cwTest
-, cwTest.Standard
-, cwTypes
+  cwLog
 ;
 
-type
-  TTestUint32Helper = class(TTestCase)
-  private
-  published
-    procedure AsString;
-    procedure AsHex;
-  end;
+function Log: ILog;
 
 implementation
+uses
+  sysutils //[RTL] for FileExists
+, cwLog.Log.Static
+, cwLog.Log.Dynamic
+;
 
-procedure TTestUint32Helper.AsHex;
 var
-  I: uint32;
-  S: string;
-begin
-  // Arrange:
-  I := 12;
-  // Act:
-  S := I.AsHex(2);
-  // Assert:
-  TTest.Expect('0C',S);
-end;
+  LocalSingletonLog: ILog = nil;
 
-procedure TTestUint32Helper.AsString;
-var
-  I: uint32;
-  S: string;
+function Log: ILog;
 begin
-  // Arrange:
-  I := 12;
-  // Act:
-  S := I.AsString;
-  // Assert:
-  TTest.Expect('12',S);
+  if not assigned(LocalSingletonLog) then begin
+    Result := cwLog.Log.Dynamic.Log();
+  end;
+  if not assigned(LocalSingletonLog) then begin
+    Result := cwLog.Log.Static.Log();
+  end;
+  Result := LocalSingletonLog;
 end;
 
 initialization
-  TestSuite.RegisterTestCase(TTestUint32Helper);
+  LocalSingletonLog := nil;
+
+finalization
+  LocalSingletonLog := nil;
 
 end.
+

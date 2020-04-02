@@ -33,6 +33,17 @@
       <Unit>
         <Filename Value="testcases\test_cwtest.sampletest.pas"/>
         <IsPartOfProject Value="True"/>
+        <UnitName Value="test_cwTest.SampleTest"/>
+      </Unit>
+      <Unit>
+        <Filename Value="testcases\test_cwtest.setupfails.pas"/>
+        <IsPartOfProject Value="True"/>
+        <UnitName Value="test_cwtest.SetupFails"/>
+      </Unit>
+      <Unit>
+        <Filename Value="testcases\test_cwtest.teardownfails.pas"/>
+        <IsPartOfProject Value="True"/>
+        <UnitName Value="test_cwtest.TearDownFails"/>
       </Unit>
     </Units>
   </ProjectOptions>

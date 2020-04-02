@@ -32,7 +32,6 @@
       <Unit>
         <Filename Value="testcases\test.cwio.buffers.pas"/>
         <IsPartOfProject Value="True"/>
-        <UnitName Value="test.coio.buffers"/>
       </Unit>
     </Units>
   </ProjectOptions>
