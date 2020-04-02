@@ -167,6 +167,14 @@ type
     class function Create( const Granularity: nativeuint = 32; const isOrdered: boolean = false; const isPruned: boolean = false ): IStringList; static;
   end;
 
+  ///  <summary>
+  ///    Namespace of pre-defined comparison functions for use
+  ///    with dictionary / list.remove().
+  ///  </summary>
+  TCompare = record
+    class function CompareStrings( const AValue: string; const BValue: string ): TComparisonResult; static;
+  end;
+
 {$endregion}
 
 implementation
@@ -184,6 +192,19 @@ class function TList<T>.Create(const Granularity: nativeuint = 32; const isOrder
 begin
   Result := TStandardList<T>.Create( Granularity, isOrdered, isPruned );
 end;
+
+class function TCompare.CompareStrings(const AValue: string; const BValue: string): TComparisonResult;
+begin
+  Result := TComparisonResult.crErrorNotCompared;
+  if AValue=BValue then begin
+    Result := TComparisonResult.crAEqualToB;
+  end else if AValue>BValue then begin
+    Result := TComparisonResult.crAGreaterThanB;
+  end else begin
+    Result := TComparisonResult.crBGreaterThanA;
+  end;
+end;
+
 {$endregion}
 
 {$region ' TStringList'}

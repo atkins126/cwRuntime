@@ -120,7 +120,7 @@ begin
   CUT.Add( TCollectionItem.Create(4) );
   CUT.Add( TCollectionItem.Create(5) );
   // Act:
-  CUT.ForEach(TEnumerate<ICollectionItem>.Create(EnumerateHandler));
+  CUT.ForEach(EnumerateHandler);
   // Assert:
   TTest.Expect(15,fSum);
 end;
@@ -251,7 +251,7 @@ begin
     // impact on the use of the class, however, for the sake of testing this
     // extra reference is required in order that the test succeed.
     Item := Cut.Items[idx];
-    CUT.Remove( Item, TCompare<ICollectionItem>.Create( CompareICollectionItem ) );
+    CUT.Remove( Item {$ifndef fpc}, CompareICollectionItem{$endif} );
     Item := nil;
 
     TTest.Expect(TRUE,DisposedFlag);
