@@ -58,6 +58,22 @@ type
     class procedure Fail( const ReasonString: string ); static;
 
     ///  <summary>
+    ///    If the boolean value passed in is not TRUE, the test will
+    ///    fail. If a reason string is provided in the optional parameter it
+    ///    will be given as the reason for failure, otherwise a generic
+    ///    'Expected True' message is used.
+    ///  </summary>
+    class procedure IsTrue( const Value: boolean; const ReasonString: string = '' ); static;
+
+    ///  <summary>
+    ///    If the boolean value passed in is not FALSE, the test will
+    ///    fail. If a reason string is provided in the optional parameter it
+    ///    will be given as the reason for failure, otherwise a generic
+    ///    'Expected False' message is used.
+    ///  </summary>
+    class procedure IsFalse( const Value: boolean; const ReasonString: string = '' ); static;
+
+    ///  <summary>
     ///    Compares the expected value to the got value and fails the test if the
     ///    two values do not match.  There are many overloads of this method for
     ///    comparison of different types. Each overload has the same two parameters
@@ -150,6 +166,30 @@ begin
     {$else}
     EFailedTest.Create(ReasonString);
     {$endif}
+end;
+
+class procedure TTest.IsTrue(const Value: boolean; const ReasonString: string);
+begin
+  if Value then begin
+    exit;
+  end;
+  if ReasonString='' then begin
+    Fail('Expected True.');
+  end else begin
+    Fail(ReasonString);
+  end;
+end;
+
+class procedure TTest.IsFalse(const Value: boolean; const ReasonString: string);
+begin
+  if not Value then begin
+    exit;
+  end;
+  if ReasonString='' then begin
+    Fail('Expected False.');
+  end else begin
+    Fail(ReasonString);
+  end;
 end;
 
 class procedure TTest.Expect(const ExpectedValue: string; const GotValue: string);
