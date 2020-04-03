@@ -32,6 +32,25 @@
       <Unit>
         <Filename Value="testcases\test.cwio.buffers.pas"/>
         <IsPartOfProject Value="True"/>
+        <UnitName Value="test.cwIO.Buffers"/>
+      </Unit>
+      <Unit>
+        <Filename Value="testcases\test.cwio.streams.pas"/>
+        <IsPartOfProject Value="True"/>
+        <UnitName Value="test.cwIO.Streams"/>
+      </Unit>
+      <Unit>
+        <Filename Value="testcases\test.cwio.unicodebuffers.pas"/>
+        <IsPartOfProject Value="True"/>
+        <UnitName Value="test.cwIO.UnicodeBuffers"/>
+      </Unit>
+      <Unit>
+        <Filename Value="testcases\test.cwio.unicodestreams.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit>
+      <Unit>
+        <Filename Value="testcases\test.cwio.cyclicbuffers.pas"/>
+        <IsPartOfProject Value="True"/>
       </Unit>
     </Units>
   </ProjectOptions>

@@ -233,8 +233,19 @@ type
     ///  </summary>
     procedure setName( const value: string );
 
+    ///  <summary>
+    ///    Writes a single byte to the stream.
+    ///  </summary>
     procedure WriteByte( const value: uint8 );
+
+    ///  <summary>
+    ///    Reads a single byte from the stream.
+    ///  </summary>
     function ReadByte: uint8;
+
+    ///  <summary>
+    ///    Writes an array of bytes to the stream.
+    ///  </summary>
     procedure WriteBytes( const value: array of uint8 );
 
     //- Pascal only, properties -//

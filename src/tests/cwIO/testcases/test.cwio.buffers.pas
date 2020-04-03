@@ -35,7 +35,7 @@ uses
 ;
 
 type
-  TTest_IUnicodeBuffer_Standard = class(TTestCase)
+  TTest_IBuffer_Standard = class(TTestCase)
   private
   published
     procedure FillMem;
@@ -63,7 +63,7 @@ uses
 const
   cTestBufferSize = 512;
 
-procedure TTest_IUnicodeBuffer_Standard.FillMem;
+procedure TTest_IBuffer_Standard.FillMem;
 var
   idx: nativeuint;
   CUT: IBuffer;
@@ -74,11 +74,11 @@ begin
   CUT.FillMem($FF);
   // Assert:
   for idx := 0 to pred( cTestBufferSize ) do begin
-    TTest.Expect( CUT.getByte(idx), $FF );
+    TTest.Expect( $FF, CUT.getByte(idx) );
   end;
 end;
 
-procedure TTest_IUnicodeBuffer_Standard.LoadFromStream;
+procedure TTest_IBuffer_Standard.LoadFromStream;
 var
   MS: IStream;
   CUT: IBuffer;
@@ -97,101 +97,181 @@ begin
   CUT.LoadFromStream(MS,MS.Size);
   // Assert:
   for idx := 0 to pred( cTestBufferSize ) do begin
-    TTest.Expect( CUT.getByte(idx), $FE );
+    TTest.Expect( $FE, CUT.getByte(idx) );
   end;
 end;
 
-procedure TTest_IUnicodeBuffer_Standard.SaveToStream;
+procedure TTest_IBuffer_Standard.SaveToStream;
+var
+  MS: IStream;
+  CUT: IBuffer;
+  B: uint8;
+  idx: nativeuint;
 begin
   // Arrange:
+  CUT := TBuffer.Create(cTestBufferSize);
+  CUT.FillMem($FD);
+  MS := TMemoryStream.Create;
   // Act:
+  CUT.SaveToStream(MS,cTestBufferSize);
   // Assert:
-  TTest.Fail('Test not yet implemented');
+  MS.Position := 0;
+  for idx := 0 to pred( cTestBufferSize ) do begin
+    B := 0;
+    MS.Read(@B,1);
+    TTest.Expect( $FD, B );
+  end;
 end;
 
-procedure TTest_IUnicodeBuffer_Standard.Assign;
+procedure TTest_IBuffer_Standard.Assign;
+var
+  idx: nativeuint;
+  B: IBuffer;
+  CUT: IBuffer;
 begin
   // Arrange:
+  B := TBuffer.Create(cTestBufferSize);
+  B.FillMem($FB);
+  CUT := TBuffer.Create;
   // Act:
+  CUT.Assign(B);
   // Assert:
-  TTest.Fail('Test not yet implemented');
+  for idx := 0 to pred( cTestBufferSize ) do begin
+    TTest.Expect( $FB, CUT.getByte(idx) );
+  end;
 end;
 
-procedure TTest_IUnicodeBuffer_Standard.InsertData;
+procedure TTest_IBuffer_Standard.InsertData;
+var
+  idx: uint8;
+  CUT: IBuffer;
 begin
   // Arrange:
+  CUT := TBuffer.Create($FF);
   // Act:
+  for idx := 0 to $FE do begin
+    CUT.InsertData(@idx,idx,1);
+  end;
   // Assert:
-  TTest.Fail('Test not yet implemented');
+  for idx := 0 to $FE do begin
+    TTest.Expect( idx, CUT.getByte(idx) );
+  end;
 end;
 
-procedure TTest_IUnicodeBuffer_Standard.AppendData;
+procedure TTest_IBuffer_Standard.AppendData;
+var
+  idx: nativeuint;
+  CUT: IBuffer;
+  B: IBuffer;
 begin
   // Arrange:
+  CUT := TBuffer.Create(cTestBufferSize div 2);
+  CUT.FillMem($FF);
+  B := TBuffer.Create(cTestBufferSize div 2 );
+  B.FillMem($FE);
   // Act:
+  CUT.AppendData(B.getDataPointer,B.size);
   // Assert:
-  TTest.Fail('Test not yet implemented');
+  TTest.Expect( CUT.Size, ((cTestBufferSize div 2)*2) );
+  for idx := 0 to pred(cTestBufferSize) do begin
+    if (idx<(cTestBuffersize div 2)) then begin
+      TTest.Expect($FF,CUT.getByte(idx));
+    end else begin
+      TTest.Expect($FE,CUT.getByte(idx));
+    end;
+  end;
 end;
 
-procedure TTest_IUnicodeBuffer_Standard.AppendDataASCIIZ;
+procedure TTest_IBuffer_Standard.AppendDataASCIIZ;
+var
+  Data: array[0..5] of uint8;
+  CUT: IBuffer;
 begin
   // Arrange:
+  CUT := TBuffer.Create(2);
+  CUT.FillMem($FF);
+  Data[0] := 67;
+  Data[1] := 82;
+  Data[2] := 65;
+  Data[3] := 73;
+  Data[4] := 71;
+  Data[5] := 0;
   // Act:
+  CUT.AppendData(@Data[0]);
   // Assert:
-  TTest.Fail('Test not yet implemented');
+  TTest.Expect( 8, CUT.Size );
+  TTest.Expect( $FF, CUT.getByte(0) );
+  TTest.Expect( $FF, CUT.getByte(1) );
+  TTest.Expect(  67, CUT.getByte(2) );
+  TTest.Expect(  82, CUT.getByte(3) );
+  TTest.Expect(  65, CUT.getByte(4) );
+  TTest.Expect(  73, CUT.getByte(5) );
+  TTest.Expect(  71, CUT.getByte(6) );
+  TTest.Expect(   0, CUT.getByte(7) );
 end;
 
-procedure TTest_IUnicodeBuffer_Standard.ExtractData;
+procedure TTest_IBuffer_Standard.ExtractData;
+var
+  CUT: IBuffer;
+  Two: array[0..1] of uint8;
 begin
   // Arrange:
+  CUT := TBuffer.Create(5);
+  CUT.setByte(0,67);
+  CUT.setByte(1,82);
+  CUT.setByte(2,65);
+  CUT.setByte(3,73);
+  CUT.setByte(4,71);
+  Two[0] := 0;
+  Two[1] := 0;
   // Act:
+  CUT.ExtractData(@Two[0],2,2);
   // Assert:
-  TTest.Fail('Test not yet implemented');
+  TTest.Expect( 65, Two[0] );
+  TTest.Expect( 73, Two[1] );
 end;
 
-procedure TTest_IUnicodeBuffer_Standard.getDataPointer;
+procedure TTest_IBuffer_Standard.getDataPointer;
 begin
   // Arrange:
   // Act:
   // Assert:
-  TTest.Fail('Test not yet implemented');
+  TTest.Fail('Test not implemented yet.');
 end;
 
-procedure TTest_IUnicodeBuffer_Standard.getSize;
+procedure TTest_IBuffer_Standard.getSize;
 begin
   // Arrange:
   // Act:
   // Assert:
-  TTest.Fail('Test not yet implemented');
+  TTest.Fail('Test not implemented yet.');
 end;
 
-procedure TTest_IUnicodeBuffer_Standard.getByte;
+procedure TTest_IBuffer_Standard.getByte;
 begin
   // Arrange:
   // Act:
   // Assert:
-  TTest.Fail('Test not yet implemented');
+  TTest.Fail('Test not implemented yet.');
 end;
 
-procedure TTest_IUnicodeBuffer_Standard.setByte;
+procedure TTest_IBuffer_Standard.setByte;
 begin
   // Arrange:
   // Act:
   // Assert:
-  TTest.Fail('Test not yet implemented');
+  TTest.Fail('Test not implemented yet.');
 end;
 
-procedure TTest_IUnicodeBuffer_Standard.setSize;
+procedure TTest_IBuffer_Standard.setSize;
 begin
   // Arrange:
   // Act:
   // Assert:
-  TTest.Fail('Test not yet implemented');
+  TTest.Fail('Test not implemented yet.');
 end;
 
 initialization
-  TestSuite.RegisterTestCase(TTest_IUnicodeBuffer_Standard);
+  TestSuite.RegisterTestCase(TTest_IBuffer_Standard);
 
 end.
-
-

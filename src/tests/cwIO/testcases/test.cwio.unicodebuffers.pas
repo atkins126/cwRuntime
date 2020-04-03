@@ -26,24 +26,91 @@
   IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 *)
 {$endif}
-program test_cwIO;
+unit test.cwIO.UnicodeBuffers;
+{$ifdef fpc} {$mode delphiunicode} {$M+} {$endif}
+
+interface
 uses
   cwTest
-, cwTest.Standard
-, test.cwIO.Buffers
-, test.cwIO.Streams
-, test.cwIO.UnicodeBuffers
-, test.cwIO.UnicodeStreams
-, test.cwIO.CyclicBuffers
 ;
 
-var
-  R: nativeuint;
-
-begin
-  R := TestSuite.Run( 'cwIO', [TConsoleReport.Create] );
-  if ParamStr(1)='ide' then begin
-    Readln;
+type
+  TTest_IUnicodeBuffer_Standard = class(TTestCase)
+  private
+  published
+    procedure getAsString;
+    procedure setAsString;
+    procedure ReadBOM;
+    procedure WriteBOM;
+    procedure DetermineUnicodeFormat;
+    procedure WriteString;
+    procedure ReadString;
   end;
-  Halt(R);
+
+implementation
+uses
+  cwTest.Standard
+, cwIO
+, cwIO.Standard
+;
+
+procedure TTest_IUnicodeBuffer_Standard.getAsString;
+begin
+  // Arrange:
+  // Act:
+  // Assert:
+  TTest.Fail('Test not implemented yet.');
+end;
+
+procedure TTest_IUnicodeBuffer_Standard.setAsString;
+begin
+  // Arrange:
+  // Act:
+  // Assert:
+  TTest.Fail('Test not implemented yet.');
+end;
+
+procedure TTest_IUnicodeBuffer_Standard.ReadBOM;
+begin
+  // Arrange:
+  // Act:
+  // Assert:
+  TTest.Fail('Test not implemented yet.');
+end;
+
+procedure TTest_IUnicodeBuffer_Standard.WriteBOM;
+begin
+  // Arrange:
+  // Act:
+  // Assert:
+  TTest.Fail('Test not implemented yet.');
+end;
+
+procedure TTest_IUnicodeBuffer_Standard.DetermineUnicodeFormat;
+begin
+  // Arrange:
+  // Act:
+  // Assert:
+  TTest.Fail('Test not implemented yet.');
+end;
+
+procedure TTest_IUnicodeBuffer_Standard.WriteString;
+begin
+  // Arrange:
+  // Act:
+  // Assert:
+  TTest.Fail('Test not implemented yet.');
+end;
+
+procedure TTest_IUnicodeBuffer_Standard.ReadString;
+begin
+  // Arrange:
+  // Act:
+  // Assert:
+  TTest.Fail('Test not implemented yet.');
+end;
+
+initialization
+  TestSuite.RegisterTestCase(TTest_IUnicodeBuffer_Standard);
+
 end.

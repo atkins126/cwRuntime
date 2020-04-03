@@ -26,24 +26,92 @@
   IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 *)
 {$endif}
-program test_cwIO;
+unit test.cwio.unicodestreams;
+{$ifdef fpc} {$mode delphiunicode} {$M+} {$endif}
+
+interface
 uses
   cwTest
-, cwTest.Standard
-, test.cwIO.Buffers
-, test.cwIO.Streams
-, test.cwIO.UnicodeBuffers
-, test.cwIO.UnicodeStreams
-, test.cwIO.CyclicBuffers
 ;
 
-var
-  R: nativeuint;
-
-begin
-  R := TestSuite.Run( 'cwIO', [TConsoleReport.Create] );
-  if ParamStr(1)='ide' then begin
-    Readln;
+type
+  TTest_IUnicodeStream_Standard = class(TTestCase)
+  private
+  published
+    procedure ReadBOM;
+    procedure WriteBOM;
+    procedure DetermineUnicodeFormat;
+    procedure WriteChar;
+    procedure ReadChar;
+    procedure WriteString;
+    procedure ReadString;
   end;
-  Halt(R);
+
+implementation
+uses
+  cwTest.Standard
+, cwIO
+, cwIO.Standard
+;
+
+procedure TTest_IUnicodeStream_Standard.ReadBOM;
+begin
+  // Arrange:
+  // Act:
+  // Assert:
+  TTest.Fail('Test not implemented yet.');
+end;
+
+procedure TTest_IUnicodeStream_Standard.WriteBOM;
+begin
+  // Arrange:
+  // Act:
+  // Assert:
+  TTest.Fail('Test not implemented yet.');
+end;
+
+procedure TTest_IUnicodeStream_Standard.DetermineUnicodeFormat;
+begin
+  // Arrange:
+  // Act:
+  // Assert:
+  TTest.Fail('Test not implemented yet.');
+end;
+
+procedure TTest_IUnicodeStream_Standard.WriteChar;
+begin
+  // Arrange:
+  // Act:
+  // Assert:
+  TTest.Fail('Test not implemented yet.');
+end;
+
+procedure TTest_IUnicodeStream_Standard.ReadChar;
+begin
+  // Arrange:
+  // Act:
+  // Assert:
+  TTest.Fail('Test not implemented yet.');
+end;
+
+procedure TTest_IUnicodeStream_Standard.WriteString;
+begin
+  // Arrange:
+  // Act:
+  // Assert:
+  TTest.Fail('Test not implemented yet.');
+end;
+
+procedure TTest_IUnicodeStream_Standard.ReadString;
+begin
+  // Arrange:
+  // Act:
+  // Assert:
+  TTest.Fail('Test not implemented yet.');
+end;
+
+
+initialization
+  TestSuite.RegisterTestCase(TTest_IUnicodeStream_Standard);
+
 end.
