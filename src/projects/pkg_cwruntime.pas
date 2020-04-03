@@ -13,14 +13,24 @@ uses
   cwCollections.Standard, cwDynLib, cwDynLib.Standard, 
   cwCollections.Stack.Standard, cwCollections.StringList.Standard, 
   cwLog.Log.Binding, cwlog.log.dynamic, cwlog.log.static, 
-  cwLog.LogTarget.Console, cwLog.Standard, cwTest.TestCase.Console, 
-  cwtest.testreport.console, cwtest.testsuite.custom, cwTest.TestSuite.Delphi, 
-  cwTest.TestSuite.Fpc, cwUnicode.Codec.Standard, 
-  cwCollections.Dictionary.Standard, cwCollections.List.Standard, 
-  cwCollections.RingBuffer.Standard, cwIO.FileStream.Standard, 
-  cwio.memorystream.standard, cwIO.Stream.Custom, cwio.unicodestream.custom, 
-  cwIO.Buffer.Standard, cwIO.CyclicBuffer.Standard, cwIO, cwIO.Standard, 
-  cwRuntime.LogEntries;
+  cwLog.LogTarget.Console, cwTest.TestCase.Console, cwtest.testreport.console, 
+  cwtest.testsuite.custom, cwTest.TestSuite.Delphi, cwTest.TestSuite.Fpc, 
+  cwUnicode.Codec.Standard, cwCollections.Dictionary.Standard, 
+  cwCollections.List.Standard, cwCollections.RingBuffer.Standard, 
+  cwIO.FileStream.Standard, cwIO.MemoryStream.Standard, cwIO.Stream.Custom, 
+  cwIO.UnicodeStream.Custom, cwIO.Buffer.Standard, cwIO.CyclicBuffer.Standard, 
+  cwIO, cwIO.Standard, cwLog.Standard, cwRuntime.LogEntries, 
+  cwThreading.Standard, cwThreading, 
+  cwThreading.SignaledCriticalSection.Windows, 
+  cwThreading.ThreadedLoop.Executor, cwThreading.ThreadedLoop.Standard, 
+  cwThreading.threadmethod.posix, cwThreading.ThreadMethod.Windows, 
+  cwThreading.ThreadPool.Standard, cwThreading.ThreadSystem.Standard, 
+  cwthreading.messaging.internal, cwThreading.CriticalSection.posix, 
+  cwThreading.criticalsection.windows, cwThreading.MessageBus.Standard, 
+  cwThreading.messagechannel.standard, cwThreading.MessagePipe.Standard, 
+  cwThreading.SignaledCriticalSection.Posix, cwWin32.Advapi32, 
+  cwWin32.Constants, cwWin32.gdi32, cwWin32.Kernel32, cwWin32.Types, 
+  cwWin32.User32;
 
 implementation
 

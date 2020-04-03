@@ -1,4 +1,4 @@
-{$ifdef license}
+﻿{$ifdef license}
 (*
   Copyright 2020 ChapmanWorld LLC ( https://chapmanworld.com )
 
@@ -26,20 +26,63 @@
   IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 *)
 {$endif}
-unit cwRuntime.LogEntries;
-{$ifdef fpc} {$mode delphiunicode} {$endif}
+unit cwThreading.CriticalSection.Posix;
+{$ifdef fpc}{$mode delphiunicode}{$endif}
 
 interface
+{$ifndef MSWINDOWS}
+uses
+  unixtype
+, deThreading
+;
 
-resourcestring
-  le_StreamDoesNotSupportClear        = '{1FFC5715-B4A1-4E0A-8DB6-D3F6969AE372} Stream does not support the Clear() method.';
-  le_CannotEncodeUnknownUnicodeFormat = '{751F423E-FE14-4E9E-8708-D4560CCE39BF} Cannot encode to unicode format utfUnknown.';
-  le_FailedThreadTerminate            = '{9798567B-E753-47EE-A51D-EB3A0A01E11B} Thread (%index%) failed to terminate gracefully.';
-  le_OSAPIError                       = '{0155B3C1-F5AA-47A4-8C33-A606F57A9DC3} An Operating System error occurred on (%call%) value (%value%).';
-  le_DuplicateMessageChannel          = '{C038923C-B2D4-400C-977C-C890C1A1D873} Message channel name must be unique. (%channel%) is already in use.';
-  le_ThreadAlreadyStarted             = '{A2BD6971-AEB3-4696-A149-B04FA8BD1005} Thread is already started.';
+type
+  TPosixCriticalSection = class( TInterfacedObject, ICriticalSection )
+  private
+    fMutex: pthread_mutex_t;
+  private //- ICriticalSection -//
+    procedure Acquire;
+    procedure Release;
+  public
+    constructor Create; reintroduce;
+    destructor Destroy; override;
+  end;
 
+{$endif}
 implementation
+{$ifndef MSWINDOWS}
+uses
+  pthreads
+, BaseUnix
+, deLog
+, deLog.Standard
+, deRTL.LogEntries
+, deTypes
+;
 
+procedure TPosixCriticalSection.Acquire;
+begin
+  pthread_mutex_lock(@fMutex);
+end;
+
+constructor TPosixCriticalSection.Create;
+begin
+  inherited Create;
+  if pthread_mutex_init(@fMutex, nil)<>0 then begin
+    Log.Insert(le_OSAPIError,lsFatal,['pthread_mutex_init',errno.AsString]);
+  end;
+end;
+
+destructor TPosixCriticalSection.Destroy;
+begin
+  pthread_mutex_destroy(@fMutex);
+end;
+
+procedure TPosixCriticalSection.Release;
+begin
+  pthread_mutex_unlock(@fMutex)
+end;
+
+{$endif}
 end.
 

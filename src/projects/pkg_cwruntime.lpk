@@ -133,35 +133,35 @@
       </Item>
       <Item>
         <Filename Value="..\main\implementation\cwio.filestream.standard.pas"/>
-        <UnitName Value="cwio.filestream.standard"/>
+        <UnitName Value="cwIO.FileStream.Standard"/>
       </Item>
       <Item>
         <Filename Value="..\main\implementation\cwio.memorystream.standard.pas"/>
-        <UnitName Value="cwio.memorystream.standard"/>
+        <UnitName Value="cwIO.MemoryStream.Standard"/>
       </Item>
       <Item>
         <Filename Value="..\main\implementation\cwio.stream.custom.pas"/>
-        <UnitName Value="cwio.stream.custom"/>
+        <UnitName Value="cwIO.Stream.Custom"/>
       </Item>
       <Item>
         <Filename Value="..\main\implementation\cwio.unicodestream.custom.pas"/>
-        <UnitName Value="cwio.unicodestream.custom"/>
+        <UnitName Value="cwIO.UnicodeStream.Custom"/>
       </Item>
       <Item>
         <Filename Value="..\main\implementation\cwio.buffer.standard.pas"/>
-        <UnitName Value="cwio.buffer.standard"/>
+        <UnitName Value="cwIO.Buffer.Standard"/>
       </Item>
       <Item>
         <Filename Value="..\main\implementation\cwio.cyclicbuffer.standard.pas"/>
-        <UnitName Value="cwio.cyclicbuffer.standard"/>
+        <UnitName Value="cwIO.CyclicBuffer.Standard"/>
       </Item>
       <Item>
         <Filename Value="..\main\api\cwio.pas"/>
-        <UnitName Value="cwio"/>
+        <UnitName Value="cwIO"/>
       </Item>
       <Item>
         <Filename Value="..\main\api\cwio.standard.pas"/>
-        <UnitName Value="cwio.standard"/>
+        <UnitName Value="cwIO.Standard"/>
       </Item>
       <Item>
         <Filename Value="..\main\api\cwlog.standard.pas"/>
@@ -169,7 +169,95 @@
       </Item>
       <Item>
         <Filename Value="..\main\implementation\cwruntime.logentries.pas"/>
-        <UnitName Value="cwruntime.logentries"/>
+        <UnitName Value="cwRuntime.LogEntries"/>
+      </Item>
+      <Item>
+        <Filename Value="..\main\api\cwthreading.standard.pas"/>
+        <UnitName Value="cwThreading.Standard"/>
+      </Item>
+      <Item>
+        <Filename Value="..\main\api\cwthreading.pas"/>
+        <UnitName Value="cwThreading"/>
+      </Item>
+      <Item>
+        <Filename Value="..\main\implementation\cwthreading.signaledcriticalsection.windows.pas"/>
+        <UnitName Value="cwThreading.SignaledCriticalSection.Windows"/>
+      </Item>
+      <Item>
+        <Filename Value="..\main\implementation\cwthreading.threadedloop.executor.pas"/>
+        <UnitName Value="cwThreading.ThreadedLoop.Executor"/>
+      </Item>
+      <Item>
+        <Filename Value="..\main\implementation\cwthreading.threadedloop.standard.pas"/>
+        <UnitName Value="cwThreading.ThreadedLoop.Standard"/>
+      </Item>
+      <Item>
+        <Filename Value="..\main\implementation\cwthreading.threadmethod.posix.pas"/>
+        <UnitName Value="cwThreading.threadmethod.posix"/>
+      </Item>
+      <Item>
+        <Filename Value="..\main\implementation\cwthreading.threadmethod.windows.pas"/>
+        <UnitName Value="cwThreading.ThreadMethod.Windows"/>
+      </Item>
+      <Item>
+        <Filename Value="..\main\implementation\cwthreading.threadpool.standard.pas"/>
+        <UnitName Value="cwThreading.ThreadPool.Standard"/>
+      </Item>
+      <Item>
+        <Filename Value="..\main\implementation\cwthreading.threadsystem.standard.pas"/>
+        <UnitName Value="cwThreading.ThreadSystem.Standard"/>
+      </Item>
+      <Item>
+        <Filename Value="..\main\implementation\cwthreading.messaging.internal.pas"/>
+        <UnitName Value="cwthreading.messaging.internal"/>
+      </Item>
+      <Item>
+        <Filename Value="..\main\implementation\cwthreading.criticalsection.posix.pas"/>
+        <UnitName Value="cwThreading.CriticalSection.posix"/>
+      </Item>
+      <Item>
+        <Filename Value="..\main\implementation\cwthreading.criticalsection.windows.pas"/>
+        <UnitName Value="cwThreading.criticalsection.windows"/>
+      </Item>
+      <Item>
+        <Filename Value="..\main\implementation\cwthreading.messagebus.standard.pas"/>
+        <UnitName Value="cwThreading.MessageBus.Standard"/>
+      </Item>
+      <Item>
+        <Filename Value="..\main\implementation\cwthreading.messagechannel.standard.pas"/>
+        <UnitName Value="cwThreading.messagechannel.standard"/>
+      </Item>
+      <Item>
+        <Filename Value="..\main\implementation\cwthreading.messagepipe.standard.pas"/>
+        <UnitName Value="cwThreading.MessagePipe.Standard"/>
+      </Item>
+      <Item>
+        <Filename Value="..\main\implementation\cwthreading.signaledcriticalsection.posix.pas"/>
+        <UnitName Value="cwThreading.SignaledCriticalSection.Posix"/>
+      </Item>
+      <Item>
+        <Filename Value="..\main\implementation\cwwin32.advapi32.pas"/>
+        <UnitName Value="cwwin32.advapi32"/>
+      </Item>
+      <Item>
+        <Filename Value="..\main\implementation\cwwin32.constants.pas"/>
+        <UnitName Value="cwwin32.constants"/>
+      </Item>
+      <Item>
+        <Filename Value="..\main\implementation\cwwin32.gdi32.pas"/>
+        <UnitName Value="cwwin32.gdi32"/>
+      </Item>
+      <Item>
+        <Filename Value="..\main\implementation\cwwin32.kernel32.pas"/>
+        <UnitName Value="cwwin32.kernel32"/>
+      </Item>
+      <Item>
+        <Filename Value="..\main\implementation\cwwin32.types.pas"/>
+        <UnitName Value="cwwin32.types"/>
+      </Item>
+      <Item>
+        <Filename Value="..\main\implementation\cwwin32.user32.pas"/>
+        <UnitName Value="cwwin32.user32"/>
       </Item>
     </Files>
     <RequiredPkgs>
