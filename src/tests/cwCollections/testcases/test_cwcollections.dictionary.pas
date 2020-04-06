@@ -84,21 +84,21 @@ procedure TTest_cwCollectionsDictionary.ForEach;
 var
   CUT: IDictionary<string,string>;
 begin
-  CUT := TDictionary<string,string>.Create(@TCompare.CompareStrings,2,FALSE,FALSE);
+  CUT := TDictionary<string,string>.Create(TCompare.CompareStrings,2,FALSE,FALSE);
   internal_ForEach(CUT);
-  CUT := TDictionary<string,string>.Create(@TCompare.CompareStrings,2,FALSE,TRUE);
+  CUT := TDictionary<string,string>.Create(TCompare.CompareStrings,2,FALSE,TRUE);
   internal_ForEach(CUT);
-  CUT := TDictionary<string,string>.Create(@TCompare.CompareStrings,2,TRUE,FALSE);
+  CUT := TDictionary<string,string>.Create(TCompare.CompareStrings,2,TRUE,FALSE);
   internal_ForEach(CUT);
-  CUT := TDictionary<string,string>.Create(@TCompare.CompareStrings,2,TRUE,TRUE);
+  CUT := TDictionary<string,string>.Create(TCompare.CompareStrings,2,TRUE,TRUE);
   internal_ForEach(CUT);
-  CUT := TDictionary<string,string>.Create(@TCompare.CompareStrings,32,FALSE,FALSE);
+  CUT := TDictionary<string,string>.Create(TCompare.CompareStrings,32,FALSE,FALSE);
   internal_ForEach(CUT);
-  CUT := TDictionary<string,string>.Create(@TCompare.CompareStrings,32,FALSE,TRUE);
+  CUT := TDictionary<string,string>.Create(TCompare.CompareStrings,32,FALSE,TRUE);
   internal_ForEach(CUT);
-  CUT := TDictionary<string,string>.Create(@TCompare.CompareStrings,32,TRUE,FALSE);
+  CUT := TDictionary<string,string>.Create(TCompare.CompareStrings,32,TRUE,FALSE);
   internal_ForEach(CUT);
-  CUT := TDictionary<string,string>.Create(@TCompare.CompareStrings,32,TRUE,TRUE);
+  CUT := TDictionary<string,string>.Create(TCompare.CompareStrings,32,TRUE,TRUE);
   internal_ForEach(CUT);
 end;
 
@@ -238,21 +238,21 @@ procedure TTest_cwCollectionsDictionary.getCount;
 var
   CUT: IDictionary<string,uint32>;
 begin
-  CUT := TDictionary<string,uint32>.Create(@TCompare.CompareStrings,2,FALSE,FALSE);
+  CUT := TDictionary<string,uint32>.Create(TCompare.CompareStrings,2,FALSE,FALSE);
   internal_getCount(CUT);
-  CUT := TDictionary<string,uint32>.Create(@TCompare.CompareStrings,2,FALSE,TRUE);
+  CUT := TDictionary<string,uint32>.Create(TCompare.CompareStrings,2,FALSE,TRUE);
   internal_getCount(CUT);
-  CUT := TDictionary<string,uint32>.Create(@TCompare.CompareStrings,2,TRUE,FALSE);
+  CUT := TDictionary<string,uint32>.Create(TCompare.CompareStrings,2,TRUE,FALSE);
   internal_getCount(CUT);
-  CUT := TDictionary<string,uint32>.Create(@TCompare.CompareStrings,2,TRUE,TRUE);
+  CUT := TDictionary<string,uint32>.Create(TCompare.CompareStrings,2,TRUE,TRUE);
   internal_getCount(CUT);
-  CUT := TDictionary<string,uint32>.Create(@TCompare.CompareStrings,32,FALSE,FALSE);
+  CUT := TDictionary<string,uint32>.Create(TCompare.CompareStrings,32,FALSE,FALSE);
   internal_getCount(CUT);
-  CUT := TDictionary<string,uint32>.Create(@TCompare.CompareStrings,32,FALSE,TRUE);
+  CUT := TDictionary<string,uint32>.Create(TCompare.CompareStrings,32,FALSE,TRUE);
   internal_getCount(CUT);
-  CUT := TDictionary<string,uint32>.Create(@TCompare.CompareStrings,32,TRUE,FALSE);
+  CUT := TDictionary<string,uint32>.Create(TCompare.CompareStrings,32,TRUE,FALSE);
   internal_getCount(CUT);
-  CUT := TDictionary<string,uint32>.Create(@TCompare.CompareStrings,32,TRUE,TRUE);
+  CUT := TDictionary<string,uint32>.Create(TCompare.CompareStrings,32,TRUE,TRUE);
   internal_getCount(CUT);
 end;
 
@@ -260,21 +260,21 @@ procedure TTest_cwCollectionsDictionary.getKeyByIndex;
 var
   CUT: IDictionary<string,uint32>;
 begin
-  CUT := TDictionary<string,uint32>.Create(@TCompare.CompareStrings,2,FALSE,FALSE);
+  CUT := TDictionary<string,uint32>.Create(TCompare.CompareStrings,2,FALSE,FALSE);
   internal_getKeyByIndex(CUT);
-  CUT := TDictionary<string,uint32>.Create(@TCompare.CompareStrings,2,FALSE,TRUE);
+  CUT := TDictionary<string,uint32>.Create(TCompare.CompareStrings,2,FALSE,TRUE);
   internal_getKeyByIndex(CUT);
-  CUT := TDictionary<string,uint32>.Create(@TCompare.CompareStrings,2,TRUE,FALSE);
+  CUT := TDictionary<string,uint32>.Create(TCompare.CompareStrings,2,TRUE,FALSE);
   internal_getKeyByIndex(CUT);
-  CUT := TDictionary<string,uint32>.Create(@TCompare.CompareStrings,2,TRUE,TRUE);
+  CUT := TDictionary<string,uint32>.Create(TCompare.CompareStrings,2,TRUE,TRUE);
   internal_getKeyByIndex(CUT);
-  CUT := TDictionary<string,uint32>.Create(@TCompare.CompareStrings,32,FALSE,FALSE);
+  CUT := TDictionary<string,uint32>.Create(TCompare.CompareStrings,32,FALSE,FALSE);
   internal_getKeyByIndex(CUT);
-  CUT := TDictionary<string,uint32>.Create(@TCompare.CompareStrings,32,FALSE,TRUE);
+  CUT := TDictionary<string,uint32>.Create(TCompare.CompareStrings,32,FALSE,TRUE);
   internal_getKeyByIndex(CUT);
-  CUT := TDictionary<string,uint32>.Create(@TCompare.CompareStrings,32,TRUE,FALSE);
+  CUT := TDictionary<string,uint32>.Create(TCompare.CompareStrings,32,TRUE,FALSE);
   internal_getKeyByIndex(CUT);
-  CUT := TDictionary<string,uint32>.Create(@TCompare.CompareStrings,32,TRUE,TRUE);
+  CUT := TDictionary<string,uint32>.Create(TCompare.CompareStrings,32,TRUE,TRUE);
   internal_getKeyByIndex(CUT);
 end;
 
@@ -282,21 +282,21 @@ procedure TTest_cwCollectionsDictionary.getValueByIndex;
 var
   CUT: IDictionary<string,uint32>;
 begin
-  CUT := TDictionary<string,uint32>.Create(@TCompare.CompareStrings,2,FALSE,FALSE);
+  CUT := TDictionary<string,uint32>.Create(TCompare.CompareStrings,2,FALSE,FALSE);
   internal_getValueByIndex(CUT);
-  CUT := TDictionary<string,uint32>.Create(@TCompare.CompareStrings,2,FALSE,TRUE);
+  CUT := TDictionary<string,uint32>.Create(TCompare.CompareStrings,2,FALSE,TRUE);
   internal_getValueByIndex(CUT);
-  CUT := TDictionary<string,uint32>.Create(@TCompare.CompareStrings,2,TRUE,FALSE);
+  CUT := TDictionary<string,uint32>.Create(TCompare.CompareStrings,2,TRUE,FALSE);
   internal_getValueByIndex(CUT);
-  CUT := TDictionary<string,uint32>.Create(@TCompare.CompareStrings,2,TRUE,TRUE);
+  CUT := TDictionary<string,uint32>.Create(TCompare.CompareStrings,2,TRUE,TRUE);
   internal_getValueByIndex(CUT);
-  CUT := TDictionary<string,uint32>.Create(@TCompare.CompareStrings,32,FALSE,FALSE);
+  CUT := TDictionary<string,uint32>.Create(TCompare.CompareStrings,32,FALSE,FALSE);
   internal_getValueByIndex(CUT);
-  CUT := TDictionary<string,uint32>.Create(@TCompare.CompareStrings,32,FALSE,TRUE);
+  CUT := TDictionary<string,uint32>.Create(TCompare.CompareStrings,32,FALSE,TRUE);
   internal_getValueByIndex(CUT);
-  CUT := TDictionary<string,uint32>.Create(@TCompare.CompareStrings,32,TRUE,FALSE);
+  CUT := TDictionary<string,uint32>.Create(TCompare.CompareStrings,32,TRUE,FALSE);
   internal_getValueByIndex(CUT);
-  CUT := TDictionary<string,uint32>.Create(@TCompare.CompareStrings,32,TRUE,TRUE);
+  CUT := TDictionary<string,uint32>.Create(TCompare.CompareStrings,32,TRUE,TRUE);
   internal_getValueByIndex(CUT);
 end;
 
@@ -304,21 +304,21 @@ procedure TTest_cwCollectionsDictionary.getKeyExists;
 var
   CUT: IDictionary<string,uint32>;
 begin
-  CUT := TDictionary<string,uint32>.Create(@TCompare.CompareStrings,2,FALSE,FALSE);
+  CUT := TDictionary<string,uint32>.Create(TCompare.CompareStrings,2,FALSE,FALSE);
   internal_getKeyExists(CUT);
-  CUT := TDictionary<string,uint32>.Create(@TCompare.CompareStrings,2,FALSE,TRUE);
+  CUT := TDictionary<string,uint32>.Create(TCompare.CompareStrings,2,FALSE,TRUE);
   internal_getKeyExists(CUT);
-  CUT := TDictionary<string,uint32>.Create(@TCompare.CompareStrings,2,TRUE,FALSE);
+  CUT := TDictionary<string,uint32>.Create(TCompare.CompareStrings,2,TRUE,FALSE);
   internal_getKeyExists(CUT);
-  CUT := TDictionary<string,uint32>.Create(@TCompare.CompareStrings,2,TRUE,TRUE);
+  CUT := TDictionary<string,uint32>.Create(TCompare.CompareStrings,2,TRUE,TRUE);
   internal_getKeyExists(CUT);
-  CUT := TDictionary<string,uint32>.Create(@TCompare.CompareStrings,32,FALSE,FALSE);
+  CUT := TDictionary<string,uint32>.Create(TCompare.CompareStrings,32,FALSE,FALSE);
   internal_getKeyExists(CUT);
-  CUT := TDictionary<string,uint32>.Create(@TCompare.CompareStrings,32,FALSE,TRUE);
+  CUT := TDictionary<string,uint32>.Create(TCompare.CompareStrings,32,FALSE,TRUE);
   internal_getKeyExists(CUT);
-  CUT := TDictionary<string,uint32>.Create(@TCompare.CompareStrings,32,TRUE,FALSE);
+  CUT := TDictionary<string,uint32>.Create(TCompare.CompareStrings,32,TRUE,FALSE);
   internal_getKeyExists(CUT);
-  CUT := TDictionary<string,uint32>.Create(@TCompare.CompareStrings,32,TRUE,TRUE);
+  CUT := TDictionary<string,uint32>.Create(TCompare.CompareStrings,32,TRUE,TRUE);
   internal_getKeyExists(CUT);
 end;
 
@@ -326,21 +326,21 @@ procedure TTest_cwCollectionsDictionary.getValueByKey;
 var
   CUT: IDictionary<string,uint32>;
 begin
-  CUT := TDictionary<string,uint32>.Create(@TCompare.CompareStrings,2,FALSE,FALSE);
+  CUT := TDictionary<string,uint32>.Create(TCompare.CompareStrings,2,FALSE,FALSE);
   internal_getValueByKey(CUT);
-  CUT := TDictionary<string,uint32>.Create(@TCompare.CompareStrings,2,FALSE,TRUE);
+  CUT := TDictionary<string,uint32>.Create(TCompare.CompareStrings,2,FALSE,TRUE);
   internal_getValueByKey(CUT);
-  CUT := TDictionary<string,uint32>.Create(@TCompare.CompareStrings,2,TRUE,FALSE);
+  CUT := TDictionary<string,uint32>.Create(TCompare.CompareStrings,2,TRUE,FALSE);
   internal_getValueByKey(CUT);
-  CUT := TDictionary<string,uint32>.Create(@TCompare.CompareStrings,2,TRUE,TRUE);
+  CUT := TDictionary<string,uint32>.Create(TCompare.CompareStrings,2,TRUE,TRUE);
   internal_getValueByKey(CUT);
-  CUT := TDictionary<string,uint32>.Create(@TCompare.CompareStrings,32,FALSE,FALSE);
+  CUT := TDictionary<string,uint32>.Create(TCompare.CompareStrings,32,FALSE,FALSE);
   internal_getValueByKey(CUT);
-  CUT := TDictionary<string,uint32>.Create(@TCompare.CompareStrings,32,FALSE,TRUE);
+  CUT := TDictionary<string,uint32>.Create(TCompare.CompareStrings,32,FALSE,TRUE);
   internal_getValueByKey(CUT);
-  CUT := TDictionary<string,uint32>.Create(@TCompare.CompareStrings,32,TRUE,FALSE);
+  CUT := TDictionary<string,uint32>.Create(TCompare.CompareStrings,32,TRUE,FALSE);
   internal_getValueByKey(CUT);
-  CUT := TDictionary<string,uint32>.Create(@TCompare.CompareStrings,32,TRUE,TRUE);
+  CUT := TDictionary<string,uint32>.Create(TCompare.CompareStrings,32,TRUE,TRUE);
   internal_getValueByKey(CUT);
 end;
 
@@ -348,21 +348,21 @@ procedure TTest_cwCollectionsDictionary.setValueByKey;
 var
   CUT: IDictionary<string,uint32>;
 begin
-  CUT := TDictionary<string,uint32>.Create(@TCompare.CompareStrings,2,FALSE,FALSE);
+  CUT := TDictionary<string,uint32>.Create(TCompare.CompareStrings,2,FALSE,FALSE);
   internal_setValueByKey(CUT);
-  CUT := TDictionary<string,uint32>.Create(@TCompare.CompareStrings,2,FALSE,TRUE);
+  CUT := TDictionary<string,uint32>.Create(TCompare.CompareStrings,2,FALSE,TRUE);
   internal_setValueByKey(CUT);
-  CUT := TDictionary<string,uint32>.Create(@TCompare.CompareStrings,2,TRUE,FALSE);
+  CUT := TDictionary<string,uint32>.Create(TCompare.CompareStrings,2,TRUE,FALSE);
   internal_setValueByKey(CUT);
-  CUT := TDictionary<string,uint32>.Create(@TCompare.CompareStrings,2,TRUE,TRUE);
+  CUT := TDictionary<string,uint32>.Create(TCompare.CompareStrings,2,TRUE,TRUE);
   internal_setValueByKey(CUT);
-  CUT := TDictionary<string,uint32>.Create(@TCompare.CompareStrings,32,FALSE,FALSE);
+  CUT := TDictionary<string,uint32>.Create(TCompare.CompareStrings,32,FALSE,FALSE);
   internal_setValueByKey(CUT);
-  CUT := TDictionary<string,uint32>.Create(@TCompare.CompareStrings,32,FALSE,TRUE);
+  CUT := TDictionary<string,uint32>.Create(TCompare.CompareStrings,32,FALSE,TRUE);
   internal_setValueByKey(CUT);
-  CUT := TDictionary<string,uint32>.Create(@TCompare.CompareStrings,32,TRUE,FALSE);
+  CUT := TDictionary<string,uint32>.Create(TCompare.CompareStrings,32,TRUE,FALSE);
   internal_setValueByKey(CUT);
-  CUT := TDictionary<string,uint32>.Create(@TCompare.CompareStrings,32,TRUE,TRUE);
+  CUT := TDictionary<string,uint32>.Create(TCompare.CompareStrings,32,TRUE,TRUE);
   internal_setValueByKey(CUT);
 end;
 
@@ -370,21 +370,21 @@ procedure TTest_cwCollectionsDictionary.removeByIndex;
 var
   CUT: IDictionary<string,uint32>;
 begin
-  CUT := TDictionary<string,uint32>.Create(@TCompare.CompareStrings,2,FALSE,FALSE);
+  CUT := TDictionary<string,uint32>.Create(TCompare.CompareStrings,2,FALSE,FALSE);
   internal_removeByIndex(CUT);
-  CUT := TDictionary<string,uint32>.Create(@TCompare.CompareStrings,2,FALSE,TRUE);
+  CUT := TDictionary<string,uint32>.Create(TCompare.CompareStrings,2,FALSE,TRUE);
   internal_removeByIndex(CUT);
-  CUT := TDictionary<string,uint32>.Create(@TCompare.CompareStrings,2,TRUE,FALSE);
+  CUT := TDictionary<string,uint32>.Create(TCompare.CompareStrings,2,TRUE,FALSE);
   internal_removeByIndex(CUT);
-  CUT := TDictionary<string,uint32>.Create(@TCompare.CompareStrings,2,TRUE,TRUE);
+  CUT := TDictionary<string,uint32>.Create(TCompare.CompareStrings,2,TRUE,TRUE);
   internal_removeByIndex(CUT);
-  CUT := TDictionary<string,uint32>.Create(@TCompare.CompareStrings,32,FALSE,FALSE);
+  CUT := TDictionary<string,uint32>.Create(TCompare.CompareStrings,32,FALSE,FALSE);
   internal_removeByIndex(CUT);
-  CUT := TDictionary<string,uint32>.Create(@TCompare.CompareStrings,32,FALSE,TRUE);
+  CUT := TDictionary<string,uint32>.Create(TCompare.CompareStrings,32,FALSE,TRUE);
   internal_removeByIndex(CUT);
-  CUT := TDictionary<string,uint32>.Create(@TCompare.CompareStrings,32,TRUE,FALSE);
+  CUT := TDictionary<string,uint32>.Create(TCompare.CompareStrings,32,TRUE,FALSE);
   internal_removeByIndex(CUT);
-  CUT := TDictionary<string,uint32>.Create(@TCompare.CompareStrings,32,TRUE,TRUE);
+  CUT := TDictionary<string,uint32>.Create(TCompare.CompareStrings,32,TRUE,TRUE);
   internal_removeByIndex(CUT);
 end;
 
@@ -392,21 +392,21 @@ procedure TTest_cwCollectionsDictionary.clear;
 var
   CUT: IDictionary<string,uint32>;
 begin
-  CUT := TDictionary<string,uint32>.Create(@TCompare.CompareStrings,2,FALSE,FALSE);
+  CUT := TDictionary<string,uint32>.Create(TCompare.CompareStrings,2,FALSE,FALSE);
   internal_clear(CUT);
-  CUT := TDictionary<string,uint32>.Create(@TCompare.CompareStrings,2,FALSE,TRUE);
+  CUT := TDictionary<string,uint32>.Create(TCompare.CompareStrings,2,FALSE,TRUE);
   internal_clear(CUT);
-  CUT := TDictionary<string,uint32>.Create(@TCompare.CompareStrings,2,TRUE,FALSE);
+  CUT := TDictionary<string,uint32>.Create(TCompare.CompareStrings,2,TRUE,FALSE);
   internal_clear(CUT);
-  CUT := TDictionary<string,uint32>.Create(@TCompare.CompareStrings,2,TRUE,TRUE);
+  CUT := TDictionary<string,uint32>.Create(TCompare.CompareStrings,2,TRUE,TRUE);
   internal_clear(CUT);
-  CUT := TDictionary<string,uint32>.Create(@TCompare.CompareStrings,32,FALSE,FALSE);
+  CUT := TDictionary<string,uint32>.Create(TCompare.CompareStrings,32,FALSE,FALSE);
   internal_clear(CUT);
-  CUT := TDictionary<string,uint32>.Create(@TCompare.CompareStrings,32,FALSE,TRUE);
+  CUT := TDictionary<string,uint32>.Create(TCompare.CompareStrings,32,FALSE,TRUE);
   internal_clear(CUT);
-  CUT := TDictionary<string,uint32>.Create(@TCompare.CompareStrings,32,TRUE,FALSE);
+  CUT := TDictionary<string,uint32>.Create(TCompare.CompareStrings,32,TRUE,FALSE);
   internal_clear(CUT);
-  CUT := TDictionary<string,uint32>.Create(@TCompare.CompareStrings,32,TRUE,TRUE);
+  CUT := TDictionary<string,uint32>.Create(TCompare.CompareStrings,32,TRUE,TRUE);
   internal_clear(CUT);
 end;
 
