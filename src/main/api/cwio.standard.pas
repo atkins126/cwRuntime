@@ -53,7 +53,7 @@ type
   ///    Factory record to create instances of ICyclicBuffer in memory.
   ///  </summary>
   TCyclicBuffer = record
-    class function Create( const Size: uint64 = 0 ): ICyclicBuffer; static;
+    class function Create( const Size: nativeuint = 0 ): ICyclicBuffer; static;
   end;
 
   ///  <summary>
@@ -77,7 +77,7 @@ begin
   Result := cwIO.FileStream.Standard.TFileStream.Create( Filepath, ReadOnly );
 end;
 
-class function TCyclicBuffer.Create(const Size: uint64): ICyclicBuffer;
+class function TCyclicBuffer.Create(const Size: nativeuint = 0): ICyclicBuffer;
 begin
   Result := cwIO.CyclicBuffer.Standard.TCyclicBuffer.Create( Size );
 end;
