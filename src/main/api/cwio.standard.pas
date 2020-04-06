@@ -60,7 +60,7 @@ type
   ///    Factory record to create instances of IBuffer / IUnicodeBuffer in memory.
   ///  </summary>
   TBuffer = record
-    class function Create( const aSize: uint64 = 0; const Align16: boolean = FALSE ): IUnicodeBuffer; static;
+    class function Create( const aSize: nativeuint = 0; const Align16: boolean = FALSE ): IUnicodeBuffer; static;
   end;
 
 
@@ -82,7 +82,7 @@ begin
   Result := cwIO.CyclicBuffer.Standard.TCyclicBuffer.Create( Size );
 end;
 
-class function TBuffer.Create(const aSize: uint64; const Align16: boolean = FALSE ): IUnicodeBuffer;
+class function TBuffer.Create(const aSize: nativeuint = 0; const Align16: boolean = FALSE ): IUnicodeBuffer;
 begin
   Result := cwIO.Buffer.Standard.TBuffer.Create( aSize, Align16 );
 end;
