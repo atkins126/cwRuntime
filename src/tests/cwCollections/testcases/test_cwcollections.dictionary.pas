@@ -84,21 +84,21 @@ procedure TTest_cwCollectionsDictionary.ForEach;
 var
   CUT: IDictionary<string,string>;
 begin
-  CUT := TDictionary<string,string>.Create(TCompare.CompareStrings,2,FALSE,FALSE);
+  CUT := TDictionary<string,string>.Create({$ifdef fpfc}@{$endif}TCompare.CompareStrings,2,FALSE,FALSE);
   internal_ForEach(CUT);
-  CUT := TDictionary<string,string>.Create(TCompare.CompareStrings,2,FALSE,TRUE);
+  CUT := TDictionary<string,string>.Create({$ifdef fpfc}@{$endif}TCompare.CompareStrings,2,FALSE,TRUE);
   internal_ForEach(CUT);
-  CUT := TDictionary<string,string>.Create(TCompare.CompareStrings,2,TRUE,FALSE);
+  CUT := TDictionary<string,string>.Create({$ifdef fpfc}@{$endif}TCompare.CompareStrings,2,TRUE,FALSE);
   internal_ForEach(CUT);
-  CUT := TDictionary<string,string>.Create(TCompare.CompareStrings,2,TRUE,TRUE);
+  CUT := TDictionary<string,string>.Create({$ifdef fpfc}@{$endif}TCompare.CompareStrings,2,TRUE,TRUE);
   internal_ForEach(CUT);
-  CUT := TDictionary<string,string>.Create(TCompare.CompareStrings,32,FALSE,FALSE);
+  CUT := TDictionary<string,string>.Create({$ifdef fpfc}@{$endif}TCompare.CompareStrings,32,FALSE,FALSE);
   internal_ForEach(CUT);
-  CUT := TDictionary<string,string>.Create(TCompare.CompareStrings,32,FALSE,TRUE);
+  CUT := TDictionary<string,string>.Create({$ifdef fpfc}@{$endif}TCompare.CompareStrings,32,FALSE,TRUE);
   internal_ForEach(CUT);
-  CUT := TDictionary<string,string>.Create(TCompare.CompareStrings,32,TRUE,FALSE);
+  CUT := TDictionary<string,string>.Create({$ifdef fpfc}@{$endif}TCompare.CompareStrings,32,TRUE,FALSE);
   internal_ForEach(CUT);
-  CUT := TDictionary<string,string>.Create(TCompare.CompareStrings,32,TRUE,TRUE);
+  CUT := TDictionary<string,string>.Create({$ifdef fpfc}@{$endif}TCompare.CompareStrings,32,TRUE,TRUE);
   internal_ForEach(CUT);
 end;
 

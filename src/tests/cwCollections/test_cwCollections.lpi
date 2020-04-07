@@ -26,7 +26,7 @@
     </RunParams>
     <Units>
       <Unit>
-        <Filename Value="test_cwCollections.lpr"/>
+        <Filename Value="test_cwCollections.dpr"/>
         <IsPartOfProject Value="True"/>
       </Unit>
       <Unit>
