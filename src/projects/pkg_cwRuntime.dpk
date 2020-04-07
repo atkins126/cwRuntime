@@ -1,7 +1,6 @@
-package pkg_cwRuntime;
+package pkg_cwRuntime_Rio;
 
 {$R *.res}
-{$R *.otares}
 {$IFDEF IMPLICITBUILDING This IFDEF should not be used by users}
 {$ALIGN 8}
 {$ASSERTIONS ON}
@@ -26,11 +25,74 @@ package pkg_cwRuntime;
 {$IMAGEBASE $400000}
 {$DEFINE DEBUG}
 {$ENDIF IMPLICITBUILDING}
-{$DESCRIPTION 'Compiler agnostic runtime library for Delphi and Freepascal.'}
-{$DESIGNONLY}
 {$IMPLICITBUILD ON}
 
 requires
   rtl;
+
+contains
+  cwio.standard in '..\main\api\cwio.standard.pas',
+  cwlog.console in '..\main\api\cwlog.console.pas',
+  cwlog.dynamic in '..\main\api\cwlog.dynamic.pas',
+  cwlog in '..\main\api\cwlog.pas',
+  cwlog.standard in '..\main\api\cwlog.standard.pas',
+  cwlog.static in '..\main\api\cwlog.static.pas',
+  cwlog.targets in '..\main\api\cwlog.targets.pas',
+  cwtest in '..\main\api\cwtest.pas',
+  cwtest.standard in '..\main\api\cwtest.standard.pas',
+  cwthreading in '..\main\api\cwthreading.pas',
+  cwthreading.standard in '..\main\api\cwthreading.standard.pas',
+  cwtypes in '..\main\api\cwtypes.pas',
+  cwunicode in '..\main\api\cwunicode.pas',
+  cwunicode.standard in '..\main\api\cwunicode.standard.pas',
+  cwvectors in '..\main\api\cwvectors.pas',
+  cwcollections in '..\main\api\cwcollections.pas',
+  cwcollections.standard in '..\main\api\cwcollections.standard.pas',
+  cwdynlib in '..\main\api\cwdynlib.pas',
+  cwdynlib.standard in '..\main\api\cwdynlib.standard.pas',
+  cwio in '..\main\api\cwio.pas',
+  cwtest.testreport.console in '..\main\implementation\cwtest.testreport.console.pas',
+  cwtest.testsuite.custom in '..\main\implementation\cwtest.testsuite.custom.pas',
+  cwtest.testsuite.delphi in '..\main\implementation\cwtest.testsuite.delphi.pas',
+  cwtest.testsuite.fpc in '..\main\implementation\cwtest.testsuite.fpc.pas',
+  cwthreading.criticalsection.posix in '..\main\implementation\cwthreading.criticalsection.posix.pas',
+  cwthreading.criticalsection.windows in '..\main\implementation\cwthreading.criticalsection.windows.pas',
+  cwthreading.messagebus.standard in '..\main\implementation\cwthreading.messagebus.standard.pas',
+  cwthreading.messagechannel.standard in '..\main\implementation\cwthreading.messagechannel.standard.pas',
+  cwthreading.messagepipe.standard in '..\main\implementation\cwthreading.messagepipe.standard.pas',
+  cwthreading.messaging.internal in '..\main\implementation\cwthreading.messaging.internal.pas',
+  cwthreading.signaledcriticalsection.posix in '..\main\implementation\cwthreading.signaledcriticalsection.posix.pas',
+  cwthreading.signaledcriticalsection.windows in '..\main\implementation\cwthreading.signaledcriticalsection.windows.pas',
+  cwthreading.threadedloop.executor in '..\main\implementation\cwthreading.threadedloop.executor.pas',
+  cwthreading.threadedloop.standard in '..\main\implementation\cwthreading.threadedloop.standard.pas',
+  cwthreading.threadmethod.posix in '..\main\implementation\cwthreading.threadmethod.posix.pas',
+  cwthreading.threadmethod.windows in '..\main\implementation\cwthreading.threadmethod.windows.pas',
+  cwthreading.threadpool.standard in '..\main\implementation\cwthreading.threadpool.standard.pas',
+  cwthreading.threadsystem.standard in '..\main\implementation\cwthreading.threadsystem.standard.pas',
+  cwunicode.codec.standard in '..\main\implementation\cwunicode.codec.standard.pas',
+  cwwin32.advapi32 in '..\main\implementation\cwwin32.advapi32.pas',
+  cwwin32.constants in '..\main\implementation\cwwin32.constants.pas',
+  cwwin32.gdi32 in '..\main\implementation\cwwin32.gdi32.pas',
+  cwwin32.kernel32 in '..\main\implementation\cwwin32.kernel32.pas',
+  cwwin32.types in '..\main\implementation\cwwin32.types.pas',
+  cwwin32.user32 in '..\main\implementation\cwwin32.user32.pas',
+  lib_cwlog.proxylogtarget in '..\main\implementation\lib_cwlog.proxylogtarget.pas',
+  cwcollections.dictionary.standard in '..\main\implementation\cwcollections.dictionary.standard.pas',
+  cwcollections.list.standard in '..\main\implementation\cwcollections.list.standard.pas',
+  cwcollections.ringbuffer.standard in '..\main\implementation\cwcollections.ringbuffer.standard.pas',
+  cwcollections.stack.standard in '..\main\implementation\cwcollections.stack.standard.pas',
+  cwcollections.stringlist.standard in '..\main\implementation\cwcollections.stringlist.standard.pas',
+  cwio.buffer.standard in '..\main\implementation\cwio.buffer.standard.pas',
+  cwio.cyclicbuffer.standard in '..\main\implementation\cwio.cyclicbuffer.standard.pas',
+  cwio.filestream.standard in '..\main\implementation\cwio.filestream.standard.pas',
+  cwio.memorystream.standard in '..\main\implementation\cwio.memorystream.standard.pas',
+  cwio.stream.custom in '..\main\implementation\cwio.stream.custom.pas',
+  cwio.unicodestream.custom in '..\main\implementation\cwio.unicodestream.custom.pas',
+  cwlog.log.binding in '..\main\implementation\cwlog.log.binding.pas',
+  cwlog.log.dynamic in '..\main\implementation\cwlog.log.dynamic.pas',
+  cwlog.log.static in '..\main\implementation\cwlog.log.static.pas',
+  cwlog.logtarget.console in '..\main\implementation\cwlog.logtarget.console.pas',
+  cwruntime.logentries in '..\main\implementation\cwruntime.logentries.pas',
+  cwtest.testcase.console in '..\main\implementation\cwtest.testcase.console.pas';
 
 end.

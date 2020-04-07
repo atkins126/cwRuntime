@@ -1,0 +1,36 @@
+﻿<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+    <PropertyGroup>
+        <ProjectGuid>{D1C159D0-06A3-418C-8312-A6D94AA330E2}</ProjectGuid>
+    </PropertyGroup>
+    <ItemGroup>
+        <Projects Include="projects\pkg_cwRuntime_Rio.dproj">
+            <Dependencies/>
+        </Projects>
+    </ItemGroup>
+    <ProjectExtensions>
+        <Borland.Personality>Default.Personality.12</Borland.Personality>
+        <Borland.ProjectType/>
+        <BorlandProject>
+            <Default.Personality/>
+        </BorlandProject>
+    </ProjectExtensions>
+    <Target Name="pkg_cwRuntime_Rio">
+        <MSBuild Projects="projects\pkg_cwRuntime_Rio.dproj"/>
+    </Target>
+    <Target Name="pkg_cwRuntime_Rio:Clean">
+        <MSBuild Projects="projects\pkg_cwRuntime_Rio.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="pkg_cwRuntime_Rio:Make">
+        <MSBuild Projects="projects\pkg_cwRuntime_Rio.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="Build">
+        <CallTarget Targets="pkg_cwRuntime_Rio"/>
+    </Target>
+    <Target Name="Clean">
+        <CallTarget Targets="pkg_cwRuntime_Rio:Clean"/>
+    </Target>
+    <Target Name="Make">
+        <CallTarget Targets="pkg_cwRuntime_Rio:Make"/>
+    </Target>
+    <Import Project="$(BDS)\Bin\CodeGear.Group.Targets" Condition="Exists('$(BDS)\Bin\CodeGear.Group.Targets')"/>
+</Project>

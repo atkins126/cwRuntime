@@ -1,0 +1,36 @@
+﻿<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+    <PropertyGroup>
+        <ProjectGuid>{DD6423ED-6B3E-498B-A219-AB7BB3D68BF3}</ProjectGuid>
+    </PropertyGroup>
+    <ItemGroup>
+        <Projects Include="projects\pkg_cwRuntime_Seattle.dproj">
+            <Dependencies/>
+        </Projects>
+    </ItemGroup>
+    <ProjectExtensions>
+        <Borland.Personality>Default.Personality.12</Borland.Personality>
+        <Borland.ProjectType/>
+        <BorlandProject>
+            <Default.Personality/>
+        </BorlandProject>
+    </ProjectExtensions>
+    <Target Name="pkg_cwRuntime_Seattle">
+        <MSBuild Projects="projects\pkg_cwRuntime_Seattle.dproj"/>
+    </Target>
+    <Target Name="pkg_cwRuntime_Seattle:Clean">
+        <MSBuild Projects="projects\pkg_cwRuntime_Seattle.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="pkg_cwRuntime_Seattle:Make">
+        <MSBuild Projects="projects\pkg_cwRuntime_Seattle.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="Build">
+        <CallTarget Targets="pkg_cwRuntime_Seattle"/>
+    </Target>
+    <Target Name="Clean">
+        <CallTarget Targets="pkg_cwRuntime_Seattle:Clean"/>
+    </Target>
+    <Target Name="Make">
+        <CallTarget Targets="pkg_cwRuntime_Seattle:Make"/>
+    </Target>
+    <Import Project="$(BDS)\Bin\CodeGear.Group.Targets" Condition="Exists('$(BDS)\Bin\CodeGear.Group.Targets')"/>
+</Project>
