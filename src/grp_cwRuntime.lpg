@@ -33,6 +33,11 @@
           <Mode Name="Default"/>
         </BuildModes>
       </Target>
+      <Target FileName="projects\lib_cwLog.lpi">
+        <BuildModes>
+          <Mode Name="Default"/>
+        </BuildModes>
+      </Target>
       <Target FileName="tests\cwLog\test_dynamic_cwLog.lpi">
         <BuildModes>
           <Mode Name="Default"/>

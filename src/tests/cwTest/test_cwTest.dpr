@@ -40,7 +40,7 @@ var
 
 begin
   R := TestSuite.Run( 'cwTest', [TConsoleReport.Create] );
-  if R<>3 then begin
+  if R<>4 then begin
     Writeln('Failing / Erroring tests should = 4');
     if ParamStr(1)='ide' then begin
       Readln;
