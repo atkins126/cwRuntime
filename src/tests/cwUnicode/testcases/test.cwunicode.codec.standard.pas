@@ -151,17 +151,16 @@ end;
 
 procedure TTest_IUnicodeCodec_Standard.DecodeCodepointFromString;
 begin
-  //- Tests here differ for Deplhi vs FPC for the same
-  //- reason as noted in EncodeCodepointToString.
-  //- This is the best case testing scenario I currently have.
   Test_DecodeCodepointFromString('$',$0024);
   {$ifndef fpc}
-  Test_DecodeCodepointFromString('€',$20AC);
-  Test_DecodeCodepointFromString('𐐷',$10437);
-  Test_DecodeCodepointFromString('𤭢',$24B62);
+  Test_DecodeCodepointFromString(#$20AC,$20AC);
+  Test_DecodeCodepointFromString(#$10437,$10437);
+  Test_DecodeCodepointFromString(#$24B62,$24B62);
   {$else}
   Test_DecodeCodepointFromString(UnicodeString(#$20AC),$20AC);
-  {$endif}
+  Test_DecodeCodepointFromString(UnicodeString(#$10437),$10437);
+  Test_DecodeCodepointFromString(UnicodeString(#$24B62),$24B62);
+    {$endif}
 end;
 
 procedure TTest_IUnicodeCodec_Standard.EncodeBOMUTF16BE;
@@ -191,21 +190,16 @@ end;
 
 procedure TTest_IUnicodeCodec_Standard.EncodeCodepointToString;
 begin
-  Test_EncodeCodepointToString($0024,'$');
-  //- I've been unable to convince FPC to compile two of the following
-  //- three tests. It seems that somewhere between FPC/Lazarus, it's not
-  //- possible to compile surrogate based UTF-16 code-poins as literals in
-  //- source. Tests pass in Delphi, and while stepping through the FPC code
-  //- using gdb, I can confirm that EncodeCodepointToString does produce the
-  //- correct character at runtime. This is the best case I have for unit
-  //- testing this code.
+  Test_EncodeCodepointToString($0024,'$');  
   {$ifndef fpc}
-  Test_EncodeCodepointToString($20AC,'€');
-  Test_EncodeCodepointToString($10437,'𐐷');
-  Test_EncodeCodepointToString($24B62,'𤭢');
+  Test_EncodeCodepointToString($20AC,#$20AC);
+  Test_EncodeCodepointToString($10437,#$10437);
+  Test_EncodeCodepointToString($24B62,#$24B62);
   {$else}
-  Test_EncodeCodepointToString($20AC,UnicodeString(#$20AC)); // '€' - works.
-  {$endif}
+  Test_EncodeCodepointToString($24B62,UnicodeString(#$24B62));
+  Test_EncodeCodepointToString($10437,UnicodeString(#$10437));
+  Test_EncodeCodepointToString($20AC,UnicodeString(#$20AC));
+    {$endif}
 end;
 
 procedure TTest_IUnicodeCodec_Standard.Test_AnsiDecode(var Data: uint32; const Expected: TUnicodeCodepoint);
