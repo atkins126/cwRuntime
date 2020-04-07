@@ -28,6 +28,7 @@
       <Unit>
         <Filename Value="test_cwCollections.dpr"/>
         <IsPartOfProject Value="True"/>
+        <UnitName Value="test_cwTest"/>
       </Unit>
       <Unit>
         <Filename Value="testcases\test_cwcollections.ringbuffer.pas"/>
