@@ -241,7 +241,8 @@ begin
   // Arrange:
   V := [ 1, 2, 3, 4 ]; // FPC Bug [0035061] https://bugs.freepascal.org/view.php?id=35061 RESOLVED
   // Act:
-  R := [ 4, 3, 2, 1 ] + V; // FPC Bug [0035061] https://bugs.freepascal.org/view.php?id=35061 RESOLVED
+  R := [ 4, 3, 2, 1 ];
+  R := R + V; // FPC Bug [0035061] https://bugs.freepascal.org/view.php?id=35061 RESOLVED
   // Assert:
   TTest.IsTrue( ((R.X > 4.99 ) and (R.X < 5.01)) );
   TTest.IsTrue( ((R.Y > 4.99 ) and (R.Y < 5.01)) );
@@ -272,7 +273,8 @@ begin
   // Arrange:
   V := [ 1, 2, 3, 4 ]; // FPC Bug [0035061] https://bugs.freepascal.org/view.php?id=35061 RESOLVED
   // Act:
-  R := V + [ 4, 3, 2, 1 ]; // FPC Bug [0035061] https://bugs.freepascal.org/view.php?id=35061 RESOLVED
+  R := [ 4, 3, 2, 1 ];
+  R := V + R; // FPC Bug [0035061] https://bugs.freepascal.org/view.php?id=35061 RESOLVED
   // Assert:
   TTest.IsTrue( ((R.X > 4.99 ) and (R.X < 5.01)) );
   TTest.IsTrue( ((R.Y > 4.99 ) and (R.Y < 5.01)) );
@@ -332,7 +334,8 @@ begin
   // Arrange:
   V := [ 1, 2, 2, 1 ]; // FPC Bug [0035061] https://bugs.freepascal.org/view.php?id=35061 RESOLVED
   // Act:
-  R :=  [ 4, 3, 3, 4 ] / V; // FPC Bug [0035061] https://bugs.freepascal.org/view.php?id=35061 RESOLVED
+  R :=  [ 4, 3, 3, 4 ];
+  R := R / V; // FPC Bug [0035061] https://bugs.freepascal.org/view.php?id=35061 RESOLVED
   // Assert:
   TTest.IsTrue( ((R.X > 3.99 ) and (R.X < 4.01)) );
   TTest.IsTrue( ((R.Y > 1.49 ) and (R.Y < 1.51)) );
@@ -363,7 +366,8 @@ begin
   // Arrange:
   V := [ 4, 3, 3, 4 ]; // FPC Bug [0035061] https://bugs.freepascal.org/view.php?id=35061 RESOLVED
   // Act:
-  R :=  V / [ 1, 2, 2, 1 ]; // FPC Bug [0035061] https://bugs.freepascal.org/view.php?id=35061 RESOLVED
+  R := [ 1, 2, 2, 1 ];
+  R :=  V / R; // FPC Bug [0035061] https://bugs.freepascal.org/view.php?id=35061 RESOLVED
   // Assert:
   TTest.IsTrue( ((R.X > 3.99 ) and (R.X < 4.01)) );
   TTest.IsTrue( ((R.Y > 1.49 ) and (R.Y < 1.51)) );
@@ -374,7 +378,7 @@ end;
 procedure TTestVector4.dot;
 var
   V1, V2: Vector4;
-  F: float;
+  F: single;
 begin
   // Arrange:
   V1 := Vector4.Create(5,6,3,8);
@@ -511,7 +515,7 @@ end;
 procedure TTestVector4.magnitude;
 var
   V1: Vector4;
-  F: Float;
+  F: single;
 begin
   // Arrange:
   V1 := Vector4.Create( 2, 4, 6, 9 );
@@ -545,7 +549,8 @@ begin
   // Arrange:
   V := [ 1, 2, 2, 1 ]; // FPC Bug [0035061] https://bugs.freepascal.org/view.php?id=35061 RESOLVED
   // Act:
-  R :=  [ 4, 3, 3, 4 ] * V; // FPC Bug [0035061] https://bugs.freepascal.org/view.php?id=35061 RESOLVED
+  R := [ 4, 3, 3, 4 ];
+  R := R * V; // FPC Bug [0035061] https://bugs.freepascal.org/view.php?id=35061 RESOLVED
   // Assert:
   TTest.IsTrue( ((R.X > 3.99 ) and (R.X < 4.01)) );
   TTest.IsTrue( ((R.Y > 5.99 ) and (R.Y < 6.01)) );
@@ -576,7 +581,8 @@ begin
   // Arrange:
   V := [ 1, 2, 2, 1 ]; // FPC Bug [0035061] https://bugs.freepascal.org/view.php?id=35061 RESOLVED
   // Act:
-  R :=  V * [ 4, 3, 3, 4 ]; // FPC Bug [0035061] https://bugs.freepascal.org/view.php?id=35061 RESOLVED
+  R := [ 4, 3, 3, 4 ];
+  R :=  V * R; // FPC Bug [0035061] https://bugs.freepascal.org/view.php?id=35061 RESOLVED
   // Assert:
   TTest.IsTrue( ((R.X > 3.99 ) and (R.X < 4.01)) );
   TTest.IsTrue( ((R.Y > 5.99 ) and (R.Y < 6.01)) );
@@ -624,7 +630,8 @@ begin
   // Arrange:
   V := [ 1, 2, 2, 1 ]; // FPC Bug [0035061] https://bugs.freepascal.org/view.php?id=35061 RESOLVED
   // Act:
-  R := [ 4, 3, 3, 4 ] - V; // FPC Bug [0035061] https://bugs.freepascal.org/view.php?id=35061 RESOLVED
+  R := [ 4, 3, 3, 4 ];
+  R := R - V; // FPC Bug [0035061] https://bugs.freepascal.org/view.php?id=35061 RESOLVED
   // Assert:
   TTest.IsTrue( ((R.X > 2.99 ) and (R.X < 3.01)) );
   TTest.IsTrue( ((R.Y > 0.99 ) and (R.Y < 1.01)) );
@@ -655,7 +662,8 @@ begin
   // Arrange:
   V := [ 4, 3, 3, 4 ]; // FPC Bug [0035061] https://bugs.freepascal.org/view.php?id=35061 RESOLVED
   // Act:
-  R := V - [ 1, 2, 2, 1 ]; // FPC Bug [0035061] https://bugs.freepascal.org/view.php?id=35061 RESOLVED
+  R := [ 1, 2, 2, 1 ];
+  R := V - R; // FPC Bug [0035061] https://bugs.freepascal.org/view.php?id=35061 RESOLVED
   // Assert:
   TTest.IsTrue( ((R.X > 2.99 ) and (R.X < 3.01)) );
   TTest.IsTrue( ((R.Y > 0.99 ) and (R.Y < 1.01)) );

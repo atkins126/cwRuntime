@@ -170,7 +170,7 @@ uses
 ;
 
 { TTestMatrix }
-function CheckMatrix( M: Matrix4x4; m00, m10, m20, m30, m01, m11, m21, m31, m02, m12, m22, m32, m03, m13, m23, m33: float ): boolean;
+function CheckMatrix( M: Matrix4x4; m00, m10, m20, m30, m01, m11, m21, m31, m02, m12, m22, m32, m03, m13, m23, m33: single ): boolean;
 begin
   Result := True;
   Result := Result and (M.m00 > (m00-0.01)) and (M.m00 < (m00+0.01));
@@ -224,7 +224,7 @@ end;
 procedure TTestMatrix.AddF;
 var
   M1, M2: Matrix4x4;
-  F: Float;
+  F: single;
 begin
   // Arrange:
   M1 := Matrix4x4.Create(
@@ -360,7 +360,7 @@ end;
 procedure TTestMatrix.determinant;
 var
   M: Matrix4x4;
-  F: float;
+  F: single;
 begin
   // Arrange:
   M := Matrix4x4.Create(
@@ -408,7 +408,7 @@ end;
 procedure TTestMatrix.DivideF;
 var
   M1, M2: Matrix4x4;
-  F: Float;
+  F: single;
 begin
   // Arrange:
   M1 := Matrix4x4.Create(
@@ -564,7 +564,7 @@ end;
 procedure TTestMatrix.MultiplyF;
 var
   M1, M2: Matrix4x4;
-  F: Float;
+  F: single;
 begin
   // Arrange:
   M1 := Matrix4x4.Create(
@@ -686,7 +686,7 @@ end;
 procedure TTestMatrix.SubtractF;
 var
   M1, M2: Matrix4x4;
-  F: Float;
+  F: single;
 begin
   // Arrange:
   M1 := Matrix4x4.Create(

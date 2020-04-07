@@ -137,7 +137,7 @@ end;
 
 function TThreadLoopExecutor.ThreadExecute: boolean;
 
-  function WorkToDo: boolean; inline;
+  function WorkToDo: boolean; {$ifdef fpc}inline;{$endif}
   begin
     Result := (fWorkTop>0);
   end;

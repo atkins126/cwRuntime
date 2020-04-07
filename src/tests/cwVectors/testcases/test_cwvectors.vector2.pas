@@ -191,7 +191,8 @@ begin
   // Arrange:
   V := [ 2, 3 ]; // FPC Bug [0035061] https://bugs.freepascal.org/view.php?id=35061 RESOLVED
   // Act:
-  R := [ 4, 6 ] + V; // FPC Bug [0035061] https://bugs.freepascal.org/view.php?id=35061 RESOLVED
+  R := [ 4, 6 ];
+  R := R + V; // FPC Bug [0035061] https://bugs.freepascal.org/view.php?id=35061 RESOLVED
   // Assert:
   TTest.IsTrue( ((R.X > 5.99 ) and (R.X < 6.01)) );
   TTest.IsTrue( ((R.Y > 8.99 ) and (R.Y < 9.01)) );
@@ -218,7 +219,8 @@ begin
   // Arrange:
   V := [ 2, 3 ]; // FPC Bug [0035061] https://bugs.freepascal.org/view.php?id=35061 RESOLVED
   // Act:
-  R := V + [ 4, 6 ]; // FPC Bug [0035061] https://bugs.freepascal.org/view.php?id=35061 RESOLVED
+  R := [ 4, 6 ];
+  R := V + R; // FPC Bug [0035061] https://bugs.freepascal.org/view.php?id=35061 RESOLVED
   // Assert:
   TTest.IsTrue( ((R.X > 5.99 ) and (R.X < 6.01)) );
   TTest.IsTrue( ((R.Y > 8.99 ) and (R.Y < 9.01)) );
@@ -270,7 +272,8 @@ begin
   // Arrange:
   V := [ 2, 3 ]; // FPC Bug [0035061] https://bugs.freepascal.org/view.php?id=35061 RESOLVED
   // Act:
-  R := [ 4, 3 ] / V; // FPC Bug [0035061] https://bugs.freepascal.org/view.php?id=35061 RESOLVED
+  R := [ 4, 3 ];
+  R := R / V; // FPC Bug [0035061] https://bugs.freepascal.org/view.php?id=35061 RESOLVED
   // Assert:
   TTest.IsTrue( ((R.X > 1.99 ) and (R.X < 2.01)) );
   TTest.IsTrue( ((R.Y > 0.99 ) and (R.Y < 1.01)) );
@@ -297,7 +300,8 @@ begin
   // Arrange:
   V := [ 4, 3 ]; // FPC Bug [0035061] https://bugs.freepascal.org/view.php?id=35061 RESOLVED
   // Act:
-  R := V / [ 2, 3 ]; // FPC Bug [0035061] https://bugs.freepascal.org/view.php?id=35061 RESOLVED
+  R := [ 2, 3 ];
+  R := V / R; // FPC Bug [0035061] https://bugs.freepascal.org/view.php?id=35061 RESOLVED
   // Assert:
   TTest.IsTrue( ((R.X > 1.99 ) and (R.X < 2.01)) );
   TTest.IsTrue( ((R.Y > 0.99 ) and (R.Y < 1.01)) );
@@ -306,7 +310,7 @@ end;
 procedure TTestVector2.dot;
 var
   V1, V2: Vector2;
-  F: float;
+  F: single;
 begin
   // Arrange:
   V1 := Vector2.Create(5,6);
@@ -320,7 +324,7 @@ end;
 procedure TTestVector2.Magnitude;
 var
   V1: Vector2;
-  F: float;
+  F: single;
 begin
   // Arrange:
   V1 := Vector2.Create(2,5);
@@ -352,7 +356,8 @@ begin
   // Arrange:
   V := [ 4, 3 ]; // FPC Bug [0035061] https://bugs.freepascal.org/view.php?id=35061 RESOLVED
   // Act:
-  R := [ 2, 3 ] * V; // FPC Bug [0035061] https://bugs.freepascal.org/view.php?id=35061 RESOLVED
+  R := [ 2, 3 ];
+  R := R * V; // FPC Bug [0035061] https://bugs.freepascal.org/view.php?id=35061 RESOLVED
   // Assert:
   TTest.IsTrue( ((R.X > 7.99 ) and (R.X < 8.01)) );
   TTest.IsTrue( ((R.Y > 8.99 ) and (R.Y < 9.01)) );
@@ -379,7 +384,8 @@ begin
   // Arrange:
   V := [ 4, 3 ]; // FPC Bug [0035061] https://bugs.freepascal.org/view.php?id=35061 RESOLVED
   // Act:
-  R := V * [ 2, 3 ]; // FPC Bug [0035061] https://bugs.freepascal.org/view.php?id=35061 RESOLVED
+  R := [ 2, 3 ];
+  R := V * R; // FPC Bug [0035061] https://bugs.freepascal.org/view.php?id=35061 RESOLVED
   // Assert:
   TTest.IsTrue( ((R.X > 7.99 ) and (R.X < 8.01)) );
   TTest.IsTrue( ((R.Y > 8.99 ) and (R.Y < 9.01)) );
@@ -421,7 +427,8 @@ begin
   // Arrange:
   V := [ 2, 3 ]; // FPC Bug [0035061] https://bugs.freepascal.org/view.php?id=35061 RESOLVED
   // Act:
-  R := [ 4, 6 ] - V; // FPC Bug [0035061] https://bugs.freepascal.org/view.php?id=35061 RESOLVED
+  R := [ 4, 6 ];
+  R := R - V; // FPC Bug [0035061] https://bugs.freepascal.org/view.php?id=35061 RESOLVED
   // Assert:
   TTest.IsTrue( ((R.X > 1.99 ) and (R.X < 2.01)) );
   TTest.IsTrue( ((R.Y > 2.99 ) and (R.Y < 3.01)) );
@@ -449,7 +456,8 @@ begin
   // Arrange:
   V := [ 4, 6 ]; // FPC Bug [0035061] https://bugs.freepascal.org/view.php?id=35061 RESOLVED
   // Act:
-  R := V - [ 2, 3 ]; // FPC Bug [0035061] https://bugs.freepascal.org/view.php?id=35061 RESOLVED
+  R := [ 2, 3 ];
+  R := V - R; // FPC Bug [0035061] https://bugs.freepascal.org/view.php?id=35061 RESOLVED
   // Assert:
   TTest.IsTrue( ((R.X > 1.99 ) and (R.X < 2.01)) );
   TTest.IsTrue( ((R.Y > 2.99 ) and (R.Y < 3.01)) );

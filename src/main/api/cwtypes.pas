@@ -698,7 +698,11 @@ var
   D: uint32;
 begin
   {$ifndef fpc}
-  D := SysUtils.StrToUInt(Self);
+  {$if CompilerVersion>30}
+    D := SysUtils.StrToUInt(Self);
+  {$else}
+    D := SysUtils.StrToInt(Self);
+  {$endif}
   Result := D;
   {$else}
   D := SysUtils.StrToDWord(UTF8Encode(Self));
@@ -709,7 +713,11 @@ end;
 function TStringHelper.AsUint32: uint32;
 begin
   {$ifndef fpc}
-  Result := SysUtils.StrToUInt(Self);
+  {$if CompilerVersion>30}
+    Result := SysUtils.StrToUInt(Self);
+  {$else}
+    Result := SysUtils.StrToInt(Self);
+  {$endif}
   {$else}
   Result := SysUtils.StrToDWord(UTF8Encode(Self));
   {$endif}
@@ -718,7 +726,11 @@ end;
 function TStringHelper.AsUint64: uint64;
 begin
   {$ifndef fpc}
-  Result := SysUtils.StrToUInt(Self);
+  {$if CompilerVersion>30}
+    Result := SysUtils.StrToUInt64(Self);
+  {$else}
+    Result := SysUtils.StrToInt64(Self);
+  {$endif}
   {$else}
   Result := SysUtils.StrToQWord(UTF8Encode(Self));
   {$endif}
@@ -729,7 +741,11 @@ var
   D: uint32;
 begin
   {$ifndef fpc}
-  D := SysUtils.StrToUInt(Self);
+  {$if CompilerVersion>30}
+    D := SysUtils.StrToUInt(Self);
+  {$else}
+    D := SysUtils.StrToInt(Self);
+  {$endif}
   Result := D;
   {$else}
   D := SysUtils.StrToDWord(UTF8Encode(Self));

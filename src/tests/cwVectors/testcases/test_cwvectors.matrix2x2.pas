@@ -149,7 +149,7 @@ uses
 ;
 
 { TTestMatrix }
-function CheckMatrix( M: Matrix2x2; m00, m10, m01, m11: float ): boolean;
+function CheckMatrix( M: Matrix2x2; m00, m10, m01, m11: single ): boolean;
 begin
   Result := True;
   Result := Result and (M.m00 > (m00-0.01)) and (M.m00 < (m00+0.01));
@@ -185,7 +185,7 @@ end;
 procedure TTestMatrix.AddF;
 var
   M1, M2: Matrix2x2;
-  F: Float;
+  F: single;
 begin
   // Arrange:
   M1 := Matrix2x2.Create(
@@ -263,7 +263,7 @@ end;
 procedure TTestMatrix.determinant;
 var
   M: Matrix2x2;
-  F: float;
+  F: single;
 begin
   // Arrange:
   M := Matrix2x2.Create(
@@ -303,7 +303,7 @@ end;
 procedure TTestMatrix.DivideF;
 var
   M1, M2: Matrix2x2;
-  F: Float;
+  F: single;
 begin
   // Arrange:
   M1 := Matrix2x2.Create(
@@ -432,7 +432,7 @@ end;
 procedure TTestMatrix.MultiplyF;
 var
   M1, M2: Matrix2x2;
-  F: Float;
+  F: single;
 begin
   // Arrange:
   M1 := Matrix2x2.Create(
@@ -508,7 +508,7 @@ end;
 procedure TTestMatrix.SubtractF;
 var
   M1, M2: Matrix2x2;
-  F: Float;
+  F: single;
 begin
   // Arrange:
   M1 := Matrix2x2.Create(

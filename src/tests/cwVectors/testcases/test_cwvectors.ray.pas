@@ -90,7 +90,7 @@ procedure TTestRay.CreateOriginDirectionLength;
 var
   Origin: Vector3;
   Direction: Vector3;
-  Length: float;
+  Length: single;
   aRay: Ray;
 begin
   // Arrange:
@@ -113,7 +113,7 @@ procedure TTestRay.Destination;
 var
   Origin: Vector3;
   Direction: Vector3;
-  Length: float;
+  Length: single;
   aRay: Ray;
   Destination: Vertex;
 begin

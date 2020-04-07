@@ -164,8 +164,8 @@ end;
 
 function TMessageChannel.MessagesWaiting: boolean;
 var
-  Count: uint64;
-  idx: uint64;
+  Count: nativeuint;
+  idx: nativeuint;
   CurrentPipe: IMessagePipe;
   PipeRing: IPipeRing;
 begin
@@ -190,7 +190,7 @@ end;
 
 procedure TMessageChannel.setEnabled(value: boolean);
 var
-  idx: uint64;
+  idx: nativeuint;
 begin
   if fEnabled=Value then begin
     exit;

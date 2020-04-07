@@ -56,7 +56,7 @@ begin
       Writeln('Failed to load library');
       exit;
     end;
-    if not DynLib.GetProcAddress('Add',pointer(Add)) then begin
+    if not DynLib.GetProcAddress('Add',pointer({$ifndef fpc}@{$endif}Add)) then begin
       Writeln('Failed to load ''Add'' entry point');
       exit;
     end;

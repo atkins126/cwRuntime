@@ -37,8 +37,11 @@ uses
 
 var
   R: nativeuint;
+  Report: ITestReport;
+
 begin
-  R := TestSuite.Run( 'Sample Tests', TConsoleReport.Create );
+  Report := TConsoleReport.Create;
+  R := TestSuite.Run( 'Sample Tests', Report );
   if ParamStr(1)='ide' then begin
     Readln;
   end;
