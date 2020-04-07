@@ -6,8 +6,8 @@
         <FrameworkType>None</FrameworkType>
         <Base>True</Base>
         <Config Condition="'$(Config)'==''">Debug</Config>
-        <Platform Condition="'$(Platform)'==''">Win32</Platform>
-        <TargetedPlatforms>1</TargetedPlatforms>
+        <Platform Condition="'$(Platform)'==''">Win64</Platform>
+        <TargetedPlatforms>1119</TargetedPlatforms>
         <AppType>Package</AppType>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Config)'=='Base' or '$(Base)'!=''">
@@ -33,8 +33,18 @@
         <CfgParent>Base</CfgParent>
         <Base>true</Base>
     </PropertyGroup>
+    <PropertyGroup Condition="('$(Platform)'=='OSX32' and '$(Base)'=='true') or '$(Base_OSX32)'!=''">
+        <Base_OSX32>true</Base_OSX32>
+        <CfgParent>Base</CfgParent>
+        <Base>true</Base>
+    </PropertyGroup>
     <PropertyGroup Condition="('$(Platform)'=='Win32' and '$(Base)'=='true') or '$(Base_Win32)'!=''">
         <Base_Win32>true</Base_Win32>
+        <CfgParent>Base</CfgParent>
+        <Base>true</Base>
+    </PropertyGroup>
+    <PropertyGroup Condition="('$(Platform)'=='Win64' and '$(Base)'=='true') or '$(Base_Win64)'!=''">
+        <Base_Win64>true</Base_Win64>
         <CfgParent>Base</CfgParent>
         <Base>true</Base>
     </PropertyGroup>
@@ -59,7 +69,7 @@
         <DCC_CBuilderOutput>All</DCC_CBuilderOutput>
         <GenDll>true</GenDll>
         <DCC_Namespace>System;Xml;Data;Datasnap;Web;Soap;$(DCC_Namespace)</DCC_Namespace>
-        <SanitizedProjectName>pkg_cwRuntime</SanitizedProjectName>
+        <SanitizedProjectName>pkg_cwRuntime_XE8</SanitizedProjectName>
         <DCC_DcuOutput>.\$(Platform)\$(Config)</DCC_DcuOutput>
         <DCC_ExeOutput>.\$(Platform)\$(Config)</DCC_ExeOutput>
         <DCC_E>false</DCC_E>
@@ -69,22 +79,46 @@
         <DCC_K>false</DCC_K>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Base_Android)'!=''">
+        <VerInfo_Keys>package=com.embarcadero.$(MSBuildProjectName);label=$(MSBuildProjectName);versionCode=1;versionName=1.0.0;persistent=False;restoreAnyVersion=False;installLocation=preferExternal;largeHeap=False;theme=TitleBar;hardwareAccelerated=true;apiKey=</VerInfo_Keys>
+        <BT_BuildType>Debug</BT_BuildType>
         <DCC_CBuilderOutput>None</DCC_CBuilderOutput>
         <EnabledSysJars>android-support-v4.dex.jar;apk-expansion.dex.jar;cloud-messaging.dex.jar;fmx.dex.jar;google-analytics-v2.dex.jar;google-play-billing.dex.jar;google-play-licensing.dex.jar;google-play-services.dex.jar</EnabledSysJars>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Base_iOSDevice32)'!=''">
+        <VerInfo_UIDeviceFamily>iPhoneAndiPad</VerInfo_UIDeviceFamily>
+        <VerInfo_BundleId>$(MSBuildProjectName)</VerInfo_BundleId>
+        <VerInfo_IncludeVerInfo>true</VerInfo_IncludeVerInfo>
+        <BT_BuildType>Debug</BT_BuildType>
+        <VerInfo_Keys>CFBundleName=$(MSBuildProjectName);CFBundleDevelopmentRegion=en;CFBundleDisplayName=$(MSBuildProjectName);CFBundleIdentifier=$(MSBuildProjectName);CFBundleInfoDictionaryVersion=7.1;CFBundleVersion=1.0.0.0;CFBundlePackageType=APPL;CFBundleSignature=????;LSRequiresIPhoneOS=true;CFBundleAllowMixedLocalizations=YES;CFBundleExecutable=$(MSBuildProjectName);UIDeviceFamily=iPhone &amp; iPad;CFBundleResourceSpecification=ResourceRules.plist;NSLocationAlwaysUsageDescription=The reason for accessing the location information of the user;NSLocationWhenInUseUsageDescription=The reason for accessing the location information of the user;FMLocalNotificationPermission=false</VerInfo_Keys>
         <DCC_CBuilderOutput>None</DCC_CBuilderOutput>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Base_iOSDevice64)'!=''">
+        <VerInfo_UIDeviceFamily>iPhoneAndiPad</VerInfo_UIDeviceFamily>
+        <VerInfo_BundleId>$(MSBuildProjectName)</VerInfo_BundleId>
+        <VerInfo_IncludeVerInfo>true</VerInfo_IncludeVerInfo>
+        <BT_BuildType>Debug</BT_BuildType>
+        <VerInfo_Keys>CFBundleName=$(MSBuildProjectName);CFBundleDevelopmentRegion=en;CFBundleDisplayName=$(MSBuildProjectName);CFBundleIdentifier=$(MSBuildProjectName);CFBundleInfoDictionaryVersion=7.1;CFBundleVersion=1.0.0.0;CFBundlePackageType=APPL;CFBundleSignature=????;LSRequiresIPhoneOS=true;CFBundleAllowMixedLocalizations=YES;CFBundleExecutable=$(MSBuildProjectName);UIDeviceFamily=iPhone &amp; iPad;CFBundleResourceSpecification=ResourceRules.plist;NSLocationAlwaysUsageDescription=The reason for accessing the location information of the user;NSLocationWhenInUseUsageDescription=The reason for accessing the location information of the user;FMLocalNotificationPermission=false</VerInfo_Keys>
         <DCC_CBuilderOutput>None</DCC_CBuilderOutput>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Base_iOSSimulator)'!=''">
+        <VerInfo_UIDeviceFamily>iPhoneAndiPad</VerInfo_UIDeviceFamily>
+        <VerInfo_IncludeVerInfo>true</VerInfo_IncludeVerInfo>
+        <VerInfo_Keys>CFBundleName=$(MSBuildProjectName);CFBundleDevelopmentRegion=en;CFBundleDisplayName=$(MSBuildProjectName);CFBundleIdentifier=$(MSBuildProjectName);CFBundleInfoDictionaryVersion=7.1;CFBundleVersion=1.0.0.0;CFBundlePackageType=APPL;CFBundleSignature=????;LSRequiresIPhoneOS=true;CFBundleAllowMixedLocalizations=YES;CFBundleExecutable=$(MSBuildProjectName);UIDeviceFamily=iPhone &amp; iPad;CFBundleResourceSpecification=ResourceRules.plist;NSLocationAlwaysUsageDescription=The reason for accessing the location information of the user;NSLocationWhenInUseUsageDescription=The reason for accessing the location information of the user;FMLocalNotificationPermission=false</VerInfo_Keys>
         <DCC_CBuilderOutput>None</DCC_CBuilderOutput>
+    </PropertyGroup>
+    <PropertyGroup Condition="'$(Base_OSX32)'!=''">
+        <VerInfo_Keys>CFBundleName=$(MSBuildProjectName);CFBundleDisplayName=$(MSBuildProjectName);CFBundleIdentifier=$(MSBuildProjectName);CFBundleVersion=1.0.0;CFBundlePackageType=APPL;CFBundleSignature=????;CFBundleAllowMixedLocalizations=YES;CFBundleExecutable=$(MSBuildProjectName);NSHighResolutionCapable=true;LSApplicationCategoryType=public.app-category.utilities;NSLocationAlwaysUsageDescription=The reason for accessing the location information of the user;NSLocationWhenInUseUsageDescription=The reason for accessing the location information of the user</VerInfo_Keys>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Base_Win32)'!=''">
         <VerInfo_IncludeVerInfo>true</VerInfo_IncludeVerInfo>
         <VerInfo_Locale>1033</VerInfo_Locale>
         <DCC_Namespace>Winapi;System.Win;Data.Win;Datasnap.Win;Web.Win;Soap.Win;Xml.Win;Bde;$(DCC_Namespace)</DCC_Namespace>
+        <VerInfo_Keys>CompanyName=;FileDescription=;FileVersion=1.0.0.0;InternalName=;LegalCopyright=;LegalTrademarks=;OriginalFilename=;ProductName=;ProductVersion=1.0.0.0;Comments=</VerInfo_Keys>
+    </PropertyGroup>
+    <PropertyGroup Condition="'$(Base_Win64)'!=''">
+        <VerInfo_IncludeVerInfo>true</VerInfo_IncludeVerInfo>
+        <DCC_Namespace>Winapi;System.Win;Data.Win;Datasnap.Win;Web.Win;Soap.Win;Xml.Win;$(DCC_Namespace)</DCC_Namespace>
+        <VerInfo_Locale>1033</VerInfo_Locale>
         <VerInfo_Keys>CompanyName=;FileDescription=;FileVersion=1.0.0.0;InternalName=;LegalCopyright=;LegalTrademarks=;OriginalFilename=;ProductName=;ProductVersion=1.0.0.0;Comments=</VerInfo_Keys>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Cfg_1)'!=''">
@@ -109,6 +143,69 @@
             <MainSource>MainSource</MainSource>
         </DelphiCompile>
         <DCCReference Include="rtl.dcp"/>
+        <DCCReference Include="..\main\api\cwio.standard.pas"/>
+        <DCCReference Include="..\main\api\cwlog.console.pas"/>
+        <DCCReference Include="..\main\api\cwlog.dynamic.pas"/>
+        <DCCReference Include="..\main\api\cwlog.pas"/>
+        <DCCReference Include="..\main\api\cwlog.standard.pas"/>
+        <DCCReference Include="..\main\api\cwlog.static.pas"/>
+        <DCCReference Include="..\main\api\cwlog.targets.pas"/>
+        <DCCReference Include="..\main\api\cwtest.pas"/>
+        <DCCReference Include="..\main\api\cwtest.standard.pas"/>
+        <DCCReference Include="..\main\api\cwthreading.pas"/>
+        <DCCReference Include="..\main\api\cwthreading.standard.pas"/>
+        <DCCReference Include="..\main\api\cwtypes.pas"/>
+        <DCCReference Include="..\main\api\cwunicode.pas"/>
+        <DCCReference Include="..\main\api\cwunicode.standard.pas"/>
+        <DCCReference Include="..\main\api\cwvectors.pas"/>
+        <DCCReference Include="..\main\api\cwcollections.pas"/>
+        <DCCReference Include="..\main\api\cwcollections.standard.pas"/>
+        <DCCReference Include="..\main\api\cwdynlib.pas"/>
+        <DCCReference Include="..\main\api\cwdynlib.standard.pas"/>
+        <DCCReference Include="..\main\api\cwio.pas"/>
+        <DCCReference Include="..\main\implementation\cwtest.testreport.console.pas"/>
+        <DCCReference Include="..\main\implementation\cwtest.testsuite.custom.pas"/>
+        <DCCReference Include="..\main\implementation\cwtest.testsuite.delphi.pas"/>
+        <DCCReference Include="..\main\implementation\cwtest.testsuite.fpc.pas"/>
+        <DCCReference Include="..\main\implementation\cwthreading.criticalsection.posix.pas"/>
+        <DCCReference Include="..\main\implementation\cwthreading.criticalsection.windows.pas"/>
+        <DCCReference Include="..\main\implementation\cwthreading.messagebus.standard.pas"/>
+        <DCCReference Include="..\main\implementation\cwthreading.messagechannel.standard.pas"/>
+        <DCCReference Include="..\main\implementation\cwthreading.messagepipe.standard.pas"/>
+        <DCCReference Include="..\main\implementation\cwthreading.messaging.internal.pas"/>
+        <DCCReference Include="..\main\implementation\cwthreading.signaledcriticalsection.posix.pas"/>
+        <DCCReference Include="..\main\implementation\cwthreading.signaledcriticalsection.windows.pas"/>
+        <DCCReference Include="..\main\implementation\cwthreading.threadedloop.executor.pas"/>
+        <DCCReference Include="..\main\implementation\cwthreading.threadedloop.standard.pas"/>
+        <DCCReference Include="..\main\implementation\cwthreading.threadmethod.posix.pas"/>
+        <DCCReference Include="..\main\implementation\cwthreading.threadmethod.windows.pas"/>
+        <DCCReference Include="..\main\implementation\cwthreading.threadpool.standard.pas"/>
+        <DCCReference Include="..\main\implementation\cwthreading.threadsystem.standard.pas"/>
+        <DCCReference Include="..\main\implementation\cwunicode.codec.standard.pas"/>
+        <DCCReference Include="..\main\implementation\cwwin32.advapi32.pas"/>
+        <DCCReference Include="..\main\implementation\cwwin32.constants.pas"/>
+        <DCCReference Include="..\main\implementation\cwwin32.gdi32.pas"/>
+        <DCCReference Include="..\main\implementation\cwwin32.kernel32.pas"/>
+        <DCCReference Include="..\main\implementation\cwwin32.types.pas"/>
+        <DCCReference Include="..\main\implementation\cwwin32.user32.pas"/>
+        <DCCReference Include="..\main\implementation\lib_cwlog.proxylogtarget.pas"/>
+        <DCCReference Include="..\main\implementation\cwcollections.dictionary.standard.pas"/>
+        <DCCReference Include="..\main\implementation\cwcollections.list.standard.pas"/>
+        <DCCReference Include="..\main\implementation\cwcollections.ringbuffer.standard.pas"/>
+        <DCCReference Include="..\main\implementation\cwcollections.stack.standard.pas"/>
+        <DCCReference Include="..\main\implementation\cwcollections.stringlist.standard.pas"/>
+        <DCCReference Include="..\main\implementation\cwio.buffer.standard.pas"/>
+        <DCCReference Include="..\main\implementation\cwio.cyclicbuffer.standard.pas"/>
+        <DCCReference Include="..\main\implementation\cwio.filestream.standard.pas"/>
+        <DCCReference Include="..\main\implementation\cwio.memorystream.standard.pas"/>
+        <DCCReference Include="..\main\implementation\cwio.stream.custom.pas"/>
+        <DCCReference Include="..\main\implementation\cwio.unicodestream.custom.pas"/>
+        <DCCReference Include="..\main\implementation\cwlog.log.binding.pas"/>
+        <DCCReference Include="..\main\implementation\cwlog.log.dynamic.pas"/>
+        <DCCReference Include="..\main\implementation\cwlog.log.static.pas"/>
+        <DCCReference Include="..\main\implementation\cwlog.logtarget.console.pas"/>
+        <DCCReference Include="..\main\implementation\cwruntime.logentries.pas"/>
+        <DCCReference Include="..\main\implementation\cwtest.testcase.console.pas"/>
         <BuildConfiguration Include="Release">
             <Key>Cfg_2</Key>
             <CfgParent>Base</CfgParent>
@@ -132,13 +229,13 @@
             </Delphi.Personality>
             <Deployment Version="1"/>
             <Platforms>
-                <Platform value="Android">False</Platform>
-                <Platform value="iOSDevice32">False</Platform>
-                <Platform value="iOSDevice64">False</Platform>
-                <Platform value="iOSSimulator">False</Platform>
-                <Platform value="OSX32">False</Platform>
+                <Platform value="Android">True</Platform>
+                <Platform value="iOSDevice32">True</Platform>
+                <Platform value="iOSDevice64">True</Platform>
+                <Platform value="iOSSimulator" ActiveMobileDevice="iPad">True</Platform>
+                <Platform value="OSX32">True</Platform>
                 <Platform value="Win32">True</Platform>
-                <Platform value="Win64">False</Platform>
+                <Platform value="Win64">True</Platform>
             </Platforms>
         </BorlandProject>
         <ProjectFileVersion>12</ProjectFileVersion>

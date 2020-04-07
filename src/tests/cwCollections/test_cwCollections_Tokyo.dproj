@@ -79,7 +79,7 @@
         <DCC_K>false</DCC_K>
         <DCC_UsePackage>RESTComponents;emsclientfiredac;DataSnapFireDAC;FireDACIBDriver;emsclient;FireDACCommon;RESTBackendComponents;soapserver;CloudService;FireDACCommonDriver;inet;FireDAC;FireDACSqliteDriver;soaprtl;soapmidas;$(DCC_UsePackage)</DCC_UsePackage>
         <DCC_Namespace>System;Xml;Data;Datasnap;Web;Soap;$(DCC_Namespace)</DCC_Namespace>
-        <SanitizedProjectName>test_cwCollections</SanitizedProjectName>
+        <SanitizedProjectName>test_cwCollections_Tokyo</SanitizedProjectName>
         <DCC_UnitSearchPath>testcases;..\..\main\api;..\..\main\implementation;$(DCC_UnitSearchPath)</DCC_UnitSearchPath>
         <VerInfo_Locale>1033</VerInfo_Locale>
     </PropertyGroup>
