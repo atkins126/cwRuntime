@@ -6,6 +6,7 @@ REM ----------------------------------------------------------------------------
 
 SET ENV=%1
 SET WORKSPACE=%2
+SET VARIANT=%3
 call %ENV% || exit /b
 
 REM ------------------------------ Build sample projects ------------------------
@@ -15,14 +16,14 @@ msbuild %WORKSPACE%\src\projects\lib_cwLog_Rio.dproj                      || exi
 
 REM ------------------------------ Build test projects --------------------------
 
-msbuild %WORKSPACE%\src\tests\cwCollections\test_cwCollections_Rio.dproj  || exit /b
-msbuild %WORKSPACE%\src\tests\cwIO\test_cwIO_Rio.dproj                    || exit /b
-msbuild %WORKSPACE%\src\tests\cwLog\test_dynamic_cwLog_Rio.dproj          || exit /b
-msbuild %WORKSPACE%\src\tests\cwLog\test_static_cwLog_Rio.dproj           || exit /b
-msbuild %WORKSPACE%\src\tests\cwTest\test_cwTest_Rio.dproj                || exit /b
-msbuild %WORKSPACE%\src\tests\cwTypes\test_cwTypes_Rio.dproj              || exit /b
-msbuild %WORKSPACE%\src\tests\cwUnicode\test_cwUnicode_Rio.dproj          || exit /b
-msbuild %WORKSPACE%\src\tests\cwVectors\test_cwVectors_Rio.dproj          || exit /b
+msbuild %WORKSPACE%\src\tests\cwCollections\test_cwCollections_%VARIANT%.dproj  || exit /b
+msbuild %WORKSPACE%\src\tests\cwIO\test_cwIO_%VARIANT%.dproj                    || exit /b
+msbuild %WORKSPACE%\src\tests\cwLog\test_dynamic_cwLog_%VARIANT%.dproj          || exit /b
+msbuild %WORKSPACE%\src\tests\cwLog\test_static_cwLog_%VARIANT%.dproj           || exit /b
+msbuild %WORKSPACE%\src\tests\cwTest\test_cwTest_%VARIANT%.dproj                || exit /b
+msbuild %WORKSPACE%\src\tests\cwTypes\test_cwTypes_%VARIANT%.dproj              || exit /b
+msbuild %WORKSPACE%\src\tests\cwUnicode\test_cwUnicode_%VARIANT%.dproj          || exit /b
+msbuild %WORKSPACE%\src\tests\cwVectors\test_cwVectors_%VARIANT%.dproj          || exit /b
 
 REM ------------------------------ Execute test projects --------------------------
 
