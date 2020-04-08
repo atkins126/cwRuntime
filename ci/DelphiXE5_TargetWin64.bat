@@ -22,6 +22,7 @@ msbuild %WORKSPACE%\src\tests\cwLog\test_static_cwLog_XE5.dproj           || exi
 msbuild %WORKSPACE%\src\tests\cwTest\test_cwTest_XE5.dproj                || exit /b
 msbuild %WORKSPACE%\src\tests\cwTypes\test_cwTypes_XE5.dproj              || exit /b
 msbuild %WORKSPACE%\src\tests\cwUnicode\test_cwUnicode_XE5.dproj          || exit /b
+msbuild %WORKSPACE%\src\tests\cwUnicode\test_cwVectors_XE5.dproj          || exit /b
 
 REM ------------------------------ Execute test projects --------------------------
 
