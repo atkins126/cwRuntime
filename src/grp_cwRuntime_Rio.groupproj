@@ -18,31 +18,16 @@
         <Projects Include="samples\cwLog\LogToConsole\cwLog_LogToConsole_Rio.dproj">
             <Dependencies/>
         </Projects>
-        <Projects Include="tests\cwTest\test_cwTest_Rio.dproj">
-            <Dependencies/>
-        </Projects>
-        <Projects Include="tests\cwCollections\test_cwCollections_Rio.dproj">
-            <Dependencies/>
-        </Projects>
         <Projects Include="projects\lib_cwLog_Rio.dproj">
             <Dependencies/>
         </Projects>
-        <Projects Include="tests\cwLog\test_dynamic_cwLog_Rio.dproj">
+        <Projects Include="tests\test_cwTest_Rio.dproj">
             <Dependencies/>
         </Projects>
-        <Projects Include="tests\cwLog\test_static_cwLog_Rio.dproj">
+        <Projects Include="tests\test_dynamic_cwLog_Rio.dproj">
             <Dependencies/>
         </Projects>
-        <Projects Include="tests\cwTypes\test_cwTypes_Rio.dproj">
-            <Dependencies/>
-        </Projects>
-        <Projects Include="tests\cwUnicode\test_cwUnicode_Rio.dproj">
-            <Dependencies/>
-        </Projects>
-        <Projects Include="tests\cwIO\test_cwIO_Rio.dproj">
-            <Dependencies/>
-        </Projects>
-        <Projects Include="tests\cwVectors\test_cwVectors_Rio.dproj">
+        <Projects Include="tests\cwRuntime_Rio.dproj">
             <Dependencies/>
         </Projects>
     </ItemGroup>
@@ -98,24 +83,6 @@
     <Target Name="cwLog_LogToConsole_Rio:Make">
         <MSBuild Projects="samples\cwLog\LogToConsole\cwLog_LogToConsole_Rio.dproj" Targets="Make"/>
     </Target>
-    <Target Name="test_cwTest_Rio">
-        <MSBuild Projects="tests\cwTest\test_cwTest_Rio.dproj"/>
-    </Target>
-    <Target Name="test_cwTest_Rio:Clean">
-        <MSBuild Projects="tests\cwTest\test_cwTest_Rio.dproj" Targets="Clean"/>
-    </Target>
-    <Target Name="test_cwTest_Rio:Make">
-        <MSBuild Projects="tests\cwTest\test_cwTest_Rio.dproj" Targets="Make"/>
-    </Target>
-    <Target Name="test_cwCollections_Rio">
-        <MSBuild Projects="tests\cwCollections\test_cwCollections_Rio.dproj"/>
-    </Target>
-    <Target Name="test_cwCollections_Rio:Clean">
-        <MSBuild Projects="tests\cwCollections\test_cwCollections_Rio.dproj" Targets="Clean"/>
-    </Target>
-    <Target Name="test_cwCollections_Rio:Make">
-        <MSBuild Projects="tests\cwCollections\test_cwCollections_Rio.dproj" Targets="Make"/>
-    </Target>
     <Target Name="lib_cwLog_Rio">
         <MSBuild Projects="projects\lib_cwLog_Rio.dproj"/>
     </Target>
@@ -125,68 +92,41 @@
     <Target Name="lib_cwLog_Rio:Make">
         <MSBuild Projects="projects\lib_cwLog_Rio.dproj" Targets="Make"/>
     </Target>
+    <Target Name="test_cwTest_Rio">
+        <MSBuild Projects="tests\test_cwTest_Rio.dproj"/>
+    </Target>
+    <Target Name="test_cwTest_Rio:Clean">
+        <MSBuild Projects="tests\test_cwTest_Rio.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="test_cwTest_Rio:Make">
+        <MSBuild Projects="tests\test_cwTest_Rio.dproj" Targets="Make"/>
+    </Target>
     <Target Name="test_dynamic_cwLog_Rio">
-        <MSBuild Projects="tests\cwLog\test_dynamic_cwLog_Rio.dproj"/>
+        <MSBuild Projects="tests\test_dynamic_cwLog_Rio.dproj"/>
     </Target>
     <Target Name="test_dynamic_cwLog_Rio:Clean">
-        <MSBuild Projects="tests\cwLog\test_dynamic_cwLog_Rio.dproj" Targets="Clean"/>
+        <MSBuild Projects="tests\test_dynamic_cwLog_Rio.dproj" Targets="Clean"/>
     </Target>
     <Target Name="test_dynamic_cwLog_Rio:Make">
-        <MSBuild Projects="tests\cwLog\test_dynamic_cwLog_Rio.dproj" Targets="Make"/>
+        <MSBuild Projects="tests\test_dynamic_cwLog_Rio.dproj" Targets="Make"/>
     </Target>
-    <Target Name="test_static_cwLog_Rio">
-        <MSBuild Projects="tests\cwLog\test_static_cwLog_Rio.dproj"/>
+    <Target Name="cwRuntime_Rio">
+        <MSBuild Projects="tests\cwRuntime_Rio.dproj"/>
     </Target>
-    <Target Name="test_static_cwLog_Rio:Clean">
-        <MSBuild Projects="tests\cwLog\test_static_cwLog_Rio.dproj" Targets="Clean"/>
+    <Target Name="cwRuntime_Rio:Clean">
+        <MSBuild Projects="tests\cwRuntime_Rio.dproj" Targets="Clean"/>
     </Target>
-    <Target Name="test_static_cwLog_Rio:Make">
-        <MSBuild Projects="tests\cwLog\test_static_cwLog_Rio.dproj" Targets="Make"/>
-    </Target>
-    <Target Name="test_cwTypes_Rio">
-        <MSBuild Projects="tests\cwTypes\test_cwTypes_Rio.dproj"/>
-    </Target>
-    <Target Name="test_cwTypes_Rio:Clean">
-        <MSBuild Projects="tests\cwTypes\test_cwTypes_Rio.dproj" Targets="Clean"/>
-    </Target>
-    <Target Name="test_cwTypes_Rio:Make">
-        <MSBuild Projects="tests\cwTypes\test_cwTypes_Rio.dproj" Targets="Make"/>
-    </Target>
-    <Target Name="test_cwUnicode_Rio">
-        <MSBuild Projects="tests\cwUnicode\test_cwUnicode_Rio.dproj"/>
-    </Target>
-    <Target Name="test_cwUnicode_Rio:Clean">
-        <MSBuild Projects="tests\cwUnicode\test_cwUnicode_Rio.dproj" Targets="Clean"/>
-    </Target>
-    <Target Name="test_cwUnicode_Rio:Make">
-        <MSBuild Projects="tests\cwUnicode\test_cwUnicode_Rio.dproj" Targets="Make"/>
-    </Target>
-    <Target Name="test_cwIO_Rio">
-        <MSBuild Projects="tests\cwIO\test_cwIO_Rio.dproj"/>
-    </Target>
-    <Target Name="test_cwIO_Rio:Clean">
-        <MSBuild Projects="tests\cwIO\test_cwIO_Rio.dproj" Targets="Clean"/>
-    </Target>
-    <Target Name="test_cwIO_Rio:Make">
-        <MSBuild Projects="tests\cwIO\test_cwIO_Rio.dproj" Targets="Make"/>
-    </Target>
-    <Target Name="test_cwVectors_Rio">
-        <MSBuild Projects="tests\cwVectors\test_cwVectors_Rio.dproj"/>
-    </Target>
-    <Target Name="test_cwVectors_Rio:Clean">
-        <MSBuild Projects="tests\cwVectors\test_cwVectors_Rio.dproj" Targets="Clean"/>
-    </Target>
-    <Target Name="test_cwVectors_Rio:Make">
-        <MSBuild Projects="tests\cwVectors\test_cwVectors_Rio.dproj" Targets="Make"/>
+    <Target Name="cwRuntime_Rio:Make">
+        <MSBuild Projects="tests\cwRuntime_Rio.dproj" Targets="Make"/>
     </Target>
     <Target Name="Build">
-        <CallTarget Targets="pkg_cwRuntime_Rio;cwTest_SampleTests_Rio;lib_testLoadLib_Rio;cwDynLib_LoadLibSample_Rio;cwLog_LogToConsole_Rio;test_cwTest_Rio;test_cwCollections_Rio;lib_cwLog_Rio;test_dynamic_cwLog_Rio;test_static_cwLog_Rio;test_cwTypes_Rio;test_cwUnicode_Rio;test_cwIO_Rio;test_cwVectors_Rio"/>
+        <CallTarget Targets="pkg_cwRuntime_Rio;cwTest_SampleTests_Rio;lib_testLoadLib_Rio;cwDynLib_LoadLibSample_Rio;cwLog_LogToConsole_Rio;lib_cwLog_Rio;test_cwTest_Rio;test_dynamic_cwLog_Rio;cwRuntime_Rio"/>
     </Target>
     <Target Name="Clean">
-        <CallTarget Targets="pkg_cwRuntime_Rio:Clean;cwTest_SampleTests_Rio:Clean;lib_testLoadLib_Rio:Clean;cwDynLib_LoadLibSample_Rio:Clean;cwLog_LogToConsole_Rio:Clean;test_cwTest_Rio:Clean;test_cwCollections_Rio:Clean;lib_cwLog_Rio:Clean;test_dynamic_cwLog_Rio:Clean;test_static_cwLog_Rio:Clean;test_cwTypes_Rio:Clean;test_cwUnicode_Rio:Clean;test_cwIO_Rio:Clean;test_cwVectors_Rio:Clean"/>
+        <CallTarget Targets="pkg_cwRuntime_Rio:Clean;cwTest_SampleTests_Rio:Clean;lib_testLoadLib_Rio:Clean;cwDynLib_LoadLibSample_Rio:Clean;cwLog_LogToConsole_Rio:Clean;lib_cwLog_Rio:Clean;test_cwTest_Rio:Clean;test_dynamic_cwLog_Rio:Clean;cwRuntime_Rio:Clean"/>
     </Target>
     <Target Name="Make">
-        <CallTarget Targets="pkg_cwRuntime_Rio:Make;cwTest_SampleTests_Rio:Make;lib_testLoadLib_Rio:Make;cwDynLib_LoadLibSample_Rio:Make;cwLog_LogToConsole_Rio:Make;test_cwTest_Rio:Make;test_cwCollections_Rio:Make;lib_cwLog_Rio:Make;test_dynamic_cwLog_Rio:Make;test_static_cwLog_Rio:Make;test_cwTypes_Rio:Make;test_cwUnicode_Rio:Make;test_cwIO_Rio:Make;test_cwVectors_Rio:Make"/>
+        <CallTarget Targets="pkg_cwRuntime_Rio:Make;cwTest_SampleTests_Rio:Make;lib_testLoadLib_Rio:Make;cwDynLib_LoadLibSample_Rio:Make;cwLog_LogToConsole_Rio:Make;lib_cwLog_Rio:Make;test_cwTest_Rio:Make;test_dynamic_cwLog_Rio:Make;cwRuntime_Rio:Make"/>
     </Target>
     <Import Project="$(BDS)\Bin\CodeGear.Group.Targets" Condition="Exists('$(BDS)\Bin\CodeGear.Group.Targets')"/>
 </Project>

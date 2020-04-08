@@ -18,31 +18,16 @@
         <Projects Include="samples\cwLog\LogToConsole\cwLog_LogToConsole_XE5.dproj">
             <Dependencies/>
         </Projects>
-        <Projects Include="tests\cwTest\test_cwTest_XE5.dproj">
-            <Dependencies/>
-        </Projects>
-        <Projects Include="tests\cwCollections\test_cwCollections_XE5.dproj">
-            <Dependencies/>
-        </Projects>
         <Projects Include="projects\lib_cwLog_XE5.dproj">
             <Dependencies/>
         </Projects>
-        <Projects Include="tests\cwLog\test_dynamic_cwLog_XE5.dproj">
+        <Projects Include="tests\test_cwTest_XE5.dproj">
             <Dependencies/>
         </Projects>
-        <Projects Include="tests\cwLog\test_static_cwLog_XE5.dproj">
+        <Projects Include="tests\test_dynamic_cwLog_XE5.dproj">
             <Dependencies/>
         </Projects>
-        <Projects Include="tests\cwTypes\test_cwTypes_XE5.dproj">
-            <Dependencies/>
-        </Projects>
-        <Projects Include="tests\cwUnicode\test_cwUnicode_XE5.dproj">
-            <Dependencies/>
-        </Projects>
-        <Projects Include="tests\cwIO\test_cwIO_XE5.dproj">
-            <Dependencies/>
-        </Projects>
-        <Projects Include="tests\cwVectors\test_cwVectors_XE5.dproj">
+        <Projects Include="tests\cwRuntime_XE5.dproj">
             <Dependencies/>
         </Projects>
     </ItemGroup>
@@ -98,24 +83,6 @@
     <Target Name="cwLog_LogToConsole_XE5:Make">
         <MSBuild Projects="samples\cwLog\LogToConsole\cwLog_LogToConsole_XE5.dproj" Targets="Make"/>
     </Target>
-    <Target Name="test_cwTest_XE5">
-        <MSBuild Projects="tests\cwTest\test_cwTest_XE5.dproj"/>
-    </Target>
-    <Target Name="test_cwTest_XE5:Clean">
-        <MSBuild Projects="tests\cwTest\test_cwTest_XE5.dproj" Targets="Clean"/>
-    </Target>
-    <Target Name="test_cwTest_XE5:Make">
-        <MSBuild Projects="tests\cwTest\test_cwTest_XE5.dproj" Targets="Make"/>
-    </Target>
-    <Target Name="test_cwCollections_XE5">
-        <MSBuild Projects="tests\cwCollections\test_cwCollections_XE5.dproj"/>
-    </Target>
-    <Target Name="test_cwCollections_XE5:Clean">
-        <MSBuild Projects="tests\cwCollections\test_cwCollections_XE5.dproj" Targets="Clean"/>
-    </Target>
-    <Target Name="test_cwCollections_XE5:Make">
-        <MSBuild Projects="tests\cwCollections\test_cwCollections_XE5.dproj" Targets="Make"/>
-    </Target>
     <Target Name="lib_cwLog_XE5">
         <MSBuild Projects="projects\lib_cwLog_XE5.dproj"/>
     </Target>
@@ -125,68 +92,41 @@
     <Target Name="lib_cwLog_XE5:Make">
         <MSBuild Projects="projects\lib_cwLog_XE5.dproj" Targets="Make"/>
     </Target>
+    <Target Name="test_cwTest_XE5">
+        <MSBuild Projects="tests\test_cwTest_XE5.dproj"/>
+    </Target>
+    <Target Name="test_cwTest_XE5:Clean">
+        <MSBuild Projects="tests\test_cwTest_XE5.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="test_cwTest_XE5:Make">
+        <MSBuild Projects="tests\test_cwTest_XE5.dproj" Targets="Make"/>
+    </Target>
     <Target Name="test_dynamic_cwLog_XE5">
-        <MSBuild Projects="tests\cwLog\test_dynamic_cwLog_XE5.dproj"/>
+        <MSBuild Projects="tests\test_dynamic_cwLog_XE5.dproj"/>
     </Target>
     <Target Name="test_dynamic_cwLog_XE5:Clean">
-        <MSBuild Projects="tests\cwLog\test_dynamic_cwLog_XE5.dproj" Targets="Clean"/>
+        <MSBuild Projects="tests\test_dynamic_cwLog_XE5.dproj" Targets="Clean"/>
     </Target>
     <Target Name="test_dynamic_cwLog_XE5:Make">
-        <MSBuild Projects="tests\cwLog\test_dynamic_cwLog_XE5.dproj" Targets="Make"/>
+        <MSBuild Projects="tests\test_dynamic_cwLog_XE5.dproj" Targets="Make"/>
     </Target>
-    <Target Name="test_static_cwLog_XE5">
-        <MSBuild Projects="tests\cwLog\test_static_cwLog_XE5.dproj"/>
+    <Target Name="cwRuntime_XE5">
+        <MSBuild Projects="tests\cwRuntime_XE5.dproj"/>
     </Target>
-    <Target Name="test_static_cwLog_XE5:Clean">
-        <MSBuild Projects="tests\cwLog\test_static_cwLog_XE5.dproj" Targets="Clean"/>
+    <Target Name="cwRuntime_XE5:Clean">
+        <MSBuild Projects="tests\cwRuntime_XE5.dproj" Targets="Clean"/>
     </Target>
-    <Target Name="test_static_cwLog_XE5:Make">
-        <MSBuild Projects="tests\cwLog\test_static_cwLog_XE5.dproj" Targets="Make"/>
-    </Target>
-    <Target Name="test_cwTypes_XE5">
-        <MSBuild Projects="tests\cwTypes\test_cwTypes_XE5.dproj"/>
-    </Target>
-    <Target Name="test_cwTypes_XE5:Clean">
-        <MSBuild Projects="tests\cwTypes\test_cwTypes_XE5.dproj" Targets="Clean"/>
-    </Target>
-    <Target Name="test_cwTypes_XE5:Make">
-        <MSBuild Projects="tests\cwTypes\test_cwTypes_XE5.dproj" Targets="Make"/>
-    </Target>
-    <Target Name="test_cwUnicode_XE5">
-        <MSBuild Projects="tests\cwUnicode\test_cwUnicode_XE5.dproj"/>
-    </Target>
-    <Target Name="test_cwUnicode_XE5:Clean">
-        <MSBuild Projects="tests\cwUnicode\test_cwUnicode_XE5.dproj" Targets="Clean"/>
-    </Target>
-    <Target Name="test_cwUnicode_XE5:Make">
-        <MSBuild Projects="tests\cwUnicode\test_cwUnicode_XE5.dproj" Targets="Make"/>
-    </Target>
-    <Target Name="test_cwIO_XE5">
-        <MSBuild Projects="tests\cwIO\test_cwIO_XE5.dproj"/>
-    </Target>
-    <Target Name="test_cwIO_XE5:Clean">
-        <MSBuild Projects="tests\cwIO\test_cwIO_XE5.dproj" Targets="Clean"/>
-    </Target>
-    <Target Name="test_cwIO_XE5:Make">
-        <MSBuild Projects="tests\cwIO\test_cwIO_XE5.dproj" Targets="Make"/>
-    </Target>
-    <Target Name="test_cwVectors_XE5">
-        <MSBuild Projects="tests\cwVectors\test_cwVectors_XE5.dproj"/>
-    </Target>
-    <Target Name="test_cwVectors_XE5:Clean">
-        <MSBuild Projects="tests\cwVectors\test_cwVectors_XE5.dproj" Targets="Clean"/>
-    </Target>
-    <Target Name="test_cwVectors_XE5:Make">
-        <MSBuild Projects="tests\cwVectors\test_cwVectors_XE5.dproj" Targets="Make"/>
+    <Target Name="cwRuntime_XE5:Make">
+        <MSBuild Projects="tests\cwRuntime_XE5.dproj" Targets="Make"/>
     </Target>
     <Target Name="Build">
-        <CallTarget Targets="pkg_cwRuntime_XE5;cwTest_SampleTests_XE5;lib_testLoadLib_XE5;cwDynLib_LoadLibSample_XE5;cwLog_LogToConsole_XE5;test_cwTest_XE5;test_cwCollections_XE5;lib_cwLog_XE5;test_dynamic_cwLog_XE5;test_static_cwLog_XE5;test_cwTypes_XE5;test_cwUnicode_XE5;test_cwIO_XE5;test_cwVectors_XE5"/>
+        <CallTarget Targets="pkg_cwRuntime_XE5;cwTest_SampleTests_XE5;lib_testLoadLib_XE5;cwDynLib_LoadLibSample_XE5;cwLog_LogToConsole_XE5;lib_cwLog_XE5;test_cwTest_XE5;test_dynamic_cwLog_XE5;cwRuntime_XE5"/>
     </Target>
     <Target Name="Clean">
-        <CallTarget Targets="pkg_cwRuntime_XE5:Clean;cwTest_SampleTests_XE5:Clean;lib_testLoadLib_XE5:Clean;cwDynLib_LoadLibSample_XE5:Clean;cwLog_LogToConsole_XE5:Clean;test_cwTest_XE5:Clean;test_cwCollections_XE5:Clean;lib_cwLog_XE5:Clean;test_dynamic_cwLog_XE5:Clean;test_static_cwLog_XE5:Clean;test_cwTypes_XE5:Clean;test_cwUnicode_XE5:Clean;test_cwIO_XE5:Clean;test_cwVectors_XE5:Clean"/>
+        <CallTarget Targets="pkg_cwRuntime_XE5:Clean;cwTest_SampleTests_XE5:Clean;lib_testLoadLib_XE5:Clean;cwDynLib_LoadLibSample_XE5:Clean;cwLog_LogToConsole_XE5:Clean;lib_cwLog_XE5:Clean;test_cwTest_XE5:Clean;test_dynamic_cwLog_XE5:Clean;cwRuntime_XE5:Clean"/>
     </Target>
     <Target Name="Make">
-        <CallTarget Targets="pkg_cwRuntime_XE5:Make;cwTest_SampleTests_XE5:Make;lib_testLoadLib_XE5:Make;cwDynLib_LoadLibSample_XE5:Make;cwLog_LogToConsole_XE5:Make;test_cwTest_XE5:Make;test_cwCollections_XE5:Make;lib_cwLog_XE5:Make;test_dynamic_cwLog_XE5:Make;test_static_cwLog_XE5:Make;test_cwTypes_XE5:Make;test_cwUnicode_XE5:Make;test_cwIO_XE5:Make;test_cwVectors_XE5:Make"/>
+        <CallTarget Targets="pkg_cwRuntime_XE5:Make;cwTest_SampleTests_XE5:Make;lib_testLoadLib_XE5:Make;cwDynLib_LoadLibSample_XE5:Make;cwLog_LogToConsole_XE5:Make;lib_cwLog_XE5:Make;test_cwTest_XE5:Make;test_dynamic_cwLog_XE5:Make;cwRuntime_XE5:Make"/>
     </Target>
     <Import Project="$(BDS)\Bin\CodeGear.Group.Targets" Condition="Exists('$(BDS)\Bin\CodeGear.Group.Targets')"/>
 </Project>
