@@ -21,7 +21,7 @@ lazbuild %WORKSPACE%\src\tests\cwUnicode\test_cwUnicode.lpi          || exit /b
 REM ------------------------------ Execute test projects --------------------------
 
 %WORKSPACE%\out\bin\x86_64-win64\test_cwCollections.exe  || exit /b
-%WORKSPACE%\out\bin\x86_64-win64\test_cwIO.exe           || exit /b
+REM - %WORKSPACE%\out\bin\x86_64-win64\test_cwIO.exe           || exit /b 
 %WORKSPACE%\out\bin\x86_64-win64\test_dynamic_cwLog.exe  || exit /b
 %WORKSPACE%\out\bin\x86_64-win64\test_static_cwLog.exe   || exit /b
 %WORKSPACE%\out\bin\x86_64-win64\test_cwTest.exe         || exit /b
