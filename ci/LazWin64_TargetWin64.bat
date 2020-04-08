@@ -13,8 +13,8 @@ lazbuild %WORKSPACE%\src\projects\lib_cwLog.lpi  || exit /b
 
 REM ------------------------------ Build test projects --------------------------
 
-lazbuild %WORKSPACE%\src\tests\test_dynamic_cwLog.lpi          || exit /b
-lazbuild %WORKSPACE%\src\tests\test_cwTest.lpi                || exit /b
+lazbuild %WORKSPACE%\src\tests\test_dynamic_cwLog.lpi      || exit /b
+lazbuild %WORKSPACE%\src\tests\test_cwTest.lpi             || exit /b
 lazbuild %WORKSPACE%\src\tests\test_cwRuntime.lpi          || exit /b
 
 REM ------------------------------ Execute test projects --------------------------
