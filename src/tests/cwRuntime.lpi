@@ -10,7 +10,7 @@
         <MainUnitHasScaledStatement Value="False"/>
       </Flags>
       <SessionStorage Value="InProjectDir"/>
-      <Title Value="test_cwTest"/>
+      <Title Value="cwRuntime"/>
       <UseAppBundle Value="False"/>
       <ResourceType Value="res"/>
     </General>
@@ -26,24 +26,8 @@
     </RunParams>
     <Units>
       <Unit>
-        <Filename Value="test_cwTest.dpr"/>
+        <Filename Value="cwRuntime.dpr"/>
         <IsPartOfProject Value="True"/>
-        <UnitName Value="test_cwIO"/>
-      </Unit>
-      <Unit>
-        <Filename Value="testcases\test_cwtest.sampletest.pas"/>
-        <IsPartOfProject Value="True"/>
-        <UnitName Value="test_cwTest.SampleTest"/>
-      </Unit>
-      <Unit>
-        <Filename Value="testcases\test_cwtest.setupfails.pas"/>
-        <IsPartOfProject Value="True"/>
-        <UnitName Value="test_cwtest.SetupFails"/>
-      </Unit>
-      <Unit>
-        <Filename Value="testcases\test_cwtest.teardownfails.pas"/>
-        <IsPartOfProject Value="True"/>
-        <UnitName Value="test_cwtest.TearDownFails"/>
       </Unit>
     </Units>
   </ProjectOptions>
@@ -51,12 +35,12 @@
     <Version Value="11"/>
     <PathDelim Value="\"/>
     <Target>
-      <Filename Value="..\..\..\out\bin\$(TargetCPU)-$(TargetOS)\test_cwTest"/>
+      <Filename Value="..\..\out\bin\$(TargetCPU)-$(TargetOS)\test_cwRuntime"/>
     </Target>
     <SearchPaths>
       <IncludeFiles Value="$(ProjOutDir)"/>
-      <OtherUnitFiles Value="..\..\main\api;..\..\main\implementation;..\cwTests\testcases;testcases"/>
-      <UnitOutputDirectory Value="..\..\..\out\lib\$(TargetCPU)-$(TargetOS)"/>
+      <OtherUnitFiles Value="..\main\api;..\main\implementation;testcases\cwCollections;testcases\cwIO;testcases\cwLog;testcases\cwTypes;testcases\cwUnicode;testcases\cwVectors"/>
+      <UnitOutputDirectory Value="..\..\out\lib\$(TargetCPU)-$(TargetOS)"/>
     </SearchPaths>
   </CompilerOptions>
   <Debugging>

@@ -10,7 +10,7 @@
         <MainUnitHasScaledStatement Value="False"/>
       </Flags>
       <SessionStorage Value="InProjectDir"/>
-      <Title Value="test_cwUnicode"/>
+      <Title Value="test_dynamic_cwLog"/>
       <UseAppBundle Value="False"/>
       <ResourceType Value="res"/>
     </General>
@@ -26,16 +26,11 @@
     </RunParams>
     <Units>
       <Unit>
-        <Filename Value="test_cwUnicode.dpr"/>
+        <Filename Value="test_dynamic_cwLog.dpr"/>
         <IsPartOfProject Value="True"/>
       </Unit>
       <Unit>
-        <Filename Value="testcases\test.cwunicode.codec.standard.pas"/>
-        <IsPartOfProject Value="True"/>
-        <UnitName Value="test.cwUnicode.Codec.Standard"/>
-      </Unit>
-      <Unit>
-        <Filename Value="testcases\test.cwunicode.unicodestring.standard.pas"/>
+        <Filename Value="cwLog\testcases\test_cwlog.inserts.dynamic.pas"/>
         <IsPartOfProject Value="True"/>
       </Unit>
     </Units>
@@ -44,12 +39,12 @@
     <Version Value="11"/>
     <PathDelim Value="\"/>
     <Target>
-      <Filename Value="..\..\..\out\bin\$(TargetCPU)-$(TargetOS)\test_cwUnicode"/>
+      <Filename Value="..\..\out\bin\$(TargetCPU)-$(TargetOS)\test_dynamic_cwLog"/>
     </Target>
     <SearchPaths>
       <IncludeFiles Value="$(ProjOutDir)"/>
-      <OtherUnitFiles Value="testcases;..\..\main\api;..\..\main\implementation"/>
-      <UnitOutputDirectory Value="..\..\..\out\lib\$(TargetCPU)-$(TargetOS)"/>
+      <OtherUnitFiles Value="..\main\api;..\main\implementation;testcases\cwLog"/>
+      <UnitOutputDirectory Value="..\..\out\lib\$(TargetCPU)-$(TargetOS)"/>
     </SearchPaths>
   </CompilerOptions>
   <Debugging>

@@ -26,21 +26,29 @@
   IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 *)
 {$endif}
-program test_cwUnicode;
+program test_cwTest;
 uses
   cwTest
 , cwTest.Standard
-, test.cwUnicode.Codec.Standard
-, Test.cwUnicode.UnicodeString.Standard
+, test_cwtest.SetupFails
+, test_cwtest.TearDownFails
+, test_cwtest.SampleTest
 ;
 
 var
   R: nativeuint;
 
 begin
-  R := TestSuite.Run( 'cwUnicode', [TConsoleReport.Create] );
-  if ParamStr(1)='ide' then begin
-    Readln;
+  R := TestSuite.Run( 'cwTest', [TConsoleReport.Create] );
+  if R<>4 then begin
+    Writeln('Failing / Erroring tests should = 4');
+    if ParamStr(1)='ide' then begin
+      Readln;
+    end;
+    Halt(1);
+  end else begin
+    if ParamStr(1)='ide' then begin
+      Readln;
+    end;
   end;
-  Halt(R);
 end.

@@ -26,22 +26,53 @@
   IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 *)
 {$endif}
-program test_cwIO;
+program test_cwRuntime;
 uses
   cwTest
 , cwTest.Standard
-, test.cwIO.Buffers
-, test.cwIO.Streams
-, test.cwIO.UnicodeBuffers
-, test.cwIO.UnicodeStreams
-, test.cwIO.CyclicBuffers
+  , test_cwVectors.Vector2
+  , test_cwVectors.Vector3
+  , test_cwVectors.Vector4
+  , test_cwVectors.Matrix2x2
+  , test_cwVectors.Matrix3x3
+  , test_cwVectors.Matrix4x4
+  , test_cwVectors.Ray
+  , test.cwIO.Buffers
+  , test.cwIO.Streams
+  , test.cwIO.UnicodeBuffers
+  , test.cwIO.UnicodeStreams
+  , test.cwIO.CyclicBuffers
+  , test.cwUnicode.Codec.Standard
+  , Test.cwUnicode.UnicodeString.Standard
+  , test_cwTypes.ExtendedHelper
+  , test_cwTypes.DoubleHelper
+  , test_cwTypes.DateTimeHelper
+  , test_cwTypes.CharHelper
+  , test_cwTypes.BooleanHelper
+  , test_cwTypes.Uint64Helper
+  , test_cwTypes.Uint32Helper
+  , test_cwTypes.Uint16Helper
+  , test_cwTypes.Uint8Helper
+  , test_cwTypes.StringHelper
+  , test_cwTypes.SingleHelper
+  , test_cwTypes.PointerHelper
+  , test_cwTypes.NativeUintHelper
+  , test_cwTypes.Int64Helper
+  , test_cwTypes.Int32Helper
+  , test_cwTypes.Int16Helper
+  , test_cwTypes.Int8Helper
+  , test_cwlog.inserts.static
+  , test_cwCollections.RingBuffer
+  , test_cwCollections.Stack
+  , test_cwCollections.Dictionary
+  , test_cwCollections.List
 ;
 
 var
   R: nativeuint;
 
 begin
-  R := TestSuite.Run( 'cwIO', [TConsoleReport.Create] );
+  R := TestSuite.Run( 'cwRuntime', [TConsoleReport.Create] );
   if ParamStr(1)='ide' then begin
     Readln;
   end;

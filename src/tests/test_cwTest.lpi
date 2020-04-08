@@ -10,7 +10,7 @@
         <MainUnitHasScaledStatement Value="False"/>
       </Flags>
       <SessionStorage Value="InProjectDir"/>
-      <Title Value="test_cwCollections"/>
+      <Title Value="test_cwTest"/>
       <UseAppBundle Value="False"/>
       <ResourceType Value="res"/>
     </General>
@@ -26,29 +26,23 @@
     </RunParams>
     <Units>
       <Unit>
-        <Filename Value="test_cwCollections.dpr"/>
+        <Filename Value="test_cwTest.dpr"/>
         <IsPartOfProject Value="True"/>
-        <UnitName Value="test_cwTest"/>
       </Unit>
       <Unit>
-        <Filename Value="testcases\test_cwcollections.ringbuffer.pas"/>
+        <Filename Value="cwTest\testcases\test_cwtest.sampletest.pas"/>
         <IsPartOfProject Value="True"/>
-        <UnitName Value="test_cwCollections.RingBuffer"/>
+        <UnitName Value="test_cwTest.SampleTest"/>
       </Unit>
       <Unit>
-        <Filename Value="testcases\test_cwcollections.stack.pas"/>
+        <Filename Value="cwTest\testcases\test_cwtest.setupfails.pas"/>
         <IsPartOfProject Value="True"/>
-        <UnitName Value="test_cwCollections.Stack"/>
+        <UnitName Value="test_cwtest.SetupFails"/>
       </Unit>
       <Unit>
-        <Filename Value="testcases\test_cwcollections.dictionary.pas"/>
+        <Filename Value="cwTest\testcases\test_cwtest.teardownfails.pas"/>
         <IsPartOfProject Value="True"/>
-        <UnitName Value="test_cwCollections.Dictionary"/>
-      </Unit>
-      <Unit>
-        <Filename Value="testcases\test_cwcollections.list.pas"/>
-        <IsPartOfProject Value="True"/>
-        <UnitName Value="test_cwCollections.List"/>
+        <UnitName Value="test_cwtest.TearDownFails"/>
       </Unit>
     </Units>
   </ProjectOptions>
@@ -56,12 +50,12 @@
     <Version Value="11"/>
     <PathDelim Value="\"/>
     <Target>
-      <Filename Value="..\..\..\out\bin\$(TargetCPU)-$(TargetOS)\test_cwCollections"/>
+      <Filename Value="..\..\out\bin\$(TargetCPU)-$(TargetOS)\test_cwTest"/>
     </Target>
     <SearchPaths>
       <IncludeFiles Value="$(ProjOutDir)"/>
-      <OtherUnitFiles Value="testcases;..\..\main\api;..\..\main\implementation"/>
-      <UnitOutputDirectory Value="..\..\..\out\lib\$(TargetCPU)-$(TargetOS)"/>
+      <OtherUnitFiles Value="..\main\api;..\main\implementation;testcases\cwTest"/>
+      <UnitOutputDirectory Value="..\..\out\lib\$(TargetCPU)-$(TargetOS)"/>
     </SearchPaths>
   </CompilerOptions>
   <Debugging>
