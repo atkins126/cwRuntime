@@ -25,11 +25,11 @@ msbuild %WORKSPACE%\src\tests\cwUnicode\test_cwUnicode_XE5.dproj          || exi
 
 REM ------------------------------ Execute test projects --------------------------
 
-%WORKSPACE%\out\bin\x86_64-win64\test_cwCollections.exe                   || exit /b
-REM - %WORKSPACE%\out\bin\x86_64-win64\test_cwIO.exe                           || exit /b 
-%WORKSPACE%\out\bin\x86_64-win64\test_dynamic_cwLog.exe                   || exit /b
-%WORKSPACE%\out\bin\x86_64-win64\test_static_cwLog.exe                    || exit /b
-%WORKSPACE%\out\bin\x86_64-win64\test_cwTest.exe                          || exit /b
-%WORKSPACE%\out\bin\x86_64-win64\test_cwTypes.exe                         || exit /b
-%WORKSPACE%\out\bin\x86_64-win64\test_cwUnicode.exe                       || exit /b
-%WORKSPACE%\out\bin\x86_64-win64\test_cwVectors.exe                       || exit /b
+%WORKSPACE%\out\bin\Win64\Debug\test_cwCollections.exe                    || exit /b
+REM - %WORKSPACE%\out\bin\Win64\Debug\test_cwIO.exe                            || exit /b 
+%WORKSPACE%\out\bin\Win64\Debug\test_dynamic_cwLog.exe                    || exit /b
+%WORKSPACE%\out\bin\Win64\Debug\test_static_cwLog.exe                     || exit /b
+%WORKSPACE%\out\bin\Win64\Debug\test_cwTest.exe                           || exit /b
+%WORKSPACE%\out\bin\Win64\Debug\test_cwTypes.exe                          || exit /b
+%WORKSPACE%\out\bin\Win64\Debug\test_cwUnicode.exe                        || exit /b
+%WORKSPACE%\out\bin\Win64\Debug\test_cwVectors.exe                        || exit /b
