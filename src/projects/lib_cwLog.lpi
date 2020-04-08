@@ -26,7 +26,7 @@
     </RunParams>
     <Units>
       <Unit>
-        <Filename Value="lib_cwLog.pas"/>
+        <Filename Value="lib_cwLog.dpr"/>
         <IsPartOfProject Value="True"/>
       </Unit>
       <Unit>
@@ -57,7 +57,7 @@
     </Target>
     <SearchPaths>
       <IncludeFiles Value="$(ProjOutDir)"/>
-      <OtherUnitFiles Value="api;implementation;..\..\dependencies\cwUnicode\api;..\..\dependencies\cwUnicode\implementation;..\..\dependencies\cwTypes\api;lib"/>
+      <OtherUnitFiles Value="..\main\api;..\main\implementation"/>
       <UnitOutputDirectory Value="..\..\out\lib\$(TargetCPU)-$(TargetOS)"/>
     </SearchPaths>
     <CodeGeneration>

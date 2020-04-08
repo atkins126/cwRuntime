@@ -53,14 +53,14 @@ type
   ///    Factory record to create instances of ICyclicBuffer in memory.
   ///  </summary>
   TCyclicBuffer = record
-    class function Create( const Size: uint64 = 0 ): ICyclicBuffer; static;
+    class function Create( const Size: nativeuint = 0 ): ICyclicBuffer; static;
   end;
 
   ///  <summary>
   ///    Factory record to create instances of IBuffer / IUnicodeBuffer in memory.
   ///  </summary>
   TBuffer = record
-    class function Create( const aSize: uint64 = 0; const Align16: boolean = FALSE ): IUnicodeBuffer; static;
+    class function Create( const aSize: nativeuint = 0; const Align16: boolean = FALSE ): IUnicodeBuffer; static;
   end;
 
 
@@ -77,12 +77,12 @@ begin
   Result := cwIO.FileStream.Standard.TFileStream.Create( Filepath, ReadOnly );
 end;
 
-class function TCyclicBuffer.Create(const Size: uint64): ICyclicBuffer;
+class function TCyclicBuffer.Create(const Size: nativeuint = 0): ICyclicBuffer;
 begin
   Result := cwIO.CyclicBuffer.Standard.TCyclicBuffer.Create( Size );
 end;
 
-class function TBuffer.Create(const aSize: uint64; const Align16: boolean = FALSE ): IUnicodeBuffer;
+class function TBuffer.Create(const aSize: nativeuint = 0; const Align16: boolean = FALSE ): IUnicodeBuffer;
 begin
   Result := cwIO.Buffer.Standard.TBuffer.Create( aSize, Align16 );
 end;

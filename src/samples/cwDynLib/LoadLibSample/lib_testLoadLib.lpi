@@ -26,7 +26,7 @@
     </RunParams>
     <Units>
       <Unit>
-        <Filename Value="lib_testLoadLib.lpr"/>
+        <Filename Value="lib_testLoadLib.dpr"/>
         <IsPartOfProject Value="True"/>
       </Unit>
     </Units>

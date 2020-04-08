@@ -196,7 +196,7 @@ begin
             //- Run test method.
             Reason := '';
             TestResult := RunTest(fRegisteredTestCases[TestCaseIndex], MethodNames[MethodIndex], HasSetup, HasTearDown, Reason );
-            if (TestResult=trFailed) or (TestResult=trError) then begin
+            if (TestResult<>trSucceeded) then begin
               inc(result);
             end;
           finally

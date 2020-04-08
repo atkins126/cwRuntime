@@ -131,13 +131,15 @@ end;
 
 function TLog.Insert(const LogEntry: string; const Severity: TLogSeverity; const Parameters: array of string): TStatus;
 var
+  S: string;
   Str: TUnicodeString;
   ParamStr: TUnicodeString;
   ParamArray: TArrayOfString;
 begin
   Str.AsString := LogEntry;
   {$warnings off} ParamArray.AssignArray(Parameters); {$warnings on}
-  ParamStr.AsString.Combine(LF,ParamArray);
+  S.Combine(LF,ParamArray);
+  ParamStr := S;
   Result := fLogBinding.InsertLogEntryByString(Str.AsPtr,Severity,ParamStr.AsPtr);
 end;
 

@@ -58,10 +58,10 @@ var
 function Log: ILog;
 begin
   if not assigned(LocalSingletonLog) then begin
-    Result := cwLog.Log.Dynamic.Log();
+    LocalSingletonLog := cwLog.Log.Dynamic.Log();
   end;
   if not assigned(LocalSingletonLog) then begin
-    Result := cwLog.Log.Static.Log();
+    LocalSingletonLog := cwLog.Log.Static.Log();
   end;
   Result := LocalSingletonLog;
 end;

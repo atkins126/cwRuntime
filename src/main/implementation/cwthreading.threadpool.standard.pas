@@ -117,7 +117,7 @@ end;
 
 procedure TThreadPool.CreateThreadMethods;
 var
-  idx: uint64;
+  idx: nativeuint;
 begin
   if fRunning then begin
     exit;
@@ -145,7 +145,7 @@ end;
 
 procedure TThreadPool.DisposeThreadMethods;
 var
-  idx: int64;
+  idx: nativeuint;
 begin
   if not fRunning then begin
     exit;

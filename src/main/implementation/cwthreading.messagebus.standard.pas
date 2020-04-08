@@ -70,7 +70,7 @@ constructor TMessageBus.Create;
 begin
   inherited Create;
   fEnabled := True;
-  fMessageChannels := TMessageChannelDictionary.Create(@TCompare.CompareStrings,16);
+  fMessageChannels := TMessageChannelDictionary.Create({$ifdef fpc}@{$endif}TCompare.CompareStrings,16);
 end;
 
 function TMessageBus.CreateChannel(ChannelName: string): IMessageChannel;
@@ -117,7 +117,7 @@ end;
 
 procedure TMessageBus.setEnabled(value: boolean);
 var
-  idx: uint64;
+  idx: nativeuint;
   Dictionary: IMessageChannelDictionary;
 begin
   if fEnabled=value then begin
