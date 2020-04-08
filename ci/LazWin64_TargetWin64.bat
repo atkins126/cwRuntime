@@ -1,5 +1,5 @@
 @echo off
-WORKSPACE=%1
+SET WORKSPACE=%1
 
 REM ------------------------------------------------------------------------------
 REM - This file exists for the sake of the projects continuous integration server.

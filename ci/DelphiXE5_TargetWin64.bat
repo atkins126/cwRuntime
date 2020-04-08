@@ -4,9 +4,9 @@ REM - This file exists for the sake of the projects continuous integration serve
 REM - Do not use unless you know what you are doing.
 REM ------------------------------------------------------------------------------
 
-ENV=%1
-WORKSPACE=%2
-call ENV || exit /b
+SET ENV=%1
+SET WORKSPACE=%2
+call %ENV% || exit /b
 
 REM ------------------------------ Build sample projects ------------------------
 
