@@ -11,7 +11,7 @@ call %ENV% || exit /b
 REM ------------------------------ Build sample projects ------------------------
 
 REM ------------------------------ Build log library (debug) --------------------
-msbuild %WORKSPACE%\src\projects\lib_cwLog.dproj                          || exit /b
+msbuild %WORKSPACE%\src\projects\lib_cwLog_XE5.dproj                      || exit /b
 
 REM ------------------------------ Build test projects --------------------------
 
