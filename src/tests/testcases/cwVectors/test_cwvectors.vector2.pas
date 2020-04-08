@@ -171,11 +171,11 @@ uses
 
 procedure TTestVector2.Add;
 var
-  V1, V2, V3: Vector2;
+  V1, V2, V3: sVector2;
 begin
   // Arrange:
-  V1 := Vector2.Create(5,6);
-  V2 := Vector2.Create(2,3);
+  V1 := sVector2.Create(5,6);
+  V2 := sVector2.Create(2,3);
   // Act:
   V3 := V1 + V2;
   // Assert:
@@ -185,8 +185,8 @@ end;
 
 procedure TTestVector2.AddAV;
 var
-  V: Vector2;
-  R: Vector2;
+  V: sVector2;
+  R: sVector2;
 begin
   // Arrange:
   V := [ 2, 3 ]; // FPC Bug [0035061] https://bugs.freepascal.org/view.php?id=35061 RESOLVED
@@ -200,10 +200,10 @@ end;
 
 procedure TTestVector2.AddF;
 var
-  V1, V2: Vector2;
+  V1, V2: sVector2;
 begin
   // Arrange:
-  V1 := Vector2.Create(5,6);
+  V1 := sVector2.Create(5,6);
   // Act:
   V2 := V1 + 2;
   // Assert:
@@ -213,8 +213,8 @@ end;
 
 procedure TTestVector2.AddVA;
 var
-  V: Vector2;
-  R: Vector2;
+  V: sVector2;
+  R: sVector2;
 begin
   // Arrange:
   V := [ 2, 3 ]; // FPC Bug [0035061] https://bugs.freepascal.org/view.php?id=35061 RESOLVED
@@ -228,7 +228,7 @@ end;
 
 procedure TTestVector2.ArrayAssign;
 var
-  V: Vector2;
+  V: sVector2;
 begin
   // Arrange:
   // Act:
@@ -240,11 +240,11 @@ end;
 
 procedure TTestVector2.CreateXY;
 var
-  V1: Vector2;
+  V1: sVector2;
 begin
   // Arrange:
   // Act:
-  V1 := Vector2.Create(5,6);
+  V1 := sVector2.Create(5,6);
   // Assert:
   TTest.IsTrue( ((V1.X > 4.99 ) and (V1.X < 5.01)) );
   TTest.IsTrue( ((V1.Y > 5.99 ) and (V1.Y < 6.01)) );
@@ -252,11 +252,11 @@ end;
 
 procedure TTestVector2.Divide;
 var
-  V1, V2, V3: Vector2;
+  V1, V2, V3: sVector2;
 begin
   // Arrange:
-  V1 := Vector2.Create(5,6);
-  V2 := Vector2.Create(2,3);
+  V1 := sVector2.Create(5,6);
+  V2 := sVector2.Create(2,3);
   // Act:
   V3 := V1 / V2;
   // Assert:
@@ -266,8 +266,8 @@ end;
 
 procedure TTestVector2.DivideAV;
 var
-  V: Vector2;
-  R: Vector2;
+  V: sVector2;
+  R: sVector2;
 begin
   // Arrange:
   V := [ 2, 3 ]; // FPC Bug [0035061] https://bugs.freepascal.org/view.php?id=35061 RESOLVED
@@ -281,10 +281,10 @@ end;
 
 procedure TTestVector2.DivideF;
 var
-  V1, V2: Vector2;
+  V1, V2: sVector2;
 begin
   // Arrange:
-  V1 := Vector2.Create(5,6);
+  V1 := sVector2.Create(5,6);
   // Act:
   V2 := V1 / 2;
   // Assert:
@@ -294,8 +294,8 @@ end;
 
 procedure TTestVector2.DivideVA;
 var
-  V: Vector2;
-  R: Vector2;
+  V: sVector2;
+  R: sVector2;
 begin
   // Arrange:
   V := [ 4, 3 ]; // FPC Bug [0035061] https://bugs.freepascal.org/view.php?id=35061 RESOLVED
@@ -309,12 +309,12 @@ end;
 
 procedure TTestVector2.dot;
 var
-  V1, V2: Vector2;
+  V1, V2: sVector2;
   F: single;
 begin
   // Arrange:
-  V1 := Vector2.Create(5,6);
-  V2 := Vector2.Create(2,3);
+  V1 := sVector2.Create(5,6);
+  V2 := sVector2.Create(2,3);
   // Act:
   F := V1.dot(V2);
   // Assert:
@@ -323,11 +323,11 @@ end;
 
 procedure TTestVector2.Magnitude;
 var
-  V1: Vector2;
+  V1: sVector2;
   F: single;
 begin
   // Arrange:
-  V1 := Vector2.Create(2,5);
+  V1 := sVector2.Create(2,5);
   // Act:
   F := V1.magnitude;
   // Assert:
@@ -336,11 +336,11 @@ end;
 
 procedure TTestVector2.Multiply;
 var
-  V1, V2, V3: Vector2;
+  V1, V2, V3: sVector2;
 begin
   // Arrange:
-  V1 := Vector2.Create(5,6);
-  V2 := Vector2.Create(7,2);
+  V1 := sVector2.Create(5,6);
+  V2 := sVector2.Create(7,2);
   // Act:
   V3 := V1 * V2;
   // Assert:
@@ -350,8 +350,8 @@ end;
 
 procedure TTestVector2.MultiplyAV;
 var
-  V: Vector2;
-  R: Vector2;
+  V: sVector2;
+  R: sVector2;
 begin
   // Arrange:
   V := [ 4, 3 ]; // FPC Bug [0035061] https://bugs.freepascal.org/view.php?id=35061 RESOLVED
@@ -365,10 +365,10 @@ end;
 
 procedure TTestVector2.MultiplyF;
 var
-  V1, V2: Vector2;
+  V1, V2: sVector2;
 begin
   // Arrange:
-  V1 := Vector2.Create( 5, 6 );
+  V1 := sVector2.Create( 5, 6 );
   // Act:
   V2 := V1 * 3;
   // Assert:
@@ -378,8 +378,8 @@ end;
 
 procedure TTestVector2.MultiplyVA;
 var
-  V: Vector2;
-  R: Vector2;
+  V: sVector2;
+  R: sVector2;
 begin
   // Arrange:
   V := [ 4, 3 ]; // FPC Bug [0035061] https://bugs.freepascal.org/view.php?id=35061 RESOLVED
@@ -394,10 +394,10 @@ end;
 
 procedure TTestVector2.Normalized;
 var
-  V1, V2: Vector2;
+  V1, V2: sVector2;
 begin
   // Arrange:
-  V1 := Vector2.Create( 2, 5 );
+  V1 := sVector2.Create( 2, 5 );
   // Act:
   V2 := V1.normalized;
   // Assert:
@@ -407,11 +407,11 @@ end;
 
 procedure TTestVector2.Subtract;
 var
-  V1, V2, V3: Vector2;
+  V1, V2, V3: sVector2;
 begin
   // Arrange:
-  V1 := Vector2.Create( 8, 6 );
-  V2 := Vector2.Create( 4, 2 );
+  V1 := sVector2.Create( 8, 6 );
+  V2 := sVector2.Create( 4, 2 );
   // Act:
   V3 := V1 - V2;
   // Assert:
@@ -421,8 +421,8 @@ end;
 
 procedure TTestVector2.SubtractAV;
 var
-  V: Vector2;
-  R: Vector2;
+  V: sVector2;
+  R: sVector2;
 begin
   // Arrange:
   V := [ 2, 3 ]; // FPC Bug [0035061] https://bugs.freepascal.org/view.php?id=35061 RESOLVED
@@ -437,10 +437,10 @@ end;
 
 procedure TTestVector2.SubtractF;
 var
-  V1, V2: Vector2;
+  V1, V2: sVector2;
 begin
   // Arrange:
-  V1 := Vector2.Create( 8, 6 );
+  V1 := sVector2.Create( 8, 6 );
   // Act:
   V2 := V1 - 2;
   // Assert:
@@ -450,8 +450,8 @@ end;
 
 procedure TTestVector2.SubtractVA;
 var
-  V: Vector2;
-  R: Vector2;
+  V: sVector2;
+  R: sVector2;
 begin
   // Arrange:
   V := [ 4, 6 ]; // FPC Bug [0035061] https://bugs.freepascal.org/view.php?id=35061 RESOLVED

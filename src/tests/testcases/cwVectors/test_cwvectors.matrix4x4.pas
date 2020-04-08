@@ -170,7 +170,7 @@ uses
 ;
 
 { TTestMatrix }
-function CheckMatrix( M: Matrix4x4; m00, m10, m20, m30, m01, m11, m21, m31, m02, m12, m22, m32, m03, m13, m23, m33: single ): boolean;
+function CheckMatrix( M: sMatrix4x4; m00, m10, m20, m30, m01, m11, m21, m31, m02, m12, m22, m32, m03, m13, m23, m33: single ): boolean;
 begin
   Result := True;
   Result := Result and (M.m00 > (m00-0.01)) and (M.m00 < (m00+0.01));
@@ -193,17 +193,17 @@ end;
 
 procedure TTestMatrix.Add;
 var
-  M1, M2, M3: Matrix4x4;
+  M1, M2, M3: sMatrix4x4;
 begin
   // Arrange:
-  M1 := Matrix4x4.Create(
+  M1 := sMatrix4x4.Create(
     2, 4, 6, 8,
     1, 3, 5, 7,
     8, 4, 6, 2,
     7, 5, 3, 1
   );
 
-  M2 := Matrix4x4.Create(
+  M2 := sMatrix4x4.Create(
     0, 2, 4, 6,
     3, 5, 7, 9,
     6, 4, 2, 0,
@@ -223,11 +223,11 @@ end;
 
 procedure TTestMatrix.AddF;
 var
-  M1, M2: Matrix4x4;
+  M1, M2: sMatrix4x4;
   F: single;
 begin
   // Arrange:
-  M1 := Matrix4x4.Create(
+  M1 := sMatrix4x4.Create(
     2, 4, 6, 8,
     1, 3, 5, 7,
     8, 4, 6, 2,
@@ -249,10 +249,10 @@ end;
 
 procedure TTestMatrix.adjugate;
 var
-  M: Matrix4x4;
+  M: sMatrix4x4;
 begin
   // Arrange:
-  M := Matrix4x4.Create(
+  M := sMatrix4x4.Create(
     2, 1, 3, 4,
     3, 2, 1, 4,
     5, 2, 4, 1,
@@ -272,10 +272,10 @@ end;
 
 procedure TTestMatrix.cofactor;
 var
-  M: Matrix4x4;
+  M: sMatrix4x4;
 begin
   // Arrange:
-  M := Matrix4x4.Create(
+  M := sMatrix4x4.Create(
     2, 1, 3, 4,
     3, 2, 1, 4,
     5, 2, 4, 1,
@@ -294,11 +294,11 @@ end;
 
 procedure TTestMatrix.CreateParameterized;
 var
-  M: Matrix4x4;
+  M: sMatrix4x4;
 begin
   // Arrange:
   // Act:
-  M := Matrix4x4.Create(
+  M := sMatrix4x4.Create(
     01, 02, 03, 04,
     05, 06, 07, 08,
     09, 10, 11, 12,
@@ -316,15 +316,15 @@ end;
 
 procedure TTestMatrix.CreateVectors;
 var
-  M: Matrix4x4;
+  M: sMatrix4x4;
 begin
   // Arrange:
   // Act:
-  M := Matrix4x4.Create(
-    Vector4.Create(01, 02, 03, 04),
-    Vector4.Create(05, 06, 07, 08),
-    Vector4.Create(09, 10, 11, 12),
-    Vector4.Create(13, 14, 15, 16)
+  M := sMatrix4x4.Create(
+    sVector4.Create(01, 02, 03, 04),
+    sVector4.Create(05, 06, 07, 08),
+    sVector4.Create(09, 10, 11, 12),
+    sVector4.Create(13, 14, 15, 16)
   );
   // Assert:
   TTest.IsTrue( CheckMatrix( M,
@@ -338,15 +338,15 @@ end;
 
 procedure TTestMatrix.CreateVectors3;
 var
-  M: Matrix4x4;
+  M: sMatrix4x4;
 begin
   // Arrange:
   // Act:
-  M := Matrix4x4.Create(
-    Vector3.Create(01, 02, 03),
-    Vector3.Create(05, 06, 07),
-    Vector3.Create(09, 10, 11),
-    Vector3.Create(13, 14, 15)
+  M := sMatrix4x4.Create(
+    sVector3.Create(01, 02, 03),
+    sVector3.Create(05, 06, 07),
+    sVector3.Create(09, 10, 11),
+    sVector3.Create(13, 14, 15)
   );
   // Assert:
   TTest.IsTrue( CheckMatrix( M,
@@ -359,11 +359,11 @@ end;
 
 procedure TTestMatrix.determinant;
 var
-  M: Matrix4x4;
+  M: sMatrix4x4;
   F: single;
 begin
   // Arrange:
-  M := Matrix4x4.Create(
+  M := sMatrix4x4.Create(
     2, 3,  2,  1,
     5, 4,  1, -4,
    12, 5, -2,  1,
@@ -377,17 +377,17 @@ end;
 
 procedure TTestMatrix.Divide;
 var
-  M1, M2, M3: Matrix4x4;
+  M1, M2, M3: sMatrix4x4;
 begin
   // Arrange:
-  M1 := Matrix4x4.Create(
+  M1 := sMatrix4x4.Create(
     2, 4, 6, 8,
     1, 3, 5, 7,
     8, 4, 6, 2,
     7, 5, 3, 1
   );
 
-  M2 := Matrix4x4.Create(
+  M2 := sMatrix4x4.Create(
     1, 2, 4, 6,
     3, 5, 7, 9,
     6, 4, 2, 1,
@@ -407,11 +407,11 @@ end;
 
 procedure TTestMatrix.DivideF;
 var
-  M1, M2: Matrix4x4;
+  M1, M2: sMatrix4x4;
   F: single;
 begin
   // Arrange:
-  M1 := Matrix4x4.Create(
+  M1 := sMatrix4x4.Create(
     2, 4, 6, 8,
     1, 3, 5, 7,
     8, 4, 6, 2,
@@ -433,17 +433,17 @@ end;
 
 procedure TTestMatrix.dotMM;
 var
-  M1, M2, M3: Matrix4x4;
+  M1, M2, M3: sMatrix4x4;
 begin
   // Arrange:
-  M1 := Matrix4x4.Create(
+  M1 := sMatrix4x4.Create(
     2, 4, 6, 8,
     1, 3, 5, 7,
     8, 4, 6, 2,
     7, 5, 3, 1
   );
 
-  M2 := Matrix4x4.Create(
+  M2 := sMatrix4x4.Create(
     1, 2, 4, 6,
     3, 5, 7, 9,
     6, 4, 2, 1,
@@ -463,17 +463,17 @@ end;
 
 procedure TTestMatrix.dotVM;
 var
-  M1: Matrix4x4;
-  V1,V2: Vector4;
+  M1: sMatrix4x4;
+  V1,V2: sVector4;
 begin
   // Arrange:
-  M1 := Matrix4x4.Create(
+  M1 := sMatrix4x4.Create(
     -03, 000, 003, 002,
     001, 007, -01, 009,
     -03, 000, 003, 002,
     001, 007, -01, 009
   );
-  V1 := Vector4.Create( 2, -3, 4, -1 );
+  V1 := sVector4.Create( 2, -3, 4, -1 );
   // Act:
   V2 := M1.dot(V1);
   // Assert:
@@ -485,11 +485,11 @@ end;
 
 procedure TTestMatrix.identity;
 var
-  M: Matrix4x4;
+  M: sMatrix4x4;
 begin
   // Arrange:
   // Act:
-  M := Matrix4x4.Identity;
+  M := sMatrix4x4.Identity;
   // Assert:
   TTest.IsTrue( CheckMatrix( M,
     1, 0, 0, 0,
@@ -501,12 +501,12 @@ end;
 
 procedure TTestMatrix.inverse;
 var
-  M: Matrix4x4;
-  M1: Matrix4x4;
-  M2: Matrix4x4;
+  M: sMatrix4x4;
+  M1: sMatrix4x4;
+  M2: sMatrix4x4;
 begin
   // Arrange:
-  M := Matrix4x4.Create(
+  M := sMatrix4x4.Create(
     2, 1, 3, 4,
     3, 2, 1, 4,
     5, 2, 4, 1,
@@ -533,17 +533,17 @@ end;
 
 procedure TTestMatrix.Multiply;
 var
-  M1, M2, M3: Matrix4x4;
+  M1, M2, M3: sMatrix4x4;
 begin
   // Arrange:
-  M1 := Matrix4x4.Create(
+  M1 := sMatrix4x4.Create(
     2, 4, 6, 8,
     1, 3, 5, 7,
     8, 4, 6, 2,
     7, 5, 3, 1
   );
 
-  M2 := Matrix4x4.Create(
+  M2 := sMatrix4x4.Create(
     0, 2, 4, 6,
     3, 5, 7, 9,
     6, 4, 2, 0,
@@ -563,11 +563,11 @@ end;
 
 procedure TTestMatrix.MultiplyF;
 var
-  M1, M2: Matrix4x4;
+  M1, M2: sMatrix4x4;
   F: single;
 begin
   // Arrange:
-  M1 := Matrix4x4.Create(
+  M1 := sMatrix4x4.Create(
     2, 4, 6, 8,
     1, 3, 5, 7,
     8, 4, 6, 2,
@@ -589,11 +589,11 @@ end;
 
 procedure TTestMatrix.rotationX;
 var
-  M: Matrix4x4;
+  M: sMatrix4x4;
 begin
   // Arrange:
   // Act:
-  M := Matrix4x4.rotationX(30);
+  M := sMatrix4x4.rotationX(30);
   // Assert:
   TTest.IsTrue( CheckMatrix( M,
     1,     0,     0,  0,
@@ -605,11 +605,11 @@ end;
 
 procedure TTestMatrix.rotationY;
 var
-  M: Matrix4x4;
+  M: sMatrix4x4;
 begin
   // Arrange:
   // Act:
-  M := Matrix4x4.rotationY(45);
+  M := sMatrix4x4.rotationY(45);
   // Assert:
   TTest.IsTrue( CheckMatrix( M,
     0.7071,  0,  0.7071,  0,
@@ -621,11 +621,11 @@ end;
 
 procedure TTestMatrix.rotationZ;
 var
-  M: Matrix4x4;
+  M: sMatrix4x4;
 begin
   // Arrange:
   // Act:
-  M := Matrix4x4.rotationZ(53.1);
+  M := sMatrix4x4.rotationZ(53.1);
   // Assert:
   TTest.IsTrue( CheckMatrix( M,
     0.6, -0.8, 0, 0,
@@ -637,13 +637,13 @@ end;
 
 procedure TTestMatrix.scale;
 var
-  V: Vector3;
-  M: Matrix4x4;
+  V: sVector3;
+  M: sMatrix4x4;
 begin
   // Arrange:
-  V := Vector3.Create( 2, 3, 4 );
+  V := sVector3.Create( 2, 3, 4 );
   // Act:
-  M := Matrix4x4.scale( V );
+  M := sMatrix4x4.scale( V );
   // Assert:
   TTest.IsTrue( CheckMatrix( M,
     V.X,   0,   0, 0,
@@ -655,17 +655,17 @@ end;
 
 procedure TTestMatrix.Subtract;
 var
-  M1, M2, M3: Matrix4x4;
+  M1, M2, M3: sMatrix4x4;
 begin
   // Arrange:
-  M1 := Matrix4x4.Create(
+  M1 := sMatrix4x4.Create(
     2, 4, 6, 8,
     1, 3, 5, 7,
     8, 4, 6, 2,
     7, 5, 3, 1
   );
 
-  M2 := Matrix4x4.Create(
+  M2 := sMatrix4x4.Create(
     0, 2, 4, 6,
     3, 5, 7, 9,
     6, 4, 2, 0,
@@ -685,11 +685,11 @@ end;
 
 procedure TTestMatrix.SubtractF;
 var
-  M1, M2: Matrix4x4;
+  M1, M2: sMatrix4x4;
   F: single;
 begin
   // Arrange:
-  M1 := Matrix4x4.Create(
+  M1 := sMatrix4x4.Create(
     2, 4, 6, 8,
     1, 3, 5, 7,
     8, 4, 6, 2,
@@ -711,13 +711,13 @@ end;
 
 procedure TTestMatrix.translation;
 var
-  V: Vector3;
-  M: Matrix4x4;
+  V: sVector3;
+  M: sMatrix4x4;
 begin
   // Arrange:
-  V := Vector3.Create( 2, 3, 4 );
+  V := sVector3.Create( 2, 3, 4 );
   // Act:
-  M := Matrix4x4.translation( V );
+  M := sMatrix4x4.translation( V );
   // Assert:
   TTest.IsTrue( CheckMatrix( M,
       1,   0,   0, V.X,
@@ -729,10 +729,10 @@ end;
 
 procedure TTestMatrix.transpose;
 var
-  M: Matrix4x4;
+  M: sMatrix4x4;
 begin
   // Arrange:
-  M := Matrix4x4.Create(
+  M := sMatrix4x4.Create(
     01, 02, 03, 04,
     05, 06, 07, 08,
     09, 10, 11, 12,

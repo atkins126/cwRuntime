@@ -149,7 +149,7 @@ uses
 ;
 
 { TTestMatrix }
-function CheckMatrix( M: Matrix2x2; m00, m10, m01, m11: single ): boolean;
+function CheckMatrix( M: sMatrix2x2; m00, m10, m01, m11: single ): boolean;
 begin
   Result := True;
   Result := Result and (M.m00 > (m00-0.01)) and (M.m00 < (m00+0.01));
@@ -160,15 +160,15 @@ end;
 
 procedure TTestMatrix.Add;
 var
-  M1, M2, M3: Matrix2x2;
+  M1, M2, M3: sMatrix2x2;
 begin
   // Arrange:
-  M1 := Matrix2x2.Create(
+  M1 := sMatrix2x2.Create(
     2, 4,
     1, 3
   );
 
-  M2 := Matrix2x2.Create(
+  M2 := sMatrix2x2.Create(
     0, 2,
     3, 5
   );
@@ -184,11 +184,11 @@ end;
 
 procedure TTestMatrix.AddF;
 var
-  M1, M2: Matrix2x2;
+  M1, M2: sMatrix2x2;
   F: single;
 begin
   // Arrange:
-  M1 := Matrix2x2.Create(
+  M1 := sMatrix2x2.Create(
     2, 4,
     1, 3
   );
@@ -206,10 +206,10 @@ end;
 
 procedure TTestMatrix.adjugate;
 var
-  M: Matrix2x2;
+  M: sMatrix2x2;
 begin
   // Arrange:
-  M := Matrix2x2.Create(
+  M := sMatrix2x2.Create(
     3, 5,
     -7, 2
   );
@@ -225,10 +225,10 @@ end;
 
 procedure TTestMatrix.cofactor;
 var
-  M: Matrix2x2;
+  M: sMatrix2x2;
 begin
   // Arrange:
-  M := Matrix2x2.Create(
+  M := sMatrix2x2.Create(
     3, 5,
     -7, 2
   );
@@ -244,11 +244,11 @@ end;
 
 procedure TTestMatrix.CreateParameterized;
 var
-  M: Matrix2x2;
+  M: sMatrix2x2;
 begin
   // Arrange:
   // Act:
-  M := Matrix2x2.Create(
+  M := sMatrix2x2.Create(
     01, 02,
     05, 06
   );
@@ -262,11 +262,11 @@ end;
 
 procedure TTestMatrix.determinant;
 var
-  M: Matrix2x2;
+  M: sMatrix2x2;
   F: single;
 begin
   // Arrange:
-  M := Matrix2x2.Create(
+  M := sMatrix2x2.Create(
    3,  5,
    -7, 2
   );
@@ -278,15 +278,15 @@ end;
 
 procedure TTestMatrix.Divide;
 var
-  M1, M2, M3: Matrix2x2;
+  M1, M2, M3: sMatrix2x2;
 begin
   // Arrange:
-  M1 := Matrix2x2.Create(
+  M1 := sMatrix2x2.Create(
     2, 4,
     1, 3
   );
 
-  M2 := Matrix2x2.Create(
+  M2 := sMatrix2x2.Create(
     1, 2,
     3, 5
   );
@@ -302,11 +302,11 @@ end;
 
 procedure TTestMatrix.DivideF;
 var
-  M1, M2: Matrix2x2;
+  M1, M2: sMatrix2x2;
   F: single;
 begin
   // Arrange:
-  M1 := Matrix2x2.Create(
+  M1 := sMatrix2x2.Create(
     2, 4,
     1, 3
   );
@@ -324,15 +324,15 @@ end;
 
 procedure TTestMatrix.dotMM;
 var
-  M1, M2, M3: Matrix2x2;
+  M1, M2, M3: sMatrix2x2;
 begin
   // Arrange:
-  M1 := Matrix2x2.Create(
+  M1 := sMatrix2x2.Create(
     2, 4,
     1, 3
   );
 
-  M2 := Matrix2x2.Create(
+  M2 := sMatrix2x2.Create(
     1, 2,
     3, 5
   );
@@ -348,15 +348,15 @@ end;
 
 procedure TTestMatrix.dotVM;
 var
-  M1: Matrix2x2;
-  V1,V2: Vector2;
+  M1: sMatrix2x2;
+  V1,V2: sVector2;
 begin
   // Arrange:
-  M1 := Matrix2x2.Create(
+  M1 := sMatrix2x2.Create(
     -03, 00,
      01, 07
   );
-  V1 := Vector2.Create( 2, -3 );
+  V1 := sVector2.Create( 2, -3 );
   // Act:
   V2 := M1.dot(V1);
   // Assert:
@@ -366,11 +366,11 @@ end;
 
 procedure TTestMatrix.identity;
 var
-  M: Matrix2x2;
+  M: sMatrix2x2;
 begin
   // Arrange:
   // Act:
-  M := Matrix2x2.Identity;
+  M := sMatrix2x2.Identity;
   // Assert:
   TTest.IsTrue( CheckMatrix( M,
     1, 0,
@@ -380,12 +380,12 @@ end;
 
 procedure TTestMatrix.inverse;
 var
-  M: Matrix2x2;
-  M1: Matrix2x2;
-  M2: Matrix2x2;
+  M: sMatrix2x2;
+  M1: sMatrix2x2;
+  M2: sMatrix2x2;
 begin
   // Arrange:
-  M := Matrix2x2.Create(
+  M := sMatrix2x2.Create(
     3, 5,
     -7, 2
   );
@@ -407,15 +407,15 @@ end;
 
 procedure TTestMatrix.Multiply;
 var
-  M1, M2, M3: Matrix2x2;
+  M1, M2, M3: sMatrix2x2;
 begin
   // Arrange:
-  M1 := Matrix2x2.Create(
+  M1 := sMatrix2x2.Create(
     2, 4,
     1, 3
   );
 
-  M2 := Matrix2x2.Create(
+  M2 := sMatrix2x2.Create(
     0, 2,
     3, 5
   );
@@ -431,11 +431,11 @@ end;
 
 procedure TTestMatrix.MultiplyF;
 var
-  M1, M2: Matrix2x2;
+  M1, M2: sMatrix2x2;
   F: single;
 begin
   // Arrange:
-  M1 := Matrix2x2.Create(
+  M1 := sMatrix2x2.Create(
     2, 4,
     1, 3
   );
@@ -453,11 +453,11 @@ end;
 
 procedure TTestMatrix.rotation;
 var
-  M: Matrix2x2;
+  M: sMatrix2x2;
 begin
   // Arrange:
   // Act:
-  M := Matrix2x2.rotation(53.1);
+  M := sMatrix2x2.rotation(53.1);
   // Assert:
   TTest.IsTrue( CheckMatrix( M,
     0.6, -0.8,
@@ -467,13 +467,13 @@ end;
 
 procedure TTestMatrix.scale;
 var
-  V: Vector2;
-  M: Matrix2x2;
+  V: sVector2;
+  M: sMatrix2x2;
 begin
   // Arrange:
-  V := Vector2.Create( 2, 3 );
+  V := sVector2.Create( 2, 3 );
   // Act:
-  M := Matrix2x2.scale( V );
+  M := sMatrix2x2.scale( V );
   // Assert:
   TTest.IsTrue( CheckMatrix( M,
     V.X,   0,
@@ -483,15 +483,15 @@ end;
 
 procedure TTestMatrix.Subtract;
 var
-  M1, M2, M3: Matrix2x2;
+  M1, M2, M3: sMatrix2x2;
 begin
   // Arrange:
-  M1 := Matrix2x2.Create(
+  M1 := sMatrix2x2.Create(
     2, 4,
     1, 3
   );
 
-  M2 := Matrix2x2.Create(
+  M2 := sMatrix2x2.Create(
     0, 2,
     3, 5
   );
@@ -507,11 +507,11 @@ end;
 
 procedure TTestMatrix.SubtractF;
 var
-  M1, M2: Matrix2x2;
+  M1, M2: sMatrix2x2;
   F: single;
 begin
   // Arrange:
-  M1 := Matrix2x2.Create(
+  M1 := sMatrix2x2.Create(
     2, 4,
     1, 3
   );
@@ -529,13 +529,13 @@ end;
 
 procedure TTestMatrix.translation;
 var
-  V: Vector2;
-  M: Matrix2x2;
+  V: sVector2;
+  M: sMatrix2x2;
 begin
   // Arrange:
-  V := Vector2.Create( 2, 3 );
+  V := sVector2.Create( 2, 3 );
   // Act:
-  M := Matrix2x2.translation( V );
+  M := sMatrix2x2.translation( V );
   // Assert:
   TTest.IsTrue( CheckMatrix( M,
       1,   V.X,
@@ -545,10 +545,10 @@ end;
 
 procedure TTestMatrix.transpose;
 var
-  M: Matrix2x2;
+  M: sMatrix2x2;
 begin
   // Arrange:
-  M := Matrix2x2.Create(
+  M := sMatrix2x2.Create(
     01, 02,
     05, 06
   );

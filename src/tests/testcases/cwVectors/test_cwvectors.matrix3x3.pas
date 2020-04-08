@@ -159,7 +159,7 @@ uses
 ;
 
 { TTestMatrix }
-function CheckMatrix( M: Matrix3x3; m00, m10, m20, m01, m11, m21, m02, m12, m22: single ): boolean;
+function CheckMatrix( M: sMatrix3x3; m00, m10, m20, m01, m11, m21, m02, m12, m22: single ): boolean;
 begin
   Result := True;
   Result := Result and (M.m00 > (m00-0.01)) and (M.m00 < (m00+0.01));
@@ -175,16 +175,16 @@ end;
 
 procedure TTestMatrix.Add;
 var
-  M1, M2, M3: Matrix3x3;
+  M1, M2, M3: sMatrix3x3;
 begin
   // Arrange:
-  M1 := Matrix3x3.Create(
+  M1 := sMatrix3x3.Create(
     2, 4, 6,
     1, 3, 5,
     8, 4, 6
   );
 
-  M2 := Matrix3x3.Create(
+  M2 := sMatrix3x3.Create(
     0, 2, 4,
     3, 5, 7,
     6, 4, 2
@@ -202,11 +202,11 @@ end;
 
 procedure TTestMatrix.AddF;
 var
-  M1, M2: Matrix3x3;
+  M1, M2: sMatrix3x3;
   F: single;
 begin
   // Arrange:
-  M1 := Matrix3x3.Create(
+  M1 := sMatrix3x3.Create(
     2, 4, 6,
     1, 3, 5,
     8, 4, 6
@@ -226,10 +226,10 @@ end;
 
 procedure TTestMatrix.adjugate;
 var
-  M: Matrix3x3;
+  M: sMatrix3x3;
 begin
   // Arrange:
-  M := Matrix3x3.Create(
+  M := sMatrix3x3.Create(
     -1, -2,  2,
      2,  1,  1,
      3,  4,  5
@@ -247,10 +247,10 @@ end;
 
 procedure TTestMatrix.cofactor;
 var
-  M: Matrix3x3;
+  M: sMatrix3x3;
 begin
   // Arrange:
-  M := Matrix3x3.Create(
+  M := sMatrix3x3.Create(
     -1, -2,  2,
      2,  1,  1,
      3,  4,  5
@@ -268,11 +268,11 @@ end;
 
 procedure TTestMatrix.CreateParameterized;
 var
-  M: Matrix3x3;
+  M: sMatrix3x3;
 begin
   // Arrange:
   // Act:
-  M := Matrix3x3.Create(
+  M := sMatrix3x3.Create(
     01, 02, 03,
     05, 06, 07,
     09, 10, 11
@@ -287,18 +287,18 @@ end;
 
 procedure TTestMatrix.determinant;
 var
-  M1: Matrix3x3;
-  M2: Matrix3x3;
+  M1: sMatrix3x3;
+  M2: sMatrix3x3;
   F1: single;
   F2: single;
 begin
   // Arrange:
-  M1 := Matrix3x3.Create(
+  M1 := sMatrix3x3.Create(
    4, -3,  0,
    2, -1, 2,
    1, 5,  7
   );
-  M2 := Matrix3x3.Create(
+  M2 := sMatrix3x3.Create(
      4, -1, 1,
      4,  5, 3,
     -2,  0, 0
@@ -313,16 +313,16 @@ end;
 
 procedure TTestMatrix.Divide;
 var
-  M1, M2, M3: Matrix3x3;
+  M1, M2, M3: sMatrix3x3;
 begin
   // Arrange:
-  M1 := Matrix3x3.Create(
+  M1 := sMatrix3x3.Create(
     2, 4, 6,
     1, 3, 5,
     8, 4, 6
   );
 
-  M2 := Matrix3x3.Create(
+  M2 := sMatrix3x3.Create(
     1, 2, 4,
     3, 5, 7,
     6, 4, 2
@@ -340,11 +340,11 @@ end;
 
 procedure TTestMatrix.DivideF;
 var
-  M1, M2: Matrix3x3;
+  M1, M2: sMatrix3x3;
   F: single;
 begin
   // Arrange:
-  M1 := Matrix3x3.Create(
+  M1 := sMatrix3x3.Create(
     2, 4, 6,
     1, 3, 5,
     8, 4, 6
@@ -364,16 +364,16 @@ end;
 
 procedure TTestMatrix.dotMM;
 var
-  M1, M2, M3: Matrix3x3;
+  M1, M2, M3: sMatrix3x3;
 begin
   // Arrange:
-  M1 := Matrix3x3.Create(
+  M1 := sMatrix3x3.Create(
     2, 4, 6,
     1, 3, 5,
     8, 4, 6
   );
 
-  M2 := Matrix3x3.Create(
+  M2 := sMatrix3x3.Create(
     1, 2, 4,
     3, 5, 7,
     6, 4, 2
@@ -391,16 +391,16 @@ end;
 
 procedure TTestMatrix.dotVM;
 var
-  M1: Matrix3x3;
-  V1,V2: Vector3;
+  M1: sMatrix3x3;
+  V1,V2: sVector3;
 begin
   // Arrange:
-  M1 := Matrix3x3.Create(
+  M1 := sMatrix3x3.Create(
     -03, 00,  03,
      01, 07, -01,
     -03, 00,  03
   );
-  V1 := Vector3.Create( 2, -3, 4 );
+  V1 := sVector3.Create( 2, -3, 4 );
   // Act:
   V2 := M1.dot(V1);
   // Assert:
@@ -411,11 +411,11 @@ end;
 
 procedure TTestMatrix.identity;
 var
-  M: Matrix3x3;
+  M: sMatrix3x3;
 begin
   // Arrange:
   // Act:
-  M := Matrix3x3.Identity;
+  M := sMatrix3x3.Identity;
   // Assert:
   TTest.IsTrue( CheckMatrix( M,
     1, 0, 0,
@@ -426,12 +426,12 @@ end;
 
 procedure TTestMatrix.inverse;
 var
-  M: Matrix3x3;
-  M1: Matrix3x3;
-  M2: Matrix3x3;
+  M: sMatrix3x3;
+  M1: sMatrix3x3;
+  M2: sMatrix3x3;
 begin
   // Arrange:
-  M := Matrix3x3.Create(
+  M := sMatrix3x3.Create(
     0, 0,  1,
     2, -1, 3,
     1,  1, 4
@@ -456,16 +456,16 @@ end;
 
 procedure TTestMatrix.Multiply;
 var
-  M1, M2, M3: Matrix3x3;
+  M1, M2, M3: sMatrix3x3;
 begin
   // Arrange:
-  M1 := Matrix3x3.Create(
+  M1 := sMatrix3x3.Create(
     2, 4, 6,
     1, 3, 5,
     8, 4, 6
   );
 
-  M2 := Matrix3x3.Create(
+  M2 := sMatrix3x3.Create(
     0, 2, 4,
     3, 5, 7,
     6, 4, 2
@@ -483,11 +483,11 @@ end;
 
 procedure TTestMatrix.MultiplyF;
 var
-  M1, M2: Matrix3x3;
+  M1, M2: sMatrix3x3;
   F: single;
 begin
   // Arrange:
-  M1 := Matrix3x3.Create(
+  M1 := sMatrix3x3.Create(
     2, 4, 6,
     1, 3, 5,
     8, 4, 6
@@ -507,11 +507,11 @@ end;
 
 procedure TTestMatrix.rotationX;
 var
-  M: Matrix3x3;
+  M: sMatrix3x3;
 begin
   // Arrange:
   // Act:
-  M := Matrix3x3.rotationX(30);
+  M := sMatrix3x3.rotationX(30);
   // Assert:
   TTest.IsTrue( CheckMatrix( M,
     1,     0,     0,
@@ -522,11 +522,11 @@ end;
 
 procedure TTestMatrix.rotationY;
 var
-  M: Matrix3x3;
+  M: sMatrix3x3;
 begin
   // Arrange:
   // Act:
-  M := Matrix3x3.rotationY(45);
+  M := sMatrix3x3.rotationY(45);
   // Assert:
   TTest.IsTrue( CheckMatrix( M,
     0.7071,  0,  0.7071,
@@ -537,11 +537,11 @@ end;
 
 procedure TTestMatrix.rotationZ;
 var
-  M: Matrix3x3;
+  M: sMatrix3x3;
 begin
   // Arrange:
   // Act:
-  M := Matrix3x3.rotationZ(53.1);
+  M := sMatrix3x3.rotationZ(53.1);
   // Assert:
   TTest.IsTrue( CheckMatrix( M,
     0.6, -0.8, 0,
@@ -552,13 +552,13 @@ end;
 
 procedure TTestMatrix.scale;
 var
-  V: Vector3;
-  M: Matrix3x3;
+  V: sVector3;
+  M: sMatrix3x3;
 begin
   // Arrange:
-  V := Vector3.Create( 2, 3, 4 );
+  V := sVector3.Create( 2, 3, 4 );
   // Act:
-  M := Matrix3x3.scale( V );
+  M := sMatrix3x3.scale( V );
   // Assert:
   TTest.IsTrue( CheckMatrix( M,
     V.X,   0,   0,
@@ -569,16 +569,16 @@ end;
 
 procedure TTestMatrix.Subtract;
 var
-  M1, M2, M3: Matrix3x3;
+  M1, M2, M3: sMatrix3x3;
 begin
   // Arrange:
-  M1 := Matrix3x3.Create(
+  M1 := sMatrix3x3.Create(
     2, 4, 6,
     1, 3, 5,
     8, 4, 6
   );
 
-  M2 := Matrix3x3.Create(
+  M2 := sMatrix3x3.Create(
     0, 2, 4,
     3, 5, 7,
     6, 4, 2
@@ -596,11 +596,11 @@ end;
 
 procedure TTestMatrix.SubtractF;
 var
-  M1, M2: Matrix3x3;
+  M1, M2: sMatrix3x3;
   F: single;
 begin
   // Arrange:
-  M1 := Matrix3x3.Create(
+  M1 := sMatrix3x3.Create(
     2, 4, 6,
     1, 3, 5,
     8, 4, 6
@@ -620,13 +620,13 @@ end;
 
 procedure TTestMatrix.translation;
 var
-  V: Vector3;
-  M: Matrix3x3;
+  V: sVector3;
+  M: sMatrix3x3;
 begin
   // Arrange:
-  V := Vector3.Create( 2, 3, 4 );
+  V := sVector3.Create( 2, 3, 4 );
   // Act:
-  M := Matrix3x3.translation( V );
+  M := sMatrix3x3.translation( V );
   // Assert:
   TTest.IsTrue( CheckMatrix( M,
       1,   0,   V.X,
@@ -637,10 +637,10 @@ end;
 
 procedure TTestMatrix.transpose;
 var
-  M: Matrix3x3;
+  M: sMatrix3x3;
 begin
   // Arrange:
-  M := Matrix3x3.Create(
+  M := sMatrix3x3.Create(
     01, 02, 03,
     05, 06, 07,
     09, 10, 11

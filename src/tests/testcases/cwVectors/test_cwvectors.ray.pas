@@ -68,14 +68,14 @@ uses
 
 procedure TTestRay.CreateOriginDesination;
 var
-  P1, P2: Vector3;
-  aRay: Ray;
+  P1, P2: sVector3;
+  aRay: sRay;
 begin
   // Arrange:
-  P1 := Vector3.Create(0,0,0);
-  P2 := Vector3.Create(1,1,1);
+  P1 := sVector3.Create(0,0,0);
+  P2 := sVector3.Create(1,1,1);
   // Act:
-  aRay := Ray.Create(P1,P2);
+  aRay := sRay.Create(P1,P2);
   // Assert:
   TTest.IsTrue( (aRay.Length>1.7319) and (aRay.Length<1.7321) );
   TTest.IsTrue( (aRay.Direction.X>0.57734) and (aRay.Direction.X<0.57736) );
@@ -88,17 +88,17 @@ end;
 
 procedure TTestRay.CreateOriginDirectionLength;
 var
-  Origin: Vector3;
-  Direction: Vector3;
+  Origin: sVector3;
+  Direction: sVector3;
   Length: single;
-  aRay: Ray;
+  aRay: sRay;
 begin
   // Arrange:
-  Origin := Vector3.Create(0,0,0);
-  Direction := Vector3.Create(1,1,1);
+  Origin := sVector3.Create(0,0,0);
+  Direction := sVector3.Create(1,1,1);
   Length := 1.7320;
   // Act:
-  aRay := Ray.Create(Origin,Direction,Length);
+  aRay := sRay.Create(Origin,Direction,Length);
   // Assert:
   TTest.IsTrue( (aRay.Length>1.7319) and (aRay.Length<1.7321) );
   TTest.IsTrue( (aRay.Direction.X>0.57734) and (aRay.Direction.X<0.57736) );
@@ -111,18 +111,18 @@ end;
 
 procedure TTestRay.Destination;
 var
-  Origin: Vector3;
-  Direction: Vector3;
+  Origin: sVector3;
+  Direction: sVector3;
   Length: single;
-  aRay: Ray;
-  Destination: Vertex;
+  aRay: sRay;
+  Destination: sVertex;
 begin
   // Arrange:
-  Origin := Vector3.Create(0,0,0);
-  Direction := Vector3.Create(1,1,1);
+  Origin := sVector3.Create(0,0,0);
+  Direction := sVector3.Create(1,1,1);
   Length := 1.7320;
   // Act:
-  aRay := Ray.Create(Origin,Direction,Length);
+  aRay := sRay.Create(Origin,Direction,Length);
   Destination := aRay.Destination;
   // Assert:
   TTest.IsTrue( (Destination.X>0.99) and (Destination.X<1.01) );

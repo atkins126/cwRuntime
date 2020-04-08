@@ -30,7 +30,7 @@
 ///   Chapmanworld Logging system library.
 /// </summary>
 /// <remarks>
-///   NOTE: ** 16-bit half precision float type thanks to Marek Mauder <br/>
+///   NOTE: ** 16-bit half precision float type thanks to Marek Mauder with permission. <br/>
 ///   https://galfar.vevb.net/wp/2011/16bit-half-float-in-pascaldelphi/
 /// </remarks>
 unit cwTypes;
@@ -577,6 +577,7 @@ type
     {$ifndef CPU64BITS}
     class operator LessThan(const a: extended; const b: half): boolean;
     {$endif}
+    class operator Equal(const a, b: half): boolean;
 
   end;
 
@@ -1732,6 +1733,11 @@ end;
 class operator half.Divide(const a, b: half): half;
 begin
   Result.value := FloatToHalf( HalfToFloat(a.value) / HalfToFloat(b.value) );
+end;
+
+class operator half.Equal(const a, b: half): boolean;
+begin
+  Result := single(a)=single(b);
 end;
 
 {$ifndef CPU64BITS}

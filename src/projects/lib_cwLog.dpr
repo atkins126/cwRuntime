@@ -36,6 +36,9 @@ uses
 , cwUnicode
 , cwUnicode.Standard
 , cwTypes
+, cwLog
+, cwLog.Static
+, Lib_cwLog.ProxyLogTarget
 ;
 
 const
