@@ -26,7 +26,7 @@
   IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 *)
 {$endif}
-unit test_cwVectors.Matrix3x3;
+unit test_cwvectors.smatrix3x3;
 {$ifdef fpc} {$mode delphiunicode} {$endif}
 {$M+}
 
@@ -37,7 +37,7 @@ uses
 ;
 
 type
-  TTestMatrix = class(TTestCase)
+  TTestMatrixSingle = class(TTestCase)
   published
 
     ///  <summary>
@@ -158,7 +158,6 @@ uses
   cwTest.Standard
 ;
 
-{ TTestMatrix }
 function CheckMatrix( M: sMatrix3x3; m00, m10, m20, m01, m11, m21, m02, m12, m22: single ): boolean;
 begin
   Result := True;
@@ -173,7 +172,7 @@ begin
   Result := Result and (M.m22 > (m22-0.01)) and (M.m22 < (m22+0.01));
 end;
 
-procedure TTestMatrix.Add;
+procedure TTestMatrixSingle.Add;
 var
   M1, M2, M3: sMatrix3x3;
 begin
@@ -200,7 +199,7 @@ begin
   ));
 end;
 
-procedure TTestMatrix.AddF;
+procedure TTestMatrixSingle.AddF;
 var
   M1, M2: sMatrix3x3;
   F: single;
@@ -224,7 +223,7 @@ begin
   ));
 end;
 
-procedure TTestMatrix.adjugate;
+procedure TTestMatrixSingle.adjugate;
 var
   M: sMatrix3x3;
 begin
@@ -245,7 +244,7 @@ begin
 end;
 
 
-procedure TTestMatrix.cofactor;
+procedure TTestMatrixSingle.cofactor;
 var
   M: sMatrix3x3;
 begin
@@ -266,7 +265,7 @@ begin
 end;
 
 
-procedure TTestMatrix.CreateParameterized;
+procedure TTestMatrixSingle.CreateParameterized;
 var
   M: sMatrix3x3;
 begin
@@ -285,7 +284,7 @@ begin
   ));
 end;
 
-procedure TTestMatrix.determinant;
+procedure TTestMatrixSingle.determinant;
 var
   M1: sMatrix3x3;
   M2: sMatrix3x3;
@@ -311,7 +310,7 @@ begin
   TTest.IsTrue( (F2>15.99) and (F2<16.01) );
 end;
 
-procedure TTestMatrix.Divide;
+procedure TTestMatrixSingle.Divide;
 var
   M1, M2, M3: sMatrix3x3;
 begin
@@ -338,7 +337,7 @@ begin
   ));
 end;
 
-procedure TTestMatrix.DivideF;
+procedure TTestMatrixSingle.DivideF;
 var
   M1, M2: sMatrix3x3;
   F: single;
@@ -362,7 +361,7 @@ begin
   ));
 end;
 
-procedure TTestMatrix.dotMM;
+procedure TTestMatrixSingle.dotMM;
 var
   M1, M2, M3: sMatrix3x3;
 begin
@@ -389,7 +388,7 @@ begin
   ));
 end;
 
-procedure TTestMatrix.dotVM;
+procedure TTestMatrixSingle.dotVM;
 var
   M1: sMatrix3x3;
   V1,V2: sVector3;
@@ -409,7 +408,7 @@ begin
   TTest.IsTrue((V2.Z > 5.99)   and (V2.Z < 6.01));
 end;
 
-procedure TTestMatrix.identity;
+procedure TTestMatrixSingle.identity;
 var
   M: sMatrix3x3;
 begin
@@ -424,7 +423,7 @@ begin
   ));
 end;
 
-procedure TTestMatrix.inverse;
+procedure TTestMatrixSingle.inverse;
 var
   M: sMatrix3x3;
   M1: sMatrix3x3;
@@ -454,7 +453,7 @@ begin
 end;
 
 
-procedure TTestMatrix.Multiply;
+procedure TTestMatrixSingle.Multiply;
 var
   M1, M2, M3: sMatrix3x3;
 begin
@@ -481,7 +480,7 @@ begin
   ));
 end;
 
-procedure TTestMatrix.MultiplyF;
+procedure TTestMatrixSingle.MultiplyF;
 var
   M1, M2: sMatrix3x3;
   F: single;
@@ -505,7 +504,7 @@ begin
   ));
 end;
 
-procedure TTestMatrix.rotationX;
+procedure TTestMatrixSingle.rotationX;
 var
   M: sMatrix3x3;
 begin
@@ -520,7 +519,7 @@ begin
   ));
 end;
 
-procedure TTestMatrix.rotationY;
+procedure TTestMatrixSingle.rotationY;
 var
   M: sMatrix3x3;
 begin
@@ -535,7 +534,7 @@ begin
   ));
 end;
 
-procedure TTestMatrix.rotationZ;
+procedure TTestMatrixSingle.rotationZ;
 var
   M: sMatrix3x3;
 begin
@@ -550,7 +549,7 @@ begin
   ));
 end;
 
-procedure TTestMatrix.scale;
+procedure TTestMatrixSingle.scale;
 var
   V: sVector3;
   M: sMatrix3x3;
@@ -567,7 +566,7 @@ begin
   ));
 end;
 
-procedure TTestMatrix.Subtract;
+procedure TTestMatrixSingle.Subtract;
 var
   M1, M2, M3: sMatrix3x3;
 begin
@@ -594,7 +593,7 @@ begin
   ));
 end;
 
-procedure TTestMatrix.SubtractF;
+procedure TTestMatrixSingle.SubtractF;
 var
   M1, M2: sMatrix3x3;
   F: single;
@@ -618,7 +617,7 @@ begin
   ));
 end;
 
-procedure TTestMatrix.translation;
+procedure TTestMatrixSingle.translation;
 var
   V: sVector3;
   M: sMatrix3x3;
@@ -635,7 +634,7 @@ begin
   ));
 end;
 
-procedure TTestMatrix.transpose;
+procedure TTestMatrixSingle.transpose;
 var
   M: sMatrix3x3;
 begin
@@ -656,7 +655,7 @@ begin
 end;
 
 initialization
-  TestSuite.RegisterTestCase(TTestMatrix);
+  TestSuite.RegisterTestCase(TTestMatrixSingle);
 
 end.
 

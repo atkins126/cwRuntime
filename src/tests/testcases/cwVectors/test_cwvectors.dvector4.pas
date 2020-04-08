@@ -26,7 +26,7 @@
   IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 *)
 {$endif}
-unit test_cwVectors.Vector4;
+unit test_cwvectors.dvector4;
 {$ifdef fpc} {$mode delphiunicode} {$endif}
 {$M+}
 
@@ -37,7 +37,7 @@ uses
 ;
 
 type
-  TTestVector4 = class(TTestCase)
+  TTestVector4Double = class(TTestCase)
   published
 
     ///  <summary>
@@ -215,15 +215,13 @@ uses
   cwTest.Standard
 ;
 
-{ TTestVector4 }
-
-procedure TTestVector4.Add;
+procedure TTestVector4Double.Add;
 var
-  V1, V2, V3: sVector4;
+  V1, V2, V3: dVector4;
 begin
   // Arrange:
-  V1 := sVector4.Create( 2, 4, 6, 8 );
-  V2 := sVector4.Create( 3, 6, 9, 12 );
+  V1 := dVector4.Create( 2, 4, 6, 8 );
+  V2 := dVector4.Create( 3, 6, 9, 12 );
   // Act:
   V3 := V1 + V2;
   // Assert:
@@ -233,10 +231,10 @@ begin
   TTest.IsTrue((V3.W > 19.99) and (V3.W < 20.01));
 end;
 
-procedure TTestVector4.AddAV;
+procedure TTestVector4Double.AddAV;
 var
-  V: sVector4;
-  R: sVector4;
+  V: dVector4;
+  R: dVector4;
 begin
   // Arrange:
   V := [ 1, 2, 3, 4 ]; // FPC Bug [0035061] https://bugs.freepascal.org/view.php?id=35061 RESOLVED
@@ -250,12 +248,12 @@ begin
   TTest.IsTrue( ((R.W > 4.99 ) and (R.W < 5.01)) );
 end;
 
-procedure TTestVector4.AddF;
+procedure TTestVector4Double.AddF;
 var
-  V1, V2: sVector4;
+  V1, V2: dVector4;
 begin
   // Arrange:
-  V1 := sVector4.Create( 2, 4, 6, 8 );
+  V1 := dVector4.Create( 2, 4, 6, 8 );
   // Act:
   V2 := V1 + 3;
   // Assert:
@@ -265,10 +263,10 @@ begin
   TTest.IsTrue((V2.W > 10.99) and (V2.W < 11.01));
 end;
 
-procedure TTestVector4.AddVA;
+procedure TTestVector4Double.AddVA;
 var
-  V: sVector4;
-  R: sVector4;
+  V: dVector4;
+  R: dVector4;
 begin
   // Arrange:
   V := [ 1, 2, 3, 4 ]; // FPC Bug [0035061] https://bugs.freepascal.org/view.php?id=35061 RESOLVED
@@ -282,9 +280,9 @@ begin
   TTest.IsTrue( ((R.W > 4.99 ) and (R.W < 5.01)) );
 end;
 
-procedure TTestVector4.ArrayAssign;
+procedure TTestVector4Double.ArrayAssign;
 var
-  V: sVector4;
+  V: dVector4;
 begin
   // Arrange:
   // Act:
@@ -296,13 +294,13 @@ begin
   TTest.IsTrue( ((V.W > 3.99 ) and (V.W < 4.01)) );
 end;
 
-procedure TTestVector4.CreateXYZW;
+procedure TTestVector4Double.CreateXYZW;
 var
-  V1: sVector4;
+  V1: dVector4;
 begin
   // Arrange:
   // Act:
-  V1 := sVector4.Create( 2, 4, 6, 8 );
+  V1 := dVector4.Create( 2, 4, 6, 8 );
   // Assert:
   TTest.IsTrue((V1.X > 1.99) and (V1.X < 2.01));
   TTest.IsTrue((V1.Y > 3.99) and (V1.Y < 4.01));
@@ -310,13 +308,13 @@ begin
   TTest.IsTrue((V1.W > 7.99) and (V1.W < 8.01));
 end;
 
-procedure TTestVector4.Divide;
+procedure TTestVector4Double.Divide;
 var
-  V1, V2, V3: sVector4;
+  V1, V2, V3: dVector4;
 begin
   // Arrange:
-  V1 := sVector4.Create( 3, 6, 9, 12 );
-  V2 := sVector4.Create( 2, 4, 6, 8 );
+  V1 := dVector4.Create( 3, 6, 9, 12 );
+  V2 := dVector4.Create( 2, 4, 6, 8 );
   // Act:
   V3 := V1 / V2;
   // Assert:
@@ -326,10 +324,10 @@ begin
   TTest.IsTrue((V3.W > 1.49) and (V3.W < 1.51));
 end;
 
-procedure TTestVector4.DivideAV;
+procedure TTestVector4Double.DivideAV;
 var
-  V: sVector4;
-  R: sVector4;
+  V: dVector4;
+  R: dVector4;
 begin
   // Arrange:
   V := [ 1, 2, 2, 1 ]; // FPC Bug [0035061] https://bugs.freepascal.org/view.php?id=35061 RESOLVED
@@ -343,12 +341,12 @@ begin
   TTest.IsTrue( ((R.W > 3.99 ) and (R.W < 4.01)) );
 end;
 
-procedure TTestVector4.DivideF;
+procedure TTestVector4Double.DivideF;
 var
-  V1, V2: sVector4;
+  V1, V2: dVector4;
 begin
   // Arrange:
-  V1 := sVector4.Create( 2, 4, 6, 8 );
+  V1 := dVector4.Create( 2, 4, 6, 8 );
   // Act:
   V2 := V1 / 2;
   // Assert:
@@ -358,10 +356,10 @@ begin
   TTest.IsTrue((V2.W > 3.99) and (V2.W < 4.01));
 end;
 
-procedure TTestVector4.DivideVA;
+procedure TTestVector4Double.DivideVA;
 var
-  V: sVector4;
-  R: sVector4;
+  V: dVector4;
+  R: dVector4;
 begin
   // Arrange:
   V := [ 4, 3, 3, 4 ]; // FPC Bug [0035061] https://bugs.freepascal.org/view.php?id=35061 RESOLVED
@@ -375,14 +373,14 @@ begin
   TTest.IsTrue( ((R.W > 3.99 ) and (R.W < 4.01)) );
 end;
 
-procedure TTestVector4.dot;
+procedure TTestVector4Double.dot;
 var
-  V1, V2: sVector4;
-  F: single;
+  V1, V2: dVector4;
+  F: double;
 begin
   // Arrange:
-  V1 := sVector4.Create(5,6,3,8);
-  V2 := sVector4.Create(2,3,5,4);
+  V1 := dVector4.Create(5,6,3,8);
+  V2 := dVector4.Create(2,3,5,4);
   // Act:
   F := V1.dot(V2);
   // Assert:
@@ -390,15 +388,15 @@ begin
 end;
 
 
-procedure TTestVector4.ExplicitV2V4;
+procedure TTestVector4Double.ExplicitV2V4;
 var
-  V2: sVector2;
-  V4: sVector4;
+  V2: dVector2;
+  V4: dVector4;
 begin
   // Arrange:
-  V2 := sVector2.Create( 2, 8 );
+  V2 := dVector2.Create( 2, 8 );
   // Act:
-  V4 := sVector4( V2 );
+  V4 := dVector4( V2 );
   // Assert:
   TTest.IsTrue( ((V4.X > 1.99 )  and (V4.X < 2.01)) );
   TTest.IsTrue( ((V4.Y > 7.99 )  and (V4.Y < 8.01)) );
@@ -406,15 +404,15 @@ begin
   TTest.IsTrue( ((V4.W > 0.99 )  and (V4.W < 1.01)) );
 end;
 
-procedure TTestVector4.ExplicitV3V4;
+procedure TTestVector4Double.ExplicitV3V4;
 var
-  V3: sVector3;
-  V4: sVector4;
+  V3: dVector3;
+  V4: dVector4;
 begin
   // Arrange:
-  V3 := sVector3.Create( 2, 4, 6 );
+  V3 := dVector3.Create( 2, 4, 6 );
   // Act:
-  V4 := sVector4( V3 );
+  V4 := dVector4( V3 );
   // Assert:
   TTest.IsTrue( ((V4.X > 1.99 ) and (V4.X < 2.01)) );
   TTest.IsTrue( ((V4.Y > 3.99 ) and (V4.Y < 4.01)) );
@@ -422,42 +420,42 @@ begin
   TTest.IsTrue( ((V4.W > 0.99 ) and (V4.W < 1.01)) );
 end;
 
-procedure TTestVector4.ExplicitV4V2;
+procedure TTestVector4Double.ExplicitV4V2;
 var
-  V4: sVector4;
-  V2: sVector2;
+  V4: dVector4;
+  V2: dVector2;
 begin
   // Arrange:
-  V4 := sVector4.Create( 2, 4, 6, 8 );
+  V4 := dVector4.Create( 2, 4, 6, 8 );
   // Act:
-  V2 := sVector2( V4 );
+  V2 := dVector2( V4 );
   // Assert:
   TTest.IsTrue( ((V2.X > 1.99 ) and (V2.X < 2.01)) );
   TTest.IsTrue( ((V2.Y > 3.99 ) and (V2.Y < 4.01)) );
 end;
 
-procedure TTestVector4.ExplicitV4V3;
+procedure TTestVector4Double.ExplicitV4V3;
 var
-  V4: sVector4;
-  V3: sVector3;
+  V4: dVector4;
+  V3: dVector3;
 begin
   // Arrange:
-  V4 := sVector4.Create( 2, 4, 6, 8 );
+  V4 := dVector4.Create( 2, 4, 6, 8 );
   // Act:
-  V3 := sVector3( V4 );
+  V3 := dVector3( V4 );
   // Assert:
   TTest.IsTrue( ((V3.X > 1.99 ) and (V3.X < 2.01)) );
   TTest.IsTrue( ((V3.Y > 3.99 ) and (V3.Y < 4.01)) );
   TTest.IsTrue( ((V3.Z > 5.99 ) and (V3.Z < 6.01)) );
 end;
 
-procedure TTestVector4.ImplicitV2V4;
+procedure TTestVector4Double.ImplicitV2V4;
 var
-  V2: sVector2;
-  V4: sVector4;
+  V2: dVector2;
+  V4: dVector4;
 begin
   // Arrange:
-  V2 := sVector2.Create( 2, 8 );
+  V2 := dVector2.Create( 2, 8 );
   // Act:
   V4 := V2;
   // Assert:
@@ -467,13 +465,13 @@ begin
   TTest.IsTrue( ((V4.W > 0.99 )  and (V4.W < 1.01)) );
 end;
 
-procedure TTestVector4.ImplicitV3V4;
+procedure TTestVector4Double.ImplicitV3V4;
 var
-  V3: sVector3;
-  V4: sVector4;
+  V3: dVector3;
+  V4: dVector4;
 begin
   // Arrange:
-  V3 := sVector3.Create( 2, 4, 6 );
+  V3 := dVector3.Create( 2, 4, 6 );
   // Act:
   V4 := V3;
   // Assert:
@@ -483,13 +481,13 @@ begin
   TTest.IsTrue( ((V4.W > 0.99 ) and (V4.W < 1.01)) );
 end;
 
-procedure TTestVector4.ImplicitV4V2;
+procedure TTestVector4Double.ImplicitV4V2;
 var
-  V4: sVector4;
-  V2: sVector2;
+  V4: dVector4;
+  V2: dVector2;
 begin
   // Arrange:
-  V4 := sVector4.Create( 2, 4, 6, 8 );
+  V4 := dVector4.Create( 2, 4, 6, 8 );
   // Act:
   V2 := V4;
   // Assert:
@@ -497,13 +495,13 @@ begin
   TTest.IsTrue( ((V2.Y > 3.99 ) and (V2.Y < 4.01)) );
 end;
 
-procedure TTestVector4.ImplicitV4V3;
+procedure TTestVector4Double.ImplicitV4V3;
 var
-  V4: sVector4;
-  V3: sVector3;
+  V4: dVector4;
+  V3: dVector3;
 begin
   // Arrange:
-  V4 := sVector4.Create( 2, 4, 6, 8 );
+  V4 := dVector4.Create( 2, 4, 6, 8 );
   // Act:
   V3 := V4;
   // Assert:
@@ -512,26 +510,26 @@ begin
   TTest.IsTrue( ((V3.Z > 5.99 ) and (V3.Z < 6.01)) );
 end;
 
-procedure TTestVector4.magnitude;
+procedure TTestVector4Double.magnitude;
 var
-  V1: sVector4;
-  F: single;
+  V1: dVector4;
+  F: double;
 begin
   // Arrange:
-  V1 := sVector4.Create( 2, 4, 6, 9 );
+  V1 := dVector4.Create( 2, 4, 6, 9 );
   // Act:
   F := V1.magnitude; // 11.704699910
   // Assert:
   TTest.IsTrue( (F > 11.699 ) and (F < 11.705) );
 end;
 
-procedure TTestVector4.Multiply;
+procedure TTestVector4Double.Multiply;
 var
-  V1, V2, V3: sVector4;
+  V1, V2, V3: dVector4;
 begin
   // Arrange:
-  V1 := sVector4.Create( 2, 4, 6, 8 );
-  V2 := sVector4.Create( 3, 6, 9, 12 );
+  V1 := dVector4.Create( 2, 4, 6, 8 );
+  V2 := dVector4.Create( 3, 6, 9, 12 );
   // Act:
   V3 := V1 * V2;
   // Assert:
@@ -541,10 +539,10 @@ begin
   TTest.IsTrue((V3.W > 95.99) and (V3.W < 96.01));
 end;
 
-procedure TTestVector4.MultiplyAV;
+procedure TTestVector4Double.MultiplyAV;
 var
-  V: sVector4;
-  R: sVector4;
+  V: dVector4;
+  R: dVector4;
 begin
   // Arrange:
   V := [ 1, 2, 2, 1 ]; // FPC Bug [0035061] https://bugs.freepascal.org/view.php?id=35061 RESOLVED
@@ -558,12 +556,12 @@ begin
   TTest.IsTrue( ((R.W > 3.99 ) and (R.W < 4.01)) );
 end;
 
-procedure TTestVector4.MultiplyF;
+procedure TTestVector4Double.MultiplyF;
 var
-  V1, V2: sVector4;
+  V1, V2: dVector4;
 begin
   // Arrange:
-  V1 := sVector4.Create( 2, 4, 6, 8 );
+  V1 := dVector4.Create( 2, 4, 6, 8 );
   // Act:
   V2 := V1 * 3;
   // Assert:
@@ -573,10 +571,10 @@ begin
   TTest.IsTrue((V2.W > 23.99) and (V2.W < 24.01));
 end;
 
-procedure TTestVector4.MultiplyVA;
+procedure TTestVector4Double.MultiplyVA;
 var
-  V: sVector4;
-  R: sVector4;
+  V: dVector4;
+  R: dVector4;
 begin
   // Arrange:
   V := [ 1, 2, 2, 1 ]; // FPC Bug [0035061] https://bugs.freepascal.org/view.php?id=35061 RESOLVED
@@ -591,12 +589,12 @@ begin
 end;
 
 
-procedure TTestVector4.normalized;
+procedure TTestVector4Double.normalized;
 var
-  V1, V2: sVector4;
+  V1, V2: dVector4;
 begin
   // Arrange:
-  V1 := sVector4.Create( 2, 4, 6, 9 );
+  V1 := dVector4.Create( 2, 4, 6, 9 );
   // Act:
   V2 := V1.normalized; //- Magnitude = // 11.704699910
   // Assert:
@@ -606,13 +604,13 @@ begin
   TTest.IsTrue((V2.W > 0.7688) and (V2.W < 0.7690));
 end;
 
-procedure TTestVector4.Subtract;
+procedure TTestVector4Double.Subtract;
 var
-  V1, V2, V3: sVector4;
+  V1, V2, V3: dVector4;
 begin
   // Arrange:
-  V1 := sVector4.Create( 3, 6, 9, 12 );
-  V2 := sVector4.Create( 2, 4, 6, 8 );
+  V1 := dVector4.Create( 3, 6, 9, 12 );
+  V2 := dVector4.Create( 2, 4, 6, 8 );
   // Act:
   V3 := V1 - V2;
   // Assert:
@@ -622,10 +620,10 @@ begin
   TTest.IsTrue((V3.W > 3.99) and (V3.W < 4.01));
 end;
 
-procedure TTestVector4.SubtractAV;
+procedure TTestVector4Double.SubtractAV;
 var
-  V: sVector4;
-  R: sVector4;
+  V: dVector4;
+  R: dVector4;
 begin
   // Arrange:
   V := [ 1, 2, 2, 1 ]; // FPC Bug [0035061] https://bugs.freepascal.org/view.php?id=35061 RESOLVED
@@ -639,12 +637,12 @@ begin
   TTest.IsTrue( ((R.W > 2.99 ) and (R.W < 3.01)) );
 end;
 
-procedure TTestVector4.SubtractF;
+procedure TTestVector4Double.SubtractF;
 var
-  V1, V2: sVector4;
+  V1, V2: dVector4;
 begin
   // Arrange:
-  V1 := sVector4.Create( 2, 4, 6, 8 );
+  V1 := dVector4.Create( 2, 4, 6, 8 );
   // Act:
   V2 := V1 - 3;
   // Assert:
@@ -654,10 +652,10 @@ begin
   TTest.IsTrue((V2.W > 4.99)  and (V2.W < 5.01));
 end;
 
-procedure TTestVector4.SubtractVA;
+procedure TTestVector4Double.SubtractVA;
 var
-  V: sVector4;
-  R: sVector4;
+  V: dVector4;
+  R: dVector4;
 begin
   // Arrange:
   V := [ 4, 3, 3, 4 ]; // FPC Bug [0035061] https://bugs.freepascal.org/view.php?id=35061 RESOLVED
@@ -672,6 +670,6 @@ begin
 end;
 
 initialization
-  TestSuite.RegisterTestCase(TTestVector4);
+  TestSuite.RegisterTestCase(TTestVector4Double);
 
 end.

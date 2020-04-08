@@ -26,7 +26,7 @@
   IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 *)
 {$endif}
-unit test_cwVectors.Ray;
+unit test_cwvectors.sray;
 {$ifdef fpc} {$mode delphiunicode} {$endif}
 {$M+}
 
@@ -37,7 +37,7 @@ uses
 ;
 
 type
-  TTestRay = class(TTestCase)
+  TTestRaySingle = class(TTestCase)
   published
     ///  <summary>
     ///    Tests the create method which takes an origin and a destination
@@ -64,9 +64,7 @@ uses
   cwTest.Standard
 ;
 
-{ TTestRay }
-
-procedure TTestRay.CreateOriginDesination;
+procedure TTestRaySingle.CreateOriginDesination;
 var
   P1, P2: sVector3;
   aRay: sRay;
@@ -86,7 +84,7 @@ begin
   TTest.IsTrue( ((aRay.Direction.Z * aRay.Length)>0.99) and ((aRay.Direction.Z * aRay.Length)<1.01) );
 end;
 
-procedure TTestRay.CreateOriginDirectionLength;
+procedure TTestRaySingle.CreateOriginDirectionLength;
 var
   Origin: sVector3;
   Direction: sVector3;
@@ -109,7 +107,7 @@ begin
   TTest.IsTrue( ((aRay.Direction.Z * aRay.Length)>0.99) and ((aRay.Direction.Z * aRay.Length)<1.01) );
 end;
 
-procedure TTestRay.Destination;
+procedure TTestRaySingle.Destination;
 var
   Origin: sVector3;
   Direction: sVector3;
@@ -131,6 +129,6 @@ begin
 end;
 
 initialization
-  TestSuite.RegisterTestCase(TTestRay);
+  TestSuite.RegisterTestCase(TTestRaySingle);
 
 end.

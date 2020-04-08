@@ -26,7 +26,7 @@
   IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 *)
 {$endif}
-unit test_cwVectors.Matrix4x4;
+unit test_cwvectors.smatrix4x4;
 {$ifdef fpc} {$mode delphiunicode} {$endif}
 {$M+}
 
@@ -37,7 +37,7 @@ uses
 ;
 
 type
-  TTestMatrix = class(TTestCase)
+  TTestMatrixSingle = class(TTestCase)
   published
 
     ///  <summary>
@@ -191,7 +191,7 @@ begin
   Result := Result and (M.m33 > (m33-0.01)) and (M.m33 < (m33+0.01));
 end;
 
-procedure TTestMatrix.Add;
+procedure TTestMatrixSingle.Add;
 var
   M1, M2, M3: sMatrix4x4;
 begin
@@ -221,7 +221,7 @@ begin
   ));
 end;
 
-procedure TTestMatrix.AddF;
+procedure TTestMatrixSingle.AddF;
 var
   M1, M2: sMatrix4x4;
   F: single;
@@ -247,7 +247,7 @@ begin
   ));
 end;
 
-procedure TTestMatrix.adjugate;
+procedure TTestMatrixSingle.adjugate;
 var
   M: sMatrix4x4;
 begin
@@ -270,7 +270,7 @@ begin
 end;
 
 
-procedure TTestMatrix.cofactor;
+procedure TTestMatrixSingle.cofactor;
 var
   M: sMatrix4x4;
 begin
@@ -292,7 +292,7 @@ begin
    ));
 end;
 
-procedure TTestMatrix.CreateParameterized;
+procedure TTestMatrixSingle.CreateParameterized;
 var
   M: sMatrix4x4;
 begin
@@ -314,7 +314,7 @@ begin
 end;
 
 
-procedure TTestMatrix.CreateVectors;
+procedure TTestMatrixSingle.CreateVectors;
 var
   M: sMatrix4x4;
 begin
@@ -336,7 +336,7 @@ begin
 end;
 
 
-procedure TTestMatrix.CreateVectors3;
+procedure TTestMatrixSingle.CreateVectors3;
 var
   M: sMatrix4x4;
 begin
@@ -357,7 +357,7 @@ begin
   ));
 end;
 
-procedure TTestMatrix.determinant;
+procedure TTestMatrixSingle.determinant;
 var
   M: sMatrix4x4;
   F: single;
@@ -375,7 +375,7 @@ begin
   TTest.IsTrue( (F>-200.01) and (F<-199.99) );
 end;
 
-procedure TTestMatrix.Divide;
+procedure TTestMatrixSingle.Divide;
 var
   M1, M2, M3: sMatrix4x4;
 begin
@@ -405,7 +405,7 @@ begin
   ));
 end;
 
-procedure TTestMatrix.DivideF;
+procedure TTestMatrixSingle.DivideF;
 var
   M1, M2: sMatrix4x4;
   F: single;
@@ -431,7 +431,7 @@ begin
   ));
 end;
 
-procedure TTestMatrix.dotMM;
+procedure TTestMatrixSingle.dotMM;
 var
   M1, M2, M3: sMatrix4x4;
 begin
@@ -461,7 +461,7 @@ begin
   ));
 end;
 
-procedure TTestMatrix.dotVM;
+procedure TTestMatrixSingle.dotVM;
 var
   M1: sMatrix4x4;
   V1,V2: sVector4;
@@ -483,7 +483,7 @@ begin
   TTest.IsTrue((V2.W > -32.01) and (V2.W < -31.99));
 end;
 
-procedure TTestMatrix.identity;
+procedure TTestMatrixSingle.identity;
 var
   M: sMatrix4x4;
 begin
@@ -499,7 +499,7 @@ begin
   ));
 end;
 
-procedure TTestMatrix.inverse;
+procedure TTestMatrixSingle.inverse;
 var
   M: sMatrix4x4;
   M1: sMatrix4x4;
@@ -531,7 +531,7 @@ begin
   ));
 end;
 
-procedure TTestMatrix.Multiply;
+procedure TTestMatrixSingle.Multiply;
 var
   M1, M2, M3: sMatrix4x4;
 begin
@@ -561,7 +561,7 @@ begin
   ));
 end;
 
-procedure TTestMatrix.MultiplyF;
+procedure TTestMatrixSingle.MultiplyF;
 var
   M1, M2: sMatrix4x4;
   F: single;
@@ -587,7 +587,7 @@ begin
   ));
 end;
 
-procedure TTestMatrix.rotationX;
+procedure TTestMatrixSingle.rotationX;
 var
   M: sMatrix4x4;
 begin
@@ -603,7 +603,7 @@ begin
   ));
 end;
 
-procedure TTestMatrix.rotationY;
+procedure TTestMatrixSingle.rotationY;
 var
   M: sMatrix4x4;
 begin
@@ -619,7 +619,7 @@ begin
   ));
 end;
 
-procedure TTestMatrix.rotationZ;
+procedure TTestMatrixSingle.rotationZ;
 var
   M: sMatrix4x4;
 begin
@@ -635,7 +635,7 @@ begin
   ));
 end;
 
-procedure TTestMatrix.scale;
+procedure TTestMatrixSingle.scale;
 var
   V: sVector3;
   M: sMatrix4x4;
@@ -653,7 +653,7 @@ begin
   ));
 end;
 
-procedure TTestMatrix.Subtract;
+procedure TTestMatrixSingle.Subtract;
 var
   M1, M2, M3: sMatrix4x4;
 begin
@@ -683,7 +683,7 @@ begin
   ));
 end;
 
-procedure TTestMatrix.SubtractF;
+procedure TTestMatrixSingle.SubtractF;
 var
   M1, M2: sMatrix4x4;
   F: single;
@@ -709,7 +709,7 @@ begin
   ));
 end;
 
-procedure TTestMatrix.translation;
+procedure TTestMatrixSingle.translation;
 var
   V: sVector3;
   M: sMatrix4x4;
@@ -727,7 +727,7 @@ begin
   ));
 end;
 
-procedure TTestMatrix.transpose;
+procedure TTestMatrixSingle.transpose;
 var
   M: sMatrix4x4;
 begin
@@ -750,7 +750,7 @@ begin
 end;
 
 initialization
-  TestSuite.RegisterTestCase(TTestMatrix);
+  TestSuite.RegisterTestCase(TTestMatrixSingle);
 
 end.
 

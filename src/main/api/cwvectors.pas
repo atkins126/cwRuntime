@@ -5158,10 +5158,6 @@ var
   M: extended;
 begin
   M := Self.magnitude;
-  if M=0 then begin
-    Result := Self;
-    exit;
-  end;
   Result.X := X / M;
   Result.Y := Y / M;
 end;
@@ -6112,10 +6108,6 @@ var
   M: extended;
 begin
   M := Self.magnitude;
-  if M=0 then begin
-    Result := Self;
-    exit;
-  end;
   Result.X := X / M;
   Result.Y := Y / M;
   Result.Z := Z / M;
@@ -7140,10 +7132,6 @@ var
   M: extended;
 begin
   M := Self.magnitude;
-  if M=0 then begin
-    Result := Self;
-    exit;
-  end;
   Result.X := X / M;
   Result.Y := Y / M;
   Result.Z := Z / M;

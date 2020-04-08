@@ -259,6 +259,18 @@
         <Filename Value="..\main\implementation\cwwin32.user32.pas"/>
         <UnitName Value="cwwin32.user32"/>
       </Item>
+      <Item>
+        <Filename Value="..\main\api\cwvectors.pas"/>
+        <UnitName Value="cwVectors"/>
+      </Item>
+      <Item>
+        <Filename Value="..\main\implementation\cwlog.common.pas"/>
+        <UnitName Value="cwLog.common"/>
+      </Item>
+      <Item>
+        <Filename Value="..\main\implementation\lib_cwlog.proxylogtarget.pas"/>
+        <UnitName Value="lib_cwLog.ProxyLogTarget"/>
+      </Item>
     </Files>
     <RequiredPkgs>
       <Item>
