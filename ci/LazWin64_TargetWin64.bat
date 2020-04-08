@@ -8,6 +8,9 @@ REM ----------------------------------------------------------------------------
 
 REM ------------------------------ Build sample projects ------------------------
 
+REM ------------------------------ Build log library (debug) --------------------
+lazbuild %WORKSPACE%\src\projects\lib_cwLog.lpi  || exit /b
+
 REM ------------------------------ Build test projects --------------------------
 
 lazbuild %WORKSPACE%\src\tests\cwCollections\test_cwCollections.lpi  || exit /b
