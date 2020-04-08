@@ -26,39 +26,36 @@
   IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 *)
 {$endif}
-/// <summary>
-///   Standard implementation of ILog
-/// </summary>
-unit cwlog.dynamic;
+unit cwLog.common;
+
 {$ifdef fpc}{$mode delphiunicode}{$endif}
+
 
 interface
 uses
-  cwLog
-, cwLog.Common
+  sysUtils //[RTL] for Exception
+, cwLog
 ;
 
-/// <summary>
-///   When this type of exception is raised it will read the most recent
-///   log entry for an exception message. It also carries the status value
-///   (message GUID) should this need to be passed to a handler.
-/// <summary>
 type
-  TException = cwLog.Common.TException; //- Alias.
+  // - See cwLog.TException
+  TException = class(Exception)
+  private
+    fStatus: TStatus;
+  public
+    constructor Create( const Status: TStatus ); reintroduce;
+    property Status: TStatus read fStatus;
+  end;
 
-///  <summary>
-///    Returns the singleton instance of ILog.
-///  </summary>
-function Log: ILog;
+var
+  SingletonLog: ILog = nil; //<- The actual instance of log!
 
 implementation
-uses
-  cwLog.Log.Dynamic
-;
 
-function Log: ILog;
+constructor TException.Create( const Status: TStatus );
 begin
-  Result := cwLog.Log.Dynamic.Log;
+  inherited Create( SingletonLog.LastEntry );
+  fStatus := Status;
 end;
 
 

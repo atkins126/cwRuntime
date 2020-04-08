@@ -38,7 +38,6 @@ uses
 , cwTypes
 ;
 
-
 type
 
 {$region ' TStatus'}

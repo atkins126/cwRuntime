@@ -63,10 +63,8 @@ implementation
 uses
   cwUnicode.Standard
 , cwCollections.Standard
+, cwLog.Common
 ;
-
-var
-  SingletonLog: ILog = nil;
 
 function Log: ILog;
 var

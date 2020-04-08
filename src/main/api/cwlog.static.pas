@@ -35,7 +35,16 @@ unit cwlog.static;
 interface
 uses
   cwLog
+, cwLog.Common
 ;
+
+/// <summary>
+///   When this type of exception is raised it will read the most recent
+///   log entry for an exception message. It also carries the status value
+///   (message GUID) should this need to be passed to a handler.
+/// <summary>
+type
+  TException = cwLog.Common.TException; //- Alias.
 
 ///  <summary>
 ///    Returns the singleton instance of ILog.
@@ -46,9 +55,6 @@ implementation
 uses
   cwLog.Log.Static
 ;
-
-var
-  SingletonLog: ILog = nil;
 
 function Log: ILog;
 begin
