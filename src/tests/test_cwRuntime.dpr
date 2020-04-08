@@ -30,13 +30,6 @@ program test_cwRuntime;
 uses
   cwTest,
   cwTest.Standard,
-  test_cwVectors.hVector2,
-  test_cwVectors.hVector3,
-  test_cwVectors.hVector4,
-  test_cwVectors.hMatrix2x2,
-  test_cwVectors.hMatrix3x3,
-  test_cwVectors.hMatrix4x4,
-  test_cwVectors.hRay,
   test_cwVectors.sVector2,
   test_cwVectors.sVector3,
   test_cwVectors.sVector4,
@@ -81,7 +74,8 @@ uses
   test_cwCollections.RingBuffer,
   test_cwCollections.Stack,
   test_cwCollections.Dictionary,
-  test_cwCollections.List;
+  test_cwCollections.List
+;
 
 var
   R: nativeuint;

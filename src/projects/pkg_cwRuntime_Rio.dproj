@@ -166,7 +166,6 @@
         <DelphiCompile Include="$(MainSource)">
             <MainSource>MainSource</MainSource>
         </DelphiCompile>
-        <DCCReference Include="rtl.dcp"/>
         <DCCReference Include="..\main\api\cwio.standard.pas"/>
         <DCCReference Include="..\main\api\cwlog.console.pas"/>
         <DCCReference Include="..\main\api\cwlog.dynamic.pas"/>
@@ -270,6 +269,12 @@
                 </DeployFile>
                 <DeployFile LocalName="$(BDS)\Redist\iossimulator\libpcre.dylib" Class="DependencyModule">
                     <Platform Name="iOSSimulator">
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="..\..\out\lib\bpl\pkg_cwRuntime_Rio.bpl" Configuration="Debug" Class="ProjectOutput">
+                    <Platform Name="Win64">
+                        <RemoteName>pkg_cwRuntime_Rio.bpl</RemoteName>
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>
