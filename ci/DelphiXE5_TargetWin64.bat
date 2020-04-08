@@ -1,10 +1,12 @@
 @echo off
-WORKSPACE=%1
-
 REM ------------------------------------------------------------------------------
 REM - This file exists for the sake of the projects continuous integration server.
 REM - Do not use unless you know what you are doing.
 REM ------------------------------------------------------------------------------
+
+ENV=%1
+WORKSPACE=%2
+call ENV || exit /b
 
 REM ------------------------------ Build sample projects ------------------------
 
