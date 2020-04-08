@@ -53,14 +53,17 @@ const
   MM_MAX_NUMAXES     = 16;
 
   INVALID_HANDLE           = -1;
+
   ///  <summary>
   ///    MSDN: https://msdn.microsoft.com/en-us/library/windows/desktop/ms644943(v=vs.85).aspx
   ///  </summary>
   PM_NOREMOVE               = $00;
+
   ///  <summary>
   ///    MSDN: https://msdn.microsoft.com/en-us/library/windows/desktop/ms644943(v=vs.85).aspx
   ///  </summary>
   PM_REMOVE                 = $01;
+
   ///  <summary>
   ///    MSDN: https://msdn.microsoft.com/en-us/library/windows/desktop/ms644943(v=vs.85).aspx
   ///  </summary>
@@ -71,31 +74,38 @@ const
   ///    MSDN: https://msdn.microsoft.com/en-us/library/windows/desktop/ms632613(v=vs.85).aspx
   ///  </summary>
   MN_GETHMENU               = $01E1;
+
   ///  <summary>
   ///    MSDN: https://msdn.microsoft.com/en-us/library/windows/desktop/ms648055(v=vs.85).aspx
   ///  </summary>
   WM_ERASEBKGND             = $0014;
+
   ///  <summary>
   ///    MSDN: https://msdn.microsoft.com/en-us/library/windows/desktop/ms632624(v=vs.85).aspx
   ///  </summary>
   WM_GETFONT                = $0031;
+
   ///  <summary>
   ///    MSDN: https://msdn.microsoft.com/en-us/library/windows/desktop/ms632627(v=vs.85).aspx
   ///  </summary>
   WM_GETTEXT                = $000D;
+
   ///  <summary>
   ///    MSDN: https://msdn.microsoft.com/en-us/library/windows/desktop/ms632628(v=vs.85).aspx
   ///  </summary>
   WM_GETTEXTLENGTH          = $000E;
+
   ///  <summary>
   ///    MSDN: https://msdn.microsoft.com/en-us/library/windows/desktop/ms632642(v=vs.85).aspx
   ///  </summary>
   WM_SETFONT                = $0030;
+
   ///  <summary>
   ///    MSDN: https://msdn.microsoft.com/en-us/library/windows/desktop/ms632643(v=vs.85).aspx
   ///  </summary>
   WM_SETICON                = $0080;
   ///  <summary>
+
   ///    MSDN: https://msdn.microsoft.com/en-us/library/windows/desktop/ms632644(v=vs.85).aspx
   ///  </summary>
   WM_SETTEXT                = $000C;
@@ -109,134 +119,167 @@ const
   ///    MSDN: https://msdn.microsoft.com/en-us/library/windows/desktop/ms632614(v=vs.85).aspx
   ///  </summary>
   WM_ACTIVATEAPP            = $001C;
+
   ///  <summary>
   ///    MSDN: https://msdn.microsoft.com/en-us/library/windows/desktop/ms632615(v=vs.85).aspx
   ///  </summary>
   WM_CANCELMODE             = $001F;
+
   ///  <summary>
   ///    MSDN: https://msdn.microsoft.com/en-us/library/windows/desktop/ms632616(v=vs.85).aspx
   ///  </summary>
   WM_CHILDACTIVATE          = $0022;
+
   ///  <summary>
   ///    MSDN: https://msdn.microsoft.com/en-us/library/windows/desktop/ms632617(v=vs.85).aspx
   ///  </summary>
   WM_CLOSE                  = $0010;
+
   ///  <summary>
   ///    MSDN: https://msdn.microsoft.com/en-us/library/windows/desktop/ms632618(v=vs.85).aspx
   ///  </summary>
   WM_COMPACTING             = $0041;
+
   ///  <summary>
   ///    MSDN: https://msdn.microsoft.com/en-us/library/windows/desktop/ms632619(v=vs.85).aspx
   ///  </summary>
   WM_CREATE                 = $0001;
+
   ///  <summary>
   ///    MSDN: https://msdn.microsoft.com/en-us/library/windows/desktop/ms632620(v=vs.85).aspx
   ///  </summary>
   WM_DESTROY                = $0002;
+
   ///  <summary>
   ///    MSDN: https://msdn.microsoft.com/en-us/library/windows/desktop/dn312083(v=vs.85).aspx
   ///  </summary>
   WM_DPICHANGED             = $02E0;
+
   ///  <summary>
   ///    MSDN: https://msdn.microsoft.com/en-us/library/windows/desktop/ms632621(v=vs.85).aspx
   ///  </summary>
   WM_ENABLE                 = $000A;
+
   ///  <summary>
   ///    MSDN: https://msdn.microsoft.com/en-us/library/windows/desktop/ms632622(v=vs.85).aspx
   ///  </summary>
   WM_ENTERSIZEMOVE          = $0231;
+
   ///  <summary>
   ///    MSDN: https://msdn.microsoft.com/en-us/library/windows/desktop/ms632623(v=vs.85).aspx
   ///  </summary>
   WM_EXITSIZEMOVE           = $0232;
+
   ///  <summary>
   ///    MSDN: https://msdn.microsoft.com/en-us/library/windows/desktop/ms632625(v=vs.85).aspx
   ///  </summary>
   WM_GETICON                = $007F;
+
   ///  <summary>
   ///    MSDN: https://msdn.microsoft.com/en-us/library/windows/desktop/ms632626(v=vs.85).aspx
   ///  </summary>
   WM_GETMINMAXINFO          = $0024;
+
   ///  <summary>
   ///    MSDN: https://msdn.microsoft.com/en-us/library/windows/desktop/ms632629(v=vs.85).aspx
   ///  </summary>
   WM_INPUTLANGCHANGE        = $0051;
+
   ///  <summary>
   ///    MSDN: https://msdn.microsoft.com/en-us/library/windows/desktop/ms632630(v=vs.85).aspx
   ///  </summary>
   WM_INPUTLANGCHANGEREQUEST = $0050;
+
   ///  <summary>
   ///    MSDN: https://msdn.microsoft.com/en-us/library/windows/desktop/ms632631(v=vs.85).aspx
   ///  </summary>
   WM_MOVE                   = $0003;
+
   ///  <summary>
   ///    MSDN: https://msdn.microsoft.com/en-us/library/windows/desktop/ms632632(v=vs.85).aspx
   ///  </summary>
   WM_MOVING                 = $0216;
+
   ///  <summary>
   ///    MSDN: https://msdn.microsoft.com/en-us/library/windows/desktop/ms632633(v=vs.85).aspx
   ///  </summary>
   WM_NCACTIVATE             = $0086;
+
   ///  <summary>
   ///    MSDN: https://msdn.microsoft.com/en-us/library/windows/desktop/ms632634(v=vs.85).aspx
   ///  </summary>
   WM_NCCALCSIZE             = $0083;
+
   ///  <summary>
   ///    MSDN: https://msdn.microsoft.com/en-us/library/windows/desktop/ms632635(v=vs.85).aspx
   ///  </summary>
   WM_NCCREATE               = $0081;
+
   ///  <summary>
   ///    MSDN: https://msdn.microsoft.com/en-us/library/windows/desktop/ms632636(v=vs.85).aspx
   ///  </summary>
   WM_NCDESTROY              = $0082;
+
   ///  <summary>
   ///    MSDN: https://msdn.microsoft.com/en-us/library/windows/desktop/ms632637(v=vs.85).aspx
   ///  </summary>
   WM_NULL                   = $0000;
+
   ///  <summary>
   ///    MSDN: https://msdn.microsoft.com/en-us/library/windows/desktop/ms632639(v=vs.85).aspx
   ///  </summary>
   WM_QUERYDRAGICON          = $0037;
+
   ///  <summary>
   ///    MSDN: https://msdn.microsoft.com/en-us/library/windows/desktop/ms632640(v=vs.85).aspx
   ///  </summary>
   WM_QUERYOPEN              = $0013;
+
   ///  <summary>
   ///    MSDN: https://msdn.microsoft.com/en-us/library/windows/desktop/ms632641(v=vs.85).aspx
   ///  </summary>
   WM_QUIT                   = $0012;
+
   ///  <summary>
   ///    MSDN: https://msdn.microsoft.com/en-us/library/windows/desktop/ms632645(v=vs.85).aspx
   ///  </summary>
   WM_SHOWWINDOW             = $0018;
+
   ///  <summary>
   ///    MSDN: https://msdn.microsoft.com/en-us/library/windows/desktop/ms632646(v=vs.85).aspx
   ///  </summary>
   WM_SIZE                   = $0005;
+
   ///  <summary>
   ///    MSDN: https://msdn.microsoft.com/en-us/library/windows/desktop/ms632647(v=vs.85).aspx
   ///  </summary>
   WM_SIZING                 = $0214;
+
   ///  <summary>
   ///    MSDN: https://msdn.microsoft.com/en-us/library/windows/desktop/ms632648(v=vs.85).aspx
   ///  </summary>
   WM_STYLECHANGED           = $007D;
+
   ///  <summary>
   ///    MSDN: https://msdn.microsoft.com/en-us/library/windows/desktop/ms632649(v=vs.85).aspx
   ///  </summary>
   WM_STYLECHANGING          = $007C;
+
   ///  <summary>
   ///    MSDN: https://msdn.microsoft.com/en-us/library/windows/desktop/ms632650(v=vs.85).aspx
   ///  </summary>
   WM_THEMECHANGED           = $031A;
+
   ///  <summary>
   ///    MSDN: https://msdn.microsoft.com/en-us/library/windows/desktop/ms632651(v=vs.85).aspx
   ///  </summary>
   WM_USERCHANGED            = $0054;
+
   ///  <summary>
   ///    MSDN: https://msdn.microsoft.com/en-us/library/windows/desktop/ms632652(v=vs.85).aspx
   ///  </summary>
   WM_WINDOWPOSCHANGED       = $0047;
+
   ///  <summary>
   ///    MSDN: https://msdn.microsoft.com/en-us/library/windows/desktop/ms632653(v=vs.85).aspx
   ///  </summary>

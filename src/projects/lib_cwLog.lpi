@@ -29,24 +29,6 @@
         <Filename Value="lib_cwLog.dpr"/>
         <IsPartOfProject Value="True"/>
       </Unit>
-      <Unit>
-        <Filename Value="api\cwlog.pas"/>
-        <IsPartOfProject Value="True"/>
-        <UnitName Value="cwLog"/>
-      </Unit>
-      <Unit>
-        <Filename Value="implementation\cwlog.log.static.pas"/>
-        <IsPartOfProject Value="True"/>
-      </Unit>
-      <Unit>
-        <Filename Value="api\cwlog.dynamic.pas"/>
-        <IsPartOfProject Value="True"/>
-      </Unit>
-      <Unit>
-        <Filename Value="lib\lib_cwlog.proxylogtarget.pas"/>
-        <IsPartOfProject Value="True"/>
-        <UnitName Value="lib_cwLog.ProxyLogTarget"/>
-      </Unit>
     </Units>
   </ProjectOptions>
   <CompilerOptions>

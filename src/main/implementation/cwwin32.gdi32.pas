@@ -40,17 +40,6 @@ uses
 const
   cLibName = 'gdi32.dll';
 
-//GDI32.1; Index 1000;			Information not available
-//GDI32.2; Index 1001;			Information not available
-//GDI32.3; Index 1002;			Information not available
-//GDI32.4; Index 1003;			Information not available
-//GDI32.5; Index 1004;			Information not available
-//GDI32.6; Index 1005;			Information not available
-//GDI32.7; Index 1006;			Information not available
-//GDI32.8; Index 1007;			Information not available
-//GDI32.9; Index 1008;			Information not available
-//GDI32.10; Index 1009;		Information not available
-//GDI32.11; Index 1010;		Information not available
 //pldcGet; Index 1011;			Information not available
 // GDI32.14; Index 1013;		Information not available
 // DwmCreatedBitmapRemotingOutput; Index 1014;	Information not available
