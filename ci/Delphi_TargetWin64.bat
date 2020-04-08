@@ -16,9 +16,9 @@ msbuild %WORKSPACE%\src\projects\lib_cwLog_Rio.dproj                      || exi
 
 REM ------------------------------ Build test projects --------------------------
 
-msbuild %WORKSPACE%\src\tests\cwLog\test_dynamic_cwLog_%VARIANT%.dproj          || exit /b
-msbuild %WORKSPACE%\src\tests\cwTest\test_cwTest_%VARIANT%.dproj                || exit /b
-msbuild %WORKSPACE%\src\tests\cwRuntime\test_cwRuntime_%VARIANT%.dproj          || exit /b
+msbuild %WORKSPACE%\src\tests\test_dynamic_cwLog_%VARIANT%.dproj          || exit /b
+msbuild %WORKSPACE%\src\tests\test_cwTest_%VARIANT%.dproj                || exit /b
+msbuild %WORKSPACE%\src\tests\test_cwRuntime_%VARIANT%.dproj          || exit /b
 
 REM ------------------------------ Execute test projects --------------------------
 
