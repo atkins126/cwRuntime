@@ -27,7 +27,7 @@
         <Projects Include="tests\test_dynamic_cwLog_Seattle.dproj">
             <Dependencies/>
         </Projects>
-        <Projects Include="tests\cwRuntime_Seattle.dproj">
+        <Projects Include="tests\test_cwRuntime_Seattle.dproj">
             <Dependencies/>
         </Projects>
     </ItemGroup>
@@ -110,23 +110,23 @@
     <Target Name="test_dynamic_cwLog_Seattle:Make">
         <MSBuild Projects="tests\test_dynamic_cwLog_Seattle.dproj" Targets="Make"/>
     </Target>
-    <Target Name="cwRuntime_Seattle">
-        <MSBuild Projects="tests\cwRuntime_Seattle.dproj"/>
+    <Target Name="test_cwRuntime_Seattle">
+        <MSBuild Projects="tests\test_cwRuntime_Seattle.dproj"/>
     </Target>
-    <Target Name="cwRuntime_Seattle:Clean">
-        <MSBuild Projects="tests\cwRuntime_Seattle.dproj" Targets="Clean"/>
+    <Target Name="test_cwRuntime_Seattle:Clean">
+        <MSBuild Projects="tests\test_cwRuntime_Seattle.dproj" Targets="Clean"/>
     </Target>
-    <Target Name="cwRuntime_Seattle:Make">
-        <MSBuild Projects="tests\cwRuntime_Seattle.dproj" Targets="Make"/>
+    <Target Name="test_cwRuntime_Seattle:Make">
+        <MSBuild Projects="tests\test_cwRuntime_Seattle.dproj" Targets="Make"/>
     </Target>
     <Target Name="Build">
-        <CallTarget Targets="pkg_cwRuntime_Seattle;cwTest_SampleTests_Seattle;lib_testLoadLib_Seattle;cwDynLib_LoadLibSample_Seattle;cwLog_LogToConsole_Seattle;lib_cwLog_Seattle;test_cwTest_Seattle;test_dynamic_cwLog_Seattle;cwRuntime_Seattle"/>
+        <CallTarget Targets="pkg_cwRuntime_Seattle;cwTest_SampleTests_Seattle;lib_testLoadLib_Seattle;cwDynLib_LoadLibSample_Seattle;cwLog_LogToConsole_Seattle;lib_cwLog_Seattle;test_cwTest_Seattle;test_dynamic_cwLog_Seattle;test_cwRuntime_Seattle"/>
     </Target>
     <Target Name="Clean">
-        <CallTarget Targets="pkg_cwRuntime_Seattle:Clean;cwTest_SampleTests_Seattle:Clean;lib_testLoadLib_Seattle:Clean;cwDynLib_LoadLibSample_Seattle:Clean;cwLog_LogToConsole_Seattle:Clean;lib_cwLog_Seattle:Clean;test_cwTest_Seattle:Clean;test_dynamic_cwLog_Seattle:Clean;cwRuntime_Seattle:Clean"/>
+        <CallTarget Targets="pkg_cwRuntime_Seattle:Clean;cwTest_SampleTests_Seattle:Clean;lib_testLoadLib_Seattle:Clean;cwDynLib_LoadLibSample_Seattle:Clean;cwLog_LogToConsole_Seattle:Clean;lib_cwLog_Seattle:Clean;test_cwTest_Seattle:Clean;test_dynamic_cwLog_Seattle:Clean;test_cwRuntime_Seattle:Clean"/>
     </Target>
     <Target Name="Make">
-        <CallTarget Targets="pkg_cwRuntime_Seattle:Make;cwTest_SampleTests_Seattle:Make;lib_testLoadLib_Seattle:Make;cwDynLib_LoadLibSample_Seattle:Make;cwLog_LogToConsole_Seattle:Make;lib_cwLog_Seattle:Make;test_cwTest_Seattle:Make;test_dynamic_cwLog_Seattle:Make;cwRuntime_Seattle:Make"/>
+        <CallTarget Targets="pkg_cwRuntime_Seattle:Make;cwTest_SampleTests_Seattle:Make;lib_testLoadLib_Seattle:Make;cwDynLib_LoadLibSample_Seattle:Make;cwLog_LogToConsole_Seattle:Make;lib_cwLog_Seattle:Make;test_cwTest_Seattle:Make;test_dynamic_cwLog_Seattle:Make;test_cwRuntime_Seattle:Make"/>
     </Target>
     <Import Project="$(BDS)\Bin\CodeGear.Group.Targets" Condition="Exists('$(BDS)\Bin\CodeGear.Group.Targets')"/>
 </Project>

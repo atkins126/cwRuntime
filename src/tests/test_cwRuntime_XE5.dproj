@@ -3,7 +3,7 @@
         <ProjectGuid>{9E49E8ED-C39B-4A55-A990-32DF75B420EE}</ProjectGuid>
         <ProjectVersion>15.3</ProjectVersion>
         <FrameworkType>None</FrameworkType>
-        <MainSource>cwRuntime.dpr</MainSource>
+        <MainSource>test_cwRuntime.dpr</MainSource>
         <Base>True</Base>
         <Config Condition="'$(Config)'==''">Debug</Config>
         <Platform Condition="'$(Platform)'==''">Win32</Platform>
@@ -165,7 +165,7 @@
                     <VersionInfoKeys Name="theme"/>
                 </VersionInfoKeys>
                 <Source>
-                    <Source Name="MainSource">cwRuntime.dpr</Source>
+                    <Source Name="MainSource">test_cwRuntime.dpr</Source>
                 </Source>
                 <Excluded_Packages>
                     <Excluded_Packages Name="$(BDSBIN)\dcloffice2k190.bpl">Microsoft Office 2000 Sample Automation Server Wrapper Components</Excluded_Packages>

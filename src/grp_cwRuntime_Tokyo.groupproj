@@ -27,7 +27,7 @@
         <Projects Include="tests\test_dynamic_cwLog_Tokyo.dproj">
             <Dependencies/>
         </Projects>
-        <Projects Include="tests\cwRuntime_Tokyo.dproj">
+        <Projects Include="tests\test_cwRuntime_Tokyo.dproj">
             <Dependencies/>
         </Projects>
     </ItemGroup>
@@ -110,23 +110,23 @@
     <Target Name="test_dynamic_cwLog_Tokyo:Make">
         <MSBuild Projects="tests\test_dynamic_cwLog_Tokyo.dproj" Targets="Make"/>
     </Target>
-    <Target Name="cwRuntime_Tokyo">
-        <MSBuild Projects="tests\cwRuntime_Tokyo.dproj"/>
+    <Target Name="test_cwRuntime_Tokyo">
+        <MSBuild Projects="tests\test_cwRuntime_Tokyo.dproj"/>
     </Target>
-    <Target Name="cwRuntime_Tokyo:Clean">
-        <MSBuild Projects="tests\cwRuntime_Tokyo.dproj" Targets="Clean"/>
+    <Target Name="test_cwRuntime_Tokyo:Clean">
+        <MSBuild Projects="tests\test_cwRuntime_Tokyo.dproj" Targets="Clean"/>
     </Target>
-    <Target Name="cwRuntime_Tokyo:Make">
-        <MSBuild Projects="tests\cwRuntime_Tokyo.dproj" Targets="Make"/>
+    <Target Name="test_cwRuntime_Tokyo:Make">
+        <MSBuild Projects="tests\test_cwRuntime_Tokyo.dproj" Targets="Make"/>
     </Target>
     <Target Name="Build">
-        <CallTarget Targets="pkg_cwRuntime_Tokyo;cwTest_SampleTests_Tokyo;lib_testLoadLib_Tokyo;cwDynLib_LoadLibSample_Tokyo;cwLog_LogToConsole_Tokyo;lib_cwLog_Tokyo;test_cwTest_Tokyo;test_dynamic_cwLog_Tokyo;cwRuntime_Tokyo"/>
+        <CallTarget Targets="pkg_cwRuntime_Tokyo;cwTest_SampleTests_Tokyo;lib_testLoadLib_Tokyo;cwDynLib_LoadLibSample_Tokyo;cwLog_LogToConsole_Tokyo;lib_cwLog_Tokyo;test_cwTest_Tokyo;test_dynamic_cwLog_Tokyo;test_cwRuntime_Tokyo"/>
     </Target>
     <Target Name="Clean">
-        <CallTarget Targets="pkg_cwRuntime_Tokyo:Clean;cwTest_SampleTests_Tokyo:Clean;lib_testLoadLib_Tokyo:Clean;cwDynLib_LoadLibSample_Tokyo:Clean;cwLog_LogToConsole_Tokyo:Clean;lib_cwLog_Tokyo:Clean;test_cwTest_Tokyo:Clean;test_dynamic_cwLog_Tokyo:Clean;cwRuntime_Tokyo:Clean"/>
+        <CallTarget Targets="pkg_cwRuntime_Tokyo:Clean;cwTest_SampleTests_Tokyo:Clean;lib_testLoadLib_Tokyo:Clean;cwDynLib_LoadLibSample_Tokyo:Clean;cwLog_LogToConsole_Tokyo:Clean;lib_cwLog_Tokyo:Clean;test_cwTest_Tokyo:Clean;test_dynamic_cwLog_Tokyo:Clean;test_cwRuntime_Tokyo:Clean"/>
     </Target>
     <Target Name="Make">
-        <CallTarget Targets="pkg_cwRuntime_Tokyo:Make;cwTest_SampleTests_Tokyo:Make;lib_testLoadLib_Tokyo:Make;cwDynLib_LoadLibSample_Tokyo:Make;cwLog_LogToConsole_Tokyo:Make;lib_cwLog_Tokyo:Make;test_cwTest_Tokyo:Make;test_dynamic_cwLog_Tokyo:Make;cwRuntime_Tokyo:Make"/>
+        <CallTarget Targets="pkg_cwRuntime_Tokyo:Make;cwTest_SampleTests_Tokyo:Make;lib_testLoadLib_Tokyo:Make;cwDynLib_LoadLibSample_Tokyo:Make;cwLog_LogToConsole_Tokyo:Make;lib_cwLog_Tokyo:Make;test_cwTest_Tokyo:Make;test_dynamic_cwLog_Tokyo:Make;test_cwRuntime_Tokyo:Make"/>
     </Target>
     <Import Project="$(BDS)\Bin\CodeGear.Group.Targets" Condition="Exists('$(BDS)\Bin\CodeGear.Group.Targets')"/>
 </Project>

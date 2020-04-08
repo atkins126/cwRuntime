@@ -27,7 +27,7 @@
         <Projects Include="tests\test_dynamic_cwLog_XE8.dproj">
             <Dependencies/>
         </Projects>
-        <Projects Include="tests\cwRuntime_XE8.dproj">
+        <Projects Include="tests\test_cwRuntime_XE8.dproj">
             <Dependencies/>
         </Projects>
     </ItemGroup>
@@ -110,23 +110,23 @@
     <Target Name="test_dynamic_cwLog_XE8:Make">
         <MSBuild Projects="tests\test_dynamic_cwLog_XE8.dproj" Targets="Make"/>
     </Target>
-    <Target Name="cwRuntime_XE8">
-        <MSBuild Projects="tests\cwRuntime_XE8.dproj"/>
+    <Target Name="test_cwRuntime_XE8">
+        <MSBuild Projects="tests\test_cwRuntime_XE8.dproj"/>
     </Target>
-    <Target Name="cwRuntime_XE8:Clean">
-        <MSBuild Projects="tests\cwRuntime_XE8.dproj" Targets="Clean"/>
+    <Target Name="test_cwRuntime_XE8:Clean">
+        <MSBuild Projects="tests\test_cwRuntime_XE8.dproj" Targets="Clean"/>
     </Target>
-    <Target Name="cwRuntime_XE8:Make">
-        <MSBuild Projects="tests\cwRuntime_XE8.dproj" Targets="Make"/>
+    <Target Name="test_cwRuntime_XE8:Make">
+        <MSBuild Projects="tests\test_cwRuntime_XE8.dproj" Targets="Make"/>
     </Target>
     <Target Name="Build">
-        <CallTarget Targets="pkg_cwRuntime_XE8;cwTest_SampleTests_XE8;lib_testLoadLib_XE8;cwDynLib_LoadLibSample_XE8;cwLog_LogToConsole_XE8;lib_cwLog_XE8;test_cwTest_XE8;test_dynamic_cwLog_XE8;cwRuntime_XE8"/>
+        <CallTarget Targets="pkg_cwRuntime_XE8;cwTest_SampleTests_XE8;lib_testLoadLib_XE8;cwDynLib_LoadLibSample_XE8;cwLog_LogToConsole_XE8;lib_cwLog_XE8;test_cwTest_XE8;test_dynamic_cwLog_XE8;test_cwRuntime_XE8"/>
     </Target>
     <Target Name="Clean">
-        <CallTarget Targets="pkg_cwRuntime_XE8:Clean;cwTest_SampleTests_XE8:Clean;lib_testLoadLib_XE8:Clean;cwDynLib_LoadLibSample_XE8:Clean;cwLog_LogToConsole_XE8:Clean;lib_cwLog_XE8:Clean;test_cwTest_XE8:Clean;test_dynamic_cwLog_XE8:Clean;cwRuntime_XE8:Clean"/>
+        <CallTarget Targets="pkg_cwRuntime_XE8:Clean;cwTest_SampleTests_XE8:Clean;lib_testLoadLib_XE8:Clean;cwDynLib_LoadLibSample_XE8:Clean;cwLog_LogToConsole_XE8:Clean;lib_cwLog_XE8:Clean;test_cwTest_XE8:Clean;test_dynamic_cwLog_XE8:Clean;test_cwRuntime_XE8:Clean"/>
     </Target>
     <Target Name="Make">
-        <CallTarget Targets="pkg_cwRuntime_XE8:Make;cwTest_SampleTests_XE8:Make;lib_testLoadLib_XE8:Make;cwDynLib_LoadLibSample_XE8:Make;cwLog_LogToConsole_XE8:Make;lib_cwLog_XE8:Make;test_cwTest_XE8:Make;test_dynamic_cwLog_XE8:Make;cwRuntime_XE8:Make"/>
+        <CallTarget Targets="pkg_cwRuntime_XE8:Make;cwTest_SampleTests_XE8:Make;lib_testLoadLib_XE8:Make;cwDynLib_LoadLibSample_XE8:Make;cwLog_LogToConsole_XE8:Make;lib_cwLog_XE8:Make;test_cwTest_XE8:Make;test_dynamic_cwLog_XE8:Make;test_cwRuntime_XE8:Make"/>
     </Target>
     <Import Project="$(BDS)\Bin\CodeGear.Group.Targets" Condition="Exists('$(BDS)\Bin\CodeGear.Group.Targets')"/>
 </Project>
