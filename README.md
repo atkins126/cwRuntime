@@ -35,3 +35,19 @@ Still To-Do:
 	
     CI Server :- Currently performs builds and runs unit tests for Windows Only, need to add targets.
 	
+
+Installation & Usage:
+
+ There is nothing to install when using the cwRuntime (the included package comes out of legacy CI, and will likely be removed soon, it should nto be installed). Instead, simply add the following two paths to your compilers search path...
+ 
+ * cwRuntime/src/main/api
+ * cwRuntime/src/main/implementation
+ 
+Each feature may then be used by adding two units to your uses list. For example, to use cwCollections you can add both cwCollections and cwCollections.Standard to your uses list. There are some exceptions to this rule, see the api directory and associated documentation.
+
+---  
+Usage videos will be uploaded to youtube soon :- https://youtube.com/c/ChapmanWorldOnTube.
+
+
+
+  
