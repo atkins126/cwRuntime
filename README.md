@@ -38,7 +38,7 @@ Still To-Do:
 
 Installation & Usage:
 
- There is nothing to install when using the cwRuntime (the included package comes out of legacy CI, and will likely be removed soon, it should nto be installed). Instead, simply add the following two paths to your compilers search path...
+ There is nothing to install when using the cwRuntime (the included package comes out of legacy CI, and will likely be removed soon, it should not be installed). Instead, simply add the following two paths to your compilers search path...
  
  * cwRuntime/src/main/api
  * cwRuntime/src/main/implementation
