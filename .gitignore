@@ -67,3 +67,10 @@ __recovery/
 
 # Boss dependency manager vendor folder https://github.com/HashLoad/boss
 modules/
+*.ppu
+*.compiled
+*.rsj
+*.lps
+*.res
+src/projects/pkg_cwRuntime.otares
+*.otares
