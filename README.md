@@ -30,7 +30,7 @@ Still To-Do:
 	* cwIO Still heavily dependent on RTL units, need to replace.
 	* cwIO Unit tests are missing.
 	* cwThreading unit tests are missing.
-	* cwCollections - IStringList to get serialize/deserialze methosd for save to file, load from file.
+	* cwCollections - IStringList to get serialize/deserialze methods for save to file, load from file.
 	* Documentation needs work.
 	
     CI Server :- Currently performs builds and runs unit tests for Windows Only, need to add targets.
