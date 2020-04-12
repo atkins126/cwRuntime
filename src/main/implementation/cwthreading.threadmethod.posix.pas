@@ -32,9 +32,15 @@ unit cwThreading.ThreadMethod.Posix;
 interface
 {$ifndef MSWINDOWS}
 uses
-  pthreads
+  cwThreading
+{$ifdef fpc}
+, pthreads
 , unixtype
-, dethreading
+{$endif}
+{$ifndef fpc}
+, Posix.SysTypes
+, posix.pthread
+{$endif}
 ;
 
 type
@@ -48,7 +54,7 @@ type
     function getExecuteMethod: TThreadExecuteMethod;
     function Terminate( Timeout: uint32 = 25 ): boolean;
   protected
-    procedure setExecuteMethod( value: TThreadExecuteMethod );
+    procedure setExecuteMethod( const Value: TThreadExecuteMethod );
     function doExecute: uint32;
   public
     constructor Create; reintroduce;
@@ -60,11 +66,15 @@ implementation
 {$ifndef MSWINDOWS}
 uses
   SysUtils
+{$ifdef fpc}
 , BaseUnix
-, deTypes
-, deLog
-, deLog.Standard
-, deRTL.LogEntries
+{$else}
+, Posix.errno
+{$endif}
+, cwTypes
+, cwLog
+, cwLog.Standard
+, cwRuntime.LogEntries
 ;
 
 const
@@ -83,16 +93,16 @@ begin
   fTerminated := False;
   fThreadedMethod := nil;
   //- Define and create thread.
-  if pthread_attr_init(@attr)<>0 then begin
+  if pthread_attr_init({$ifdef fpc}@{$endif}attr)<>0 then begin
     Log.Insert(le_OSAPIError,lsFatal,['pthread_attr_init',errno.AsString]);
   end;
-  if pthread_attr_setstacksize(@attr,cDefaultStackSize)<>0 then begin
+  if pthread_attr_setstacksize({$ifdef fpc}@{$endif}attr,cDefaultStackSize)<>0 then begin
     Log.Insert(le_OSAPIError,lsFatal,['pthread_attr_setstacksize',errno.AsString]);
   end;
-  if pthread_create(@fHandle,@attr,@InternalHandler,Self)<>0 then begin
+  if pthread_create({$ifdef fpc}@{$endif}fHandle,{$ifdef fpc}@{$endif}attr,@InternalHandler,Self)<>0 then begin
     Log.Insert(le_OSAPIError,lsFatal,['pthread_create',errno.AsString]);
   end;
-  if pthread_attr_destroy(@attr)<>0 then begin
+  if pthread_attr_destroy({$ifdef fpc}@{$endif}attr)<>0 then begin
     Log.Insert(le_OSAPIError,lsFatal,['pthread_attr_destroy',errno.AsString]);
   end;
 end;
@@ -145,7 +155,7 @@ begin
   Result := fThreadedMethod;
 end;
 
-procedure TPosixThreadMethod.setExecuteMethod(value: TThreadExecuteMethod);
+procedure TPosixThreadMethod.setExecuteMethod(const value: TThreadExecuteMethod);
 begin
   fThreadedMethod := value;
 end;

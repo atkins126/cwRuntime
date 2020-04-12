@@ -198,11 +198,15 @@ type
     ///  </summary>
     function RegisterLogEntry( const EntryString: string ): boolean;
 
-    /// <exclude/> - A convenience overload to prevent the need for type-casting ansi-strings to unicode strings.
+    {$if defined(fpc) or defined(MSWINDOWS)}
+    /// <exclude/> - A convenience overload to prevent the need for type-casting ansi-strings to unicode strings under fpc
     function Insert( const LogEntry: AnsiString; const Severity: TLogSeverity ): TStatus; overload;
+    {$endif}
 
-    /// <exclude/> - A convenience overload to prevent the need for type-casting ansi-strings to unicode strings.
+    {$if defined(fpc) or defined(MSWINDOWS)}
+    /// <exclude/> - A convenience overload to prevent the need for type-casting ansi-strings to unicode strings under fpc
     function Insert( const LogEntry: AnsiString; const Severity: TLogSeverity; const Parameters: array of string ): TStatus; overload;
+    {$endif}
 
     ///  <summary>
     ///    Inserts a log entry into the log. <br/>

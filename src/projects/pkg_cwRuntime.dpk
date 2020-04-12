@@ -1,5 +1,6 @@
 package pkg_cwRuntime;
 
+{$IFDEF IMPLICITBUILDING This IFDEF should not be used by users}
 {$ALIGN 8}
 {$ASSERTIONS ON}
 {$BOOLEVAL OFF}
@@ -22,6 +23,11 @@ package pkg_cwRuntime;
 {$MINENUMSIZE 1}
 {$IMAGEBASE $400000}
 {$DEFINE DEBUG}
+{$ENDIF IMPLICITBUILDING}
+{$IMPLICITBUILD ON}
+
+requires
+  rtl;
 
 contains
   cwio.standard in '..\main\api\cwio.standard.pas',
@@ -89,4 +95,5 @@ contains
   cwtest.testcase.console in '..\main\implementation\cwtest.testcase.console.pas';
 
 end.
+
 

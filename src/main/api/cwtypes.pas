@@ -94,17 +94,21 @@ type
     ///  </summary>
     function Len: nativeuint;
 
+    {$if defined(fpc) or defined(MSWINDOWS)}
     ///  <summary>
     ///    Returns the string as an ansistring.
     ///    Getter for AsAnsiString property.
     ///  <summary>
     function getAsAnsiString: ansiString;
+    {$endif}
 
+    {$if defined(fpc) or defined(MSWINDOWS)}
     ///  <summary>
     ///    Sets the string as an ansistring.
     ///    Setter for AsAnsiString property.
     ///  <summary>
     procedure setAsAnsiString( const value: ansistring );
+    {$endif}
 
     ///  <summary>
     ///    Sets the string using a pansichar / pchar.
@@ -263,15 +267,19 @@ type
     ///  </summary>
     function AsExtended: extended;
 
+    {$if defined(fpc) or defined(MSWINDOWS)}
     ///  <summary>
     ///    Get or Set this string as an ansi string, for compatibility with
     ///    older API's.
     ///  </summary>
     property AsAnsiString: ansistring read getAsAnsiString write setAsAnsiString;
+    {$endif}
+
   end;
 {$endregion}
 {$region ' Helper for ansistring'}
 type
+  {$if defined(fpc) or defined(MSWINDOWS)}
   TAnsiStringHelper = record helper for ansistring
     ///  <summary>
     ///    Returns the ansi string as a regular string for interation with
@@ -286,6 +294,7 @@ type
     ///  </summary>
     property AsString: string read getAsString;
   end;
+  {$endif}
 {$endregion}
 {$region ' Helper for char'}
   TCharHelper = record helper for char
@@ -798,6 +807,7 @@ begin
   end;
 end;
 
+{$if defined(fpc) or defined(MSWINDOWS)}
 function TStringHelper.getAsAnsiString: ansiString;
 var
   Cursor: int32;
@@ -829,6 +839,7 @@ begin
     Result := Result + ansichar(B);
   end;
 end;
+{$endif}
 
 function TStringHelper.LeftPad( const CharCount: nativeuint; const ch: char ): string;
 begin
@@ -932,6 +943,7 @@ begin
   Result := strutils.RightStr(Self,ACount);
 end;
 
+{$if defined(fpc) or defined(MSWINDOWS)}
 procedure TStringHelper.setAsAnsiString(const value: ansistring);
 var
   idx: uint32;
@@ -955,6 +967,7 @@ begin
     end;
   end;
 end;
+{$endif}
 
 procedure TStringHelper.SetAsPChar(const value: pointer);
 var
@@ -1012,11 +1025,13 @@ end;
 {$endregion}
 {$region ' Implementation of TAnsiStringHelper'}
 
+{$if defined(fpc) or defined(MSWINDOWS)}
 function TAnsiStringHelper.getAsString: string;
 begin
   Result := '';
   Result.AsAnsiString := Self;
 end;
+{$endif}
 
 {$endregion}
 {$region ' Implementation of TCharArrayHelper'}

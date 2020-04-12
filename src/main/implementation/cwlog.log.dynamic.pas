@@ -47,8 +47,12 @@ type
     procedure AddLogTarget( const LogTarget: ILogTarget );
     function ExportTranslationFile( const FilePath: string ): TStatus;
     function ImportTranslationFile( const FilePath: string ): TStatus;
+    {$if defined(fpc) or defined(MSWINDOWS)}
     function Insert( const LogEntry: AnsiString; const Severity: TLogSeverity ): TStatus; overload;
+    {$endif}
+    {$if defined(fpc) or defined(MSWINDOWS)}
     function Insert( const LogEntry: AnsiString; const Severity: TLogSeverity; const Parameters: array of string ): TStatus; overload;
+    {$endif}
     function Insert( const LogEntry: string; const Severity: TLogSeverity; const Parameters: array of string ): TStatus; overload;
     function Insert( const LogEntry: string; const Severity: TLogSeverity ): TStatus; overload;
     function getLastEntry: string;
@@ -107,6 +111,7 @@ begin
   //-
 end;
 
+{$if defined(fpc) or defined(MSWINDOWS)}
 function TLog.Insert(const LogEntry: AnsiString; const Severity: TLogSeverity): TStatus;
 var
   Str: TUnicodeString;
@@ -114,7 +119,9 @@ begin
   Str.AsString := LogEntry.AsString;
   Result := fLogBinding.InsertLogEntryByString(Str.AsPtr,Severity,nil);
 end;
+{$endif}
 
+{$if defined(fpc) or defined(MSWINDOWS)}
 function TLog.Insert(const LogEntry: AnsiString; const Severity: TLogSeverity; const Parameters: array of string): TStatus;
 var
   Str: TUnicodeString;
@@ -128,6 +135,7 @@ begin
   ParamStr.AsString := StrParameters;
   Result := fLogBinding.InsertLogEntryByString(Str.AsPtr,Severity,ParamStr.AsPtr);
 end;
+{$endif}
 
 function TLog.Insert(const LogEntry: string; const Severity: TLogSeverity; const Parameters: array of string): TStatus;
 var

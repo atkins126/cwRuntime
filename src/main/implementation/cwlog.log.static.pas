@@ -63,8 +63,12 @@ type
     function Insert( const LogEntry: TGUID; const EntryText: string; const Severity: TLogSeverity; const Parameters: array of string ): TStatus; overload;
     function Insert( const LogEntry: string; const Severity: TLogSeverity; const Parameters: array of string ): TStatus; overload;
     function Insert( const LogEntry: string; const Severity: TLogSeverity ): TStatus; overload;
+    {$if defined(fpc) or defined(MSWINDOWS)}
     function Insert( const LogEntry: AnsiString; const Severity: TLogSeverity ): TStatus; overload;
+    {$endif}
+    {$if defined(fpc) or defined(MSWINDOWS)}
     function Insert( const LogEntry: AnsiString; const Severity: TLogSeverity; const Parameters: array of string ): TStatus; overload;
+    {$endif}
     function getLastEntry: string;
   public
     constructor Create; reintroduce;
@@ -79,7 +83,7 @@ function Log: ILog;
 implementation
 uses
   sysutils  //[RTL] For IsEqualGUID
-, strutils  //[RTL] for LeftStr(),RightStr(),Pos()
+, cwTypes
 , cwCollections.Standard
 ;
 
@@ -126,7 +130,11 @@ begin
   if not ParseLogEntryDeclaration(EntryString,UIDStr,MessageStr) then begin
     exit;
   end;
+  {$if defined(fpc) or defined(MSWINDOWS)}
   GUID := StringToGUID(ansistring(UIDStr));
+  {$else}
+  GUID := StringToGUID(UIDStr);
+  {$endif}
   if FindLogEntry( GUID, foundIdx ) then begin
     //- Unlikely the same GUID used for two different messages, very likely a
     //- second instance of cwRTL in proxy log attempting to register a second
@@ -228,11 +236,7 @@ begin
     exit;
   end;
   //- No opening brace means this is not a log entry.
-  {$ifdef NEXTGEN}
-  if SourceStr[0]<>'{' then begin
-  {$else}
-  if SourceStr[1]<>'{' then begin
-  {$endif}
+  if SourceStr.LeftStr(1)<>'{' then begin
     exit;
   end;
   //- 38th character should be closing brace else, not a log entry.
@@ -290,11 +294,11 @@ begin
   Src := SourceString;
   Counter := 0;
   while (Pos('(%',Src)>0) do begin
-    Src := RightStr(Src,pred(Length(Src)-Pos('(%',Src)));
+    Src := Src.RightStr(pred(Length(Src)-Pos('(%',Src)));
     if Pos('%)',Src)>0 then begin
-      ParamName := LeftStr(Src,pred(Pos('%)',Src)));
+      ParamName := ParamName.LeftStr(pred(Pos('%)',Src)));
       if pred(pred(Length(Src)-Length(ParamName)))>0 then begin
-        Src := RightStr(Src,pred(pred(Length(Src)-Length(ParamName))));
+        Src := Src.RightStr(pred(pred(Length(Src)-Length(ParamName))));
       end else begin
         Src := '';
       end;
@@ -312,11 +316,11 @@ begin
   Src := SourceString;
   Counter := 0;
   while (Pos('(%',Src)>0) do begin
-    Src := RightStr(Src,pred(Length(Src)-Pos('(%',Src)));
+    Src := Src.RightStr(pred(Length(Src)-Pos('(%',Src)));
     if Pos('%)',Src)>0 then begin
-      ParamName := LeftStr(Src,pred(Pos('%)',Src)));
+      ParamName := ParamName.LeftStr(pred(Pos('%)',Src)));
       if pred(pred(Length(Src)-Length(ParamName)))>0 then begin
-        Src := RightStr(Src,pred(pred(Length(Src)-Length(ParamName))));
+        Src := Src.RightStr(pred(pred(Length(Src)-Length(ParamName))));
       end else begin
         Src := '';
       end;
@@ -340,10 +344,19 @@ begin
   Result := TStatus.Unknown;
   //- Separate out the GUID and MessageText.
   if not ParseLogEntryDeclaration(string(LogEntry), GUIDStr, EntryString) then begin
+    {$if defined(fpc) or defined(MSWINDOWS)}
     raise
       EInvalidLogEntry.Create(ansistring('Unable to parse log entry "'+LogEntry+'"'));
+    {$else}
+    raise
+      EInvalidLogEntry.Create('Unable to parse log entry "'+LogEntry+'"');
+    {$endif}
   end;
+  {$if defined(fpc) or defined(MSWINDOWS)}
   GUID := StringToGUID(ansistring(GUIDStr));
+  {$else}
+  GUID := StringToGUID(GUIDStr);
+  {$endif}
   Result := Insert( GUID, EntryString, Severity, Parameters );
 end;
 
@@ -352,15 +365,19 @@ begin
   Result := Insert( LogEntry, Severity, [] );
 end;
 
+{$if defined(fpc) or defined(MSWINDOWS)}
 function TLog.Insert(const LogEntry: AnsiString; const Severity: TLogSeverity ): TStatus;
 begin
   Result := Insert( string(LogEntry), Severity );
 end;
+{$endif}
 
+{$if defined(fpc) or defined(MSWINDOWS)}
 function TLog.Insert(const LogEntry: AnsiString; const Severity: TLogSeverity; const Parameters: array of string): TStatus;
 begin
   Result := Insert( string(LogEntry), Severity, Parameters );
 end;
+{$endif}
 
 function TLog.getLastEntry: string;
 begin

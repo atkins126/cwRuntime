@@ -32,8 +32,13 @@ unit cwThreading.CriticalSection.Posix;
 interface
 {$ifndef MSWINDOWS}
 uses
-  unixtype
-, deThreading
+  cwThreading
+{$ifdef fpc}
+, unixtype
+{$else}
+, Posix.sysTypes
+, Posix.pthread
+{$endif}
 ;
 
 type
@@ -52,35 +57,39 @@ type
 implementation
 {$ifndef MSWINDOWS}
 uses
-  pthreads
+  cwLog
+, cwLog.Standard
+, cwRuntime.LogEntries
+, cwTypes
+{$ifdef fpc}
+, pthreads
 , BaseUnix
-, deLog
-, deLog.Standard
-, deRTL.LogEntries
-, deTypes
+{$else}
+, Posix.errno
+{$endif}
 ;
 
 procedure TPosixCriticalSection.Acquire;
 begin
-  pthread_mutex_lock(@fMutex);
+  pthread_mutex_lock({$ifdef fpc}@{$endif}fMutex);
 end;
 
 constructor TPosixCriticalSection.Create;
 begin
   inherited Create;
-  if pthread_mutex_init(@fMutex, nil)<>0 then begin
+  if pthread_mutex_init({$ifdef fpc}@{$endif}fMutex, nil)<>0 then begin
     Log.Insert(le_OSAPIError,lsFatal,['pthread_mutex_init',errno.AsString]);
   end;
 end;
 
 destructor TPosixCriticalSection.Destroy;
 begin
-  pthread_mutex_destroy(@fMutex);
+  pthread_mutex_destroy({$ifdef fpc}@{$endif}fMutex);
 end;
 
 procedure TPosixCriticalSection.Release;
 begin
-  pthread_mutex_unlock(@fMutex)
+  pthread_mutex_unlock({$ifdef fpc}@{$endif}fMutex)
 end;
 
 {$endif}

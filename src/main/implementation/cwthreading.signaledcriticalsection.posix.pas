@@ -32,8 +32,12 @@ unit cwThreading.SignaledCriticalSection.Posix;
 interface
 {$ifndef MSWINDOWS}
 uses
-  unixtype
-, deThreading
+  cwThreading
+{$ifdef fpc}
+, unixtype
+{$else}
+, Posix.SysTypes
+{$endif}
 ;
 
 type
@@ -55,52 +59,57 @@ type
 implementation
 {$ifndef MSWINDOWS}
 uses
-  pthreads
-, deLog
-, deLog.Standard
-, deRTL.LogEntries
+  cwLog
+, cwLog.Standard
+, cwRuntime.LogEntries
+, cwTypes
+{$ifdef fpc}
+, pthreads
 , BaseUnix
-, deTypes
+{$else}
+, Posix.pthread
+, Posix.errno
+{$endif}
 ;
 
 procedure TSignaledCriticalSection.Acquire;
 begin
-  pthread_mutex_lock(@fMutex);
+  pthread_mutex_lock({$ifdef fpc}@{$endif}fMutex);
 end;
 
 constructor TSignaledCriticalSection.Create;
 begin
   inherited Create;
-  if pthread_mutex_init(@fMutex, nil)<>0 then begin
+  if pthread_mutex_init({$ifdef fpc}@{$endif}fMutex, nil)<>0 then begin
     Log.Insert(le_OSAPIError,lsFatal,['pthread_mutex_init',errno.AsString]);
   end;
-  if pthread_cond_init(@fCondition,nil)<>0 then begin
+  if pthread_cond_init({$ifdef fpc}@{$endif}fCondition,nil)<>0 then begin
     Log.Insert(le_OSAPIError,lsFatal,['pthread_cond_init',errno.AsString]);
   end;
 end;
 
 destructor TSignaledCriticalSection.Destroy;
 begin
-  pthread_mutex_destroy(@fMutex);
-  pthread_cond_destroy(@fCondition);
+  pthread_mutex_destroy({$ifdef fpc}@{$endif}fMutex);
+  pthread_cond_destroy({$ifdef fpc}@{$endif}fCondition);
   inherited Destroy;
 end;
 
 procedure TSignaledCriticalSection.Release;
 begin
-  pthread_mutex_unlock(@fMutex);
+  pthread_mutex_unlock({$ifdef fpc}@{$endif}fMutex);
 end;
 
 procedure TSignaledCriticalSection.Sleep;
 begin
-  if pthread_cond_wait(@fCondition,@fMutex)<>0 then begin
+  if pthread_cond_wait({$ifdef fpc}@{$endif}fCondition,{$ifdef fpc}@{$endif}fMutex)<>0 then begin
     Log.Insert(le_OSAPIError,lsFatal,['pthread_cond_wait',errno.AsString]);
   end;
 end;
 
 procedure TSignaledCriticalSection.Wake;
 begin
-  pthread_cond_signal(@fCondition);
+  pthread_cond_signal({$ifdef fpc}@{$endif}fCondition);
 end;
 
 {$endif}
