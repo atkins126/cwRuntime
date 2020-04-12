@@ -39,7 +39,6 @@ Still To-Do:
 	* Documentation needs work.
 	
     CI Server :- Currently performs builds and runs unit tests for Windows Only, need to add targets.
-	
 
 Installation & Usage:
 
@@ -53,6 +52,25 @@ Each feature may then be used by adding two units to your uses list. For example
 ---  
 Usage videos will be uploaded to youtube soon :- https://youtube.com/c/ChapmanWorldOnTube.
 
+CI Migration Status:
 
+	* Delphi
+		Win32        - Builds
+		Win64        - Builds / Unit Tested
+		Linux_x86_64 - Builds
+		Android      - TBD
+		MacOS        - TBD
+		iOS          - TBD
+
+	* Lazarus
+		Win32        - TBD
+		Win64        - Builds / Unit Tested
+		Linux_x86_64 - TBD
+		Linux_ARM    - TBD
+		Linux_AARCH  - TBD
+		Android      - TBD
+		MacOS        - TBD
+		iOS          - TBD ? possible ?
+		 
 
   
