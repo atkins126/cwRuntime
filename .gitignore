@@ -74,3 +74,6 @@ modules/
 *.res
 src/projects/pkg_cwRuntime.otares
 *.otares
+
+# Linux binaries
+out/bin/Linux64/

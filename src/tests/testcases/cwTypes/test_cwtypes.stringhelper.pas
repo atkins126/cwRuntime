@@ -69,7 +69,9 @@ type
     procedure AsSingle;
     procedure AsDouble;
     procedure AsExtended;
+    {$if defined(fpc) or defined(MSWINDOWS)}
     procedure AsAnsiString;
+    {$endif}
   end;
 
 implementation
@@ -79,6 +81,8 @@ begin
   Result := (A>B-Precision) and (A<B+Precision);
 end;
 
+
+{$if defined(fpc) or defined(MSWINDOWS)}
 procedure TTestStringHelper.AsAnsiString;
 var
   S: string;
@@ -95,6 +99,7 @@ begin
   // Assert:
   TTest.Expect(S,FromAnsi);
 end;
+{$endif}
 
 procedure TTestStringHelper.AsBoolean;
 var
