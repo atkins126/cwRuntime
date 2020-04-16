@@ -166,6 +166,7 @@
         <DelphiCompile Include="$(MainSource)">
             <MainSource>MainSource</MainSource>
         </DelphiCompile>
+        <DCCReference Include="rtl.dcp"/>
         <DCCReference Include="..\main\api\cwio.standard.pas"/>
         <DCCReference Include="..\main\api\cwlog.console.pas"/>
         <DCCReference Include="..\main\api\cwlog.dynamic.pas"/>

@@ -318,7 +318,7 @@ begin
   while (Pos('(%',Src)>0) do begin
     Src := Src.RightStr(pred(Length(Src)-Pos('(%',Src)));
     if Pos('%)',Src)>0 then begin
-      ParamName := ParamName.LeftStr(pred(Pos('%)',Src)));
+      ParamName := Src.LeftStr(pred(Pos('%)',Src)));
       if pred(pred(Length(Src)-Length(ParamName)))>0 then begin
         Src := Src.RightStr(pred(pred(Length(Src)-Length(ParamName))));
       end else begin
