@@ -98,8 +98,8 @@ type
 {$region ' IRingBuffer<T>'}
 
   /// <summary>
-  ///   A ring buffer is a FIFO buffer of pre-determined size. This interface
-  ///   represents a read-only ring buffer.
+  ///   A ring buffer is a FIFO buffer of pre-determined size. <br/>
+  ///   This interface represents a read-only ring buffer.
   /// </summary>
   /// <typeparam name="T">
   ///   The data-type of the items to be stored within the buffer.
