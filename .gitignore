@@ -1,3 +1,9 @@
+#########
+# Specific to cwRuntime
+
+# Output folder for binaries and object files
+out/
+
 # Uncomment these types if you want even more clean repository. But be careful.
 # It can make harm to an existing project source. Read explanations below.
 #
@@ -75,5 +81,5 @@ modules/
 src/projects/pkg_cwRuntime.otares
 *.otares
 
-# Linux binaries
-out/bin/Linux64/
+# Lazarus backup folder
+backup
