@@ -33,6 +33,9 @@ unit cwDynLib;
 {$ifdef fpc} {$mode delphiunicode} {$endif}
 
 interface
+uses
+  cwLog
+;
 
 type
   /// <summary>
@@ -51,7 +54,7 @@ type
     /// </param>
     /// <returns>
     /// </returns>
-    function LoadLibrary( const filepath: string ): boolean;
+    function LoadLibrary( const filepath: string ): TStatus;
 
     /// <summary>
     ///   Unloads the library (previously loaded using the LoadLibrary()
@@ -76,7 +79,7 @@ type
     ///   Symbol names may be case sensitive, depending upon the implementation
     ///   and target.
     /// </returns>
-    function GetProcAddress( const funcName: string; out ptrProc: pointer ): boolean; overload;
+    function GetProcAddress( const funcName: string; out ptrProc: pointer ): TStatus;
   end;
 
 

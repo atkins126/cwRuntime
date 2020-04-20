@@ -92,7 +92,7 @@ class function TLogBinding.Create(out LogBinding: TLogBinding): TStatus;
   function GetProcAddress( var DynLib: IDynLib; const MethodName: string; var MethodPtr: pointer ): boolean;
   begin
     Result := False;
-    if not DynLib.GetProcAddress(MethodName,MethodPtr) then begin
+    if not DynLib.GetProcAddress(MethodName,MethodPtr).IsSuccess then begin
       DynLib := nil;
       MethodPtr := nil;
       exit;
@@ -102,7 +102,7 @@ class function TLogBinding.Create(out LogBinding: TLogBinding): TStatus;
 begin
   Result := TStatus.Unknown;
   LogBinding.DynLib := TDynLib.Create;
-  if not LogBinding.DynLib.LoadLibrary(cLibName) then begin
+  if not LogBinding.DynLib.LoadLibrary(cLibName).IsSuccess then begin
     LogBinding.DynLib := nil;
     exit;
   end;

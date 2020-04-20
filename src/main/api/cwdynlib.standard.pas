@@ -35,17 +35,19 @@ unit cwDynLib.Standard;
 
 interface
 uses
- cwDynLib
+  cwDynLib
+, cwLog
 ;
 
 type
   TDynlib = class( TInterfacedObject, IDynlib )
   private
+    fLibrary: string;
     fHandle: nativeuint;
   protected //- IDynlib -//
-    function LoadLibrary( const filepath: string ): boolean;
+    function LoadLibrary( const filepath: string ): TStatus;
     function FreeLibrary: boolean;
-    function GetProcAddress( const funcName: string; out ptrProc: pointer ): boolean; overload;
+    function GetProcAddress( const funcName: string; out ptrProc: pointer ): TStatus;
   public
     constructor Create; reintroduce;
     destructor Destroy; override;
@@ -54,6 +56,8 @@ type
 implementation
 uses
   sysutils
+, cwLog.Standard
+, cwRuntime.LogEntries
   {$ifndef MSWINDOWS}
   {$ifndef fpc}
   , posix.errno
@@ -127,9 +131,9 @@ begin
   Result := True;
 end;
 
-function TDynlib.GetProcAddress(const funcName: string; out ptrProc: pointer): boolean;
+function TDynlib.GetProcAddress(const funcName: string; out ptrProc: pointer): TStatus;
 begin
-  Result := False;
+  Result := TStatus.Unknown;
   {$ifdef MSWINDOWS}
     ptrProc := winGetProcAddress(fHandle,pAnsiChar(UTF8Encode(funcName)));
   {$else}
@@ -138,14 +142,19 @@ begin
     {$hints on}
   {$endif}
   if not assigned(ptrProc) then begin
+    Result := Log.Insert(le_FailedToLoadEntryPoint,TLogSeverity.lsError,[funcName,fLibrary]);
     exit;
   end;
-  Result := True;
+  Result := TStatus.Success;
 end;
 
-function TDynlib.LoadLibrary(const filepath: string): boolean;
+function TDynlib.LoadLibrary(const filepath: string): TStatus;
 begin
-  Result := False;
+  Result := TStatus.Unknown;
+  if not FileExists(filepath) then begin
+    Result := Log.Insert(le_FileNotFound,TLogSeverity.lsError,[Filepath]);
+    exit;
+  end;
   {$ifdef MSWINDOWS}
   fHandle := winLoadLibrary(pAnsiChar(UTF8Encode(filepath)));
   {$else}
@@ -154,9 +163,11 @@ begin
   {$hints on}
   {$endif}
   if fHandle=0 then begin
+    Result := Log.Insert(le_ModuleNotLoaded,TLogSeverity.lsError,[Filepath]);
     exit;
   end;
-  Result := True;
+  fLibrary := filepath;
+  Result := TStatus.Success;
 end;
 
 end.

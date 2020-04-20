@@ -193,7 +193,11 @@ type
   ///    Namespace of pre-defined comparison functions for use
   ///    with dictionary / list.remove().
   ///  </summary>
+
+  { TCompare }
+
   TCompare = record
+    class function ComparePointers( const AValue: pointer; const BValue: pointer ): TComparisonResult; static;
     class function CompareStrings( const AValue: string; const BValue: string ): TComparisonResult; static;
   end;
 
@@ -213,6 +217,18 @@ uses
 class function TList<T>.Create(const Granularity: nativeuint = 32; const isOrdered: boolean = false; const isPruned: boolean = false): IList<T>;
 begin
   Result := TStandardList<T>.Create( Granularity, isOrdered, isPruned );
+end;
+
+class function TCompare.ComparePointers(const AValue: pointer; const BValue: pointer): TComparisonResult;
+begin
+  Result := TComparisonResult.crErrorNotCompared;
+  if AValue=BValue then begin
+    Result := TComparisonResult.crAEqualToB;
+  end else if AValue>BValue then begin
+    Result := TComparisonResult.crAGreaterThanB;
+  end else begin
+    Result := TComparisonResult.crBGreaterThanA;
+  end;
 end;
 
 class function TCompare.CompareStrings(const AValue: string; const BValue: string): TComparisonResult;

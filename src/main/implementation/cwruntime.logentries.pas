@@ -32,14 +32,35 @@ unit cwRuntime.LogEntries;
 interface
 
 resourcestring
+  le_IndexOutOfBounds                 = '{CA1B1695-17C4-49A9-8460-908ED702F5AA} Index out of bounds "(%index%)".';
   le_StreamDoesNotSupportClear        = '{1FFC5715-B4A1-4E0A-8DB6-D3F6969AE372} Stream does not support the Clear() method.';
   le_CannotEncodeUnknownUnicodeFormat = '{751F423E-FE14-4E9E-8708-D4560CCE39BF} Cannot encode to unicode format utfUnknown.';
   le_FailedThreadTerminate            = '{9798567B-E753-47EE-A51D-EB3A0A01E11B} Thread (%index%) failed to terminate gracefully.';
   le_OSAPIError                       = '{0155B3C1-F5AA-47A4-8C33-A606F57A9DC3} An Operating System error occurred on (%call%) value (%value%).';
   le_DuplicateMessageChannel          = '{C038923C-B2D4-400C-977C-C890C1A1D873} Message channel name must be unique. (%channel%) is already in use.';
   le_ThreadAlreadyStarted             = '{A2BD6971-AEB3-4696-A149-B04FA8BD1005} Thread is already started.';
+  le_FileNotFound                     = '{0A32412A-196B-40B2-8880-5D73DE46E3F1} File not found "(%filename%)"';
+  le_ModuleNotLoaded                  = '{F6881310-4F2E-4D5B-8A4B-8318EDF8D4AD} DynLib failed to load module "(%module%)"';
+  le_FailedToLoadEntryPoint           = '{B425D9C3-262A-425B-85BB-149E79A4C9CC} Failed to locate entrypoint "(%entrypoint%)" in library "(%library%)"';
 
 implementation
+uses
+  cwLog
+, cwLog.Standard
+;
+
+initialization
+  {$ifndef fpc}
+  Log.RegisterLogEntry(le_IndexOutOfBounds);
+  Log.RegisterLogEntry(le_StreamDoesNotSupportClear);
+  Log.RegisterLogEntry(le_CannotEncodeUnknownUnicodeFormat);
+  Log.RegisterLogEntry(le_FailedThreadTerminate);
+  Log.RegisterLogEntry(le_OSAPIError);
+  Log.RegisterLogEntry(le_DuplicateMessageChannel);
+  Log.RegisterLogEntry(le_ThreadAlreadyStarted);
+  {$endif}
+
+finalization
 
 end.
 
