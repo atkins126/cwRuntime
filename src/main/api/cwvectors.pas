@@ -3852,7 +3852,8 @@ begin
     raise
       EInvalidArrayLength2.Create;
   end;
-  {$hints off} Move(A[0],Result,sizeof(extended)*L); {$hints on} //- FPC, Result not initialized (it is)
+  Result.X := A[0];
+  Result.Y := A[1];
 end;
 
 function eVector2.magnitude: extended;
@@ -4547,7 +4548,9 @@ begin
     raise
       EInvalidArrayLength3.Create;
   end;
-  {$hints off} Move(A[0],Result,sizeof(extended)*L); {$hints on} //- FPC, Result not initialized (it is)
+  Result.X := A[0];
+  Result.Y := A[1];
+  Result.Z := A[2];
 end;
 
 class operator eVector3.Explicit( const a: array of extended ): eVector3;
@@ -5470,7 +5473,10 @@ begin
     raise
       EInvalidArrayLength4.Create;
   end;
-  {$hints off} Move(A[0],Result,sizeof(extended)*L); {$hints on} //- FPC, Result not initialized (it is)
+  Result.X := A[0];
+  Result.Y := A[1];
+  Result.Z := A[2];
+  Result.W := A[3];
 end;
 
 class operator eVector4.Explicit( const a: array of extended ): eVector4;
@@ -7790,10 +7796,22 @@ end;
 
 class function eMatrix4x4.Create( const Row0: eVector4; const Row1: eVector4; const Row2: eVector4; const Row3: eVector4 ): eMatrix4x4;
 begin
-  {$hints off} Move(Row0,Result.m00,sizeof(extended)*4); {$hints on} //- FPC, Result not initialized (it is)
-  Move(Row1,Result.m01,sizeof(extended)*4);
-  Move(Row2,Result.m02,sizeof(extended)*4);
-  Move(Row3,Result.m03,sizeof(extended)*4);
+  Result.m00 := Row0.X;
+  Result.m01 := Row1.X;
+  Result.m02 := Row2.X;
+  Result.m03 := Row3.X;
+  Result.m10 := Row0.Y;
+  Result.m11 := Row1.Y;
+  Result.m12 := Row2.Y;
+  Result.m13 := Row3.Y;
+  Result.m20 := Row0.Z;
+  Result.m21 := Row1.Z;
+  Result.m22 := Row2.Z;
+  Result.m23 := Row3.Z;
+  Result.m30 := Row0.W;
+  Result.m31 := Row1.W;
+  Result.m32 := Row2.W;
+  Result.m33 := Row3.W;
 end;
 
 class function eMatrix4x4.CreatePerspective( const angleDeg: extended; const ratio: extended; const _near: extended; const _far: extended ): eMatrix4x4;
@@ -7821,10 +7839,18 @@ end;
 
 class function eMatrix4x4.Create( const Row0: eVector3; const Row1: eVector3; const Row2: eVector3; const Row3: eVector3 ): eMatrix4x4;
 begin
-  {$hints off} Move(Row0,Result.m00,sizeof(extended)*3); {$hints on} //- FPC, Result not initialized (it is)
-  Move(Row1,Result.m01,sizeof(extended)*3);
-  Move(Row2,Result.m02,sizeof(extended)*3);
-  Move(Row3,Result.m03,sizeof(extended)*3);
+  Result.m00 := Row0.X;
+  Result.m01 := Row1.X;
+  Result.m02 := Row2.X;
+  Result.m03 := Row3.X;
+  Result.m10 := Row0.Y;
+  Result.m11 := Row1.Y;
+  Result.m12 := Row2.Y;
+  Result.m13 := Row3.Y;
+  Result.m20 := Row0.Z;
+  Result.m21 := Row1.Z;
+  Result.m22 := Row2.Z;
+  Result.m23 := Row3.Z;
   Result.m30 := 0;
   Result.m31 := 0;
   Result.m32 := 0;
