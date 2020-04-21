@@ -224,7 +224,7 @@ begin
   Result := TComparisonResult.crErrorNotCompared;
   if AValue=BValue then begin
     Result := TComparisonResult.crAEqualToB;
-  end else if AValue>BValue then begin
+  end else if nativeuint(AValue)>nativeuint(BValue) then begin
     Result := TComparisonResult.crAGreaterThanB;
   end else begin
     Result := TComparisonResult.crBGreaterThanA;

@@ -52,11 +52,11 @@ var
 begin
   DynLib := TDynLib.Create;
   try
-    if not DynLib.LoadLibrary( cLibName ) then begin
+    if not DynLib.LoadLibrary( cLibName ).IsSuccess then begin
       Writeln('Failed to load library');
       exit;
     end;
-    if not DynLib.GetProcAddress('Add',pointer({$ifndef fpc}@{$endif}Add)) then begin
+    if not DynLib.GetProcAddress('Add',pointer({$ifndef fpc}@{$endif}Add)).IsSuccess then begin
       Writeln('Failed to load ''Add'' entry point');
       exit;
     end;
