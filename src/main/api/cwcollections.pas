@@ -38,57 +38,244 @@ type
 
 {$region ' TEnumerate<T>'}
   {$ifdef fpc}
-  /// <exclude/>
+
+  /// <summary>
+  ///   The call-back type for handlers passed to enumeration methods on
+  ///   collections. <br /><br />For example, this method may be provided as a
+  ///   call-back to the IList&lt;T&gt;.foreach() method, to be called for each
+  ///   object in the list collection.
+  /// </summary>
+  /// <typeparam name="T">
+  ///   The data-type used to specialize the collection for which this
+  ///   call-back is provided.
+  /// </typeparam>
+  /// <remarks>
+  ///   * This is the FPC specific call-back for providing global procedures.
+  /// </remarks>
   TEnumerateGlobalHandler<T> = procedure( const item : T );
-  /// <exclude/>
+
+  /// <summary>
+  ///   The call-back type for handlers passed to enumeration methods on
+  ///   collections. <br /><br />For example, this method may be provided as a
+  ///   call-back to the IList&lt;T&gt;.foreach() method, to be called for each
+  ///   object in the list collection.
+  /// </summary>
+  /// <typeparam name="T">
+  ///   The data-type used to specialize the collection for which this
+  ///   call-back is provided.
+  /// </typeparam>
+  /// <remarks>
+  ///   * This is the FPC specific call-back for providing method procedures.
+  /// </remarks>
   TEnumerateOfObjectHandler<T> = procedure( const item : T ) of object;
+
   {$else}
-  /// <excluide/>
+
+  /// <summary>
+  ///   The call-back type for handlers passed to enumeration methods on
+  ///   collections. <br /><br />For example, this method may be provided as a
+  ///   call-back to the IList&lt;T&gt;.foreach() method, to be called for each
+  ///   object in the list collection.
+  /// </summary>
+  /// <typeparam name="T">
+  ///   The data-type used to specialize the collection for which this
+  ///   call-back is provided.
+  /// </typeparam>
+  /// <remarks>
+  ///   * This is the Delphi specific call-back type, which permits global
+  ///   procedures, method procedures as well as anonymous procedures. <br /><br />
+  ///   As the current version of FreePascal does not support anonymous
+  ///   methods, they should be avoided if you intend your code to remain
+  ///   compatible with FPC/Lazarus.
+  /// </remarks>
+  /// <exclude />
   TEnumerateReferenceHandler<T> = reference to procedure( const item : T );
+
   {$endif}
 {$endregion}
 
 {$region ' TEnumeratePair<K,V>'}
   {$ifdef fpc}
-  /// <excluide/>
+
+  /// <summary>
+  ///   The call-back type for handlers passed to enumeration methods on
+  ///   dictionary collections. <br /><br />For example, this method may be
+  ///   provided as a call-back to the IDictionary&lt;K,V&gt;.foreach() method,
+  ///   to be called for each object in the dictionary collection.
+  /// </summary>
+  /// <typeparam name="K">
+  ///   The data-type used to specialize the key portion of a key-value pair.
+  /// </typeparam>
+  /// <typeparam name="V">
+  ///   The data-type used to specialzie the value portion of a key-value pair.
+  /// </typeparam>
+  /// <remarks>
+  ///   * This is the FPC specific call-back for providing global procedures.
+  /// </remarks>
+  /// <seealso cref="TEnumeratePairOfObjectHandler&lt;K,V&gt;">
+  ///   TEnumeratePairOfObjectHandler&lt;K,V&gt;
+  /// </seealso>
   TEnumeratePairGlobalHandler<K,V> = procedure( const key: K; const value: V );
-  /// <excluide/>
+
+  /// <summary>
+  ///   The call-back type for handlers passed to enumeration methods on
+  ///   dictionary collections. <br /><br />For example, this method may be
+  ///   provided as a call-back to the IDictionary&lt;K,V&gt;.foreach() method,
+  ///   to be called for each object in the dictionary collection.
+  /// </summary>
+  /// <typeparam name="K">
+  ///   The data-type used to specialize the key portion of a key-value pair.
+  /// </typeparam>
+  /// <typeparam name="V">
+  ///   The data-type used to specialzie the value portion of a key-value pair.
+  /// </typeparam>
+  /// <remarks>
+  ///   * This is the FPC specific call-back for providing method procedures.
+  /// </remarks>
+  /// <seealso cref="TEnumeratePairGlobalHandler&lt;K,V&gt;">
+  ///   TEnumeratePairGlobalHandler&lt;K,V&gt;
+  /// </seealso>
   TEnumeratePairOfObjectHandler<K,V> = procedure( const key: K; const value: V ) of object;
+
   {$else}
-  /// <excluide/>
+
+  /// <summary>
+  ///   The call-back type for handlers passed to enumeration methods on
+  ///   dictionary collections. <br /><br />For example, this method may be
+  ///   provided as a call-back to the IDictionary&lt;K,V&gt;.foreach() method,
+  ///   to be called for each object in the dictionary collection.
+  /// </summary>
+  /// <typeparam name="K">
+  ///   The data-type used to specialize the key portion of a key-value pair.
+  /// </typeparam>
+  /// <typeparam name="V">
+  ///   The data-type used to specialzie the value portion of a key-value pair.
+  /// </typeparam>
+  /// <remarks>
+  ///   * This is the Delphi specific call-back type, which permits global
+  ///   procedures, method procedures as well as anonymous procedures. <br /><br />
+  ///   As the current version of FreePascal does not support anonymous
+  ///   methods, they should be avoided if you intend your code to remain
+  ///   compatible with FPC/Lazarus.
+  /// </remarks>
   TEnumeratePairReferenceHandler<K,V> = reference to procedure( const key: K; const value: V );
+
   {$endif}
 {$endregion}
 
 {$region ' TCompare<A,B>'}
 
-  ///  <summary>
-  ///    The value returned from a comparison call-back to indicate
-  ///    the equality/inequality of the values compared.
-  ///  </summary>
+  /// <summary>
+  ///   The value returned from a comparison call back, used to indicate the
+  ///   relationship between two parameters of the same type.
+  /// </summary>
   TComparisonResult = (
+    /// <summary>
+    ///   An error occurred when comparing the two values.
+    /// </summary>
     crErrorNotCompared,
+    /// <summary>
+    ///   Value A is greater than B
+    /// </summary>
     crAGreaterThanB,
+    /// <summary>
+    ///   Value B is greater than A
+    /// </summary>
     crBGreaterThanA,
+    /// <summary>
+    ///   Values A and B are equal.
+    /// </summary>
     crAEqualToB
   );
 
   {$ifdef fpc}
-  /// <excluide/>
+
+  /// <summary>
+  ///   This is the callback type used to compare two items of type T as
+  ///   required by collections with comparison methods. <br /><br />For
+  ///   example, the IDictionary collection, when performing a value look-up by
+  ///   key, uses such a comparison call-back. <br /><br />Your call back
+  ///   method should compare the parameters "AValue" and "BValue", and return
+  ///   a TComparisonResult enumeration to describe the relationship between
+  ///   the two parameters.
+  /// </summary>
+  /// <typeparam name="T">
+  ///   The data type of the parameters to be compared.
+  /// </typeparam>
+  /// <remarks>
+  ///   <para>
+  ///     This is the FPC specific type for working with global procedures.
+  ///   </para>
+  /// </remarks>
+  /// <seealso cref="TCompareOfObjectHandler&lt;T&gt;">
+  ///   TCompareOfObjectHandler&lt;T&gt;
+  /// </seealso>
   TCompareGlobalHandler<T> = function( const AValue: T; const BValue: T ): TComparisonResult;
-  /// <excluide/>
+
+  /// <summary>
+  ///   This is the callback type used to compare two items of type T as
+  ///   required by collections with comparison methods. <br /><br />For
+  ///   example, the IDictionary collection, when performing a value look-up by
+  ///   key, uses such a comparison call-back. <br /><br />Your call back
+  ///   method should compare the parameters "AValue" and "BValue", and return
+  ///   a TComparisonResult enumeration to describe the relationship between
+  ///   the two parameters.
+  /// </summary>
+  /// <typeparam name="T">
+  ///   The data type of the parameters to be compared.
+  /// </typeparam>
+  /// <remarks>
+  ///   <para>
+  ///     This is the FPC specific type for working with method call backs.
+  ///   </para>
+  /// </remarks>
+  /// <seealso cref="TCompareGlobalHandler&lt;T&gt;">
+  ///   TCompareGlobalHandler&lt;T&gt;
+  /// </seealso>
   TCompareOfObjectHandler<T> = function( const AValue: T; const BValue: T ): TComparisonResult of object;
   {$else}
-  /// <excluide/>
+
+  /// <summary>
+  ///   This is the callback type used to compare two items of type T as
+  ///   required by collections with comparison methods. <br /><br />For
+  ///   example, the IDictionary collection, when performing a value look-up by
+  ///   key, uses such a comparison call-back. <br /><br />Your call back
+  ///   method should compare the parameters "AValue" and "BValue", and return
+  ///   a TComparisonResult enumeration to describe the relationship between
+  ///   the two parameters.
+  /// </summary>
+  /// <typeparam name="T">
+  ///   The data type of the parameters to be compared.
+  /// </typeparam>
+  /// <remarks>
+  ///   <para>
+  ///     This is the Delphi specific call-back type. It supports global
+  ///     procedures, methods, and anonymous methods.
+  ///   </para>
+  ///   <para>
+  ///     The current FPC version does not support anonymous methods, and so
+  ///     they should be avoided when attempting to keep your code compatible
+  ///     across the two compilers.
+  ///   </para>
+  /// </remarks>
+  /// <seealso cref="TCompareGlobalHandler&lt;T&gt;">
+  ///   TCompareGlobalHandler&lt;T&gt;
+  /// </seealso>
+  /// <seealso cref="TCompareOfObjectHandler&lt;T&gt;">
+  ///   TCompareOfObjectHandler&lt;T&gt;
+  /// </seealso>
   TCompareReferenceHandler<T> = reference to function( const AValue: T; const BValue: T ): TComparisonResult;
   {$endif}
 {$endregion}
 
 {$region ' ICollection'}
 
-  ///   This interface does nothing other than to provide an interface from
-  ///   which other collection interfaces may be derrived.
-  ///   <exclude/>
+
+  /// <summary>
+  ///   ICollection is a common root interface for the other collection
+  ///   interfaces. It has no particular function except to identify an
+  ///   interface referenced object as a collection. <br />
+  /// </summary>
   ICollection = interface
     ['{B21B7438-044D-4D3A-8CD2-973DC7C5B1CA}']
   end;
@@ -98,12 +285,18 @@ type
 {$region ' IRingBuffer<T>'}
 
   /// <summary>
-  ///   A ring buffer is a FIFO buffer of pre-determined size. <br/>
-  ///   This interface represents a read-only ring buffer.
+  ///   A ring buffer is a FIFO buffer of pre-determined size. <br />This
+  ///   interface represents the read-only methods of a ring buffer, and may
+  ///   therefore be used as a read-only property on another object/interface.
   /// </summary>
   /// <typeparam name="T">
   ///   The data-type of the items to be stored within the buffer.
   /// </typeparam>
+  /// <remarks>
+  ///   ** Note: Unlike other read-only collection interfaces, the Pull()
+  ///   method on a read-only ring buffer is destructive, in-that it removes an
+  ///   item from the buffer.
+  /// </remarks>
   IReadOnlyRingBuffer<T> = interface( ICollection )
     ['{B26BFBD9-7293-48F0-9C04-CCF07E902924}']
 
@@ -119,13 +312,18 @@ type
     ///   Retrieves and removes an item from the ring buffer.
     /// </summary>
     /// <param name="Item">
-    ///   out parameter to be populated with the item extracted from the
+    ///   Out parameter to be populated with the item extracted from the
     ///   buffer.
     /// </param>
     /// <returns>
     ///   Returns true if the item was extracted from the buffer, else returns
     ///   false.
     /// </returns>
+    /// <remarks>
+    ///   ** Note: Unlike other read-only collection interfaces, the
+    ///   Pull()method on a read-only ring buffer is destructive, in-that it
+    ///   removes an itemfrom the buffer.
+    /// </remarks>
     function Pull( out Item: T ): boolean;
 
   end;
@@ -140,7 +338,7 @@ type
     ['{44A78B5E-440D-4BC1-97E7-3C3DAB74DBB8}']
 
     /// <summary>
-    ///   Pushes a new item into the buffer, assuming there is space to do so.
+    ///   Pushes a new item into the buffer, assuming there is space to do so. <br />
     ///   If there is no space, returns false.
     /// </summary>
     /// <param name="Item">
@@ -165,11 +363,20 @@ type
 
   /// <summary>
   ///   A stack is a FILO buffer of pre-determined size. <br />This interface
-  ///   represents a read-only stack.
+  ///   represents the read-only methods of a stack, and may therefore be used
+  ///   as a read-only property on another object/interface.
   /// </summary>
   /// <typeparam name="T">
   ///   The data-type of the items to be stored in the stack.
   /// </typeparam>
+  /// <remarks>
+  ///   The typical behavior for a stack is for it to grow as required by the
+  ///   inserted data. This behavior may differ in low-memory situations, you
+  ///   should check the documentation for the stack implementation if other
+  ///   than the standard implementation. <br /><br />** Note: Unlike other
+  ///   read-only collection interfaces, the Pull() method on a read-only stack
+  ///   is destructive, in-that it removes an item from the stack.
+  /// </remarks>
   IReadOnlyStack<T> = interface( ICollection )
     ['{8FB4DD73-3D52-4781-9C82-0B09721CDD16}']
 
@@ -179,16 +386,27 @@ type
     /// <returns>
     ///   The item returned from the stack, or nil if no items remain.
     /// </returns>
+    /// <remarks>
+    ///   ** Note: Unlike other read-only collection interfaces, the
+    ///   Pull()method on a read-only stack is destructive, in-that it removes
+    ///   an itemfrom the stack.
+    /// </remarks>
     function Pull: T;
 
   end;
 
   /// <summary>
-  ///   A stack is a FILO buffer of pre-determined size.
+  ///   A stack is a FILO buffer.
   /// </summary>
   /// <typeparam name="T">
   ///   The data-type of the items to be stored in the stack.
   /// </typeparam>
+  /// <remarks>
+  ///   The typical behavior for a stack is for it to grow as required by the
+  ///   inserted data. This behavior may differ in low-memory situations, you
+  ///   should check the documentation for the stack implementation if other
+  ///   than the standard implementation.
+  /// </remarks>
   IStack<T> = interface( IReadOnlyStack<T> )
     ['{36648989-4580-4003-B773-4563F186A2B1}']
 
@@ -211,7 +429,7 @@ type
 {$region ' IDictionary<K,V>'}
 
   /// <summary>
-  ///   A dictionary is a collection of key-value pairs. This interface
+  ///   A dictionary is a collection of key-value pairs. <br />This interface
   ///   represents a read-only dictionary.
   /// </summary>
   /// <typeparam name="K">
@@ -223,14 +441,51 @@ type
   IReadOnlyDictionary<K,V> = interface( ICollection )
     ['{3E208C75-6B22-4A1E-A788-B362D001B3AB}']
 
-    ///  <summary>
-    ///    Calls the Enumerate callback for each key-value pair in the
-    ///    dictionary.
-    ///  </summary>
     {$ifdef fpc}
+    /// <summary>
+    ///   Calls the Enumerate callback for each key-value pair in the
+    ///   dictionary.
+    /// </summary>
+    /// <param name="Enumerate">
+    ///   A call back function to be called for each item enumerated by
+    ///   ForEach()
+    /// </param>
+    /// <remarks>
+    ///   This overload of ForEach() is the FPC overload for using a global
+    ///   procedure as the call back,
+    /// </remarks>
     procedure ForEach( const Enumerate: TEnumeratePairGlobalHandler<K,V> ); overload;
+
+    /// <summary>
+    ///   Calls the Enumerate callback for each key-value pair in the
+    ///   dictionary.
+    /// </summary>
+    /// <param name="Enumerate">
+    ///   A call back function to be called for each item enumerated by
+    ///   ForEach()
+    /// </param>
+    /// <remarks>
+    ///   This overload is the FPC specific overload for using a method as the
+    ///   call back.
+    /// </remarks>
     procedure ForEach( const Enumerate: TEnumeratePairOfObjectHandler<K,V> ); overload;
     {$else}
+
+    /// <summary>
+    ///   Calls the Enumerate callback for each key-value pair in the
+    ///   dictionary.
+    /// </summary>
+    /// <param name="Enumerate">
+    ///   A call back function to be called for each item enumerated by
+    ///   ForEach()
+    /// </param>
+    /// <remarks>
+    ///   This overload of ForEach() is the Delphi specific overload using
+    ///   TEnumeratePairReferenceHandler&lt;K,V&gt; to enumerate each pair in
+    ///   the dictionary. It will accept an anonymous method, however, at this
+    ///   time FPC does not support anonymous methods and so they should be
+    ///   avoided if your code is intended to compile using either compiler.
+    /// </remarks>
     procedure ForEach( const Enumerate: TEnumeratePairReferenceHandler<K,V> ); overload;
     {$endif}
 
@@ -473,7 +728,6 @@ type
     /// </remarks>
    {$ifdef fpc}
     procedure ForEach( const Enumerate: TEnumerateGlobalHandler<T> ); overload;
-    /// <exclude/>
     procedure ForEach( const Enumerate: TEnumerateOfObjectHandler<T> ); overload;
     {$else}
     procedure ForEach( const Enumerate: TEnumerateReferenceHandler<T> ); overload;
@@ -507,7 +761,6 @@ type
     /// </returns>
     function getAsReadOnly: IReadOnlyList<T>;
 
-    //- Pascal only properties -//
     /// <summary>
     ///   Returns the number of items within the list.
     /// </summary>

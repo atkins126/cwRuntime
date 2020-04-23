@@ -1,0 +1,53 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<Project Version="1.0">
+  <Title>grp_cwRuntime_Rio</Title>
+  <Summary/>
+  <Author/>
+  <Email/>
+  <Copyright/>
+  <Comment/>
+  <Language/>
+  <Charset/>
+  <HeaderHtml>&lt;%TopicTitle%&gt;</HeaderHtml>
+  <FooterHtml>Powered by &lt;a href="http://www.devjetsoftware.com/products/documentation-insight/" target="_blank"&gt;Documentation Insight&lt;/a&gt;</FooterHtml>
+  <CustomDefines/>
+  <ShowImplementationSection>false</ShowImplementationSection>
+  <ShowPrivateMembers>false</ShowPrivateMembers>
+  <ShowProtectedMembers>true</ShowProtectedMembers>
+  <ShowInheritedMembers>true</ShowInheritedMembers>
+  <ShowPropertyAccessors>true</ShowPropertyAccessors>
+  <FileNamePolicy>0</FileNamePolicy>
+  <CompilerVersion>22</CompilerVersion>
+  <TargetPlatform>0</TargetPlatform>
+  <Sources>
+    <Source>.\projects\pkg_cwRuntime.dpk</Source>
+    <Source>.\samples\cwTest\SampleTests\cwTest_SampleTests.dpr</Source>
+    <Source>.\samples\cwDynLib\LoadLibSample\lib_testLoadLib.dpr</Source>
+    <Source>.\samples\cwDynLib\LoadLibSample\cwDynLib_LoadLibSample.dpr</Source>
+    <Source>.\samples\cwLog\LogToConsole\cwLog_LogToConsole.dpr</Source>
+    <Source>.\projects\lib_cwLog.dpr</Source>
+    <Source>.\tests\test_cwTest.dpr</Source>
+    <Source>.\tests\test_dynamic_cwLog.dpr</Source>
+    <Source>.\tests\test_cwRuntime.dpr</Source>
+  </Sources>
+  <Outputs>
+    <Output Type="HTML">
+      <Active>true</Active>
+      <OutputDirectory>Doc\Html</OutputDirectory>
+    </Output>
+    <Output Type="CHM">
+      <Active>true</Active>
+      <OutputFileName>Doc\CHM\grp_cwRuntime_Rio.chm</OutputFileName>
+    </Output>
+    <Output Type="MSHELP2">
+      <Active>false</Active>
+      <OutputFileName>Doc\MSHelp2\grp_cwRuntime_Rio.HxS</OutputFileName>
+      <Namespace>grp_cwRuntime_Rio</Namespace>
+      <TitleID>library</TitleID>
+    </Output>
+    <Output Type="HelpAndManual">
+      <Active>false</Active>
+      <OutputFileName>Doc\HM\grp_cwRuntime_Rio.hmxp</OutputFileName>
+    </Output>
+  </Outputs>
+</Project>
