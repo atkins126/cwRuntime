@@ -46,10 +46,11 @@ type
     function getCount: nativeuint;
     function getItem( const idx: nativeuint ): T;
     {$ifdef fpc}
-    procedure ForEach( const Enumerate: TEnumerateGlobalHandler<T> ); overload;
-    procedure ForEach( const Enumerate: TEnumerateOfObjectHandler<T> ); overload;
+    procedure ForEach( const Enumerate: TEnumerateMethodGlobal<T> ); overload;
+    procedure ForEach( const Enumerate: TEnumerateMethodOfObject<T> ); overload;
+    procedure ForEach( const Enumerate: TEnumerateMethodIsNested<T> ); overload;
     {$else}
-    procedure ForEach( const Enumerate: TEnumerateReferenceHandler<T> ); overload;
+    procedure ForEach( const Enumerate: TEnumerateMethod<T> ); overload;
     {$endif}
     function getAsReadOnly: IReadOnlyList<T>;
   private //- IList<T> -/
@@ -116,7 +117,7 @@ begin
 end;
 
 {$ifdef fpc}
-procedure TStandardList<T>.ForEach( const Enumerate: TEnumerateOfObjectHandler<T> ); overload;
+procedure TStandardList<T>.ForEach( const Enumerate: TEnumerateMethodOfObject<T> ); overload;
 var
   idx: nativeuint;
 begin
@@ -130,7 +131,21 @@ end;
 {$endif}
 
 {$ifdef fpc}
-procedure TStandardList<T>.ForEach( const Enumerate: TEnumerateGlobalHandler<T> ); overload;
+procedure TStandardList<T>.ForEach( const Enumerate: TEnumerateMethodGlobal<T> ); overload;
+var
+  idx: nativeuint;
+begin
+  if getCount=0 then begin
+    exit;
+  end;
+  for idx := 0 to pred(getCount) do begin
+    Enumerate(getItem(idx));
+  end;
+end;
+{$endif}
+
+{$ifdef fpc}
+procedure TStandardList<T>.ForEach( const Enumerate: TEnumerateMethodIsNested<T> ); overload;
 var
   idx: nativeuint;
 begin
@@ -144,7 +159,7 @@ end;
 {$endif}
 
 {$ifndef fpc}
-procedure TStandardList<T>.ForEach( const Enumerate: TEnumerateReferenceHandler<T> );
+procedure TStandardList<T>.ForEach( const Enumerate: TEnumerateMethod<T> );
 var
   idx: nativeuint;
 begin

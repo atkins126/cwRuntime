@@ -28,7 +28,10 @@
 {$endif}
 /// <exclude/>
 unit cwCollections.StringList.Standard;
-{$ifdef fpc} {$mode delphiunicode} {$endif}
+{$ifdef fpc}
+  {$mode delphiunicode}
+  {$modeswitch nestedprocvars}
+{$endif}
 
 interface
 uses
@@ -41,10 +44,11 @@ type
     fStrings: IList<string>;
   strict private //- IReadOnlyStringList -//
     {$ifdef fpc}
-    procedure ForEach( const Enumerate: TEnumerateGlobalHandler<string> ); overload;
-    procedure ForEach( const Enumerate: TEnumerateOfObjectHandler<string> ); overload;
+    procedure ForEach( const Enumerate: TEnumerateMethodGlobal<string> ); overload;
+    procedure ForEach( const Enumerate: TEnumerateMethodOfObject<string> ); overload;
+    procedure ForEach( const Enumerate: TEnumerateMethodIsNested<string> ); overload;
     {$else}
-    procedure ForEach( const Enumerate: TEnumerateReferenceHandler<string> ); overload;
+    procedure ForEach( const Enumerate: TEnumerateMethod<string> ); overload;
     {$endif}
     function getCount: nativeuint;
     function getString( const idx: nativeuint ): string;
@@ -115,21 +119,29 @@ begin
 end;
 
 {$ifdef fpc}
-procedure TStandardStringList.ForEach(const Enumerate: TEnumerateGlobalHandler<string>);
+procedure TStandardStringList.ForEach(const Enumerate: TEnumerateMethodGlobal<string>);
 begin
   fStrings.ForEach(Enumerate);
 end;
 {$endif}
 
 {$ifdef fpc}
-procedure TStandardStringList.ForEach(const Enumerate: TEnumerateOfObjectHandler<string>);
+procedure TStandardStringList.ForEach(const Enumerate: TEnumerateMethodOfObject<string>);
 begin
   fStrings.ForEach(Enumerate);
 end;
 {$endif}
 
+{$ifdef fpc}
+procedure TStandardStringList.ForEach(const Enumerate: TEnumerateMethodIsNested<string>);
+begin
+  fStrings.ForEach(Enumerate);
+end;
+{$endif}
+
+
 {$ifndef fpc}
-procedure TStandardStringList.ForEach(const Enumerate: TEnumerateReferenceHandler<string>);
+procedure TStandardStringList.ForEach(const Enumerate: TEnumerateMethod<string>);
 begin
   fStrings.ForEach(Enumerate);
 end;

@@ -23,14 +23,14 @@ uses
   cwThreading.Standard, cwThreading, 
   cwThreading.SignaledCriticalSection.Windows, 
   cwThreading.ThreadedLoop.Executor, cwThreading.ThreadedLoop.Standard, 
-  cwThreading.threadmethod.posix, cwThreading.ThreadMethod.Windows, 
+  cwThreading.ThreadMethod.Posix, cwThreading.ThreadMethod.Windows, 
   cwThreading.ThreadPool.Standard, cwThreading.ThreadSystem.Standard, 
-  cwthreading.messaging.internal, cwThreading.CriticalSection.posix, 
-  cwThreading.criticalsection.windows, cwThreading.MessageBus.Standard, 
-  cwThreading.messagechannel.standard, cwThreading.MessagePipe.Standard, 
+  cwThreading.Messaging.Internal, cwThreading.CriticalSection.Posix, 
+  cwThreading.Criticalsection.Windows, cwThreading.MessageBus.Standard, 
+  cwThreading.MessageChannel.Standard, cwThreading.MessagePipe.Standard, 
   cwThreading.SignaledCriticalSection.Posix, cwWin32.Advapi32, 
-  cwWin32.Constants, cwWin32.gdi32, cwWin32.Kernel32, cwWin32.Types, 
-  cwWin32.User32;
+  cwWin32.Constants, cwWin32.Gdi32, cwWin32.Kernel32, cwWin32.Types, 
+  cwWin32.User32, cwVectors, cwLog.common, lib_cwLog.ProxyLogTarget;
 
 implementation
 

@@ -30,7 +30,10 @@
 ///   Chapmanworld Collections Generics cwCollections.
 /// </summary>
 unit cwCollections;
-{$ifdef fpc} {$mode delphiunicode} {$endif}
+{$ifdef fpc}
+  {$mode delphiunicode}
+  {$modeswitch nestedprocvars}
+{$endif}
 
 interface
 
@@ -52,7 +55,7 @@ type
   /// <remarks>
   ///   * This is the FPC specific call-back for providing global procedures.
   /// </remarks>
-  TEnumerateGlobalHandler<T> = procedure( const item : T );
+  TEnumerateMethodGlobal<T> = procedure( const item : T );
 
   /// <summary>
   ///   The call-back type for handlers passed to enumeration methods on
@@ -67,7 +70,22 @@ type
   /// <remarks>
   ///   * This is the FPC specific call-back for providing method procedures.
   /// </remarks>
-  TEnumerateOfObjectHandler<T> = procedure( const item : T ) of object;
+  TEnumerateMethodOfObject<T> = procedure( const item: T ) of object;
+
+  /// <summary>
+  ///   The call-back type for handlers passed to enumeration methods on
+  ///   collections. <br /><br />For example, this method may be provided as a
+  ///   call-back to the IList&lt;T&gt;.foreach() method, to be called for each
+  ///   object in the list collection.
+  /// </summary>
+  /// <typeparam name="T">
+  ///   The data-type used to specialize the collection for which this
+  ///   call-back is provided.
+  /// </typeparam>
+  /// <remarks>
+  ///   * This is the FPC specific call-back for providing nested method procedures.
+  /// </remarks>
+  TEnumerateMethodIsNested<T> = procedure( const item: T ) is nested;
 
   {$else}
 
@@ -89,7 +107,7 @@ type
   ///   compatible with FPC/Lazarus.
   /// </remarks>
   /// <exclude />
-  TEnumerateReferenceHandler<T> = reference to procedure( const item : T );
+  TEnumerateMethod<T> = reference to procedure( const item: T );
 
   {$endif}
 {$endregion}
@@ -115,7 +133,7 @@ type
   /// <seealso cref="TEnumeratePairOfObjectHandler&lt;K,V&gt;">
   ///   TEnumeratePairOfObjectHandler&lt;K,V&gt;
   /// </seealso>
-  TEnumeratePairGlobalHandler<K,V> = procedure( const key: K; const value: V );
+  TEnumeratePairGlobal<K,V> = procedure( const key: K; const value: V );
 
   /// <summary>
   ///   The call-back type for handlers passed to enumeration methods on
@@ -135,7 +153,27 @@ type
   /// <seealso cref="TEnumeratePairGlobalHandler&lt;K,V&gt;">
   ///   TEnumeratePairGlobalHandler&lt;K,V&gt;
   /// </seealso>
-  TEnumeratePairOfObjectHandler<K,V> = procedure( const key: K; const value: V ) of object;
+  TEnumeratePairOfObject<K,V> = procedure( const key: K; const value: V ) of object;
+
+  /// <summary>
+  ///   The call-back type for handlers passed to enumeration methods on
+  ///   dictionary collections. <br /><br />For example, this method may be
+  ///   provided as a call-back to the IDictionary&lt;K,V&gt;.foreach() method,
+  ///   to be called for each object in the dictionary collection.
+  /// </summary>
+  /// <typeparam name="K">
+  ///   The data-type used to specialize the key portion of a key-value pair.
+  /// </typeparam>
+  /// <typeparam name="V">
+  ///   The data-type used to specialzie the value portion of a key-value pair.
+  /// </typeparam>
+  /// <remarks>
+  ///   * This is the FPC specific call-back for providing method procedures.
+  /// </remarks>
+  /// <seealso cref="TEnumeratePairGlobalHandler&lt;K,V&gt;">
+  ///   TEnumeratePairGlobalHandler&lt;K,V&gt;
+  /// </seealso>
+  TEnumeratePairIsNested<K,V> = procedure( const key: K; const value: V ) is nested;
 
   {$else}
 
@@ -158,7 +196,7 @@ type
   ///   methods, they should be avoided if you intend your code to remain
   ///   compatible with FPC/Lazarus.
   /// </remarks>
-  TEnumeratePairReferenceHandler<K,V> = reference to procedure( const key: K; const value: V );
+  TEnumeratePair<K,V> = reference to procedure( const key: K; const value: V );
 
   {$endif}
 {$endregion}
@@ -210,7 +248,7 @@ type
   /// <seealso cref="TCompareOfObjectHandler&lt;T&gt;">
   ///   TCompareOfObjectHandler&lt;T&gt;
   /// </seealso>
-  TCompareGlobalHandler<T> = function( const AValue: T; const BValue: T ): TComparisonResult;
+  TCompareGlobal<T> = function( const AValue: T; const BValue: T ): TComparisonResult;
 
   /// <summary>
   ///   This is the callback type used to compare two items of type T as
@@ -232,7 +270,31 @@ type
   /// <seealso cref="TCompareGlobalHandler&lt;T&gt;">
   ///   TCompareGlobalHandler&lt;T&gt;
   /// </seealso>
-  TCompareOfObjectHandler<T> = function( const AValue: T; const BValue: T ): TComparisonResult of object;
+  TCompareOfObject<T> = function( const AValue: T; const BValue: T ): TComparisonResult of object;
+
+  /// <summary>
+  ///   This is the callback type used to compare two items of type T as
+  ///   required by collections with comparison methods. <br /><br />For
+  ///   example, the IDictionary collection, when performing a value look-up by
+  ///   key, uses such a comparison call-back. <br /><br />Your call back
+  ///   method should compare the parameters "AValue" and "BValue", and return
+  ///   a TComparisonResult enumeration to describe the relationship between
+  ///   the two parameters.
+  /// </summary>
+  /// <typeparam name="T">
+  ///   The data type of the parameters to be compared.
+  /// </typeparam>
+  /// <remarks>
+  ///   <para>
+  ///     This is the FPC specific type for working with nested method
+  ///     call backs.
+  ///   </para>
+  /// </remarks>
+  /// <seealso cref="TCompareGlobalHandler&lt;T&gt;">
+  ///   TCompareGlobalHandler&lt;T&gt;
+  /// </seealso>
+  TCompareNested<T> = function( const AValue: T; const BValue: T ): TComparisonResult is nested;
+
   {$else}
 
   /// <summary>
@@ -264,7 +326,7 @@ type
   /// <seealso cref="TCompareOfObjectHandler&lt;T&gt;">
   ///   TCompareOfObjectHandler&lt;T&gt;
   /// </seealso>
-  TCompareReferenceHandler<T> = reference to function( const AValue: T; const BValue: T ): TComparisonResult;
+  TCompare<T> = reference to function( const AValue: T; const BValue: T ): TComparisonResult;
   {$endif}
 {$endregion}
 
@@ -454,7 +516,7 @@ type
     ///   This overload of ForEach() is the FPC overload for using a global
     ///   procedure as the call back,
     /// </remarks>
-    procedure ForEach( const Enumerate: TEnumeratePairGlobalHandler<K,V> ); overload;
+    procedure ForEach( const Enumerate: TEnumeratePairGlobal<K,V> ); overload;
 
     /// <summary>
     ///   Calls the Enumerate callback for each key-value pair in the
@@ -468,7 +530,22 @@ type
     ///   This overload is the FPC specific overload for using a method as the
     ///   call back.
     /// </remarks>
-    procedure ForEach( const Enumerate: TEnumeratePairOfObjectHandler<K,V> ); overload;
+    procedure ForEach( const Enumerate: TEnumeratePairOfObject<K,V> ); overload;
+
+    /// <summary>
+    ///   Calls the Enumerate callback for each key-value pair in the
+    ///   dictionary.
+    /// </summary>
+    /// <param name="Enumerate">
+    ///   A call back function to be called for each item enumerated by
+    ///   ForEach()
+    /// </param>
+    /// <remarks>
+    ///   This overload is the FPC specific overload for using a nested method
+    ///   as the call back.
+    /// </remarks>
+    procedure ForEach( const Enumerate: TEnumeratePairIsNested<K,V> ); overload;
+
     {$else}
 
     /// <summary>
@@ -725,12 +802,17 @@ type
     ///   When targeting the Delphi compiler, you may use an anonymous method
     ///   as the enumeration call back. As FPC does not currently support
     ///   anonymous methods however, doing so will break FPC compatibility.
+    ///   FPC provides overloads for Global, Of Object and Nested methods.
     /// </remarks>
    {$ifdef fpc}
-    procedure ForEach( const Enumerate: TEnumerateGlobalHandler<T> ); overload;
-    procedure ForEach( const Enumerate: TEnumerateOfObjectHandler<T> ); overload;
+    /// <exclude/>
+    procedure ForEach( const Enumerate: TEnumerateMethodGlobal<T> ); overload;
+    /// <exclude/>
+    procedure ForEach( const Enumerate: TEnumerateMethodOfObject<T> ); overload;
+    /// <exclude/>
+    procedure ForEach( const Enumerate: TEnumerateMethodIsNested<T> ); overload;
     {$else}
-    procedure ForEach( const Enumerate: TEnumerateReferenceHandler<T> ); overload;
+    procedure ForEach( const Enumerate: TEnumerateMethod<T> ); overload;
     {$endif}
 
     /// <summary>
@@ -885,11 +967,13 @@ type
     ///   support anonymous methods, doing so will break FPC compatibility.
     /// </remarks>
     {$ifdef fpc}
-    procedure ForEach( const Enumerate: TEnumerateGlobalHandler<string> ); overload;
+    procedure ForEach( const Enumerate: TEnumerateMethodGlobal<string> ); overload;
     /// <exclude/>
-    procedure ForEach( const Enumerate: TEnumerateOfObjectHandler<string> ); overload;
+    procedure ForEach( const Enumerate: TEnumerateMethodOfObject<string> ); overload;
+    /// <exclude/>
+    procedure ForEach( const Enumerate: TEnumerateMethodIsNested<string> ); overload;
     {$else}
-    procedure ForEach( const Enumerate: TEnumerateReferenceHandler<string> ); overload;
+    procedure ForEach( const Enumerate: TEnumerateMethod<string> ); overload;
     {$endif}
 
     /// <summary>

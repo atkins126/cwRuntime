@@ -30,7 +30,10 @@
 ///   Standard implementation for cwCollections.
 /// </summary>
 unit cwCollections.Standard;
-{$ifdef fpc} {$mode delphiunicode} {$endif}
+{$ifdef fpc}
+  {$mode delphiunicode}
+  {$modeswitch nestedprocvars}
+{$endif}
 
 interface
 uses
@@ -112,10 +115,11 @@ type
     ///   dictionary is disposed.
     /// </param>
     {$ifdef fpc}
-    class function Create( const KeyCompare: TCompareGlobalHandler<K>; const Granularity: nativeuint = 32; const isOrdered: boolean = false; const isPruned: boolean = false ): IDictionary<K,V>; static; overload;
-    class function Create( const KeyCompare: TCompareOfObjectHandler<K>; const Granularity: nativeuint = 32; const isOrdered: boolean = false; const isPruned: boolean = false ): IDictionary<K,V>; static; overload;
+    class function Create( const KeyCompare: TCompareGlobal<K>; const Granularity: nativeuint = 32; const isOrdered: boolean = false; const isPruned: boolean = false ): IDictionary<K,V>; static; overload;
+    class function Create( const KeyCompare: TCompareOfObject<K>; const Granularity: nativeuint = 32; const isOrdered: boolean = false; const isPruned: boolean = false ): IDictionary<K,V>; static; overload;
+    class function Create( const KeyCompare: TCompareNested<K>; const Granularity: nativeuint = 32; const isOrdered: boolean = false; const isPruned: boolean = false ): IDictionary<K,V>; static; overload;
     {$else}
-    class function Create( const KeyCompare: TCompareReferenceHandler<K>; const Granularity: nativeuint = 32; const isOrdered: boolean = false; const isPruned: boolean = false ): IDictionary<K,V>; static;
+    class function Create( const KeyCompare: TCompare<K>; const Granularity: nativeuint = 32; const isOrdered: boolean = false; const isPruned: boolean = false ): IDictionary<K,V>; static;
     {$endif}
   end;
 
@@ -255,14 +259,21 @@ end;
 {$region ' TDictionary<K,V>'}
 
 {$ifdef fpc}
-class function TDictionary<K,V>.Create( const KeyCompare: TCompareGlobalHandler<K>; const Granularity: nativeuint = 32; const isOrdered: boolean = false; const isPruned: boolean = false ): IDictionary<K,V>; static; overload;
+class function TDictionary<K,V>.Create( const KeyCompare: TCompareGlobal<K>; const Granularity: nativeuint = 32; const isOrdered: boolean = false; const isPruned: boolean = false ): IDictionary<K,V>; static; overload;
 begin
   Result := TStandardDictionary<K,V>.Create( KeyCompare, Granularity, isOrdered, isPruned );
 end;
 {$endif}
 
 {$ifdef fpc}
-class function TDictionary<K,V>.Create( const KeyCompare: TCompareOfObjectHandler<K>; const Granularity: nativeuint = 32; const isOrdered: boolean = false; const isPruned: boolean = false ): IDictionary<K,V>; static; overload;
+class function TDictionary<K,V>.Create( const KeyCompare: TCompareOfObject<K>; const Granularity: nativeuint = 32; const isOrdered: boolean = false; const isPruned: boolean = false ): IDictionary<K,V>; static; overload;
+begin
+  Result := TStandardDictionary<K,V>.Create( KeyCompare, Granularity, isOrdered, isPruned );
+end;
+{$endif}
+
+{$ifdef fpc}
+class function TDictionary<K,V>.Create( const KeyCompare: TCompareNested<K>; const Granularity: nativeuint = 32; const isOrdered: boolean = false; const isPruned: boolean = false ): IDictionary<K,V>; static; overload;
 begin
   Result := TStandardDictionary<K,V>.Create( KeyCompare, Granularity, isOrdered, isPruned );
 end;
