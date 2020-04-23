@@ -60,7 +60,7 @@ type
     {$ifdef fpc}
     procedure Remove( const Item: T );
     {$else}
-    procedure Remove( const Item: T; const Compare: TCompareReferenceHandler<T> );
+    procedure Remove( const Item: T; const Compare: TCompare<T> );
     {$endif}
     function RemoveItem( const idx: nativeuint ): boolean;
   private
@@ -261,7 +261,7 @@ end;
 {$endif}
 
 {$ifndef fpc}
-procedure TStandardList<T>.Remove( const Item: T; const Compare: TCompareReferenceHandler<T> );
+procedure TStandardList<T>.Remove( const Item: T; const Compare: TCompare<T> );
 var
   idx: nativeuint;
 begin

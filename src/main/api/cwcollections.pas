@@ -563,7 +563,7 @@ type
     ///   time FPC does not support anonymous methods and so they should be
     ///   avoided if your code is intended to compile using either compiler.
     /// </remarks>
-    procedure ForEach( const Enumerate: TEnumeratePairReferenceHandler<K,V> ); overload;
+    procedure ForEach( const Enumerate: TEnumeratePair<K,V> ); overload;
     {$endif}
 
     /// <summary>
@@ -909,7 +909,7 @@ type
     {$ifdef fpc}
     procedure Remove( const Item: T );
     {$else}
-    procedure Remove( const Item: T; const Compare: TCompareReferenceHandler<T> );
+    procedure Remove( const Item: T; const Compare: TCompare<T> );
     {$endif}
 
     /// <summary>

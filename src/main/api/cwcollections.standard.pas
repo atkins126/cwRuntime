@@ -280,7 +280,7 @@ end;
 {$endif}
 
 {$ifndef fpc}
-class function TDictionary<K,V>.Create( const KeyCompare: TCompareReferenceHandler<K>; const Granularity: nativeuint = 32; const isOrdered: boolean = false; const isPruned: boolean = false ): IDictionary<K,V>;
+class function TDictionary<K,V>.Create( const KeyCompare: TCompare<K>; const Granularity: nativeuint = 32; const isOrdered: boolean = false; const isPruned: boolean = false ): IDictionary<K,V>;
 begin
   Result := TStandardDictionary<K,V>.Create( KeyCompare, Granularity, isOrdered, isPruned );
 end;
