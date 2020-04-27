@@ -225,7 +225,6 @@ end;
 
 class function TCompare.ComparePointers(const AValue: pointer; const BValue: pointer): TComparisonResult;
 begin
-  Result := TComparisonResult.crErrorNotCompared;
   if AValue=BValue then begin
     Result := TComparisonResult.crAEqualToB;
   {$hints off} end else if nativeuint(AValue)>nativeuint(BValue) then begin {$hints on} // fpc warns not portable, actually it is.
@@ -237,8 +236,7 @@ end;
 
 class function TCompare.CompareStrings(const AValue: string; const BValue: string): TComparisonResult;
 begin
-  Result := TComparisonResult.crErrorNotCompared;
-  if AValue=BValue then begin
+    if AValue=BValue then begin
     Result := TComparisonResult.crAEqualToB;
   end else if AValue>BValue then begin
     Result := TComparisonResult.crAGreaterThanB;

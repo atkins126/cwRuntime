@@ -3,9 +3,6 @@
         <ProjectGuid>{D1C159D0-06A3-418C-8312-A6D94AA330E2}</ProjectGuid>
     </PropertyGroup>
     <ItemGroup>
-        <Projects Include="projects\pkg_cwRuntime_Rio.dproj">
-            <Dependencies/>
-        </Projects>
         <Projects Include="samples\cwTest\SampleTests\cwTest_SampleTests_Rio.dproj">
             <Dependencies/>
         </Projects>
@@ -38,15 +35,6 @@
             <Default.Personality/>
         </BorlandProject>
     </ProjectExtensions>
-    <Target Name="pkg_cwRuntime_Rio">
-        <MSBuild Projects="projects\pkg_cwRuntime_Rio.dproj"/>
-    </Target>
-    <Target Name="pkg_cwRuntime_Rio:Clean">
-        <MSBuild Projects="projects\pkg_cwRuntime_Rio.dproj" Targets="Clean"/>
-    </Target>
-    <Target Name="pkg_cwRuntime_Rio:Make">
-        <MSBuild Projects="projects\pkg_cwRuntime_Rio.dproj" Targets="Make"/>
-    </Target>
     <Target Name="cwTest_SampleTests_Rio">
         <MSBuild Projects="samples\cwTest\SampleTests\cwTest_SampleTests_Rio.dproj"/>
     </Target>
@@ -120,13 +108,13 @@
         <MSBuild Projects="tests\test_cwRuntime_Rio.dproj" Targets="Make"/>
     </Target>
     <Target Name="Build">
-        <CallTarget Targets="pkg_cwRuntime_Rio;cwTest_SampleTests_Rio;lib_testLoadLib_Rio;cwDynLib_LoadLibSample_Rio;cwLog_LogToConsole_Rio;lib_cwLog_Rio;test_cwTest_Rio;test_dynamic_cwLog_Rio;test_cwRuntime_Rio"/>
+        <CallTarget Targets="cwTest_SampleTests_Rio;lib_testLoadLib_Rio;cwDynLib_LoadLibSample_Rio;cwLog_LogToConsole_Rio;lib_cwLog_Rio;test_cwTest_Rio;test_dynamic_cwLog_Rio;test_cwRuntime_Rio"/>
     </Target>
     <Target Name="Clean">
-        <CallTarget Targets="pkg_cwRuntime_Rio:Clean;cwTest_SampleTests_Rio:Clean;lib_testLoadLib_Rio:Clean;cwDynLib_LoadLibSample_Rio:Clean;cwLog_LogToConsole_Rio:Clean;lib_cwLog_Rio:Clean;test_cwTest_Rio:Clean;test_dynamic_cwLog_Rio:Clean;test_cwRuntime_Rio:Clean"/>
+        <CallTarget Targets="cwTest_SampleTests_Rio:Clean;lib_testLoadLib_Rio:Clean;cwDynLib_LoadLibSample_Rio:Clean;cwLog_LogToConsole_Rio:Clean;lib_cwLog_Rio:Clean;test_cwTest_Rio:Clean;test_dynamic_cwLog_Rio:Clean;test_cwRuntime_Rio:Clean"/>
     </Target>
     <Target Name="Make">
-        <CallTarget Targets="pkg_cwRuntime_Rio:Make;cwTest_SampleTests_Rio:Make;lib_testLoadLib_Rio:Make;cwDynLib_LoadLibSample_Rio:Make;cwLog_LogToConsole_Rio:Make;lib_cwLog_Rio:Make;test_cwTest_Rio:Make;test_dynamic_cwLog_Rio:Make;test_cwRuntime_Rio:Make"/>
+        <CallTarget Targets="cwTest_SampleTests_Rio:Make;lib_testLoadLib_Rio:Make;cwDynLib_LoadLibSample_Rio:Make;cwLog_LogToConsole_Rio:Make;lib_cwLog_Rio:Make;test_cwTest_Rio:Make;test_dynamic_cwLog_Rio:Make;test_cwRuntime_Rio:Make"/>
     </Target>
     <Import Project="$(BDS)\Bin\CodeGear.Group.Targets" Condition="Exists('$(BDS)\Bin\CodeGear.Group.Targets')"/>
 </Project>

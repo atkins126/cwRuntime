@@ -78,9 +78,10 @@ type
   private
     function getValue: uint32;
     procedure setValue( value: uint32 );
+  protected
+    destructor Destroy; override;
   public
     constructor create( value: uint32 = 0 ); reintroduce;
-    destructor destroy; override;
   end;
 
 constructor TCollectionItem.create(value: uint32);
@@ -90,12 +91,12 @@ begin
   inc(Allocations);
 end;
 
-destructor TCollectionItem.destroy;
+destructor TCollectionItem.Destroy;
 begin
   DisposedFlag := True;
   DisposedValue := fValue;
   Dec(Allocations);
-  inherited destroy;
+  inherited Destroy;
 end;
 
 function TCollectionItem.getValue: uint32;

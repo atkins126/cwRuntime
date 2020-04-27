@@ -106,7 +106,6 @@ begin
   aMessageRec.aMessage.ParamD := ParamD;
   Result := fPipeRing.Push(aMessageRec);
   fPushCS.Wake;
-  Result := True;
 end;
 
 function TMessagePipe.SendMessageWait(MessageValue: uint64; ParamA: uint64 = 0; ParamB: uint64 = 0; ParamC: uint64 = 0; ParamD: uint64 = 0): uint64;
