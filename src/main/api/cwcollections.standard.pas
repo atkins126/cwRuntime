@@ -228,7 +228,7 @@ begin
   Result := TComparisonResult.crErrorNotCompared;
   if AValue=BValue then begin
     Result := TComparisonResult.crAEqualToB;
-  end else if nativeuint(AValue)>nativeuint(BValue) then begin
+  {$hints off} end else if nativeuint(AValue)>nativeuint(BValue) then begin {$hints on} // fpc warns not portable, actually it is.
     Result := TComparisonResult.crAGreaterThanB;
   end else begin
     Result := TComparisonResult.crBGreaterThanA;

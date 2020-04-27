@@ -48,13 +48,21 @@ type
   end;
 
 var
-  SingletonLog: ILog = nil; //<- The actual instance of log!
+  SingletonLog: ILog = nil;
 
 implementation
+uses
+  cwTypes
+, cwLog.Static
+;
 
 constructor TException.Create( const Status: TStatus );
 begin
-  inherited Create( SingletonLog.LastEntry );
+  {$ifdef fpc}
+  inherited Create( Log.LastEntry.AsAnsiString );
+  {$else}
+  inherited Create( Log.LastEntry );
+  {$endif}
   fStatus := Status;
 end;
 

@@ -30,7 +30,10 @@
 ///   Chapmanworld Logging system cwLog.
 /// </summary>
 unit cwLog;
-{$ifdef fpc}{$mode delphiunicode}{$endif}  
+{$ifdef fpc}
+  {$mode delphiunicode}
+  {$modeswitch nestedprocvars}
+{$endif}
 
 interface
 uses
@@ -149,6 +152,17 @@ type
   ///  </summary>
   EInvalidLogEntry = class(Exception);
 
+{$endregion}
+
+{$region ' TOnLogInsertEvent'}
+type
+  {$ifdef fpc}
+  TOnLogInsertEventGlobal   = procedure( const LogEntry: TGUID; const TranslatedText: string; const TS: TDateTime; const Severity: TLogSeverity; const Parameters: array of string );
+  TOnLogInsertEventOfObject = procedure( const LogEntry: TGUID; const TranslatedText: string; const TS: TDateTime; const Severity: TLogSeverity; const Parameters: array of string ) of object;
+  TOnLogInsertEventNested   = procedure( const LogEntry: TGUID; const TranslatedText: string; const TS: TDateTime; const Severity: TLogSeverity; const Parameters: array of string ) is nested;
+  {$else}
+  TOnLogInsertEvent         = reference to procedure( const LogEntry: TGUID; const TranslatedText: string; const TS: TDateTime; const Severity: TLogSeverity; const Parameters: array of string );
+  {$endif}
 {$endregion}
 
 {$region ' ILogTarget'}

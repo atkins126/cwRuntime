@@ -30,11 +30,9 @@ requires
   rtl;
 
 contains
-  cwio.standard in '..\main\api\cwio.standard.pas',
   cwlog.console in '..\main\api\cwlog.console.pas',
   cwlog.dynamic in '..\main\api\cwlog.dynamic.pas',
   cwlog in '..\main\api\cwlog.pas',
-  cwlog.standard in '..\main\api\cwlog.standard.pas',
   cwlog.static in '..\main\api\cwlog.static.pas',
   cwlog.targets in '..\main\api\cwlog.targets.pas',
   cwtest in '..\main\api\cwtest.pas',
@@ -95,5 +93,3 @@ contains
   cwtest.testcase.console in '..\main\implementation\cwtest.testcase.console.pas';
 
 end.
-
-

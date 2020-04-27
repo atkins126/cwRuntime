@@ -33,7 +33,6 @@ library lib_cwLog;
 {$ifdef fpc}{$mode delphiunicode}{$endif}
 uses
   sysutils //[RTL] for exception
-, cwUnicode
 , cwUnicode.Standard
 , cwTypes
 , cwLog
@@ -131,6 +130,22 @@ begin
   Result := TStatus.Success;
 end;
 
+function ExportTranslations( const lpszFilename: pointer ): TStatus; {$ifdef MSWINDOWS} stdcall; {$else} cdecl; {$endif} export;
+var
+  Filename: TUnicodeString;
+begin
+  Filename.AsPtr := lpszFilename;
+  Result := Log.ExportTranslationFile(Filename.AsString);
+end;
+
+function ImportTranslations( const lpszFilename: pointer ): TStatus; {$ifdef MSWINDOWS} stdcall; {$else} cdecl; {$endif} export;
+var
+  Filename: TUnicodeString;
+begin
+  Filename.AsPtr := lpszFilename;
+  Result := Log.ImportTranslationFile(Filename.AsString);
+end;
+
 exports
   getVersionMajor
 , getVersionMinor
@@ -138,6 +153,8 @@ exports
 , InsertLogEntryByString
 , getLastEntry
 , AddProxyLogTarget
+, ExportTranslations
+, ImportTranslations
 ;
 
 begin

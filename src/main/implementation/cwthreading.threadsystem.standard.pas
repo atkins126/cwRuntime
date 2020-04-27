@@ -82,7 +82,7 @@ uses
 , cwThreading.MessageBus.Standard
 , cwCollections.Standard
 , cwLog
-, cwLog.Standard
+, cwLog.Static
 , cwRuntime.LogEntries
 ;
 

@@ -26,51 +26,41 @@
   IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 *)
 {$endif}
-unit cwLog.Standard;
+unit cwLog.LogTarget.Stream;
 {$ifdef fpc}{$mode delphiunicode}{$endif}
 
 interface
 uses
   cwLog
-, cwLog.Common
+, cwIO
 ;
 
-/// <summary>
-///   When this type of exception is raised it will read the most recent
-///   log entry for an exception message. It also carries the status value
-///   (message GUID) should this need to be passed to a handler.
-/// <summary>
 type
-  TException = cwLog.Common.TException; //- Alias.
-
-function Log: ILog;
+  TStreamLogTarget = class( TInterfacedObject, ILogTarget )
+  private
+    fStream: IUnicodeStream;
+    fFormat: TUnicodeFormat;
+  strict private //- ILogTarget -//
+    {$hints off} procedure Insert( const LogEntry: TGUID; const TranslatedText: string; const TS: TDateTime; const Severity: TLogSeverity; const Parameters: array of string ); {$hints on}
+  public
+    constructor Create( const TargetStream: IUnicodeStream; const Format: TUnicodeFormat ); reintroduce;
+  end;
 
 implementation
-uses
-  sysutils //[RTL] for FileExists
-, cwLog.Log.Static
-, cwLog.Log.Dynamic
-;
 
-var
-  LocalSingletonLog: ILog = nil;
-
-function Log: ILog;
+constructor TStreamLogTarget.Create(const TargetStream: IUnicodeStream; const Format: TUnicodeFormat);
 begin
-  if not assigned(LocalSingletonLog) then begin
-    LocalSingletonLog := cwLog.Log.Dynamic.Log();
-  end;
-  if not assigned(LocalSingletonLog) then begin
-    LocalSingletonLog := cwLog.Log.Static.Log();
-  end;
-  Result := LocalSingletonLog;
+  inherited Create;
+  fStream := TargetStream;
+  fFormat := Format;
 end;
 
-initialization
-  LocalSingletonLog := nil;
-
-finalization
-  LocalSingletonLog := nil;
+{$hints off}
+procedure TStreamLogTarget.Insert(const LogEntry: TGUID; const TranslatedText: string; const TS: TDateTime; const Severity: TLogSeverity; const Parameters: array of string );
+begin
+  fStream.WriteString( TranslatedText, fFormat );
+end;
+{$hints on}
 
 end.
 

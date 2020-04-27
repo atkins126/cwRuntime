@@ -28,7 +28,6 @@ type
 implementation
 uses
   cwTypes
-, cwUnicode
 , cwUnicode.Standard
 ;
 
@@ -39,7 +38,8 @@ var
   ParamUTF: TUnicodeString;
   TextUTF: TUnicodeString;
 begin
-  ParamArray.AssignArray(Parameters);
+  {$warnings off} ParamArray.AssignArray(Parameters); {$warnings on} // fpc warns not initialized, this is initialization.
+  ParamStr := '';
   ParamStr.Combine(LF,ParamArray);
   ParamUTF := ParamStr;
   TextUTF := TranslatedText;

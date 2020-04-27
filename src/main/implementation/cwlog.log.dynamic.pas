@@ -38,7 +38,7 @@ uses
 ;
 
 type
-  TLog = class( TInterfacedObject, ILog )
+  TLogDynamic = class( TInterfacedObject, ILog )
   private
     fLogBinding: TLogBinding;
     fProxyLogTargets: IList<IInterface>;
@@ -74,17 +74,20 @@ function Log: ILog;
 var
   LogBinding: TLogBinding;
 begin
-  if not assigned(SingletonLog) then begin
+  Result := nil;
+  if (
+       assigned(SingletonLog) and (not (SingletonLog is TLogDynamic))
+     ) or
+     (not assigned(SingletonLog)) then begin
     if not TLogBinding.Create( LogBinding ).IsSuccess then begin
-      Result := nil;
       exit;
     end;
-    SingletonLog := TLog.Create(LogBinding);
+    SingletonLog := TLogDynamic.Create(LogBinding);
   end;
   Result := SingletonLog;
 end;
 
-function TLog.RegisterLogEntry(const EntryString: string): boolean;
+function TLogDynamic.RegisterLogEntry(const EntryString: string): boolean;
 var
   Str: TUnicodeString;
 begin
@@ -96,23 +99,29 @@ begin
   Result := True;
 end;
 
-procedure TLog.AddLogTarget(const LogTarget: ILogTarget);
+procedure TLogDynamic.AddLogTarget(const LogTarget: ILogTarget);
 begin
   fProxyLogTargets.Add( TProxyLogTarget.Create( LogTarget, fLogBinding ) );
 end;
 
-function TLog.ExportTranslationFile(const FilePath: string): TStatus;
+function TLogDynamic.ExportTranslationFile(const FilePath: string): TStatus;
+var
+  Unifilepath: TUnicodeString;
 begin
-  //-
+  UniFilepath.AsString := FilePath;
+  Result := fLogBinding.ExportTranslations(UniFilepath.AsPtr);
 end;
 
-function TLog.ImportTranslationFile(const FilePath: string): TStatus;
+function TLogDynamic.ImportTranslationFile(const FilePath: string): TStatus;
+var
+  Unifilepath: TUnicodeString;
 begin
-  //-
+  UniFilepath.AsString := FilePath;
+  Result := fLogBinding.ImportTranslations(UniFilepath.AsPtr);
 end;
 
 {$if defined(fpc) or defined(MSWINDOWS)}
-function TLog.Insert(const LogEntry: AnsiString; const Severity: TLogSeverity): TStatus;
+function TLogDynamic.Insert(const LogEntry: AnsiString; const Severity: TLogSeverity): TStatus;
 var
   Str: TUnicodeString;
 begin
@@ -122,7 +131,7 @@ end;
 {$endif}
 
 {$if defined(fpc) or defined(MSWINDOWS)}
-function TLog.Insert(const LogEntry: AnsiString; const Severity: TLogSeverity; const Parameters: array of string): TStatus;
+function TLogDynamic.Insert(const LogEntry: AnsiString; const Severity: TLogSeverity; const Parameters: array of string): TStatus;
 var
   Str: TUnicodeString;
   ParamStr: TUnicodeString;
@@ -131,13 +140,14 @@ var
 begin
   Str.AsString := LogEntry.AsString;
   {$warnings off} ParamArray.AssignArray(Parameters); {$warnings on}
+  StrParameters := '';
   StrParameters.Combine(LF,ParamArray);
   ParamStr.AsString := StrParameters;
   Result := fLogBinding.InsertLogEntryByString(Str.AsPtr,Severity,ParamStr.AsPtr);
 end;
 {$endif}
 
-function TLog.Insert(const LogEntry: string; const Severity: TLogSeverity; const Parameters: array of string): TStatus;
+function TLogDynamic.Insert(const LogEntry: string; const Severity: TLogSeverity; const Parameters: array of string): TStatus;
 var
   S: string;
   Str: TUnicodeString;
@@ -146,12 +156,13 @@ var
 begin
   Str.AsString := LogEntry;
   {$warnings off} ParamArray.AssignArray(Parameters); {$warnings on}
+  S := '';
   S.Combine(LF,ParamArray);
   ParamStr := S;
   Result := fLogBinding.InsertLogEntryByString(Str.AsPtr,Severity,ParamStr.AsPtr);
 end;
 
-function TLog.Insert(const LogEntry: string; const Severity: TLogSeverity): TStatus;
+function TLogDynamic.Insert(const LogEntry: string; const Severity: TLogSeverity): TStatus;
 var
   Str: TUnicodeString;
 begin
@@ -159,7 +170,7 @@ begin
   Result := fLogBinding.InsertLogEntryByString(Str.AsPtr,Severity,nil);
 end;
 
-function TLog.getLastEntry: string;
+function TLogDynamic.getLastEntry: string;
 var
   Buffer: array of uint8;
   Size: nativeuint;
@@ -181,14 +192,14 @@ begin
   end;
 end;
 
-constructor TLog.Create( const LogBinding: TLogBinding );
+constructor TLogDynamic.Create( const LogBinding: TLogBinding );
 begin
   inherited Create;
   fProxyLogTargets := TList<IInterface>.Create;
   fLogBinding := LogBinding;
 end;
 
-destructor TLog.Destroy;
+destructor TLogDynamic.Destroy;
 begin
   fProxyLogTargets := nil;
   inherited Destroy;
@@ -203,14 +214,8 @@ var
   ValueStr: string;
 begin
   Result := Value;
-  if not assigned(SingletonLog) then begin
-    Log();
-  end;
-  if not assigned(SingletonLog) then begin
-    exit;
-  end;
   ValueStr := string(Value);
-  SingletonLog.RegisterLogEntry(ValueStr);
+  Log.RegisterLogEntry(ValueStr);
 end;
 {$hints on}
 {$endif}

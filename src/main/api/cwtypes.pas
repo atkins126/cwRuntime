@@ -42,7 +42,10 @@ unit cwTypes;
 {$endif}
 
 interface
-{$ifdef fpc}{$MODESWITCH ADVANCEDRECORDS}{$MODESWITCH TYPEHELPERS}{$endif}
+{$ifdef fpc}
+  {$MODESWITCH ADVANCEDRECORDS}
+  {$MODESWITCH TYPEHELPERS}
+{$endif}
 uses
   sysutils //[RTL]
 ;
@@ -297,7 +300,7 @@ type
   {$endif}
 {$endregion}
 {$region ' Helper for char'}
-  TCharHelper = record helper for char
+  TCharHelper = record helper for Char
   public
 
     ///  <summary>

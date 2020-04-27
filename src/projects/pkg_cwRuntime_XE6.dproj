@@ -131,11 +131,9 @@
             <MainSource>MainSource</MainSource>
         </DelphiCompile>
         <DCCReference Include="rtl.dcp"/>
-        <DCCReference Include="..\main\api\cwio.standard.pas"/>
         <DCCReference Include="..\main\api\cwlog.console.pas"/>
         <DCCReference Include="..\main\api\cwlog.dynamic.pas"/>
         <DCCReference Include="..\main\api\cwlog.pas"/>
-        <DCCReference Include="..\main\api\cwlog.standard.pas"/>
         <DCCReference Include="..\main\api\cwlog.static.pas"/>
         <DCCReference Include="..\main\api\cwlog.targets.pas"/>
         <DCCReference Include="..\main\api\cwtest.pas"/>

@@ -3363,7 +3363,7 @@ function ArrayOfSingleToArrayOfHalf( const a: array of single ): TArrayOfHalf;
 var
   idx: nativeuint;
 begin
-  SetLength(Result,Length(a));
+  {$warnings off} SetLength(Result,Length(a)); {$warnings on} // fpc warns not initialized, this is initialization
   if Length(Result)=0 then begin
     exit;
   end;

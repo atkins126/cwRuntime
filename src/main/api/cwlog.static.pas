@@ -58,18 +58,8 @@ uses
 
 function Log: ILog;
 begin
-  if not assigned(SingletonLog) then begin
-    SingletonLog := TLog.Create;
-  end;
-  Result := SingletonLog;
+  Result := cwLog.Log.Static.Log;
 end;
-
-
-initialization
-  SingletonLog := nil;
-
-finalization
-  SingletonLog := nil;
 
 end.
 

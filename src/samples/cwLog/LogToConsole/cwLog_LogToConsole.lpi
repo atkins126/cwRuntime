@@ -29,6 +29,10 @@
         <Filename Value="cwLog_LogToConsole.dpr"/>
         <IsPartOfProject Value="True"/>
       </Unit>
+      <Unit>
+        <Filename Value="..\..\..\main\implementation\cwlog.translationparser.standard.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit>
     </Units>
   </ProjectOptions>
   <CompilerOptions>

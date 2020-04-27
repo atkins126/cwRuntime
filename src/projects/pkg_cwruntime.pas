@@ -8,8 +8,8 @@ unit pkg_cwRuntime;
 interface
 
 uses
-  cwlog.console, cwlog.dynamic, cwLog, cwlog.static, cwlog.targets, cwTest, 
-  cwTest.Standard, cwTypes, cwUnicode, cwUnicode.Standard, cwCollections, 
+  cwlog.console, cwlog.dynamic, cwLog, cwlog.static, cwTest, cwTest.Standard, 
+  cwTypes, cwUnicode, cwUnicode.Standard, cwCollections, 
   cwCollections.Standard, cwDynLib, cwDynLib.Standard, 
   cwCollections.Stack.Standard, cwCollections.StringList.Standard, 
   cwLog.Log.Binding, cwlog.log.dynamic, cwlog.log.static, 
@@ -19,9 +19,8 @@ uses
   cwCollections.List.Standard, cwCollections.RingBuffer.Standard, 
   cwIO.FileStream.Standard, cwIO.MemoryStream.Standard, cwIO.Stream.Custom, 
   cwIO.UnicodeStream.Custom, cwIO.Buffer.Standard, cwIO.CyclicBuffer.Standard, 
-  cwIO, cwIO.Standard, cwLog.Standard, cwRuntime.LogEntries, 
-  cwThreading.Standard, cwThreading, 
-  cwThreading.SignaledCriticalSection.Windows, 
+  cwIO, cwIO.Standard, cwRuntime.LogEntries, cwThreading.Standard, 
+  cwThreading, cwThreading.SignaledCriticalSection.Windows, 
   cwThreading.ThreadedLoop.Executor, cwThreading.ThreadedLoop.Standard, 
   cwThreading.ThreadMethod.Posix, cwThreading.ThreadMethod.Windows, 
   cwThreading.ThreadPool.Standard, cwThreading.ThreadSystem.Standard, 
@@ -30,7 +29,8 @@ uses
   cwThreading.MessageChannel.Standard, cwThreading.MessagePipe.Standard, 
   cwThreading.SignaledCriticalSection.Posix, cwWin32.Advapi32, 
   cwWin32.Constants, cwWin32.Gdi32, cwWin32.Kernel32, cwWin32.Types, 
-  cwWin32.User32, cwVectors, cwLog.common, lib_cwLog.ProxyLogTarget;
+  cwWin32.User32, cwVectors, cwLog.common, lib_cwLog.ProxyLogTarget, 
+  cwlog.targets;
 
 implementation
 

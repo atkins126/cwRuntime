@@ -77,6 +77,8 @@ type
 
 ///  <summary>
 ///    Returns a singleton instance of ILog.
+///    Ignore the override log parameter, this is used internally to
+///    override a static log with a dynamic log.
 ///  </summary>
 function Log: ILog;
 
@@ -85,14 +87,15 @@ uses
   sysutils  //[RTL] For IsEqualGUID
 , cwTypes
 , cwCollections.Standard
+, cwIO
+, cwIO.Standard
+, cwlog.translationparser.standard
+, cwLog.Common
 ;
 
 //- Record last log entry for each thread so that it may be recalled if required.
 threadvar
   LastEntry: string;
-
-var
-  SingletonLog: ILog = nil;
 
 function Log: ILog;
 begin
@@ -130,15 +133,13 @@ begin
   if not ParseLogEntryDeclaration(EntryString,UIDStr,MessageStr) then begin
     exit;
   end;
-  {$if defined(fpc) or defined(MSWINDOWS)}
+  {$if fpc}
   GUID := StringToGUID(ansistring(UIDStr));
   {$else}
   GUID := StringToGUID(UIDStr);
   {$endif}
   if FindLogEntry( GUID, foundIdx ) then begin
-    //- Unlikely the same GUID used for two different messages, very likely a
-    //- second instance of cwRTL in proxy log attempting to register a second
-    //- instance of the log entry.
+    fLogEntryTexts[foundIdx] := MessageStr;
     exit;
   end;
   //- Ensure there is space in the arrays.
@@ -163,17 +164,73 @@ begin
 end;
 
 function TLog.ExportTranslationFile(const FilePath: string): TStatus;
+var
+  FS: IUnicodeStream;
+  idx: nativeuint;
+  GUIDStr: string;
+  EntryText: string;
 begin
-  //-
+  Result := TStatus.Unknown;
+  if FileExists(FilePath) then begin
+    DeleteFile(FilePath);
+  end;
+  FS := TFileStream.Create(FilePath,False);
+  try
+    FS.WriteBOM( TUnicodeFormat.utf8 );
+    FS.WriteString('['+CR+LF, TUnicodeFormat.utf8 );
+    for idx := 0 to pred( fLogEntryCount ) do begin
+      {$ifdef fpc}
+      GUIDStr := GUIDToString(fLogEntryIDs[idx]).AsString;
+      {$else}
+      GUIDStr := GUIDToString(fLogEntryIDs[idx]);
+      {$endif}
+      EntryText := fLogEntryTexts[idx];
+      EntryText := EntryText.StringReplace('"','\"',TRUE,TRUE);
+      FS.WriteString('{ "EntryID": "'+GUIDStr+'", "EntryText": "'+EntryText+'"}', TUnicodeFormat.utf8 );
+      if idx<pred(fLogEntryCount) then begin
+        FS.WriteString(','+CR+LF, TUnicodeFormat.utf8 );
+      end else begin
+        FS.WriteString(','+CR+LF, TUnicodeFormat.utf8 );
+      end;
+    end;
+    FS.WriteString(']'+CR+LF, TUnicodeFormat.utf8 );
+  finally
+    FS := nil;
+  end;
+  Result := TStatus.Success;
 end;
 
 function TLog.ImportTranslationFile(const FilePath: string): TStatus;
+var
+  FS: IUnicodeStream;
+  TranslationParser: TTranslationParser;
+  idx: nativeuint;
 begin
-  //-
+  Result := TStatus.Unknown;
+  if not FileExists(FilePath) then begin
+    exit;
+  end;
+  FS := TFileStream.Create(FilePath,TRUE);
+  try
+    if not TranslationParser.ParseTranslations(FS) then begin
+      exit;
+    end;
+    if TranslationParser.EntryCount=0 then begin
+      Result := TStatus.Success;
+      exit;
+    end;
+    for idx := 0 to pred(TranslationParser.EntryCount) do begin
+      RegisterLogEntry(TranslationParser.GUIDs[idx]+' '+TranslationParser.Texts[idx]);
+    end;
+  finally
+    FS := nil;
+  end;
+  Result := TStatus.Success;
 end;
 
 function TLog.Insert(const LogEntry: TGUID; const EntryText: string; const Severity: TLogSeverity; const Parameters: array of string): TStatus;
 var
+  ErrorStr: string;
   MessageText: string;
   ParameterPlaceholders: TArrayOfString;
   foundIdx: nativeuint;
@@ -184,17 +241,27 @@ begin
   TS := Now;
 
   //- Get the message translation
+  MessageText := EntryText;
   if FindLogEntry( Result.Value, foundIdx ) then begin
     MessageText := fLogEntryTexts[foundIdx];
+  end else begin
+    {$ifdef fpc}
+    ErrorStr := 'Unable to locate log entry for insertion "'+GuidToString(LogEntry).AsString+'".';
+    raise
+      Exception.Create(ErrorStr.AsAnsiString);
+    {$else}
+    ErrorStr := 'Unable to locate log entry for insertion "'+GuidToString(LogEntry)+'".';
+    raise
+      Exception.Create(ErrorStr);
+    {$endif}
   end;
-  MessageText := EntryText;
 
   //- Parse Parameters and substitute.
   ParameterPlaceholders := ParseParameters(MessageText);
   if Length(ParameterPlaceholders)<=Length(Parameters) then begin
     if Length(ParameterPlaceholders)>0 then begin
       for idx := 0 to pred(Length(ParameterPlaceholders)) do begin
-        MessageText := StringReplace(MessageText,'(%'+ParameterPlaceholders[idx]+'%)',Parameters[idx],[rfReplaceAll,rfIgnoreCase]);
+        MessageText.StringReplace('(%'+ParameterPlaceholders[idx]+'%)',Parameters[idx],True,True);
       end;
     end;
   end;
@@ -296,7 +363,7 @@ begin
   while (Pos('(%',Src)>0) do begin
     Src := Src.RightStr(pred(Length(Src)-Pos('(%',Src)));
     if Pos('%)',Src)>0 then begin
-      ParamName := ParamName.LeftStr(pred(Pos('%)',Src)));
+      ParamName := Src.LeftStr(pred(Pos('%)',Src)));
       if pred(pred(Length(Src)-Length(ParamName)))>0 then begin
         Src := Src.RightStr(pred(pred(Length(Src)-Length(ParamName))));
       end else begin
@@ -344,7 +411,7 @@ begin
   Result := TStatus.Unknown;
   //- Separate out the GUID and MessageText.
   if not ParseLogEntryDeclaration(string(LogEntry), GUIDStr, EntryString) then begin
-    {$if defined(fpc) or defined(MSWINDOWS)}
+    {$ifdef fpc}
     raise
       EInvalidLogEntry.Create(ansistring('Unable to parse log entry "'+LogEntry+'"'));
     {$else}
@@ -352,7 +419,7 @@ begin
       EInvalidLogEntry.Create('Unable to parse log entry "'+LogEntry+'"');
     {$endif}
   end;
-  {$if defined(fpc) or defined(MSWINDOWS)}
+  {$ifdef fpc}
   GUID := StringToGUID(ansistring(GUIDStr));
   {$else}
   GUID := StringToGUID(GUIDStr);
@@ -417,11 +484,8 @@ var
   ValueStr: string;
 begin
   Result := Value;
-  if not assigned(SingletonLog) then begin
-    SingletonLog := TLog.Create;
-  end;
   ValueStr := string(Value);
-  SingletonLog.RegisterLogEntry(ValueStr);
+  Log.RegisterLogEntry(ValueStr);
 end;
 {$hints on}
 {$endif}

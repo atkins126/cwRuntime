@@ -56,7 +56,7 @@ type
 implementation
 uses
   sysutils
-, cwLog.Standard
+, cwLog.Static
 , cwRuntime.LogEntries
   {$ifndef MSWINDOWS}
   {$ifndef fpc}
@@ -142,7 +142,9 @@ begin
     {$hints on}
   {$endif}
   if not assigned(ptrProc) then begin
-    Result := Log.Insert(le_FailedToLoadEntryPoint,TLogSeverity.lsError,[funcName,fLibrary]);
+    if assigned(Log()) then begin
+      Result := Log.Insert(le_FailedToLoadEntryPoint,TLogSeverity.lsError,[funcName,fLibrary]);
+    end;
     exit;
   end;
   Result := TStatus.Success;
@@ -152,7 +154,9 @@ function TDynlib.LoadLibrary(const filepath: string): TStatus;
 begin
   Result := TStatus.Unknown;
   if not FileExists(filepath) then begin
-    Result := Log.Insert(le_FileNotFound,TLogSeverity.lsError,[Filepath]);
+    if assigned(Log()) then begin
+      Result := Log.Insert(le_FileNotFound,TLogSeverity.lsError,[Filepath]);
+    end;
     exit;
   end;
   {$ifdef MSWINDOWS}
@@ -163,7 +167,9 @@ begin
   {$hints on}
   {$endif}
   if fHandle=0 then begin
-    Result := Log.Insert(le_ModuleNotLoaded,TLogSeverity.lsError,[Filepath]);
+    if assigned(Log()) then begin
+      Result := Log.Insert(le_ModuleNotLoaded,TLogSeverity.lsError,[Filepath]);
+    end;
     exit;
   end;
   fLibrary := filepath;

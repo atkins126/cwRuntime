@@ -30,11 +30,15 @@
 ///   Provides pre-defined log targets.
 /// </summary>
 unit cwlog.targets;
-{$ifdef fpc}{$mode delphiunicode}{$endif}
+{$ifdef fpc}
+  {$mode delphiunicode}
+  {$modeswitch nestedprocvars}
+{$endif}
 
 interface
 uses
   cwLog
+, cwIO
 ;
 
 type
@@ -42,9 +46,54 @@ type
   ///    A namespace for instancing log targets.
   ///  </summary>
   TLogTarget = record
-
+    class function Stream( const TargetStream: IUnicodeStream; const Format: TUnicodeFormat ): ILogTarget; static;
+    {$ifdef fpc}
+      class function Event( const anEvent: TOnLogInsertEventGlobal ): ILogTarget; overload; static;
+      class function Event( const anEvent: TOnLogInsertEventOfObject ): ILogTarget; overload; static;
+      class function Event( const anEvent: TOnLogInsertEventNested ): ILogTarget; overload; static;
+    {$else}
+      class function Event( const anEvent: TOnLogInsertEvent ): ILogTarget; static;
+    {$endif}
   end;
 
 implementation
+uses
+  cwLog.LogTarget.Stream
+, cwLog.LogTarget.Event
+;
+
+class function TLogTarget.Stream( const TargetStream: IUnicodeStream; const Format: TUnicodeFormat ): ILogTarget;
+begin
+  Result := TStreamLogTarget.Create( TargetStream, Format );
+end;
+
+{$ifdef fpc}
+class function TLogTarget.Event(const anEvent: TOnLogInsertEventGlobal): ILogTarget;
+begin
+  Result := TEventLogTarget.Create( anEvent );
+end;
+{$endif}
+
+{$ifdef fpc}
+class function TLogTarget.Event(const anEvent: TOnLogInsertEventOfObject): ILogTarget;
+begin
+  Result := TEventLogTarget.Create( anEvent );
+end;
+{$endif}
+
+{$ifdef fpc}
+class function TLogTarget.Event(const anEvent: TOnLogInsertEventNested): ILogTarget;
+begin
+  Result := TEventLogTarget.Create( anEvent );
+end;
+{$endif}
+
+{$ifndef fpc}
+class function TLogTarget.Event(const anEvent: TOnLogInsertEvent): ILogTarget;
+begin
+  Result := TEventLogTarget.Create( anEvent );
+end;
+{$endif}
+
 
 end.

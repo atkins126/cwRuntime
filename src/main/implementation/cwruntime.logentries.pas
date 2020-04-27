@@ -44,10 +44,11 @@ resourcestring
   le_FailedToLoadEntryPoint           = '{B425D9C3-262A-425B-85BB-149E79A4C9CC} Failed to locate entrypoint "(%entrypoint%)" in library "(%library%)"';
 
 implementation
+{$ifndef fpc}
 uses
-  cwLog
-, cwLog.Standard
+  cwLog.Static
 ;
+{$endif}
 
 initialization
   {$ifndef fpc}

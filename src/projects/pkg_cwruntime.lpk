@@ -32,10 +32,6 @@
         <UnitName Value="cwlog.static"/>
       </Item>
       <Item>
-        <Filename Value="..\main\api\cwlog.targets.pas"/>
-        <UnitName Value="cwlog.targets"/>
-      </Item>
-      <Item>
         <Filename Value="..\main\api\cwtest.pas"/>
         <UnitName Value="cwTest"/>
       </Item>
@@ -164,10 +160,6 @@
         <UnitName Value="cwIO.Standard"/>
       </Item>
       <Item>
-        <Filename Value="..\main\api\cwlog.standard.pas"/>
-        <UnitName Value="cwLog.Standard"/>
-      </Item>
-      <Item>
         <Filename Value="..\main\implementation\cwruntime.logentries.pas"/>
         <UnitName Value="cwRuntime.LogEntries"/>
       </Item>
@@ -193,7 +185,7 @@
       </Item>
       <Item>
         <Filename Value="..\main\implementation\cwthreading.threadmethod.posix.pas"/>
-        <UnitName Value="cwThreading.threadmethod.posix"/>
+        <UnitName Value="cwThreading.ThreadMethod.Posix"/>
       </Item>
       <Item>
         <Filename Value="..\main\implementation\cwthreading.threadmethod.windows.pas"/>
@@ -209,15 +201,15 @@
       </Item>
       <Item>
         <Filename Value="..\main\implementation\cwthreading.messaging.internal.pas"/>
-        <UnitName Value="cwthreading.messaging.internal"/>
+        <UnitName Value="cwThreading.Messaging.Internal"/>
       </Item>
       <Item>
         <Filename Value="..\main\implementation\cwthreading.criticalsection.posix.pas"/>
-        <UnitName Value="cwThreading.CriticalSection.posix"/>
+        <UnitName Value="cwThreading.CriticalSection.Posix"/>
       </Item>
       <Item>
         <Filename Value="..\main\implementation\cwthreading.criticalsection.windows.pas"/>
-        <UnitName Value="cwThreading.criticalsection.windows"/>
+        <UnitName Value="cwThreading.Criticalsection.Windows"/>
       </Item>
       <Item>
         <Filename Value="..\main\implementation\cwthreading.messagebus.standard.pas"/>
@@ -225,7 +217,7 @@
       </Item>
       <Item>
         <Filename Value="..\main\implementation\cwthreading.messagechannel.standard.pas"/>
-        <UnitName Value="cwThreading.messagechannel.standard"/>
+        <UnitName Value="cwThreading.MessageChannel.Standard"/>
       </Item>
       <Item>
         <Filename Value="..\main\implementation\cwthreading.messagepipe.standard.pas"/>
@@ -237,27 +229,27 @@
       </Item>
       <Item>
         <Filename Value="..\main\implementation\cwwin32.advapi32.pas"/>
-        <UnitName Value="cwwin32.advapi32"/>
+        <UnitName Value="cwWin32.Advapi32"/>
       </Item>
       <Item>
         <Filename Value="..\main\implementation\cwwin32.constants.pas"/>
-        <UnitName Value="cwwin32.constants"/>
+        <UnitName Value="cwWin32.Constants"/>
       </Item>
       <Item>
         <Filename Value="..\main\implementation\cwwin32.gdi32.pas"/>
-        <UnitName Value="cwwin32.gdi32"/>
+        <UnitName Value="cwWin32.Gdi32"/>
       </Item>
       <Item>
         <Filename Value="..\main\implementation\cwwin32.kernel32.pas"/>
-        <UnitName Value="cwwin32.kernel32"/>
+        <UnitName Value="cwWin32.Kernel32"/>
       </Item>
       <Item>
         <Filename Value="..\main\implementation\cwwin32.types.pas"/>
-        <UnitName Value="cwwin32.types"/>
+        <UnitName Value="cwWin32.Types"/>
       </Item>
       <Item>
         <Filename Value="..\main\implementation\cwwin32.user32.pas"/>
-        <UnitName Value="cwwin32.user32"/>
+        <UnitName Value="cwWin32.User32"/>
       </Item>
       <Item>
         <Filename Value="..\main\api\cwvectors.pas"/>
@@ -270,6 +262,10 @@
       <Item>
         <Filename Value="..\main\implementation\lib_cwlog.proxylogtarget.pas"/>
         <UnitName Value="lib_cwLog.ProxyLogTarget"/>
+      </Item>
+      <Item>
+        <Filename Value="..\main\api\cwlog.targets.pas"/>
+        <UnitName Value="cwlog.targets"/>
       </Item>
     </Files>
     <RequiredPkgs>

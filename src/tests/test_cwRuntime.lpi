@@ -29,6 +29,15 @@
         <Filename Value="test_cwRuntime.dpr"/>
         <IsPartOfProject Value="True"/>
       </Unit>
+      <Unit>
+        <Filename Value="..\main\implementation\cwlog.logtarget.stream.pas"/>
+        <IsPartOfProject Value="True"/>
+        <UnitName Value="cwLog.LogTarget.Stream"/>
+      </Unit>
+      <Unit>
+        <Filename Value="..\main\implementation\cwlog.logtarget.event.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit>
     </Units>
   </ProjectOptions>
   <CompilerOptions>

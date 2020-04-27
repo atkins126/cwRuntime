@@ -112,7 +112,7 @@ function CompareICollectionItem( const AValue: ICollectionItem; const BValue: IC
 begin
   if AValue=BValue then begin
     Result := crAEqualToB;
-  end else if nativeuint(pointer(AValue))>nativeuint(pointer(BValue)) then begin //- doesn't mean anything, but provides a sorting order should it be needed
+    {$hints off} end else if nativeuint(pointer(AValue))>nativeuint(pointer(BValue)) then begin {$hints on} //- doesn't mean anything, but provides a sorting order should it be needed
     Result := crAGreaterThanB;
   end else begin
     Result := crBGreaterThanA;
@@ -188,7 +188,7 @@ begin
   // Act:
   ROCUT := CUT.getAsReadOnly;
   // Assert:
-  TTest.Expect( nativeuint(pointer(ROCUT)), nativeuint(pointer(CUT)) );
+  {$hints off} TTest.Expect( nativeuint(pointer(ROCUT)), nativeuint(pointer(CUT)) ); {$hints on}
 end;
 
 procedure TTest_cwCollectionsList.Clear;

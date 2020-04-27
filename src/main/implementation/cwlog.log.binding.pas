@@ -48,6 +48,8 @@ type
     InsertLogEntryByString: function( const lpszLogEntry: pointer; const Severity: TLogSeverity; const Parameters: pointer ): TStatus; {$ifdef MSWINDOWS} stdcall; {$else} cdecl; {$endif}
     getLastEntry: function( const lpszBuffer: pointer; out szBuffer: nativeuint ): TStatus; {$ifdef MSWINDOWS} stdcall; {$else} cdecl; {$endif}
     AddProxyLogTarget: function( const Obj: pointer; const Method: TProxyLogMethod ): TStatus; {$ifdef MSWINDOWS} stdcall; {$else} cdecl; {$endif}
+    ExportTranslations: function( const lpszFilename: pointer ): TStatus; {$ifdef MSWINDOWS} stdcall; {$else} cdecl; {$endif}
+    ImportTranslations: function( const lpszFilename: pointer ): TStatus; {$ifdef MSWINDOWS} stdcall; {$else} cdecl; {$endif}
     //- factory
     class function Create( out LogBinding: TLogBinding ): TStatus; static;
   end;
@@ -112,6 +114,8 @@ begin
   if not GetProcAddress( LogBinding.DynLib, 'InsertLogEntryByString', @LogBinding.InsertLogEntryByString ) then exit;
   if not GetProcAddress( LogBinding.DynLib, 'getLastEntry',           @LogBinding.getLastEntry )           then exit;
   if not GetProcAddress( LogBinding.DynLib, 'AddProxyLogTarget',      @LogBinding.AddProxyLogTarget )      then exit;
+  if not GetProcAddress( LogBinding.DynLib, 'ExportTranslations',     @LogBinding.ExportTranslations )     then exit;
+  if not GetProcAddress( LogBinding.DynLib, 'ImportTranslations',     @LogBinding.ImportTranslations )     then exit;
   Result := TStatus.Success;
 end;
 

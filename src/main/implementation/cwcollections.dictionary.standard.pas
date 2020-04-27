@@ -38,18 +38,18 @@ uses
 ;
 
 type
-
-  { TStandardDictionary }
-
   TStandardDictionary<K,V> = class( TInterfacedObject, ICollection, IReadOnlyDictionary<K,V>, IDictionary<K,V> )
   private
-    {$ifdef fpc}
-    fKeyCompareG: TCompareGlobal<K>;
-    fKeyCompareO: TCompareOfObject<K>;
-    fKeyCompareN: TCompareNested<K>;
+    {$ifndef fpc}
+    const rfRefrTo = 0;
     {$else}
-    fKeyCompareR: TCompare<K>;
+    const rfGlobal = 1;
+    const rfObject = 2;
+    const rfNested = 3;
     {$endif}
+  private
+    fKeyCompare: pointer;
+    fKeyCompareType: uint8;
     fKeys: array of K;
     fItems: array of V;
     fCapacity: nativeuint;
@@ -81,7 +81,7 @@ type
   strict private //- IDictionary<K,V> -//
     procedure setValueByKey( const key: K; const value: V );
     procedure removeByIndex( const idx: nativeuint );
-    procedure clear;
+    procedure Clear;
   public
     {$ifdef fpc}
     constructor Create( const KeyCompare: TCompareGlobal<K>; const Granularity: nativeuint = 32; const isOrdered: boolean = false; const isPruned: boolean = false ); reintroduce; overload;
@@ -116,9 +116,8 @@ end;
 constructor TStandardDictionary<K,V>.Create( const KeyCompare: TCompareGlobal<K>; const Granularity: nativeuint = 32; const isOrdered: boolean = false; const isPruned: boolean = false );
 begin
   inherited Create;
-  fKeyCompareG := KeyCompare;
-  fKeyCompareO := nil;
-  fKeyCompareN := nil;
+  fKeyCompare := @KeyCompare;
+  fKeyCompareType := rfGlobal;
   Initialize(Granularity,isOrdered,isPruned);
 end;
 {$endif}
@@ -127,9 +126,8 @@ end;
 constructor TStandardDictionary<K,V>.Create( const KeyCompare: TCompareOfObject<K>; const Granularity: nativeuint = 32; const isOrdered: boolean = false; const isPruned: boolean = false );
 begin
   inherited Create;
-  fKeyCompareO := KeyCompare;
-  fKeyCompareG := nil;
-  fKeyCompareN := nil;
+  fKeyCompare := @KeyCompare;
+  fKeyCompareType := rfObject;
   Initialize(Granularity,isOrdered,isPruned);
 end;
 {$endif}
@@ -138,9 +136,8 @@ end;
 constructor TStandardDictionary<K,V>.Create( const KeyCompare: TCompareNested<K>; const Granularity: nativeuint = 32; const isOrdered: boolean = false; const isPruned: boolean = false );
 begin
   inherited Create;
-  fKeyCompareO := nil;
-  fKeyCompareG := nil;
-  fKeyCompareN := KeyCompare;
+  fKeyCompare := @KeyCompare;
+  fKeyCompareType := rfNested;
   Initialize(Granularity,isOrdered,isPruned);
 end;
 {$endif}
@@ -150,7 +147,8 @@ end;
 constructor TStandardDictionary<K,V>.Create( const KeyCompare: TCompare<K>; const Granularity: nativeuint = 32; const isOrdered: boolean = false; const isPruned: boolean = false );
 begin
   inherited Create;
-  fKeyCompareR := KeyCompare;
+  fKeyCompare := @KeyCompare;
+  fKeyCompareType := rfRefrTo;
   Initialize(Granularity,isOrdered,isPruned);
 end;
 {$endif}
@@ -232,27 +230,44 @@ begin
 end;
 
 function TStandardDictionary<K,V>.CompareKeys( const KeyA: K; const KeyB: K ): TComparisonResult;
+var
+  {$ifndef fpc}
+  Ref: TCompare<K>;
+  {$else}
+  Glob: TCompareGlobal<K>;
+  Obj: TCompareOfObject<K>;
+  Nested: TCompareNested<K>;
+  {$endif}
 begin
   Result := TComparisonResult.crErrorNotCompared;
-  {$ifdef fpc}
-  if (not assigned(fKeyCompareG)) and
-     (not assigned(fKeyCompareO)) and
-     (not assigned(fKeyCompareN)) then begin
+  if not assigned(fKeyCompare) then begin
     exit;
   end;
-  if assigned(fKeyCompareG) then begin
-    Result := fKeyCompareG( KeyA, KeyB );
-  end else if assigned(fKeyCompareO) then begin
-    Result := fKeyCompareO( KeyA, KeyB );
-  end else if assigned(fKeyCompareN) then begin
-    Result := fKeyCompareN( KeyA, KeyB );
+  case fKeyCompareType of
+    {$ifndef fpc}
+    rfRefrTo: begin
+        Ref := nil;
+        Move(fKeyCompare,Ref,sizeof(pointer));
+        Result := Ref( KeyA, keyB );
+    end;
+    {$else}
+    rfGlobal: begin
+      Glob := nil;
+      Move(fKeyCompare,Glob,sizeof(pointer));
+      Result := Glob( KeyA, keyB );
+    end;
+    rfObject: begin
+      Obj := nil;
+      Move(fKeyCompare,Obj,sizeof(pointer));
+      Result := Obj( KeyA, keyB );
+    end;
+    rfNested: begin
+      Nested := nil;
+      Move(fKeyCompare,Nested,sizeof(pointer));
+      Result := Nested( KeyA, keyB );
+    end;
+    {$endif}
   end;
-  {$else}
-  if not assigned(fKeyCompareR) then begin
-    exit;
-  end;
-  Result := fKeyCompareR( KeyA, KeyB );
-  {$endif}
 end;
 
 function TStandardDictionary<K,V>.getKeyExists( const key: K ): boolean;
