@@ -29,12 +29,13 @@
 /// <summary>
 ///   Standard implementation of ILog
 /// </summary>
-unit cwlog.static;
+unit cwlog.standard;
 {$ifdef fpc}{$mode delphiunicode}{$endif}
 
 interface
 uses
-  cwLog
+  sysutils // for Exception
+, cwLog
 , cwLog.Common
 ;
 
@@ -43,8 +44,16 @@ uses
 ///   log entry for an exception message. It also carries the status value
 ///   (message GUID) should this need to be passed to a handler.
 /// <summary>
-type
-  TException = cwLog.Common.TException; //- Alias.
+{$region ' TException'}
+type  
+  TException = class(Exception)
+  private
+    fStatus: TStatus;
+  public
+    constructor Create( const Status: TStatus ); reintroduce;
+    property Status: TStatus read fStatus;
+  end;  
+{$endregion}
 
 ///  <summary>
 ///    Returns the singleton instance of ILog.
@@ -60,6 +69,18 @@ function Log: ILog;
 begin
   Result := cwLog.Log.Static.Log;
 end;
+
+{$region ' TException'}
+constructor TException.Create( const Status: TStatus );
+begin
+  {$ifdef fpc}
+  inherited Create( Log.LastEntry.AsAnsiString );
+  {$else}
+  inherited Create( Log.LastEntry );
+  {$endif}
+  fStatus := Status;
+end;
+{$endregion}
 
 end.
 

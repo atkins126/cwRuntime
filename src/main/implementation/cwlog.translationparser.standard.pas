@@ -186,6 +186,7 @@ function TTranslationParser.ParseEntry(const Translations: IUnicodeStream): bool
 var
   UUID: string;
   MessageText: string;
+  L: nativeuint;
 begin
   Result := False;
   //- Remove opening bra
@@ -258,7 +259,8 @@ begin
     exit;
   end;
   //- Add the entry.
-  if EntryCount>=Length(GUIDS) then begin
+  L := Length(GUIDS);
+  if EntryCount>=L then begin
     SetLength(GUIDS,Length(GUIDS)+cEntryGranularity);
     SetLength(Texts,Length(Texts)+cEntryGranularity);
   end;

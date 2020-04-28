@@ -209,11 +209,24 @@ begin
 end;
 
 class procedure TTest.Expect(const ExpectedValue: boolean; const GotValue: boolean);
+var
+  strExpected: string;
+  strGot: string;
 begin
   if ExpectedValue=GotValue then begin
     exit;
   end;
-  Fail( string(Format(cExpected,[ExpectedValue,GotValue])) );
+  if ExpectedValue then begin
+    strExpected := 'True';
+  end else begin
+    strExpected := 'False';
+  end;
+  if GotValue then begin
+    strGot := 'True';
+  end else begin
+    strGot := 'False';
+  end;
+  Fail( string(Format(cExpected,[strExpected,strGot])) );
 end;
 
 class procedure TTest.Expect(const ExpectedValue: uint8; const GotValue: uint8);

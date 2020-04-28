@@ -29,7 +29,7 @@
 program cwLog_LogToConsole;
 uses
   cwLog
-, cwLog.Static
+, cwLog.Standard
 , cwLog.Targets
 , cwLog.Console
 ;

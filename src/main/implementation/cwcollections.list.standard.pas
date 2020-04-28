@@ -73,12 +73,17 @@ type
   end;
 
 implementation
+uses
+  cwTypes
+;
 
 function TStandardList<T>.Add( const Item: T ): nativeuint;
 var
   NewSize: nativeuint;
+  L: nativeuint;
 begin
-  if (fCount=Length(fItems)) then begin
+  L := Length(fItems);
+  if (fCount=L) then begin
     NewSize := Length(fItems);
     NewSize := NewSize + fGranularity;
     SetLength(fItems, NewSize);
@@ -229,6 +234,7 @@ var
   Blocks: nativeuint;
   Remainder: nativeuint;
   TargetSize: nativeuint;
+  L: nativeuint;
 begin
   TargetSize := 0;
   Remainder := 0;
@@ -239,7 +245,8 @@ begin
   end;
   TargetSize := Blocks*fGranularity;
   //- Total number of required blocks has been determined.
-  if Length(fItems)>TargetSize then begin
+  L := Length(fItems);
+  if L>TargetSize then begin
     SetLength( fItems, TargetSize );
   end;
 end;

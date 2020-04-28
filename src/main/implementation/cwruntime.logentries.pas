@@ -46,7 +46,7 @@ resourcestring
 implementation
 {$ifndef fpc}
 uses
-  cwLog.Static
+  cwLog.Standard
 ;
 {$endif}
 

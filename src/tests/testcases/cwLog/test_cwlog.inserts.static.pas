@@ -88,7 +88,7 @@ uses
   sysutils
 , cwTest.Standard
 , cwLog
-, cwLog.Static
+, cwLog.Standard
 ;
 
 resourcestring
@@ -214,6 +214,10 @@ end;
 
 initialization
   TestSuite.RegisterTestCase( TTest_cwLog_Insert );
+  {$ifndef fpc}
+  Log.RegisterLogEntry(le_TestLogEntry);
+  Log.RegisterLogEntry(le_Alphabet);
+  {$endif}
 
 end.
 

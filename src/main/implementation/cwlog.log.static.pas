@@ -128,6 +128,7 @@ var
   GUID: TGUID;
   UIDStr: string;
   MessageStr: string;
+  L: nativeuint;
 begin
   Result := False;
   if not ParseLogEntryDeclaration(EntryString,UIDStr,MessageStr) then begin
@@ -143,7 +144,8 @@ begin
     exit;
   end;
   //- Ensure there is space in the arrays.
-  if fLogEntryCount>=Length(fLogEntryIDs) then begin
+  L := Length(fLogEntryIDs);
+  if fLogEntryCount>=L then begin
     SetLength( fLogEntryIDs, Length(fLogEntryIDs)+cLogEntryGranularity );
     SetLength( fLogEntryTexts, Length(fLogEntryTexts)+cLogEntryGranularity );
   end;
@@ -261,7 +263,7 @@ begin
   if Length(ParameterPlaceholders)<=Length(Parameters) then begin
     if Length(ParameterPlaceholders)>0 then begin
       for idx := 0 to pred(Length(ParameterPlaceholders)) do begin
-        MessageText.StringReplace('(%'+ParameterPlaceholders[idx]+'%)',Parameters[idx],True,True);
+        MessageText := MessageText.StringReplace('(%'+ParameterPlaceholders[idx]+'%)',Parameters[idx],True,True);
       end;
     end;
   end;

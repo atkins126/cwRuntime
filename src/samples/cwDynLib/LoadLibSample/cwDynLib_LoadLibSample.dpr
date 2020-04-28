@@ -40,6 +40,7 @@ const
   cLibName = 'lib_testLoadLib.dll';
   {$else}
   {$ifdef MACOS}
+  cLibName = 'lib_testLoadLib.dynlib';
   {$else}
   cLibName = 'lib_testLoadLib.so';
   {$endif}

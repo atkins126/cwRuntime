@@ -69,7 +69,7 @@ implementation
 uses
   sysutils  //[RTL]
 , cwRuntime.LogEntries
-, cwLog.Static
+, cwLog.Standard
 ;
 
 function TCustomStream.getRemainingBytes: nativeuint;

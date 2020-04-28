@@ -236,7 +236,7 @@ end;
 
 class function TCompare.CompareStrings(const AValue: string; const BValue: string): TComparisonResult;
 begin
-    if AValue=BValue then begin
+  if AValue=BValue then begin
     Result := TComparisonResult.crAEqualToB;
   end else if AValue>BValue then begin
     Result := TComparisonResult.crAGreaterThanB;

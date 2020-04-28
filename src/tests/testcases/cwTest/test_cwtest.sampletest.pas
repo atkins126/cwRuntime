@@ -29,6 +29,7 @@
 /// <exclude/>
 unit test_cwTest.SampleTest;
 {$ifdef fpc}{$mode delphiunicode}{$M+}{$endif}
+{$M+}
 
 interface
 uses

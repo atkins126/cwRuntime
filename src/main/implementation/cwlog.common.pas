@@ -27,44 +27,17 @@
 *)
 {$endif}
 unit cwLog.common;
-
 {$ifdef fpc}{$mode delphiunicode}{$endif}
-
 
 interface
 uses
-  sysUtils //[RTL] for Exception
-, cwLog
+  cwLog
 ;
-
-type
-  // - See cwLog.TException
-  TException = class(Exception)
-  private
-    fStatus: TStatus;
-  public
-    constructor Create( const Status: TStatus ); reintroduce;
-    property Status: TStatus read fStatus;
-  end;
 
 var
   SingletonLog: ILog = nil;
 
 implementation
-uses
-  cwTypes
-, cwLog.Static
-;
-
-constructor TException.Create( const Status: TStatus );
-begin
-  {$ifdef fpc}
-  inherited Create( Log.LastEntry.AsAnsiString );
-  {$else}
-  inherited Create( Log.LastEntry );
-  {$endif}
-  fStatus := Status;
-end;
 
 
 end.

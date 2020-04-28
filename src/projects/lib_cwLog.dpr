@@ -36,7 +36,7 @@ uses
 , cwUnicode.Standard
 , cwTypes
 , cwLog
-, cwLog.Static
+, cwLog.Standard
 , Lib_cwLog.ProxyLogTarget
 ;
 

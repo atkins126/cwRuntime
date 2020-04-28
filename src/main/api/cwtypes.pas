@@ -137,12 +137,12 @@ type
     ///    The optional iCount parameter can be used to limit the number of
     ///    result strings.
     ///  </summary>
-    function Explode( const cDelimiter: string; const iCount: uint32 = 0 ): TArrayOfString;
+    function Explode( const cDelimiter: string; const iCount: nativeuint = 0 ): TArrayOfString;
 
     ///  <summary>
     ///    Combines the 'Parts' into a single string, separated by cDelimiter.
     ///  </summary>
-    function Combine( const cDelimiter: string; const Parts: TArrayOfString; const StartIdx: uint32 = 0): string;
+    function Combine( const cDelimiter: string; const Parts: TArrayOfString; const StartIdx: nativeuint = 0): string;
 
     ///  <summary>
     ///    Trims white-space characters from the start of and end of the string.
@@ -451,6 +451,16 @@ type
     ///    Returns the int32 as a string of hex characters
     ///  </summary>
     function AsHex( const Width: uint8 = 8 ): string;
+
+    ///  <summary>
+    ///    Returns the int32 as a nativeint (by assignment)
+    ///  </summary>
+    function AsNativeInt: nativeint;
+
+    ///  <summary>
+    ///    Returns the int32 as a nativeuint (by assignment)
+    ///  </summary>
+    function AsNativeUInt: nativeuint;
   end;
 {$endregion}
 {$region ' Helper for int64'}
@@ -466,6 +476,16 @@ type
     ///    Returns the int64 as a string of hex characters.
     ///  </summary>
     function AsHex( const Width: uint8 = 16 ): string;
+
+    ///  <summary>
+    ///    Returns the int32 as a nativeint (by assignment)
+    ///  </summary>
+    function AsNativeInt: nativeint;
+
+    ///  <summary>
+    ///    Returns the int32 as a nativeuint (by assignment)
+    ///  </summary>
+    function AsNativeUInt: nativeuint;
   end;
 {$endregion}
 {$region ' Helper for single'}
@@ -766,10 +786,10 @@ begin
   {$endif}
 end;
 
-function TStringHelper.Combine(const cDelimiter: string; const Parts: TArrayOfString; const StartIdx: uint32 = 0): string;
+function TStringHelper.Combine(const cDelimiter: string; const Parts: TArrayOfString; const StartIdx: nativeuint = 0): string;
 var
-  idx: uint32;
-  Len: uint32;
+  idx: nativeuint;
+  Len: nativeuint;
 begin
   Self := '';
   Result := '';
@@ -789,10 +809,10 @@ begin
   Result := Self;
 end;
 
-function TStringHelper.Explode(const cDelimiter: string; const iCount : uint32 = 0 ): TArrayOfString;
+function TStringHelper.Explode(const cDelimiter: string; const iCount: nativeuint = 0 ): TArrayOfString;
 var
   s: string;
-  i,p: uint32;
+  i,p: nativeuint;
 begin
   s:= Self;
   i:= 0;
@@ -847,10 +867,10 @@ end;
 function TStringHelper.LeftPad( const CharCount: nativeuint; const ch: char ): string;
 begin
   Result := Self;
-  if CharCount<=Length(Result) then begin
+  if CharCount<=Length(Result).AsNativeUInt then begin
     exit;
   end;
-  while Length(Result)<CharCount do begin
+  while Length(Result).AsNativeUInt<CharCount do begin
     Result := ch + Result;
   end;
 end;
@@ -932,10 +952,10 @@ end;
 function TStringHelper.RightPad( const CharCount: nativeuint; const ch: char ): string;
 begin
   Result := Self;
-  if CharCount<=Length(Result) then begin
+  if CharCount<=Length(Result).AsNativeUInt then begin
     exit;
   end;
-  while Length(Result)<CharCount do begin
+  while Length(Result).AsNativeUInt<CharCount do begin
     Result := Result + ch;
   end;
 end;
@@ -1158,6 +1178,16 @@ begin
 end;
 
 
+function TInt32Helper.AsNativeInt: nativeint;
+begin
+  Result := Self;
+end;
+
+function TInt32Helper.AsNativeUInt: nativeuint;
+begin
+  Result := Self;
+end;
+
 function TInt32Helper.AsString: string;
 begin
   {$ifdef fpc}
@@ -1179,6 +1209,16 @@ begin
   {$endif}
 end;
 
+
+function TInt64Helper.AsNativeInt: nativeint;
+begin
+  Result := Self;
+end;
+
+function TInt64Helper.AsNativeUInt: nativeuint;
+begin
+  Result := Self;
+end;
 
 function TInt64Helper.AsString: string;
 begin

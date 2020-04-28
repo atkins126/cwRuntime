@@ -56,7 +56,7 @@ type
 implementation
 uses
   sysutils
-, cwLog.Static
+, cwLog.Standard
 , cwRuntime.LogEntries
   {$ifndef MSWINDOWS}
   {$ifndef fpc}
@@ -84,15 +84,19 @@ uses
 
   const
     clibname = 'libdl.so';
-    cSuccess = 0;
-    cRTLD_LAZY = 1;
 
   function dlopen( filename: pointer; flags: int32 ): pointer; cdecl; external clibname name 'dlopen';
   function dlsym( handle: pointer; symbolname: pointer ): pointer; cdecl; external clibname name 'dlsym';
   function dlclose( handle: pointer ): int32; cdecl; external clibname name 'dlclose';
 
   {$endif}
+
+const
+    cSuccess = 0;
+    cRTLD_LAZY = 1;
+
 {$endif}
+
 
 constructor TDynlib.Create;
 begin

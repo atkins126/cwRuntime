@@ -40,8 +40,12 @@ uses
 type
   TEventLogTarget = class( TInterfacedObject, ILogTarget )
   private
+  {$ifdef fpc}
     fEventHandler: pointer;
     fEventHandlerType: uint8;
+	{$else}
+  	fEventHandler: TOnLogInsertEvent;
+	{$endif}
   strict private //- ILogTarget -//
     {$hints off} procedure Insert( const LogEntry: TGUID; const TranslatedText: string; const TS: TDateTime; const Severity: TLogSeverity; const Parameters: array of string ); {$hints on}
   public
@@ -58,36 +62,26 @@ type
 
 implementation
 
+{$ifdef fpc}
 const
-  {$ifndef fpc}
-  rfRefrTo = 0;
-  {$else}
   rfGlobal = 1;
   rfObject = 2;
   rfNested = 3;
-  {$endif}
+{$endif}
 
 procedure TEventLogTarget.Insert(const LogEntry: TGUID; const TranslatedText: string; const TS: TDateTime; const Severity: TLogSeverity; const Parameters: array of string);
+{$ifdef fpc}
 var
-  {$ifndef fpc}
-  Ref: TOnLogInsertEvent;
-  {$else}
   Global: TOnLogInsertEventGlobal;
   Obj: TOnLogInsertEventOfObject;
   Nested: TOnLogInsertEventNested;
-  {$endif}
+{$endif}
 begin
+  {$ifdef fpc}
   if not assigned(fEventHandler) then begin
     exit;
   end;
-  case fEventHandlerType of
-    {$ifndef fpc}
-    rfRefrTo: begin
-      Ref := nil;
-      Move(fEventHandler,Ref,sizeof(pointer));
-      Ref(LogEntry,TranslatedText,TS,Severity,Parameters);
-    end;
-    {$else}
+  case fEventHandlerType of    
     rfGlobal: begin
       Global := nil;
       Move(fEventHandler,Global,sizeof(pointer));
@@ -102,17 +96,18 @@ begin
       Nested := nil;
       Move(fEventHandler,Nested,sizeof(pointer));
       Nested(LogEntry,TranslatedText,TS,Severity,Parameters);
-    end;
-    {$endif}
+    end;    
   end;
+  {$else}
+  fEventHandler(LogEntry,TranslatedText,TS,Severity,Parameters);
+  {$endif}
 end;
 
 {$ifndef fpc}
 constructor TEventLogTarget.Create(const Event: TOnLogInsertEvent);
 begin
   inherited Create;
-  fEventHandlerType := rfRefrTo;
-  Move(Event,fEventHandler,sizeof(pointer));
+  fEventHandler := Event;  
 end;
 {$endif}
 

@@ -51,6 +51,9 @@ type
   end;
 
 implementation
+uses
+  cwTypes
+;
 
 constructor TStandardRingBuffer<T>.Create( ItemCount: nativeuint );
 begin
@@ -72,6 +75,7 @@ end;
 function TStandardRingBuffer<T>.Pull(out item: T): boolean;
 var
   NewIndex: nativeuint;
+  L: nativeuint;
 begin
   Result := False;
   if fPullIndex=fPushIndex then begin
@@ -80,7 +84,8 @@ begin
   Item := Default(T);
   Move( fItems[fPullIndex], item, sizeof(T) );
   NewIndex := succ(fPullIndex);
-  if NewIndex>=Length(fItems) then begin
+  L := Length(fItems);
+  if NewIndex>=L then begin
     NewIndex := 0;
   end;
   fPullIndex := NewIndex;
@@ -90,10 +95,12 @@ end;
 function TStandardRingBuffer<T>.Push(const item: T): boolean;
 var
   NewIndex: nativeuint;
+  L: nativeuint;
 begin
   Result := False;
   NewIndex := succ(fPushIndex);
-  if (NewIndex>=Length(fItems)) then begin
+  L := Length(fItems);
+  if (NewIndex>=L) then begin
     NewIndex := 0;
   end;
   if NewIndex=fPullIndex then begin

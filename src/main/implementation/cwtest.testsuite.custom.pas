@@ -60,7 +60,8 @@ type
 
 implementation
 uses
-  sysutils
+  cwTypes
+, cwLog.Standard
 ;
 
 const
@@ -80,8 +81,11 @@ begin
 end;
 
 procedure TCustomTestSuite.RegisterTestCase(const TestCase: TTestCaseClass);
+var
+  L: nativeuint;
 begin
-  if fTestCaseCount>=Length(fRegisteredTestCases) then begin
+  L := Length(fRegisteredTestCases);
+  if fTestCaseCount>=L then begin
     SetLength(fRegisteredTestCases,Length(fRegisteredTestCases)+cTestCaseGranularity);
   end;
   fRegisteredTestCases[fTestCaseCount] := TestCase;
@@ -153,7 +157,7 @@ begin
   try
     Result := ExecuteTestMethod( TestCaseClass, aMethodName, WithSetup, WithTearDown, Reason );
   except
-    on E: Exception do begin
+    on E: TException do begin
       Reason := string(E.Message);
       Result := TTestResult.trError;
     end else begin
