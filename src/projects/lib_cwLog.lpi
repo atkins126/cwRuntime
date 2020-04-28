@@ -44,12 +44,19 @@
     </SearchPaths>
     <CodeGeneration>
       <RelocatableUnit Value="True"/>
+      <TargetCPU Value="x86_64"/>
+      <TargetOS Value="linux"/>
     </CodeGeneration>
     <Linking>
       <Options>
         <ExecutableType Value="Library"/>
       </Options>
     </Linking>
+    <Other>
+      <CustomOptions Value="-CaDEFAULT
+-CfSSSE3
+-XRC:\lazarus\cross\lib\x86_64-linux"/>
+    </Other>
   </CompilerOptions>
   <Debugging>
     <Exceptions>

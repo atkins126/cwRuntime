@@ -51,6 +51,10 @@
       <OtherUnitFiles Value="..\main\api;..\main\implementation;testcases\cwCollections;testcases\cwIO;testcases\cwLog;testcases\cwTypes;testcases\cwUnicode;testcases\cwVectors"/>
       <UnitOutputDirectory Value="..\..\out\lib\$(TargetCPU)-$(TargetOS)"/>
     </SearchPaths>
+    <CodeGeneration>
+      <TargetCPU Value="x86_64"/>
+      <TargetOS Value="linux"/>
+    </CodeGeneration>
   </CompilerOptions>
   <Debugging>
     <Exceptions>
