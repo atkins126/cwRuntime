@@ -30,7 +30,6 @@ Supported compilers:
 
 Still To-Do:
 
-	* cwLog saving/loading of translation files not yet migrated.
 	* cwTypes Still heavily dependent on RTL units for string/type conversion, need to replace.
 	* cwIO Still heavily dependent on RTL units, need to replace. (incl heap wrapper)
 	* cwIO Unit tests are missing.
@@ -65,7 +64,8 @@ CI Migration Status:
 	* Lazarus
 		Win32        - TBD
 		Win64        - Builds / Unit Tested
-		Linux_x86_64 - TBD
+		Linux_x86_64 - Builds
+		Linux_i386   - Builds
 		Linux_ARM    - TBD
 		Linux_AARCH  - TBD
 		Android      - TBD
@@ -73,4 +73,5 @@ CI Migration Status:
 		iOS          - TBD ? possible ?
 		 
 
-  
+Notes: For cross compiling to Linux from Windows, see issue #8
+
