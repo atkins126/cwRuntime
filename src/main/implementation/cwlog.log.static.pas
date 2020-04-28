@@ -134,7 +134,7 @@ begin
   if not ParseLogEntryDeclaration(EntryString,UIDStr,MessageStr) then begin
     exit;
   end;
-  {$if fpc}
+  {$ifdef fpc}
   GUID := StringToGUID(ansistring(UIDStr));
   {$else}
   GUID := StringToGUID(UIDStr);

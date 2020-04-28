@@ -57,7 +57,7 @@ uses
   cwWin32.Constants
 , cwTypes
 , cwLog
-, cwLog.Static
+, cwLog.Standard
 , cwRuntime.LogEntries
 ;
 

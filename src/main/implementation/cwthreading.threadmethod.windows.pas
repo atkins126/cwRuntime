@@ -59,7 +59,7 @@ implementation
 {$ifdef MSWINDOWS}
 uses
   cwLog
-, cwLog.Static
+, cwLog.Standard
 , cwRuntime.LogEntries
 ;
 

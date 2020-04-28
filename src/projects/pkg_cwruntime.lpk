@@ -28,10 +28,6 @@
         <UnitName Value="cwLog"/>
       </Item>
       <Item>
-        <Filename Value="..\main\api\cwlog.static.pas"/>
-        <UnitName Value="cwlog.static"/>
-      </Item>
-      <Item>
         <Filename Value="..\main\api\cwtest.pas"/>
         <UnitName Value="cwTest"/>
       </Item>
@@ -266,6 +262,10 @@
       <Item>
         <Filename Value="..\main\api\cwlog.targets.pas"/>
         <UnitName Value="cwlog.targets"/>
+      </Item>
+      <Item>
+        <Filename Value="..\main\api\cwlog.standard.pas"/>
+        <UnitName Value="cwlog.standard"/>
       </Item>
     </Files>
     <RequiredPkgs>

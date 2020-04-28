@@ -56,7 +56,7 @@ uses
 , cwThreading.messagechannel.standard
 , cwCollections.standard
 , cwLog
-, cwLog.Static
+, cwLog.Standard
 , cwRuntime.LogEntries
 ;
 

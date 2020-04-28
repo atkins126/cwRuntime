@@ -67,7 +67,7 @@ uses
 {$endif}
 , cwTypes
 , cwLog
-, cwLog.Static
+, cwLog.Standard
 ;
 
 type

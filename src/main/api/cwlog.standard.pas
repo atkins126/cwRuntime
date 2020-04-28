@@ -63,6 +63,9 @@ function Log: ILog;
 implementation
 uses
   cwLog.Log.Static
+{$ifdef fpc}
+, cwTypes
+{$endif}
 ;
 
 function Log: ILog;
