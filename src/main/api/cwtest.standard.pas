@@ -102,9 +102,9 @@ type
     ///  <exclude/>
     class procedure Expect( const ExpectedValue: int64;    const GotValue: int64 ); overload; static;
     ///  <exclude/>
-    class procedure Expect( const ExpectedValue: single;   const GotValue: single;   const precision: single ); overload; static;
+    class procedure Expect( const ExpectedValue: single;   const GotValue: single; const precision: single = 0.0001 ); overload; static;
     ///  <exclude/>
-    class procedure Expect( const ExpectedValue: double;   const GotValue: double;   const precision: double ); overload; static;
+    class procedure Expect( const ExpectedValue: double;   const GotValue: double; const precision: double = 0.0001 ); overload; static;
     ///  <exclude/>
     class procedure Compare( const SourceData: pointer; const TargetData: pointer; const ByteCount: nativeuint; const FailMessage: string = '' ); static;
   end;

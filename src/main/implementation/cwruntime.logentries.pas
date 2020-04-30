@@ -42,6 +42,7 @@ resourcestring
   le_FileNotFound                     = '{0A32412A-196B-40B2-8880-5D73DE46E3F1} File not found "(%filename%)"';
   le_ModuleNotLoaded                  = '{F6881310-4F2E-4D5B-8A4B-8318EDF8D4AD} DynLib failed to load module "(%module%)"';
   le_FailedToLoadEntryPoint           = '{B425D9C3-262A-425B-85BB-149E79A4C9CC} Failed to locate entrypoint "(%entrypoint%)" in library "(%library%)"';
+  le_NoHighPrecisionTimer             = '{6EB4740F-C483-47CE-A78C-7CD2CC4D97EC} Unable to access high-precision timer device.';
 
 implementation
 {$ifndef fpc}
@@ -59,6 +60,7 @@ initialization
   Log.RegisterLogEntry(le_OSAPIError);
   Log.RegisterLogEntry(le_DuplicateMessageChannel);
   Log.RegisterLogEntry(le_ThreadAlreadyStarted);
+  Log.RegisterLogEntry(le_NoHighPrecisionTimer);
   {$endif}
 
 finalization
