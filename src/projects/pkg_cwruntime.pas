@@ -29,8 +29,10 @@ uses
   cwThreading.MessageChannel.Standard, cwThreading.MessagePipe.Standard, 
   cwThreading.SignaledCriticalSection.Posix, cwWin32.Advapi32, 
   cwWin32.Constants, cwWin32.Gdi32, cwWin32.Kernel32, cwWin32.Types, 
-  cwWin32.User32, cwVectors, cwLog.common, lib_cwLog.ProxyLogTarget, 
-  cwlog.targets, cwlog.standard;
+  cwWin32.User32, cwVectors, cwLog.common, cwlog.targets, cwlog.standard, 
+  cwlog.logtarget.event, cwLog.LogTarget.Stream, 
+  cwlog.translationparser.standard, cwTiming.posix, cwTiming.windows, 
+  cwTiming, cwTiming.standard;
 
 implementation
 

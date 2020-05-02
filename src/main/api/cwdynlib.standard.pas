@@ -157,12 +157,6 @@ end;
 function TDynlib.LoadLibrary(const filepath: string): TStatus;
 begin
   Result := TStatus.Unknown;
-  if not FileExists(filepath) then begin
-    if assigned(Log()) then begin
-      Result := Log.Insert(le_FileNotFound,TLogSeverity.lsError,[Filepath]);
-    end;
-    exit;
-  end;
   {$ifdef MSWINDOWS}
   fHandle := winLoadLibrary(pAnsiChar(UTF8Encode(filepath)));
   {$else}

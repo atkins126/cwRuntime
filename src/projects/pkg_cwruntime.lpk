@@ -256,16 +256,40 @@
         <UnitName Value="cwLog.common"/>
       </Item>
       <Item>
-        <Filename Value="..\main\implementation\lib_cwlog.proxylogtarget.pas"/>
-        <UnitName Value="lib_cwLog.ProxyLogTarget"/>
-      </Item>
-      <Item>
         <Filename Value="..\main\api\cwlog.targets.pas"/>
         <UnitName Value="cwlog.targets"/>
       </Item>
       <Item>
         <Filename Value="..\main\api\cwlog.standard.pas"/>
         <UnitName Value="cwlog.standard"/>
+      </Item>
+      <Item>
+        <Filename Value="..\main\implementation\cwlog.logtarget.event.pas"/>
+        <UnitName Value="cwlog.logtarget.event"/>
+      </Item>
+      <Item>
+        <Filename Value="..\main\implementation\cwlog.logtarget.stream.pas"/>
+        <UnitName Value="cwLog.LogTarget.Stream"/>
+      </Item>
+      <Item>
+        <Filename Value="..\main\implementation\cwlog.translationparser.standard.pas"/>
+        <UnitName Value="cwlog.translationparser.standard"/>
+      </Item>
+      <Item>
+        <Filename Value="..\main\implementation\cwtiming.posix.pas"/>
+        <UnitName Value="cwTiming.posix"/>
+      </Item>
+      <Item>
+        <Filename Value="..\main\implementation\cwtiming.windows.pas"/>
+        <UnitName Value="cwTiming.windows"/>
+      </Item>
+      <Item>
+        <Filename Value="..\main\api\cwtiming.pas"/>
+        <UnitName Value="cwTiming"/>
+      </Item>
+      <Item>
+        <Filename Value="..\main\api\cwtiming.standard.pas"/>
+        <UnitName Value="cwTiming.standard"/>
       </Item>
     </Files>
     <RequiredPkgs>
