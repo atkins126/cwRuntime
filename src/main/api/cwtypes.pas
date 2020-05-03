@@ -574,7 +574,7 @@ type
     class operator Implicit(const a: double): half;
     class operator Implicit(const a: half): double;
     {$if defined(LINUX) and defined(FPC)}
-    {$ifndef CPUAARCH64}
+    {$if (not defined(CPUAARCH64)) and (not defined(CPUARM))}
     class operator Implicit(const a: extended): half;
     class operator Implicit(const a: half): extended;
     {$endif}
@@ -593,23 +593,31 @@ type
     class operator GreaterThan(const a: half; const b: single): boolean;
     class operator GreaterThan(const a: half; const b: double): boolean;
     {$ifndef CPU64BITS}
+    {$if (not defined(CPUAARCH64)) and (not defined(CPUARM))}
     class operator GreaterThan(const a: half; const b: extended): boolean;
+    {$endif}
     {$endif}
     class operator GreaterThan(const a: single; const b: half): boolean;
     class operator GreaterThan(const a: double; const b: half): boolean;
     {$ifndef CPU64BITS}
+    {$if (not defined(CPUAARCH64)) and (not defined(CPUARM))}
     class operator GreaterThan(const a: extended; const b: half): boolean;
+    {$endif}
     {$endif}
     class operator LessThan(const a: half; const b: half): boolean;
     class operator LessThan(const a: half; const b: single): boolean;
     class operator LessThan(const a: half; const b: double): boolean;
     {$ifndef CPU64BITS}
+    {$if (not defined(CPUAARCH64)) and (not defined(CPUARM))}
     class operator LessThan(const a: half; const b: extended): boolean;
+    {$endif}
     {$endif}
     class operator LessThan(const a: single; const b: half): boolean;
     class operator LessThan(const a: double; const b: half): boolean;
     {$ifndef CPU64BITS}
+    {$if (not defined(CPUAARCH64)) and (not defined(CPUARM))}
     class operator LessThan(const a: extended; const b: half): boolean;
+    {$endif}
     {$endif}
     class operator Equal(const a, b: half): boolean;
 
@@ -1662,6 +1670,7 @@ begin
 end;
 
 {$ifndef CPU64BITS}
+{$if (not defined(CPUAARCH64)) and (not defined(CPUARM))}
 class operator half.GreaterThan(const a: extended; const b: half): boolean;
 var
   sB: single;
@@ -1669,6 +1678,7 @@ begin
   sB := b;
   Result := a>sB;
 end;
+{$endif}
 {$endif}
 
 class operator half.GreaterThan(const a: half; const b: double): boolean;
@@ -1680,6 +1690,7 @@ begin
 end;
 
 {$ifndef CPU64BITS}
+{$if (not defined(CPUAARCH64)) and (not defined(CPUARM))}
 class operator half.GreaterThan(const a: half; const b: extended): boolean;
 var
   sA: single;
@@ -1687,6 +1698,7 @@ begin
   sA := a;
   Result := sA>b;
 end;
+{$endif}
 {$endif}
 
 class operator half.GreaterThan(const a: half; const b: half): boolean;
@@ -1725,6 +1737,7 @@ end;
 
 
 {$ifndef CPU64BITS}
+{$if (not defined(CPUAARCH64)) and (not defined(CPUARM))}
 class operator half.LessThan(const a: extended; const b: half): boolean;
 var
   sB: single;
@@ -1732,6 +1745,7 @@ begin
   sB := b;
   Result := a<sB;
 end;
+{$endif}
 {$endif}
 
 class operator half.LessThan(const a: half; const b: double): boolean;
@@ -1743,6 +1757,7 @@ begin
 end;
 
 {$ifndef CPU64BITS}
+{$if (not defined(CPUAARCH64)) and (not defined(CPUARM))}
 class operator half.LessThan(const a: half; const b: extended): boolean;
 var
   sA: single;
@@ -1750,6 +1765,7 @@ begin
   sA := a;
   Result := sA<b;
 end;
+{$endif}
 {$endif}
 
 class operator half.LessThan(const a: half; const b: half): boolean;
@@ -1847,7 +1863,7 @@ begin
 end;
 
 {$if defined(LINUX) and defined(FPC)}
-{$ifndef CPUAARCH64}
+{$if (not defined(CPUAARCH64)) and (not defined(CPUARM))}
 class operator half.Implicit(const a: extended): half;
 var
   d: double;
@@ -1859,7 +1875,7 @@ end;
 {$endif}
 
 {$if defined(LINUX) and defined(FPC)}
-{$ifndef CPUAARCH64}
+{$if (not defined(CPUAARCH64)) and (not defined(CPUARM))}
 class operator half.Implicit(const a: half): extended;
 var
   d: double;
