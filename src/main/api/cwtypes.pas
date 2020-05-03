@@ -574,8 +574,10 @@ type
     class operator Implicit(const a: double): half;
     class operator Implicit(const a: half): double;
     {$if defined(LINUX) and defined(FPC)}
+    {$ifndef CPUAARCH64}
     class operator Implicit(const a: extended): half;
     class operator Implicit(const a: half): extended;
+    {$endif}
     {$endif}
     {$ifndef CPU64BITS}
     class operator Explicit(const a: single): half;
@@ -1845,6 +1847,7 @@ begin
 end;
 
 {$if defined(LINUX) and defined(FPC)}
+{$ifndef CPUAARCH64}
 class operator half.Implicit(const a: extended): half;
 var
   d: double;
@@ -1852,7 +1855,11 @@ begin
   d := a;
   Result.value := FloatToHalf(d);
 end;
+{$endif}
+{$endif}
 
+{$if defined(LINUX) and defined(FPC)}
+{$ifndef CPUAARCH64}
 class operator half.Implicit(const a: half): extended;
 var
   d: double;
@@ -1860,6 +1867,7 @@ begin
   d := HalfToFloat(a.value);
   Result := d;
 end;
+{$endif}
 {$endif}
 
 class operator half.Multiply(const a, b: half): half;
