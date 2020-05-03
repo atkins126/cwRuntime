@@ -74,7 +74,11 @@ begin
     if utMethodName<>utSearch then begin
       continue;
     end;
-    rttiMethod.Invoke(TestCase,[]);
+    try
+      rttiMethod.Invoke(TestCase,[]);
+    except
+      exit;
+    end;
     Result := True;
     exit;
   end;
