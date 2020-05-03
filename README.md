@@ -17,6 +17,7 @@ Current Features:
 	cwThreading   - A system for organizing multi-threaded code.
 	cwUnicode     - A Unicode Codec and string data type to convert between unicode formats.
 	cwVectors     - A simple vector math library.
+	cwTiming      - A high precision timer (where available on target).
 
 (* Half precision floating point with permission from, and thanks to Marek Mauder
    at Galfar's Lair: https://galfar.vevb.net *)
@@ -34,6 +35,7 @@ Still To-Do:
 	* cwIO Still heavily dependent on RTL units, need to replace. (incl heap wrapper)
 	* cwIO Unit tests are missing.
 	* cwThreading unit tests are missing.
+	* cwTiming unit tests are missing.
 	* cwCollections - IStringList to get serialize/deserialze methods for save to file, load from file.	
 	* Documentation needs work.
 	
