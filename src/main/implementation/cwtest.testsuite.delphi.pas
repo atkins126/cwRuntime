@@ -76,11 +76,17 @@ begin
     end;
     try
       rttiMethod.Invoke(TestCase,[]);
-    except
+      Result := True;
       exit;
+    except
+      on E: Exception do begin
+        Reason := E.Message;
+        raise E;
+      end else begin
+        Reason := 'Unknown exception';
+        raise Exception.Create('Unknown Exception');
+      end;
     end;
-    Result := True;
-    exit;
   end;
   Reason := 'Method "'+aMethodName+'" not found.';
 end;
@@ -150,20 +156,7 @@ begin
     end;
 
     //- Run test method.
-    try
-      RunMethod( TestCase, aMethodName, Reason );
-    except
-      on E: EFailedTest do begin
-        Reason := E.Message;
-        Result := TTestResult.trFailed;
-        exit;
-      end;
-      on E: Exception do begin
-        Reason := E.Message;
-        exit;
-      end
-      else exit;
-    end;
+    RunMethod( TestCase, aMethodName, Reason );
     Result := TTestResult.trSucceeded;
 
     //- Run TearDown method.

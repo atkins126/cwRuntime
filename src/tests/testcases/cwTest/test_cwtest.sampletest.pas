@@ -60,15 +60,14 @@ type
   end;
 
 implementation
+uses
+  sysutils;
 
 {$hints off}
 procedure TSampleTest.ErrorSample;
-var
-  R: single;
 begin
-  //- Attempt to divide by zero to raise an exception.
-  R := 3;
-  R := R / 0;
+  raise
+    Exception.Create('Delphi for Linux does not raise divide by zero as an exception, so altering test.');
 end;
 {$hints on}
 
