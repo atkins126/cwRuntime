@@ -74,19 +74,9 @@ begin
     if utMethodName<>utSearch then begin
       continue;
     end;
-    try
-      rttiMethod.Invoke(TestCase,[]);
-      Result := True;
-      exit;
-    except
-      on E: Exception do begin
-        Reason := E.Message;
-        raise E;
-      end else begin
-        Reason := 'Unknown exception';
-        raise Exception.Create('Unknown Exception');
-      end;
-    end;
+    rttiMethod.Invoke(TestCase,[]);
+    Result := True;
+    exit;
   end;
   Reason := 'Method "'+aMethodName+'" not found.';
 end;
@@ -156,8 +146,16 @@ begin
     end;
 
     //- Run test method.
-    RunMethod( TestCase, aMethodName, Reason );
-    Result := TTestResult.trSucceeded;
+    try
+      RunMethod( TestCase, aMethodName, Reason );
+      Result := TTestResult.trSucceeded;
+    except
+      on E: Exception do begin
+        Result := TTestResult.trError;
+        Reason := E.Message;
+        exit;
+      end;
+    end;
 
     //- Run TearDown method.
     if WithTearDown then begin
