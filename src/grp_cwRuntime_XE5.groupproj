@@ -15,13 +15,7 @@
         <Projects Include="samples\cwLog\LogToConsole\cwLog_LogToConsole_XE5.dproj">
             <Dependencies/>
         </Projects>
-        <Projects Include="projects\lib_cwLog_XE5.dproj">
-            <Dependencies/>
-        </Projects>
         <Projects Include="tests\test_cwTest_XE5.dproj">
-            <Dependencies/>
-        </Projects>
-        <Projects Include="tests\test_dynamic_cwLog_XE5.dproj">
             <Dependencies/>
         </Projects>
         <Projects Include="tests\test_cwRuntime_XE5.dproj">
@@ -71,15 +65,6 @@
     <Target Name="cwLog_LogToConsole_XE5:Make">
         <MSBuild Projects="samples\cwLog\LogToConsole\cwLog_LogToConsole_XE5.dproj" Targets="Make"/>
     </Target>
-    <Target Name="lib_cwLog_XE5">
-        <MSBuild Projects="projects\lib_cwLog_XE5.dproj"/>
-    </Target>
-    <Target Name="lib_cwLog_XE5:Clean">
-        <MSBuild Projects="projects\lib_cwLog_XE5.dproj" Targets="Clean"/>
-    </Target>
-    <Target Name="lib_cwLog_XE5:Make">
-        <MSBuild Projects="projects\lib_cwLog_XE5.dproj" Targets="Make"/>
-    </Target>
     <Target Name="test_cwTest_XE5">
         <MSBuild Projects="tests\test_cwTest_XE5.dproj"/>
     </Target>
@@ -88,15 +73,6 @@
     </Target>
     <Target Name="test_cwTest_XE5:Make">
         <MSBuild Projects="tests\test_cwTest_XE5.dproj" Targets="Make"/>
-    </Target>
-    <Target Name="test_dynamic_cwLog_XE5">
-        <MSBuild Projects="tests\test_dynamic_cwLog_XE5.dproj"/>
-    </Target>
-    <Target Name="test_dynamic_cwLog_XE5:Clean">
-        <MSBuild Projects="tests\test_dynamic_cwLog_XE5.dproj" Targets="Clean"/>
-    </Target>
-    <Target Name="test_dynamic_cwLog_XE5:Make">
-        <MSBuild Projects="tests\test_dynamic_cwLog_XE5.dproj" Targets="Make"/>
     </Target>
     <Target Name="test_cwRuntime_XE5">
         <MSBuild Projects="tests\test_cwRuntime_XE5.dproj"/>
@@ -108,13 +84,13 @@
         <MSBuild Projects="tests\test_cwRuntime_XE5.dproj" Targets="Make"/>
     </Target>
     <Target Name="Build">
-        <CallTarget Targets="cwTest_SampleTests_XE5;lib_testLoadLib_XE5;cwDynLib_LoadLibSample_XE5;cwLog_LogToConsole_XE5;lib_cwLog_XE5;test_cwTest_XE5;test_dynamic_cwLog_XE5;test_cwRuntime_XE5"/>
+        <CallTarget Targets="cwTest_SampleTests_XE5;lib_testLoadLib_XE5;cwDynLib_LoadLibSample_XE5;cwLog_LogToConsole_XE5;test_cwTest_XE5;test_cwRuntime_XE5"/>
     </Target>
     <Target Name="Clean">
-        <CallTarget Targets="cwTest_SampleTests_XE5:Clean;lib_testLoadLib_XE5:Clean;cwDynLib_LoadLibSample_XE5:Clean;cwLog_LogToConsole_XE5:Clean;lib_cwLog_XE5:Clean;test_cwTest_XE5:Clean;test_dynamic_cwLog_XE5:Clean;test_cwRuntime_XE5:Clean"/>
+        <CallTarget Targets="cwTest_SampleTests_XE5:Clean;lib_testLoadLib_XE5:Clean;cwDynLib_LoadLibSample_XE5:Clean;cwLog_LogToConsole_XE5:Clean;test_cwTest_XE5:Clean;test_cwRuntime_XE5:Clean"/>
     </Target>
     <Target Name="Make">
-        <CallTarget Targets="cwTest_SampleTests_XE5:Make;lib_testLoadLib_XE5:Make;cwDynLib_LoadLibSample_XE5:Make;cwLog_LogToConsole_XE5:Make;lib_cwLog_XE5:Make;test_cwTest_XE5:Make;test_dynamic_cwLog_XE5:Make;test_cwRuntime_XE5:Make"/>
+        <CallTarget Targets="cwTest_SampleTests_XE5:Make;lib_testLoadLib_XE5:Make;cwDynLib_LoadLibSample_XE5:Make;cwLog_LogToConsole_XE5:Make;test_cwTest_XE5:Make;test_cwRuntime_XE5:Make"/>
     </Target>
     <Import Project="$(BDS)\Bin\CodeGear.Group.Targets" Condition="Exists('$(BDS)\Bin\CodeGear.Group.Targets')"/>
 </Project>
