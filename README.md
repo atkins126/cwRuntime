@@ -58,7 +58,7 @@ CI Migration Status:
 	* Delphi
 		Win32        - Builds
 		Win64        - Builds / Unit Tested
-		Linux_x86_64 - Builds / Unit Tests - Some failing.
+		Linux_x86_64 - Builds / Unit Tested
 		Android      - TBD
 		MacOS        - TBD
 		iOS          - TBD
