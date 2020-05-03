@@ -68,8 +68,8 @@ CI Migration Status:
 		Win64        - Builds / Unit Tested
 		Linux_x86_64 - Builds / Unit Tested
 		Linux_i386   - Builds / Unit Tested
-		Linux_ARM    - TBD
-		Linux_AARCH  - TBD
+		Linux_ARM    - Builds / Unit Tested
+		Linux_AARCH  - Builds / Unit Tested
 		Android      - TBD
 		MacOS        - TBD
 		iOS          - TBD ? possible ?
