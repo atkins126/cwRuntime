@@ -6,11 +6,12 @@
 .\src\main\api\cwio.pas
 .\src\main\api\cwio.standard.pas
 .\src\main\api\cwlog.console.pas
-.\src\main\api\cwlog.dynamic.pas
 .\src\main\api\cwlog.pas
-.\src\main\api\cwlog.static.pas
+.\src\main\api\cwlog.standard.pas
 .\src\main\api\cwlog.targets.pas
 .\src\main\api\cwtest.pas
 .\src\main\api\cwtest.standard.pas
 .\src\main\api\cwunicode.pas
 .\src\main\api\cwunicode.standard.pas
+.\src\main\api\cwtimings.pas
+.\src\main\api\cwtiming.standard.pas

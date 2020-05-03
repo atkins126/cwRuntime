@@ -78,10 +78,9 @@ type
   private
     function getValue: uint32;
     procedure setValue( value: uint32 );
-  protected
-    destructor Destroy; override;
   public
     constructor create( value: uint32 = 0 ); reintroduce;
+    destructor Destroy; override;
   end;
 
 constructor TCollectionItem.create(value: uint32);
