@@ -341,16 +341,18 @@ begin
   L := 0;
   Result := 0;
   // Loop each character
-  {$ifdef NEXTGEN}
-  StrLen := Pred(Length(aString));
-  {$else}
   StrLen := Length(aString);
+  {$ifdef NEXTGEN}
+  {$ifndef LINUX}
+  StrLen := Pred(Length(aString));
+  {$endif}
   {$endif}
   //- Pass one, measure string length.
-  {$ifdef NEXTGEN}
-  Cursor := 0;
-  {$else}
   Cursor := 1;
+  {$ifdef NEXTGEN}
+  {$ifndef LINUX}
+  Cursor := 0;
+  {$endif}
   {$endif}
   //- Pass one, measure string length.
   while (Cursor<=StrLen) do begin
@@ -397,10 +399,11 @@ begin
   //- Set buffer size.
   Self.AllocateBuffer(Result);
   //- Pass two, put data into buffer
-  {$ifdef NEXTGEN}
-  Cursor := 0;
-  {$else}
   Cursor := 1;
+  {$ifdef NEXTGEN}
+  {$ifndef LINUX}
+  Cursor := 0;
+  {$endif}
   {$endif}
   ptr := fData;
   while (Cursor<=StrLen) do begin

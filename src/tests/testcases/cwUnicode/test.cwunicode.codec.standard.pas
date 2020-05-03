@@ -272,7 +272,7 @@ var
 begin
   c := 0;
   Cursor := 1;
-  {$ifndef fpc} {$ifdef NEXTGEN} Cursor := 0; {$endif} {$endif}
+  {$ifndef fpc} {$ifdef NEXTGEN} {$ifndef Linux} Cursor := 0; {$endif} {$endif} {$endif}
   if not Unicode.DecodeCodepointFromString(c,s,cursor) then begin
     TTest.Fail('Decode Codepoint from string call failed.');
   end;

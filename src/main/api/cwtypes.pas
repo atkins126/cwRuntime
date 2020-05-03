@@ -845,10 +845,10 @@ begin
   end;
   Cursor := 1;
   Stop := succ(Length(Self));
-  {$ifdef NEXTGEN}
+  {$ifdef NEXTGEN}{$ifndef LINUX}
   Cursor := 0;
   Stop := Length(Self));
-  {$endif}
+  {$endif}{$endif}
   CP := 0;
   S := 0;
   B := 0;
