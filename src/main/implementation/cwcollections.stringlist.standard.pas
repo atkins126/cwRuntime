@@ -35,7 +35,8 @@ unit cwCollections.StringList.Standard;
 
 interface
 uses
-  cwCollections
+  cwIO
+, cwCollections
 ;
 
 type
@@ -54,6 +55,9 @@ type
     function getString( const idx: nativeuint ): string;
     function getAsReadOnly: IReadOnlyStringList;
     function Contains( const Search: string; const CaseInsensitive: boolean = FALSE ): boolean;
+    procedure SaveToStream( const Stream: IUnicodeStream; const Format: TUnicodeFormat );
+    procedure LoadFromStream( const Stream: IUnicodeStream; const Format: TUnicodeFormat );
+
   strict private //- IStringList -//
     procedure Clear;
     function Add( const value: string ): nativeuint;
@@ -67,7 +71,9 @@ type
 implementation
 uses
   sysutils
+, cwTypes
 , cwCollections.List.Standard
+, cwIO.Standard
 ;
 
 constructor TStandardStringList.Create(const Granularity: nativeuint; const isOrdered: boolean; const isPruned: boolean);
@@ -77,8 +83,22 @@ begin
 end;
 
 function TStandardStringList.Add(const value: string): nativeuint;
+var
+  Exploded: TArrayOfString;
+  idx: nativeuint;
 begin
-  Result := fStrings.Add(value);
+  if Value.Trim='' then begin
+    fStrings.Add(CR+LF);
+    exit;
+  end;
+  Exploded := Value.Explode(LF);
+  if Length(Exploded)>0 then begin
+    for idx := 0 to pred(Length(Exploded)) do begin
+      fStrings.Add(Exploded[idx]);
+    end;
+  end else begin
+    Result := fStrings.Add(value);
+  end;
 end;
 
 procedure TStandardStringList.Clear;
@@ -109,6 +129,57 @@ begin
        Result := True;
        exit;
      end;
+  end;
+end;
+
+procedure TStandardStringList.SaveToStream(const Stream: IUnicodeStream; const Format: TUnicodeFormat);
+var
+  idx: nativeuint;
+begin
+  if Format=TUnicodeFormat.utfUnknown then begin
+    raise
+      Exception.Create('Cannot save the string list in an unknown format.');
+  end;
+  Stream.WriteBOM(Format);
+  if getCount()=0 then begin
+    exit;
+  end;
+  for idx := 0 to pred(getCount()) do begin
+    Stream.WriteString( fStrings[idx]+LF, Format );
+  end;
+end;
+
+procedure TStandardStringList.LoadFromStream(const Stream: IUnicodeStream; const Format: TUnicodeFormat);
+var
+  ActualFormat: TUnicodeFormat;
+  Exploded: TArrayOfString;
+  idx: nativeuint;
+  S: string;
+begin
+  ActualFormat := Format;
+  if ActualFormat=TUnicodeFormat.utfUnknown then begin
+    ActualFormat := Stream.DetermineUnicodeFormat;
+  end;
+  if ActualFormat=TUnicodeFormat.utfUnknown then begin
+    raise
+      Exception.Create('Cannot determine stream unicode format.');
+  end;
+  Self.Clear;
+  while not Stream.getEndOfStream do begin
+    S := Stream.ReadString(ActualFormat,True);
+    if S.Trim='' then continue;
+    Exploded := S.Explode(LF);
+    try
+      if Length(Exploded)>0 then begin
+        for idx := 0 to pred(Length(Exploded)) do begin
+          Self.Add(Exploded[idx]);
+        end;
+      end else begin
+        Self.Add(S);
+      end;
+    finally
+      SetLength(Exploded,0);
+    end;
   end;
 end;
 

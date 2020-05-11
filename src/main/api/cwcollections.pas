@@ -36,9 +36,11 @@ unit cwCollections;
 {$endif}
 
 interface
+uses
+  cwIO
+;
 
 type
-
 {$region ' TEnumerate<T>'}
   {$ifdef fpc}
 
@@ -1079,6 +1081,19 @@ type
     ///   Should always return TRUE unless idx is out of bounds.
     /// </returns>
     function RemoveString( const idx: nativeuint ): boolean;
+
+    ///  <summary>
+    ///    Saves the content of the string list to a unicode stream in the
+    ///    specified unicode format.
+    ///  </summary>
+    procedure SaveToStream( const Stream: IUnicodeStream; const Format: TUnicodeFormat );
+
+    ///  <summary>
+    ///    Loads the string list content from a unicode stream using the
+    ///    specified format. If TUnicodeFormat.utfUnknown is specified,
+    ///    an attempt is made to determine the unicode format automatically.
+    ///  </summary>
+    procedure LoadFromStream( const Stream: IUnicodeStream; const Format: TUnicodeFormat );
 
     //- Pascal only properties -//
 
