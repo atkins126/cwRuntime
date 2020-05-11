@@ -43,7 +43,6 @@ type
     fActualDataWhenAligned: pointer;
     fData: pointer;
     fSize: nativeuint;
-    fLog: ILog;
   private  //- IBuffer -//
     procedure FillMem( const value: uint8 );
     function LoadFromStream( const Stream: IStream; const Bytes: nativeuint ): nativeuint;
@@ -70,7 +69,7 @@ type
     procedure DeallocateBuffer;
     procedure ResizeBuffer( const NewSize: nativeuint );
   public
-    constructor Create( const aSize: nativeuint = 0; const Align16: boolean = FALSE; const Log: ILog = nil ); reintroduce;
+    constructor Create( const aSize: nativeuint = 0; const Align16: boolean = FALSE ); overload;
     destructor Destroy; override;
   end;
 
@@ -78,6 +77,7 @@ implementation
 uses
   cwUnicode.Standard
 , cwRuntime.LogEntries
+, cwLog.Standard
 ;
 
 procedure TBuffer.AllocateBuffer(const NewSize: nativeuint);
@@ -114,12 +114,12 @@ begin
   end;
 end;
 
-function TBuffer.GetDataPointer: pointer;
+function TBuffer.getDataPointer: pointer;
 begin
   Result := fData;
 end;
 
-function TBuffer.GetSize: nativeuint;
+function TBuffer.getSize: nativeuint;
 begin
   Result := fSize;
 end;
@@ -358,9 +358,7 @@ begin
     case Format of
 
       TUnicodeFormat.utfUnknown: begin
-        if assigned(fLog) then begin
-          fLog.Insert(le_CannotEncodeUnknownUnicodeFormat,TLogSeverity.lsError);
-        end;
+        Log.Insert(le_CannotEncodeUnknownUnicodeFormat,TLogSeverity.lsError);
         exit;
       end;
 
@@ -443,12 +441,11 @@ begin
   end;
 end;
 
-constructor TBuffer.Create( const aSize: nativeuint = 0; const Align16: boolean = FALSE; const Log: ILog = nil );
+constructor TBuffer.Create( const aSize: nativeuint = 0; const Align16: boolean = FALSE );
 begin
   inherited Create;
   fData := nil;
   fSize := aSize;
-  fLog := Log;
   fAlign16 := Align16;
   //- Dependencies
   //- Allocate an initial amount.

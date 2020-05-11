@@ -31,7 +31,7 @@ uses
   cwWin32.User32, cwVectors, cwLog.common, cwlog.targets, cwlog.standard, 
   cwlog.logtarget.event, cwLog.LogTarget.Stream, 
   cwlog.translationparser.standard, cwTiming.posix, cwTiming.windows, 
-  cwTiming, cwTiming.standard;
+  cwTiming, cwTiming.standard, cwIO.TypedBuffer.Standard;
 
 implementation
 

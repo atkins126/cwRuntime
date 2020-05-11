@@ -279,6 +279,10 @@
         <Filename Value="..\main\api\cwtiming.standard.pas"/>
         <UnitName Value="cwTiming.standard"/>
       </Item>
+      <Item>
+        <Filename Value="..\main\implementation\cwio.typedbuffer.standard.pas"/>
+        <UnitName Value="cwio.typedbuffer.standard"/>
+      </Item>
     </Files>
     <RequiredPkgs>
       <Item>

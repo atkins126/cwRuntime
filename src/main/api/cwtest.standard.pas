@@ -234,7 +234,7 @@ begin
   if ExpectedValue=GotValue then begin
     exit;
   end;
-  Fail( string(Format(cExpected,[ExpectedValue,GotValue])) );
+  Fail( string(Format(cExpected,[ExpectedValue.ToString,GotValue.ToString])) );
 end;
 
 class procedure TTest.Expect(const ExpectedValue: uint16; const GotValue: uint16);
@@ -242,7 +242,7 @@ begin
   if ExpectedValue=GotValue then begin
     exit;
   end;
-  Fail( string(Format(cExpected,[ExpectedValue,GotValue])) );
+  Fail( string(Format(cExpected,[ExpectedValue.ToString,GotValue.ToString])) );
 end;
 
 class procedure TTest.Expect(const ExpectedValue: uint32; const GotValue: uint32);
@@ -250,7 +250,7 @@ begin
   if ExpectedValue=GotValue then begin
     exit;
   end;
-  Fail( string(Format(cExpected,[ExpectedValue,GotValue])) );
+  Fail( string(Format(cExpected,[ExpectedValue.ToString,GotValue.ToString])) );
 end;
 
 class procedure TTest.Expect(const ExpectedValue: uint64; const GotValue: uint64);
@@ -258,7 +258,7 @@ begin
   if ExpectedValue=GotValue then begin
     exit;
   end;
-  Fail( string(Format(cExpected,[ExpectedValue,GotValue])) );
+  Fail( string(Format(cExpected,[ExpectedValue.ToString,GotValue.ToString])) );
 end;
 
 class procedure TTest.Expect(const ExpectedValue: int8; const GotValue: int8);
@@ -266,7 +266,7 @@ begin
   if ExpectedValue=GotValue then begin
     exit;
   end;
-  Fail( string(Format(cExpected,[ExpectedValue,GotValue])) );
+  Fail( string(Format(cExpected,[ExpectedValue.ToString,GotValue.ToString])) );
 end;
 
 class procedure TTest.Expect(const ExpectedValue: int16; const GotValue: int16);
@@ -274,7 +274,7 @@ begin
   if ExpectedValue=GotValue then begin
     exit;
   end;
-  Fail( string(Format(cExpected,[ExpectedValue,GotValue])) );
+  Fail( string(Format(cExpected,[ExpectedValue.ToString,GotValue.ToString])) );
 end;
 
 class procedure TTest.Expect(const ExpectedValue: int32; const GotValue: int32);
@@ -282,7 +282,7 @@ begin
   if ExpectedValue=GotValue then begin
     exit;
   end;
-  Fail( string(Format(cExpected,[ExpectedValue,GotValue])) );
+  Fail( string(Format(cExpected,[ExpectedValue.ToString,GotValue.ToString])) );
 end;
 
 class procedure TTest.Expect(const ExpectedValue: int64; const GotValue: int64);
@@ -290,23 +290,23 @@ begin
   if ExpectedValue=GotValue then begin
     exit;
   end;
-  Fail( string(Format(cExpected,[ExpectedValue,GotValue])) );
+  Fail( string(Format(cExpected,[ExpectedValue.ToString,GotValue.ToString])) );
 end;
 
 class procedure TTest.Expect(const ExpectedValue: single; const GotValue: single; const precision: single);
 begin
-  if (GotValue>(ExpectedValue-Precision)) or (GotValue<(ExpectedValue+Precision)) then begin
+  if (GotValue>=(ExpectedValue-Precision)) or (GotValue<=(ExpectedValue+Precision)) then begin
     exit;
   end;
-  Fail( string(Format(cExpected,[ExpectedValue,GotValue])) );
+  Fail( string(Format(cExpected,[ExpectedValue.ToString,GotValue.ToString])) );
 end;
 
 class procedure TTest.Expect(const ExpectedValue: double; const GotValue: double; const precision: double);
 begin
-  if (GotValue>(ExpectedValue-Precision)) or (GotValue<(ExpectedValue+Precision)) then begin
+  if (GotValue>=(ExpectedValue-Precision)) or (GotValue<=(ExpectedValue+Precision)) then begin
     exit;
   end;
-  Fail( string(Format(cExpected,[ExpectedValue,GotValue])) );
+  Fail( string(Format(cExpected,[ExpectedValue.ToString,GotValue.ToString])) );
 end;
 
 class procedure TTest.Compare(const SourceData: pointer; const TargetData: pointer; const ByteCount: nativeuint; const FailMessage: string);

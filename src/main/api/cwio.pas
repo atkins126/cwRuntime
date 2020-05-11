@@ -631,6 +631,61 @@ type
   end;
 {$endregion}
 
+{$region ' ITypedBuffer'}
+  ///  <summary>
+  ///    Creates a buffer for storing items of type T.
+  ///    The buffer lays out the items <T> sequentially across the buffer
+  ///    meaning they may be addressed as an array of items.
+  ///  </summary>
+  ITypedBuffer<T> = interface( IBuffer )
+    ['{4BD15A6F-73CE-43E7-BF16-E5BB76C0A841}']
+
+    ///  <summary>
+    ///    Fills the entire buffer with the value passed in the 'value'
+    ///    parameter. Useful for clearing the buffer for example.
+    ///  </summary>
+    ///  <param name="value">
+    ///    The value to fill the buffer with.
+    ///  </param>
+    procedure Fill( const Value: T );
+
+    ///  <summary>
+    ///    Returns the number of iems for which there is space in the buffer.
+    ///  </summary>
+    function getCount: nativeuint;
+
+    ///  <summary>
+    ///    Sets the buffer to a new size to accomodate the number of items
+    ///    specified by the value parameter. Note: If the buffer is made
+    ///    larger, the content will be maintained. If the buffer is
+    ///    made smaller, only the content for which there is room after
+    ///    resizing is maintained.
+    ///  </summary>
+    procedure setCount( const value: nativeuint );
+
+    ///  <summary>
+    ///    Returns an item from the buffer by it's index.
+    ///  </summary>
+    function getValue( const Index: nativeuint ): T;
+
+    ///  <summary>
+    ///    Sets the value of an item from the buffer by index.
+    ///  </summary>
+    procedure setValue( const Index: nativeuint; value: T );
+
+    ///  <summary>
+    ///    Get/Set items in the buffer by index (array style access)
+    ///  </summary>
+    property Values[ Index: nativeuint ]: T read getValue write setValue; default;
+
+    ///  <summary>
+    ///    Returns the number of iems for which there is space in the buffer.
+    ///  </summary>
+    property Count: nativeuint read getCount write setCount;
+  end;
+
+{$endregion}
+
 {$region ' ICyclicBuffer'}
   ICyclicBuffer = interface
     ['{42C239B3-36F7-4618-B4BD-929C53DFF75C}']
@@ -682,7 +737,6 @@ type
     function GetUsedBytes: nativeuint;
   end;
 {$endregion}
-
 
 implementation
 

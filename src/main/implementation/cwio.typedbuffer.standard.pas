@@ -26,47 +26,17 @@
   IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 *)
 {$endif}
-unit cwIO.Standard;
+unit cwIO.TypedBuffer.Standard;
 {$ifdef fpc}{$mode delphiunicode}{$endif}
 
 interface
 uses
   cwIO
+, cwIO.Buffer.Standard
 ;
 
 type
-  ///  <summary>
-  ///    Factory record to create instances of IStream / IUnicodeStream in memory.
-  ///  </summary>
-  TMemoryStream = record
-    class function Create( const BufferGranularity: uint64 = 0 ): IUnicodeStream; static;
-  end;
-
-  ///  <summary>
-  ///    Factory record to create instances of IStream / IUnicodeStream to disk file.
-  ///  </summary>
-  TFileStream = record
-    class function Create( const Filepath: string; const ReadOnly: boolean ): IUnicodeStream; static;
-  end;
-
-  ///  <summary>
-  ///    Factory record to create instances of ICyclicBuffer.
-  ///  </summary>
-  TCyclicBuffer = record
-    class function Create( const Size: nativeuint = 0 ): ICyclicBuffer; static;
-  end;
-
-  ///  <summary>
-  ///    Factory record to create instances of IBuffer / IUnicodeBuffer.
-  ///  </summary>
-  TBuffer = record
-    class function Create( const aSize: nativeuint = 0; const Align16: boolean = FALSE ): IUnicodeBuffer; static; overload;
-  end;
-
-  ///  <summary>
-  ///
-  ///  </summary>
-  TTypedBuffer<T> = class( TInterfacedObject, IBuffer, ITypedBuffer<T> )
+  TTypedBuffer<T> = class( TInterfacedObject, ITypedBuffer<T> )
   private
     fCount: nativeuint;
     fItemSize: nativeuint;
@@ -92,20 +62,15 @@ type
     function getValue( const Index: nativeuint ): T;
     procedure setValue( const Index: nativeuint; value: T );
   public
-    constructor Create(const Items: nativeuint; const ItemSize: nativeuint; const Align16: boolean = FALSE); overload;
+    constructor Create(const Items: nativeuint; const Align16: boolean = FALSE); reintroduce;
     destructor Destroy; override;
   end;
 
 implementation
 uses
   sysutils
-, cwIO.MemoryStream.Standard
-, cwIO.FileStream.Standard
-, cwIO.CyclicBuffer.Standard
-, cwIO.Buffer.Standard
 ;
 
-{$region ' TTypedBuffer<T>'}
 procedure TTypedBuffer<T>.FillMem(const value: uint8);
 begin
   fBuffer.FillMem(Value);
@@ -232,39 +197,18 @@ begin
   p^ := value;
 end;
 
-constructor TTypedBuffer<T>.Create(const Items: nativeuint; const ItemSize: nativeuint; const Align16: boolean);
+constructor TTypedBuffer<T>.Create(const Items: nativeuint; const Align16: boolean);
 begin
   inherited Create;
   fCount := Items;
-  fItemSize := ItemSize;
-  fBuffer := TBuffer.Create( fCount*fItemSize, Align16 );
+  fItemSize := sizeof(T);
+  fBuffer := TBuffer.Create( fCount*sizeof(T), Align16 );
 end;
 
 destructor TTypedBuffer<T>.Destroy;
 begin
   fBuffer := nil;
   inherited Destroy;
-end;
-{$endregion}
-
-class function TFileStream.Create(const Filepath: string; const ReadOnly: boolean): IUnicodeStream;
-begin
-  Result := cwIO.FileStream.Standard.TFileStream.Create( Filepath, ReadOnly );
-end;
-
-class function TCyclicBuffer.Create(const Size: nativeuint = 0): ICyclicBuffer;
-begin
-  Result := cwIO.CyclicBuffer.Standard.TCyclicBuffer.Create( Size );
-end;
-
-class function TBuffer.Create(const aSize: nativeuint = 0; const Align16: boolean = FALSE ): IUnicodeBuffer;
-begin
-  Result := cwIO.Buffer.Standard.TBuffer.Create( aSize, Align16 );
-end;
-
-class function TMemoryStream.Create(const BufferGranularity: uint64): IUnicodeStream;
-begin
-  Result := cwIO.MemoryStream.Standard.TMemoryStream.Create(BufferGranularity);
 end;
 
 end.
