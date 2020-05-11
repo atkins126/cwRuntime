@@ -30,9 +30,9 @@ program test_cwTest;
 uses
   cwTest
 , cwTest.Standard
+, test_cwTest.SampleTest
 , test_cwtest.SetupFails
 , test_cwtest.TearDownFails
-, test_cwtest.SampleTest
 ;
 
 var

@@ -150,6 +150,11 @@ begin
       RunMethod( TestCase, aMethodName, Reason );
       Result := TTestResult.trSucceeded;
     except
+      on E: EFailedTest do begin
+        Reason := string(E.Message);
+        Result := TTestResult.trFailed;
+        exit;
+      end;
       on E: Exception do begin
         Result := TTestResult.trError;
         Reason := E.Message;

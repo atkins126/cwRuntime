@@ -310,7 +310,11 @@ begin
   end;
   //- 38th character should be closing brace else, not a log entry.
   {$ifdef NEXTGEN}
+  {$ifndef LINUX}
   if SourceStr[pred(cGUIDLen)]<>'}' then begin
+  {$else}
+  if SourceStr[cGUIDLen]<>'}' then begin
+  {$endif}
   {$else}
   if SourceStr[cGUIDLen]<>'}' then begin
   {$endif}
@@ -329,7 +333,11 @@ begin
   end;
   RemainingChars := Length(SourceStr)-cGUIDLen;
   {$ifdef NEXTGEN}
-  MessageText := Trim(Copy(SourceStr,cGUIDLen,RemainingChars));
+  {$ifndef LINUX}
+    MessageText := Trim(Copy(SourceStr,cGUIDLen,RemainingChars));
+  {$else}
+    MessageText := Trim(Copy(SourceStr,succ(cGUIDLen),RemainingChars));
+  {$endif}
   {$else}
   MessageText := Trim(Copy(SourceStr,succ(cGUIDLen),RemainingChars));
   {$endif}

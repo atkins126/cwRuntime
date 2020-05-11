@@ -30,17 +30,17 @@
         <IsPartOfProject Value="True"/>
       </Unit>
       <Unit>
-        <Filename Value="cwTest\testcases\test_cwtest.sampletest.pas"/>
+        <Filename Value="testcases\cwTest\test_cwtest.sampletest.pas"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="test_cwTest.SampleTest"/>
       </Unit>
       <Unit>
-        <Filename Value="cwTest\testcases\test_cwtest.setupfails.pas"/>
+        <Filename Value="testcases\cwTest\test_cwtest.setupfails.pas"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="test_cwtest.SetupFails"/>
       </Unit>
       <Unit>
-        <Filename Value="cwTest\testcases\test_cwtest.teardownfails.pas"/>
+        <Filename Value="testcases\cwTest\test_cwtest.teardownfails.pas"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="test_cwtest.TearDownFails"/>
       </Unit>

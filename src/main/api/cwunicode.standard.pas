@@ -378,8 +378,10 @@ begin
   Result := 0;
   CP := 0;
   TempBuffer := 0;
-  {$ifdef NEXTGEN} Start := 0; {$else} Start := 1; {$endif}
-  {$ifdef NEXTGEN} Stop := pred(Length(value)); {$else} Stop := Length(Value); {$endif}
+  Start := 1;
+  Stop := Length(Value);
+  {$ifdef NEXTGEN} {$ifndef LINUX} Start := 0; {$endif} {$endif}
+  {$ifdef NEXTGEN} {$ifndef LINUX} Stop := pred(Length(value)); {$endif} {$endif}
   Cursor := Start;
   repeat
     // Decode the code point
@@ -547,8 +549,10 @@ var
 begin
   lpTgt := tgtPtr;
   CP := 0;
-  {$ifdef NEXTGEN} Start := 0; {$else} Start := 1; {$endif}
-  {$ifdef NEXTGEN} Stop := pred(Length(value)); {$else} Stop := Length(Value); {$endif}
+  Start := 1;
+  Stop := Length(Value);
+  {$ifdef NEXTGEN} {$ifndef LINUX} Start := 0; {$endif} {$endif}
+  {$ifdef NEXTGEN} {$ifndef LINUX} Stop := pred(Length(value)); {$endif} {$endif}
   Cursor := Start;
   repeat
     // Decode the code point
