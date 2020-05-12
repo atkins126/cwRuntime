@@ -60,7 +60,7 @@ type
 
   strict private //- IStringList -//
     procedure Clear;
-    function Add( const value: string ): nativeuint;
+    procedure Add( const value: string );
     procedure setString( const idx: nativeuint; const value: string );
     function RemoveString( const idx: nativeuint ): boolean;
   public
@@ -82,7 +82,7 @@ begin
   fStrings := TStandardList<string>.Create( Granularity, isOrdered, isPruned );
 end;
 
-function TStandardStringList.Add(const value: string): nativeuint;
+procedure TStandardStringList.Add(const value: string);
 var
   Exploded: TArrayOfString;
   idx: nativeuint;
@@ -97,7 +97,7 @@ begin
       fStrings.Add(Exploded[idx]);
     end;
   end else begin
-    Result := fStrings.Add(value);
+    fStrings.Add(value);
   end;
 end;
 

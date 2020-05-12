@@ -60,7 +60,7 @@ type
   ///    Factory record to create instances of IBuffer / IUnicodeBuffer.
   ///  </summary>
   TBuffer = record
-    class function Create( const aSize: nativeuint = 0; const Align16: boolean = FALSE ): IUnicodeBuffer; static; overload;
+    class function Create( const aSize: nativeuint = 0; const Align16: boolean = FALSE ): IUnicodeBuffer; static;
   end;
 
   ///  <summary>
@@ -89,8 +89,8 @@ type
     function getDataPointer: pointer;
     function getCount: nativeuint;
     procedure setCount( const value: nativeuint );
-    function getValue( const Index: nativeuint ): T;
-    procedure setValue( const Index: nativeuint; value: T );
+    function getValue( Index: nativeuint ): T;
+    procedure setValue( Index: nativeuint; const value: T );
   public
     constructor Create(const Items: nativeuint; const ItemSize: nativeuint; const Align16: boolean = FALSE); overload;
     destructor Destroy; override;
@@ -206,7 +206,7 @@ begin
   fBuffer.Size := fCount * fItemSize;
 end;
 
-function TTypedBuffer<T>.getValue(const Index: nativeuint): T;
+function TTypedBuffer<T>.getValue(Index: nativeuint): T;
 var
   p: ^T;
 begin
@@ -219,7 +219,7 @@ begin
   Result := p^;
 end;
 
-procedure TTypedBuffer<T>.setValue(const Index: nativeuint; value: T);
+procedure TTypedBuffer<T>.setValue(Index: nativeuint; const value: T);
 var
   p: ^T;
 begin

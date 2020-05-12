@@ -40,6 +40,7 @@ uses
   cwIO
 ;
 
+
 type
 {$region ' TEnumerate<T>'}
   {$ifdef fpc}
@@ -1053,12 +1054,14 @@ type
     procedure Clear;
 
     /// <summary>
-    ///   Adds a string to the list and returns it's index within the list.
+    ///   Adds a string to the list.
+    ///   If the string being added contains line-feed characters, it will be
+    ///   divided into multiple strings.
     /// </summary>
     /// <param name="value">
     ///   The string to be added to the list.
     /// </param>
-    function Add( const value: string ): nativeuint;
+    procedure Add( const value: string );
 
     /// <summary>
     ///   Replaces the string specified by index with a new string value.
