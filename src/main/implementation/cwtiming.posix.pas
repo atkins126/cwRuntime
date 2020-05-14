@@ -46,7 +46,9 @@ type
   private
     procedure internalGetResolution;
     function internalGetTicks: TTickInteger;
-  protected
+  strict private //- ITimer -//
+    procedure Clear;
+    function getDeltaSeconds: double;
     function getDeltaTicks: TTickInteger;
     function getTicksPerSecond: TTickInteger;
   public
@@ -99,6 +101,16 @@ begin
     fTicksPerSecond := cMillisecondsPerSecond;
     fHighRes := False;
   end;
+end;
+
+procedure TTimer.Clear;
+begin
+  getDeltaTicks;
+end;
+
+function TTimer.getDeltaSeconds: double;
+begin
+  Result := getDeltaTicks / fTicksPerSecond;
 end;
 
 function TTimer.getDeltaTicks: TTickInteger;

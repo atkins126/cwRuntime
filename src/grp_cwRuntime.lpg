@@ -2,43 +2,43 @@
 <CONFIG>
   <ProjectGroup FileVersion="2">
     <Targets>
-      <Target FileName="projects\pkg_cwruntime.lpk"/>
-      <Target FileName="samples\cwTest\SampleTests\cwTest_SampleTests.lpi">
+      <Target FileName="projects/pkg_cwruntime.lpk"/>
+      <Target FileName="samples/cwTest/SampleTests/cwTest_SampleTests.lpi">
         <BuildModes>
           <Mode Name="Default"/>
         </BuildModes>
       </Target>
-      <Target FileName="samples\cwDynLib\LoadLibSample\lib_testLoadLib.lpi">
+      <Target FileName="samples/cwDynLib/LoadLibSample/lib_testLoadLib.lpi">
         <BuildModes>
           <Mode Name="Default"/>
         </BuildModes>
       </Target>
-      <Target FileName="samples\cwDynLib\LoadLibSample\cwDynLib_LoadLibSample.lpi">
+      <Target FileName="samples/cwDynLib/LoadLibSample/cwDynLib_LoadLibSample.lpi">
         <BuildModes>
           <Mode Name="Default"/>
         </BuildModes>
       </Target>
-      <Target FileName="samples\cwLog\LogToConsole\cwLog_LogToConsole.lpi">
+      <Target FileName="samples/cwLog/LogToConsole/cwLog_LogToConsole.lpi">
         <BuildModes>
           <Mode Name="Default"/>
         </BuildModes>
       </Target>
-      <Target FileName="tests\test_cwTest.lpi">
+      <Target FileName="tests/test_cwTest.lpi">
         <BuildModes>
           <Mode Name="Default"/>
         </BuildModes>
       </Target>
-      <Target FileName="tests\test_cwRuntime.lpi">
+      <Target FileName="tests/test_cwRuntime.lpi">
         <BuildModes>
           <Mode Name="Default"/>
         </BuildModes>
       </Target>
-      <Target FileName="samples\cwSockets\01-EchoServer\EchoServer.lpi">
+      <Target FileName="samples/cwSockets/01-EchoServer/EchoServer.lpi">
         <BuildModes>
           <Mode Name="Default"/>
         </BuildModes>
       </Target>
-      <Target FileName="samples\cwSockets\02_EchoClient\EchoClient.lpi">
+      <Target FileName="samples/cwSockets/02_EchoClient/EchoClient.lpi">
         <BuildModes>
           <Mode Name="Default"/>
         </BuildModes>

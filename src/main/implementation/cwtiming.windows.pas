@@ -40,7 +40,7 @@ type
   private
     fPreviousTicks: TTickInteger;
     fTicksPerSecond: TTickInteger;
-  private //- ITimer -//
+  strict private //- ITimer -//
     procedure Clear;
     function getDeltaSeconds: double;
     function getDeltaTicks: TTickInteger;

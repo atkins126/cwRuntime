@@ -447,9 +447,9 @@ type
 {$region ' IPv6 Address structure '}
   TInAddr6 = record
     case integer of
-      1: ( addr8: packed array [0..15] of uint8);
-      2: (addr16: packed array [0..7]  of uint16);
-      3: (addr32: packed array [0..3]  of int32);
+      1: ( addr8: array [0..15] of uint8);
+      2: (addr16: array [0..7]  of uint16);
+      3: (addr32: array [0..3]  of int32);
   end;
 
   TSockAddrIn6 = record
@@ -457,7 +457,7 @@ type
         sin_port: uint16;
     sin_flowinfo: uint16;
         sin_addr: TInAddr6;
-    sin_scope_id: cardinal;
+    sin_scope_id: uint32;
   end;
 {$endregion}
 
@@ -468,7 +468,7 @@ function sktInetAddr( const lpszAddress: pointer ): TIntAddr;                   
 function sktHtoNS( const Host: uint16 ): uint16;                                                                    {$ifdef MSWINDOWS} stdcall; {$else} cdecl; {$endif} external cLibName name 'htons';
 function sktListen( const Socket: TSocketHandle; const BackLog: int32 ): int32;                                     {$ifdef MSWINDOWS} stdcall; {$else} cdecl; {$endif} external cLibName name 'listen';
 function sktAccept( const Socket: TSocketHandle; const lpAddr: pTSockAddr; var AddrLen: int32): TSocketHandle;      {$ifdef MSWINDOWS} stdcall; {$else} cdecl; {$endif} external cLibName name 'accept';
-function sktConnect( const Socket: TSocketHandle; const lpAddr: pTSockAddr; var AddrLen: int32): int32;             {$ifdef MSWINDOWS} stdcall; {$else} cdecl; {$endif} external cLibName name 'connect';
+function sktConnect( const Socket: TSocketHandle; const lpAddr: pTSockAddr; const AddrLen: int32): int32;           {$ifdef MSWINDOWS} stdcall; {$else} cdecl; {$endif} external cLibName name 'connect';
 function sktCloseSocket( const Socket: TSocketHandle ): int32;                                                      {$ifdef MSWINDOWS} stdcall; {$else} cdecl; {$endif} external cLibName name {$ifdef MSWINDOWS} 'closesocket' {$else} 'close' {$endif};
 function sktSend( const Socket: TSocketHandle; const lpData: pointer; const len: int32; const flags: int32): int32; {$ifdef MSWINDOWS} stdcall; {$else} cdecl; {$endif} external cLibName name 'send';
 function sktRecv( const Socket: TSocketHandle; const lpData: pointer; const len: int32; const flags: int32): int32; {$ifdef MSWINDOWS} stdcall; {$else} cdecl; {$endif} external cLibName name 'recv';
@@ -506,12 +506,15 @@ function cwCleanup(): int32; stdcall; external cLibName name 'WSACleanup';
 function GetLastError: int32;
 
 implementation
+uses
+  BaseUnix;
 
 function GetLastError: int32;
 begin
   {$ifdef MSWINDOWS}
   Result := cwGetLastError();
   {$else}
+  Result := errno;
   {$endif}
 end;
 

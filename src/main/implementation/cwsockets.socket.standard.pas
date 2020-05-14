@@ -375,7 +375,7 @@ begin
     AddrSize := Address.Size;
     retCode := sktConnect( fHandle, Address.DataPtr, AddrSize );
     if retCode<>0 then begin
-      Result := Log.Insert(le_SocketConnectError,lsError,[retCode.AsString]);
+      Result := Log.Insert(le_SocketError,lsError,[GetLastError().AsString]);
       exit;
     end;
     fAddress := NetworkAddress.IPAddress;
