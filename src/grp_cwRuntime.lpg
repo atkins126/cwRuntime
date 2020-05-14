@@ -33,12 +33,12 @@
           <Mode Name="Default"/>
         </BuildModes>
       </Target>
-      <Target FileName="samples\cwSockets\01-RawChatServer\RawChatServer.lpi">
+      <Target FileName="samples\cwSockets\01-EchoServer\EchoServer.lpi">
         <BuildModes>
           <Mode Name="Default"/>
         </BuildModes>
       </Target>
-      <Target FileName="samples\cwSockets\02-RawChatClient\RawChatClient.lpi">
+      <Target FileName="samples\cwSockets\02_EchoClient\EchoClient.lpi">
         <BuildModes>
           <Mode Name="Default"/>
         </BuildModes>

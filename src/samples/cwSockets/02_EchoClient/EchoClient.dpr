@@ -1,4 +1,4 @@
-program RawChatClient;
+program EchoClient;
 {$ifdef fpc}{$mode delphiunicode}{$endif}
 {$APPTYPE CONSOLE}
 uses

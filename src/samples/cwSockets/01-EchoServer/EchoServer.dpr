@@ -35,7 +35,7 @@
     5) Repeats at step 2 until client disconnects.
     6) Server shuts down.
 }
-program RawChatServer;
+program EchoServer;
 {$ifdef fpc}{$mode delphiunicode}{$endif}
 {$APPTYPE CONSOLE}
 uses

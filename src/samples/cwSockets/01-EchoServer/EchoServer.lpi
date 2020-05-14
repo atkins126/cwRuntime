@@ -10,7 +10,7 @@
         <MainUnitHasScaledStatement Value="False"/>
       </Flags>
       <SessionStorage Value="InProjectDir"/>
-      <Title Value="RawChatServer"/>
+      <Title Value="EchoServer"/>
       <UseAppBundle Value="False"/>
       <ResourceType Value="res"/>
     </General>
@@ -26,7 +26,7 @@
     </RunParams>
     <Units>
       <Unit>
-        <Filename Value="RawChatServer.dpr"/>
+        <Filename Value="EchoServer.dpr"/>
         <IsPartOfProject Value="True"/>
       </Unit>
     </Units>
@@ -35,7 +35,7 @@
     <Version Value="11"/>
     <PathDelim Value="\"/>
     <Target>
-      <Filename Value="..\..\..\..\out\bin\$(TargetCPU)-$(TargetOS)\RawChatServer"/>
+      <Filename Value="..\..\..\..\out\bin\$(TargetCPU)-$(TargetOS)\EchoServer"/>
     </Target>
     <SearchPaths>
       <IncludeFiles Value="$(ProjOutDir)"/>
