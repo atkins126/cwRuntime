@@ -36,6 +36,11 @@ uses
 {$ifndef MSWINDOWS}
 const
   cLibCName = 'libc.so';
+  {$ifdef LINUX}
+  cLibName = cLibCName;
+  {$else}
+  cLibName = 'libsocket.so';
+  {$endif}
 {$endif}
 {$endregion}
 
@@ -43,12 +48,6 @@ const
 {$ifdef MSWINDOWS}
 const
   cLibName = 'ws2_32.dll';
-{$else}
-  {$ifdef UNIX}
-  cLibName = 'libsocket.so';
-  {$else}
-  cLibName = cLibCName;
-  {$endif}
 {$endif}
 {$endregion}
 
@@ -463,21 +462,17 @@ type
 {$endregion}
 
 {$region ' Socket functions'}
-function sktSocket( const Domain: int32; const kind: int32; const protocol: int32 ): TSocketHandle;                 {$ifdef MSWINDOWS} stdcall; {$else} cdecl; {$endif} external cLibName  name 'socket';
-function sktBind( const Socket: TSocketHandle; const Addr: pointer; const Addrlen: TSockLen ): int32;               {$ifdef MSWINDOWS} stdcall; {$else} cdecl; {$endif} external cLibName  name 'bind';
-function sktInetAddr( const lpszAddress: pointer ): TIntAddr;                                                       {$ifdef MSWINDOWS} stdcall; {$else} cdecl; {$endif} external cLibName  name 'inet_addr';
-function sktHtoNS( const Host: uint16 ): uint16;                                                                    {$ifdef MSWINDOWS} stdcall; {$else} cdecl; {$endif} external cLibName  name 'htons';
-function sktListen( const Socket: TSocketHandle; const BackLog: int32 ): int32;                                     {$ifdef MSWINDOWS} stdcall; {$else} cdecl; {$endif} external cLibName  name 'listen';
-function sktAccept( const Socket: TSocketHandle; const lpAddr: pTSockAddr; var AddrLen: int32): TSocketHandle;      {$ifdef MSWINDOWS} stdcall; {$else} cdecl; {$endif} external cLibName  name 'accept';
-function sktConnect( const Socket: TSocketHandle; const lpAddr: pTSockAddr; var AddrLen: int32): int32;             {$ifdef MSWINDOWS} stdcall; {$else} cdecl; {$endif} external cLibName  name 'connect';
-function sktCloseSocket( const Socket: TSocketHandle ): int32;                                                      {$ifdef MSWINDOWS} stdcall; {$else} cdecl; {$endif} external cLibName  name 'closesocket';
-function sktSend( const Socket: TSocketHandle; const lpData: pointer; const len: int32; const flags: int32): int32; {$ifdef MSWINDOWS} stdcall; {$else} cdecl; {$endif} external cLibName  name 'send';
-function sktRecv( const Socket: TSocketHandle; const lpData: pointer; const len: int32; const flags: int32): int32; {$ifdef MSWINDOWS} stdcall; {$else} cdecl; {$endif} external cLibName  name 'recv';
-{$ifdef MSWINDOWS}
-function ioctl( Socket: TSocketHandle; const cmd: int32; var argp: uint32 ): int32;                                                    stdcall;                         external cLibName  name 'ioctlsocket';
-{$else}
-function ioctl( const fd: int32; const request: uint32; const argp: pointer ): int32;                                                                   cdecl;          external cLibCName name 'ioctl';
-{$endif}
+function sktSocket( const Domain: int32; const kind: int32; const protocol: int32 ): TSocketHandle;                 {$ifdef MSWINDOWS} stdcall; {$else} cdecl; {$endif} external cLibName name 'socket';
+function sktBind( const Socket: TSocketHandle; const Addr: pointer; const Addrlen: TSockLen ): int32;               {$ifdef MSWINDOWS} stdcall; {$else} cdecl; {$endif} external cLibName name 'bind';
+function sktInetAddr( const lpszAddress: pointer ): TIntAddr;                                                       {$ifdef MSWINDOWS} stdcall; {$else} cdecl; {$endif} external cLibName name 'inet_addr';
+function sktHtoNS( const Host: uint16 ): uint16;                                                                    {$ifdef MSWINDOWS} stdcall; {$else} cdecl; {$endif} external cLibName name 'htons';
+function sktListen( const Socket: TSocketHandle; const BackLog: int32 ): int32;                                     {$ifdef MSWINDOWS} stdcall; {$else} cdecl; {$endif} external cLibName name 'listen';
+function sktAccept( const Socket: TSocketHandle; const lpAddr: pTSockAddr; var AddrLen: int32): TSocketHandle;      {$ifdef MSWINDOWS} stdcall; {$else} cdecl; {$endif} external cLibName name 'accept';
+function sktConnect( const Socket: TSocketHandle; const lpAddr: pTSockAddr; var AddrLen: int32): int32;             {$ifdef MSWINDOWS} stdcall; {$else} cdecl; {$endif} external cLibName name 'connect';
+function sktCloseSocket( const Socket: TSocketHandle ): int32;                                                      {$ifdef MSWINDOWS} stdcall; {$else} cdecl; {$endif} external cLibName name {$ifdef MSWINDOWS} 'closesocket' {$else} 'close' {$endif};
+function sktSend( const Socket: TSocketHandle; const lpData: pointer; const len: int32; const flags: int32): int32; {$ifdef MSWINDOWS} stdcall; {$else} cdecl; {$endif} external cLibName name 'send';
+function sktRecv( const Socket: TSocketHandle; const lpData: pointer; const len: int32; const flags: int32): int32; {$ifdef MSWINDOWS} stdcall; {$else} cdecl; {$endif} external cLibName name 'recv';
+function ioctl( Socket: TSocketHandle; const cmd: int32; var argp: uint32 ): int32;                                 {$ifdef MSWINDOWS} stdcall; {$else} cdecl; {$endif} external {$ifdef MSWINDOWS} cLibName  name 'ioctlsocket' {$else} cLibCName name 'ioctl' {$endif};
 {$endregion}
 
 {$region ' Windows specific startup / cleanup '}

@@ -478,45 +478,25 @@ begin
 end;
 
 function TSocket.setBlocking(const value: boolean): TStatus;
-{$ifdef MSWINDOWS}
 const
   cBlockingEnabled  = 0;
   cBlockingDisabled = 1;
-{$endif}
 var
-  Flags: uint32;
+  Option: uint32;
 begin
   if fBlocking=Value then begin
     Result := TStatus.Success;
     exit;
   end;
-  {$ifdef MSWINDOWS}
   if value then begin
-    Flags := cBlockingEnabled;
+    Option := cBlockingEnabled;
   end else begin
-    Flags := cBlockingDisabled;
+    Option := cBlockingDisabled;
   end;
-  if ioctl(fHandle, FIONBIO, Flags)=SOCKET_ERROR then begin
+  if ioctl(fHandle, FIONBIO, Option)=SOCKET_ERROR then begin
     Result := Log.Insert(le_SocketError,lsError,[GetLastError().AsString]);
     exit;
   end;
-  {$else}
-  if value then begin
-    Flags := ioctl(fHandle,F_GETFL);
-    Flags := Flags xor O_NONBLOCK;
-    if ioctl(fHandle,F_SETFL,Flags)=SOCKET_ERROR then begin
-      Result := Log.Insert(le_SocketError,lsError,[GetLastError().AsString]);
-      exit;
-    end;
-  end else begin
-    Flags := ioctl(fHandle,F_GETFL);
-    Flags := Flags or O_NONBLOCK;
-    if ioctl(fHandle,F_SETFL,Flags)=SOCKET_ERROR then begin
-      Result := Log.Insert(le_SocketError,lsError,[GetLastError().AsString]);
-      exit;
-    end;
-  end;
-  {$endif}
   fBlocking := Value;
   Result := TStatus.Success;
 end;

@@ -165,7 +165,6 @@ begin
 
   finally
     ClientSocket := nil;
-    ServerSocket.Shutdown;
     //- Closing the socket is optional in this case, we could simply
     //- set ServerSocket := nil; However, when setting the ServerSocket
     //- nil it may not be reused. Using Close() we could stop the socket
