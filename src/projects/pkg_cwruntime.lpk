@@ -268,10 +268,6 @@
         <UnitName Value="cwTiming.posix"/>
       </Item>
       <Item>
-        <Filename Value="..\main\implementation\cwtiming.windows.pas"/>
-        <UnitName Value="cwTiming.windows"/>
-      </Item>
-      <Item>
         <Filename Value="..\main\api\cwtiming.pas"/>
         <UnitName Value="cwTiming"/>
       </Item>
@@ -283,12 +279,23 @@
         <Filename Value="..\main\implementation\cwio.typedbuffer.standard.pas"/>
         <UnitName Value="cwio.typedbuffer.standard"/>
       </Item>
-    </Files>
-    <RequiredPkgs>
       <Item>
-        <PackageName Value="FCL"/>
+        <Filename Value="..\main\api\cwsockets.pas"/>
+        <UnitName Value="cwsockets"/>
       </Item>
-    </RequiredPkgs>
+      <Item>
+        <Filename Value="..\main\api\cwsockets.standard.pas"/>
+        <UnitName Value="cwSockets.Standard"/>
+      </Item>
+      <Item>
+        <Filename Value="..\main\implementation\cwsockets.socket.standard.pas"/>
+        <UnitName Value="cwsockets.socket.standard"/>
+      </Item>
+      <Item>
+        <Filename Value="..\main\implementation\cwsockets.common.pas"/>
+        <UnitName Value="cwsockets.common"/>
+      </Item>
+    </Files>
     <UsageOptions>
       <UnitPath Value="$(PkgOutDir)"/>
     </UsageOptions>

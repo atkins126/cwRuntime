@@ -33,6 +33,16 @@
           <Mode Name="Default"/>
         </BuildModes>
       </Target>
+      <Target FileName="samples\cwSockets\01-RawChatServer\RawChatServer.lpi">
+        <BuildModes>
+          <Mode Name="Default"/>
+        </BuildModes>
+      </Target>
+      <Target FileName="samples\cwSockets\02-RawChatClient\RawChatClient.lpi">
+        <BuildModes>
+          <Mode Name="Default"/>
+        </BuildModes>
+      </Target>
     </Targets>
   </ProjectGroup>
 </CONFIG>
