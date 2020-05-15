@@ -504,8 +504,6 @@ function cwCleanup(): int32; stdcall; external cLibName name 'WSACleanup';
 {$endif}
 {$endregion}
 
-
-
 ///  <summary>
 ///    Returns the most recent error raised within the platform API for the
 ///    given thread.
@@ -513,9 +511,19 @@ function cwCleanup(): int32; stdcall; external cLibName name 'WSACleanup';
 function GetLastError: int32;
 
 implementation
+
 {$ifndef MSWINDOWS}
-uses
-  BaseUnix;
+type
+  ptrToInt = ^int32;
+  {$ifdef linux}
+  function errno: ptrToInt; cdecl; external cLibCName name '__errno_location';
+  {$endif}
+  {$ifdef macos}
+  function errno: ptrToInt; cdecl; external cLibCName name '___error';
+  {$endif}
+  {$ifdef android}
+  function errno: ptrToInt; cdecl; external cLibCName name '__errno';
+  {$endif}
 {$endif}
 
 function GetLastError: int32;
@@ -523,7 +531,7 @@ begin
   {$ifdef MSWINDOWS}
   Result := cwGetLastError();
   {$else}
-  Result := errno;
+  Result := errno()^;
   {$endif}
 end;
 

@@ -21,10 +21,10 @@
         <Projects Include="tests\test_cwRuntime_Rio.dproj">
             <Dependencies/>
         </Projects>
-        <Projects Include="samples\cwSockets\01-RawChatServer\RawChatServer.dproj">
+        <Projects Include="samples\cwSockets\01-EchoServer\EchoServer_Rio.dproj">
             <Dependencies/>
         </Projects>
-        <Projects Include="samples\cwSockets\02-RawChatClient\RawChatClient.dproj">
+        <Projects Include="samples\cwSockets\02_EchoClient\EchoClient_Rio.dproj">
             <Dependencies/>
         </Projects>
     </ItemGroup>
@@ -89,32 +89,32 @@
     <Target Name="test_cwRuntime_Rio:Make">
         <MSBuild Projects="tests\test_cwRuntime_Rio.dproj" Targets="Make"/>
     </Target>
-    <Target Name="RawChatServer">
-        <MSBuild Projects="samples\cwSockets\01-RawChatServer\RawChatServer.dproj"/>
+    <Target Name="EchoServer_Rio">
+        <MSBuild Projects="samples\cwSockets\01-EchoServer\EchoServer_Rio.dproj"/>
     </Target>
-    <Target Name="RawChatServer:Clean">
-        <MSBuild Projects="samples\cwSockets\01-RawChatServer\RawChatServer.dproj" Targets="Clean"/>
+    <Target Name="EchoServer_Rio:Clean">
+        <MSBuild Projects="samples\cwSockets\01-EchoServer\EchoServer_Rio.dproj" Targets="Clean"/>
     </Target>
-    <Target Name="RawChatServer:Make">
-        <MSBuild Projects="samples\cwSockets\01-RawChatServer\RawChatServer.dproj" Targets="Make"/>
+    <Target Name="EchoServer_Rio:Make">
+        <MSBuild Projects="samples\cwSockets\01-EchoServer\EchoServer_Rio.dproj" Targets="Make"/>
     </Target>
-    <Target Name="RawChatClient">
-        <MSBuild Projects="samples\cwSockets\02-RawChatClient\RawChatClient.dproj"/>
+    <Target Name="EchoClient_Rio">
+        <MSBuild Projects="samples\cwSockets\02_EchoClient\EchoClient_Rio.dproj"/>
     </Target>
-    <Target Name="RawChatClient:Clean">
-        <MSBuild Projects="samples\cwSockets\02-RawChatClient\RawChatClient.dproj" Targets="Clean"/>
+    <Target Name="EchoClient_Rio:Clean">
+        <MSBuild Projects="samples\cwSockets\02_EchoClient\EchoClient_Rio.dproj" Targets="Clean"/>
     </Target>
-    <Target Name="RawChatClient:Make">
-        <MSBuild Projects="samples\cwSockets\02-RawChatClient\RawChatClient.dproj" Targets="Make"/>
+    <Target Name="EchoClient_Rio:Make">
+        <MSBuild Projects="samples\cwSockets\02_EchoClient\EchoClient_Rio.dproj" Targets="Make"/>
     </Target>
     <Target Name="Build">
-        <CallTarget Targets="cwTest_SampleTests_Rio;lib_testLoadLib_Rio;cwDynLib_LoadLibSample_Rio;cwLog_LogToConsole_Rio;test_cwTest_Rio;test_cwRuntime_Rio;RawChatServer;RawChatClient"/>
+        <CallTarget Targets="cwTest_SampleTests_Rio;lib_testLoadLib_Rio;cwDynLib_LoadLibSample_Rio;cwLog_LogToConsole_Rio;test_cwTest_Rio;test_cwRuntime_Rio;EchoServer_Rio;EchoClient_Rio"/>
     </Target>
     <Target Name="Clean">
-        <CallTarget Targets="cwTest_SampleTests_Rio:Clean;lib_testLoadLib_Rio:Clean;cwDynLib_LoadLibSample_Rio:Clean;cwLog_LogToConsole_Rio:Clean;test_cwTest_Rio:Clean;test_cwRuntime_Rio:Clean;RawChatServer:Clean;RawChatClient:Clean"/>
+        <CallTarget Targets="cwTest_SampleTests_Rio:Clean;lib_testLoadLib_Rio:Clean;cwDynLib_LoadLibSample_Rio:Clean;cwLog_LogToConsole_Rio:Clean;test_cwTest_Rio:Clean;test_cwRuntime_Rio:Clean;EchoServer_Rio:Clean;EchoClient_Rio:Clean"/>
     </Target>
     <Target Name="Make">
-        <CallTarget Targets="cwTest_SampleTests_Rio:Make;lib_testLoadLib_Rio:Make;cwDynLib_LoadLibSample_Rio:Make;cwLog_LogToConsole_Rio:Make;test_cwTest_Rio:Make;test_cwRuntime_Rio:Make;RawChatServer:Make;RawChatClient:Make"/>
+        <CallTarget Targets="cwTest_SampleTests_Rio:Make;lib_testLoadLib_Rio:Make;cwDynLib_LoadLibSample_Rio:Make;cwLog_LogToConsole_Rio:Make;test_cwTest_Rio:Make;test_cwRuntime_Rio:Make;EchoServer_Rio:Make;EchoClient_Rio:Make"/>
     </Target>
     <Import Project="$(BDS)\Bin\CodeGear.Group.Targets" Condition="Exists('$(BDS)\Bin\CodeGear.Group.Targets')"/>
 </Project>
