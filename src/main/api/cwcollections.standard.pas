@@ -288,7 +288,7 @@ end;
 {$endregion}
 
 {$region ' TRingBuffer<T>'}
-class function TRingBuffer<T>.Create( const ItemCount: nativeuint = 128 ): IRingBuffer<T>; static;
+class function TRingBuffer<T>.Create( const ItemCount: nativeuint = 128 ): IRingBuffer<T>;
 begin
   Result := TStandardRingBuffer<T>.Create( ItemCount );
 end;

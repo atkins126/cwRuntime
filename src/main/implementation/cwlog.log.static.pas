@@ -267,61 +267,9 @@ begin
   //- If log entry is fatal
   if Severity=lsFatal then begin
     raise
-      ELogEntryFatal.Create(MessageText.AsAnsiString);
+      ELogEntryFatal.Create(MessageText{$ifdef fpc}.AsAnsiString{$endif});
   end;
 end;
-
-//function TLog.ParseLogEntryDeclaration(const SourceStr: string; out GUID: string; out MessageText: string): boolean;
-//const
-//  cGUIDLen = 38;
-//var
-//  RemainingChars: nativeuint;
-//begin
-//  GUID := '';
-//  MessageText := '';
-//  Result := False;
-//  if Length(SourceStr)<cGUIDLen then begin
-//    exit;
-//  end;
-//  //- No opening brace means this is not a log entry.
-//  if SourceStr.LeftStr(1)<>'{' then begin
-//    exit;
-//  end;
-//  //- 38th character should be closing brace else, not a log entry.
-//  {$ifdef NEXTGEN}
-//  {$ifndef LINUX}
-//  if SourceStr[pred(cGUIDLen)]<>'}' then begin
-//  {$else}
-//  if SourceStr[cGUIDLen]<>'}' then begin
-//  {$endif}
-//  {$else}
-//  if SourceStr[cGUIDLen]<>'}' then begin
-//  {$endif}
-//    exit;
-//  end;
-//  //- Get the GUID.
-//  {$ifdef NEXTGEN}
-//  GUID := Copy(SourceStr,0,cGUIDLen);
-//  {$else}
-//  GUID := Copy(SourceStr,1,cGUIDLen);
-//  {$endif}
-//  //- Get the remaining text.
-//  if Length(SourceStr)=cGUIDLen then begin
-//    Result := True;
-//    exit;
-//  end;
-//  RemainingChars := Length(SourceStr)-cGUIDLen;
-//  {$ifdef NEXTGEN}
-//  {$ifndef LINUX}
-//    MessageText := Trim(Copy(SourceStr,cGUIDLen,RemainingChars));
-//  {$else}
-//    MessageText := Trim(Copy(SourceStr,succ(cGUIDLen),RemainingChars));
-//  {$endif}
-//  {$else}
-//  MessageText := Trim(Copy(SourceStr,succ(cGUIDLen),RemainingChars));
-//  {$endif}
-//  Result := True;
-//end;
 
 (* Returns an array of strings containing the names of parameters within the
    Source string. The parameter names are uppercased and trimmed *)

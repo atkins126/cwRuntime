@@ -266,7 +266,7 @@ begin
     SetLength(Texts,Length(Texts)+cEntryGranularity);
   end;
   S := '{'+UUID+'}';
-  GUIDS[EntryCount] := StringToGUID(S.AsAnsiString);
+  GUIDS[EntryCount] := StringToGUID(S{$ifdef fpc}.AsAnsiString{$endif});
   Texts[EntryCount] := MessageText;
   inc(EntryCount);
   Result := True;
