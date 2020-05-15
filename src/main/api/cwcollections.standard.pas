@@ -295,7 +295,7 @@ end;
 {$endregion}
 
 {$region ' TStack<T>'}
-class function TStack<T>.Create( const Granularity: nativeuint = 0; const IsPruned: boolean = false ): IStack<T>; static;
+class function TStack<T>.Create( const Granularity: nativeuint = 0; const IsPruned: boolean = false ): IStack<T>;
 begin
   Result := TStandardStack<T>.Create( Granularity, isPruned );
 end;
