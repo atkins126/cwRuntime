@@ -32,27 +32,25 @@ unit cwSockets.Standard;
 
 interface
 uses
-  cwSockets
+  cwLog
+, cwSockets
 ;
 
 type
   TSocket = record
-    class function Create( const Domain: TSocketDomain = sdIPv6; const Kind: TSocketKind = skStream; const Protocol: TPacketProtocol = ppTCP ): ISocket; static;
+    class function Construct( var Socket: ISocket; const Domain: TSocketDomain = sdIPv6; const Kind: TSocketKind = skStream; const Protocol: TPacketProtocol = ppTCP ): TStatus; static;
   end;
 
 implementation
 uses
-  cwLog
-, cwSockets.Socket.Standard
+  cwSockets.Socket.Standard
 ;
 
-class function TSocket.Create( const Domain: TSocketDomain; const Kind: TSocketKind; const Protocol: TPacketProtocol ): ISocket;
-var
-  Status: TStatus;
+class function TSocket.Construct( var Socket: ISocket; const Domain: TSocketDomain; const Kind: TSocketKind; const Protocol: TPacketProtocol ): TStatus;
 begin
-  Result := cwSockets.Socket.Standard.TSocket.Create( Domain, Kind, Protocol, Status );
-  if not Status.IsSuccess then begin
-    Result := nil;
+  Socket := cwSockets.Socket.Standard.TSocket.Create( Domain, Kind, Protocol, Result );
+  if not Result.IsSuccess then begin
+    Socket := nil;
   end;
 end;
 

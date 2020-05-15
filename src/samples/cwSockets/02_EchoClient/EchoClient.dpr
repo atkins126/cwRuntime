@@ -37,7 +37,16 @@ uses
 ;
 
 const
-  cIPv6Loopback = '0000:0000:0000:0000:0000:0000:0000:0001';
+  // I'm using IPv6 for most targets because on some targets it is depricated,
+  // however, for some reason at this time my older mac (el capitan) will not
+  // create an IPv6 socket, so using IPv4 on mac until I can determine why.
+  {$ifdef MACOS}
+  cIPAddress = '127.0.0.1';
+  cSocketDomain: TSocketDomain = sdIPv4;
+  {$else}
+  cIPAddress = '0000:0000:0000:0000:0000:0000:0000:0001';
+  cSocketDomain: TSocketDomain = sdIPv6;
+  {$endif}
   cPort = 55443;
   cMaxBuffer = 511;
 
@@ -51,10 +60,14 @@ begin
   //- Start by creating a new socket for our client to connect through.
   //- Because this sample is intended to run on multiple target platforms, we
   //- select IPv6 (because some platforms have depricated IPv4).
-  ClientSocket := TSocket.Create( sdIPv6 );
+  if not TSocket.Construct( ClientSocket, cSocketDomain ).IsSuccess then begin
+    Writeln('Failed to create socket.');
+    exit;
+  end;
+
   try
     //- Connect our client to the server.
-    if not ClientSocket.Connect( TNetworkAddress.Create(cIPv6Loopback,cPort) ).IsSuccess then begin
+    if not ClientSocket.Connect( TNetworkAddress.Create(cIPAddress,cPort) ).IsSuccess then begin
       Writeln('Unable to connect to server.');
       exit;
     end;

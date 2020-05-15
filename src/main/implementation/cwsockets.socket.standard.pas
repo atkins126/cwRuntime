@@ -100,6 +100,7 @@ var
 
 function TSocket.SocketKindToInt( const Kind: TSocketKind ): int32;
 begin
+  Result := 0;
   case Kind of
     skDatagram:  Result := SOCK_DGRAM;
     skStream:    Result := SOCK_STREAM;
@@ -111,6 +112,7 @@ end;
 
 function TSocket.PacketProtocolToInt( const Protocol: TPacketProtocol ): int32;
 begin
+  Result := 0;
   case Protocol of
     ppUnSpec:   Result := IPPROTO_UNSPEC;
     ppICMP:     Result := IPPROTO_ICMP;
@@ -146,6 +148,7 @@ end;
 
 function TSocket.SocketDomainToInt( const Domain: TSocketDomain ): int32;
 begin
+  Result := 0;
   case Domain of
     sdUnspecified: Result := AF_UNSPEC;
     sdIPv4:        Result := AF_INET;
@@ -392,6 +395,7 @@ var
   Opts: uint32;
   retCode: int32;
 begin
+  Opts := 0;
   case Options of
          soBoth: Opts := SD_BOTH;
       soSending: Opts := SD_SEND;
@@ -440,11 +444,11 @@ begin
   TotalSent := 0;
   while (TotalSent<Data.Size) do begin
       if TotalSent>0 then begin
-        DataPtr := {$hints off} pointer( nativeuint(Data.DataPtr) + pred(TotalSent) ); {$hints on} // nativeuint is ptr sized.
+        DataPtr := {$warnings off}{$hints off} pointer( nativeuint(Data.DataPtr) + pred(TotalSent) ); {$hints on}{$warnings on} // nativeuint is ptr sized.
       end else begin
         DataPtr := {$hints off} pointer( nativeuint(Data.DataPtr) ); {$hints on} // nativeuint is ptr sized.
       end;
-      DataSize := Data.Size - TotalSent;
+      DataSize := {$warnings off} Data.Size - TotalSent; {$warnings on} //- Delphi signed/unsigned warning W1073
       Sent := sktSend(fHandle,DataPtr,DataSize,0); // todo - correct flags
       if Sent = SOCKET_ERROR then begin
         Result := Log.Insert(le_SocketError,lsError,[GetLastError().AsString]);
@@ -532,6 +536,7 @@ end;
 
 function TSocket.IntToSocketDomain( const AddrFamily: uint16 ): TSocketDomain;
 begin
+  Result := TSocketDomain.sdUnspecified;  //<- Just to avoid Delphi may be undefined warning).
   case AddrFamily of
     AF_UNSPEC:    Result := TSocketDomain.sdUnspecified;
     AF_UNIX:      Result := TSocketDomain.sdUNIX;
