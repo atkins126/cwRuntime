@@ -31,7 +31,8 @@ unit cwThreading.ThreadSystem.Standard;
 
 interface
 uses
-  cwCollections
+  cwStatus
+, cwCollections
 , cwThreading
 ;
 
@@ -83,7 +84,6 @@ uses
 , cwCollections.Standard
 , cwLog
 , cwLog.Standard
-, cwRuntime.LogEntries
 ;
 
 type

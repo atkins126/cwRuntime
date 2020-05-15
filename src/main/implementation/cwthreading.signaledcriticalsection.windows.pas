@@ -32,9 +32,11 @@ unit cwThreading.SignaledCriticalSection.Windows;
 interface
 {$ifdef MSWINDOWS}
 uses
-  cwWin32.Types,
-  cwWin32.Kernel32,
-  cwThreading;
+  cwStatus
+, cwWin32.Types
+, cwWin32.Kernel32
+, cwThreading
+;
 
 type
   TSignaledCriticalSection = class( TInterfacedObject, ISignaledCriticalSection )
@@ -58,7 +60,6 @@ uses
 , cwTypes
 , cwLog
 , cwLog.Standard
-, cwRuntime.LogEntries
 ;
 
 procedure TSignaledCriticalSection.Acquire;

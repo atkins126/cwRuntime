@@ -144,10 +144,6 @@
         <UnitName Value="cwIO.Standard"/>
       </Item>
       <Item>
-        <Filename Value="..\main\implementation\cwruntime.logentries.pas"/>
-        <UnitName Value="cwRuntime.LogEntries"/>
-      </Item>
-      <Item>
         <Filename Value="..\main\api\cwthreading.standard.pas"/>
         <UnitName Value="cwThreading.Standard"/>
       </Item>
@@ -277,11 +273,11 @@
       </Item>
       <Item>
         <Filename Value="..\main\implementation\cwio.typedbuffer.standard.pas"/>
-        <UnitName Value="cwio.typedbuffer.standard"/>
+        <UnitName Value="cwIO.TypedBuffer.Standard"/>
       </Item>
       <Item>
         <Filename Value="..\main\api\cwsockets.pas"/>
-        <UnitName Value="cwsockets"/>
+        <UnitName Value="cwSockets"/>
       </Item>
       <Item>
         <Filename Value="..\main\api\cwsockets.standard.pas"/>
@@ -289,11 +285,15 @@
       </Item>
       <Item>
         <Filename Value="..\main\implementation\cwsockets.socket.standard.pas"/>
-        <UnitName Value="cwsockets.socket.standard"/>
+        <UnitName Value="cwSockets.Socket.Standard"/>
       </Item>
       <Item>
         <Filename Value="..\main\implementation\cwsockets.common.pas"/>
         <UnitName Value="cwsockets.common"/>
+      </Item>
+      <Item>
+        <Filename Value="..\main\api\cwstatus.pas"/>
+        <UnitName Value="cwStatus"/>
       </Item>
     </Files>
     <UsageOptions>

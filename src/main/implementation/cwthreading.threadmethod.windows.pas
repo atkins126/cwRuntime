@@ -32,8 +32,10 @@ unit cwThreading.ThreadMethod.Windows;
 interface
 {$ifdef MSWINDOWS}
 uses
-  Windows,
-  cwThreading;
+  Windows
+, cwStatus
+, cwThreading
+;
 
 type
   TWindowsThreadMethod = class( TInterfacedObject, IThreadMethod )
@@ -60,7 +62,6 @@ implementation
 uses
   cwLog
 , cwLog.Standard
-, cwRuntime.LogEntries
 ;
 
 function InternalHandler( threadmethod: pointer ): uint32; stdcall;

@@ -59,8 +59,8 @@ const
   cPort = 55443;
 
 var
-  ServerSocket: ISocket;
-  ClientSocket: ISocket;
+  ServerSocket: ISocket = nil;
+  ClientSocket: ISocket = nil;
   RecvBuffer: IUnicodeBuffer;
   Accepted: boolean;
   QueryResponse: string;
@@ -69,7 +69,7 @@ begin
   //- Start by creating a new socket for our server to run on.
   //- Because this sample is intended to run on multiple target platforms, we
   //- select IPv6 (because some platforms have depricated IPv4).
-  if not TSocket.Construct( ServerSocket, cSocketDomain ).IsSuccess then begin
+  if not TSocket.Construct( ServerSocket, cSocketDomain ) then begin
     Writeln('Failed to create a socket');
     exit;
   end;
@@ -79,14 +79,14 @@ begin
     //- We'll start by binding the socket to a network address and port, which
     //- in turn will bind it to one or more network interfaces (to which the
     //- network address belongs).
-    if not ServerSocket.Bind( TNetworkAddress.Create(cIPAddress, cPort) ).IsSuccess then begin
+    if not ServerSocket.Bind( TNetworkAddress.Create(cIPAddress, cPort) ) then begin
       Writeln('The socket failed to bind to the loopback address.');
       exit;
     end;
 
     //- Now that the server socket is bound to a network address, we tell it
     //- that it should begin listening for incoming connections from clients.
-    if not ServerSocket.Listen.IsSuccess then begin
+    if not ServerSocket.Listen then begin
       Writeln('The socket failed to enter listening state.');
       exit;
     end;
@@ -102,7 +102,7 @@ begin
     Writeln('Would you like the server to operate as a non-blocking socket? (Y/N)');
     Readln(QueryResponse);
     if (QueryResponse='y') or (QueryResponse='Y') then begin
-      if not ServerSocket.setBlocking(False).IsSuccess then begin
+      if not ServerSocket.setBlocking(False) then begin
         Writeln('The socket failed to enter non-blocking mode.');
         exit;
       end;
@@ -118,7 +118,7 @@ begin
     Accepted := False;
     repeat
       //- Attempt to accept incomming connection (if blocking, will block here until connection is made)
-      if ServerSocket.Accept( ClientSocket ).IsSuccess then begin
+      if ServerSocket.Accept( ClientSocket ) then begin
         //- If the socket is blocking, we now have a new socket which is connected to the client.
         //- If the socket is non-blocking the new connection may be nil, we should try to accept again.
         //- Note: The new socket will be in the same blocking mode as the server socket, which becomes
@@ -144,7 +144,7 @@ begin
         //- disconnection was graceful or not, however, for this example we
         //- simply state that the client socket disconected, and break the
         //- loop.
-        if not ClientSocket.Recv(RecvBuffer).IsSuccess then begin
+        if not ClientSocket.Recv(RecvBuffer) then begin
           Writeln('The client socket was disconnected.');
           break;
         end;
@@ -165,7 +165,7 @@ begin
         //- We could check the status returned from Send() to see if the
         //- disconnection was graceful or not, however, for this example we
         //- simply state that the client socket disconected and break the loop.
-        if not ClientSocket.Send(RecvBuffer).IsSuccess then begin
+        if not ClientSocket.Send(RecvBuffer) then begin
           Writeln('The client socket was disconnected.');
           break;
         end;

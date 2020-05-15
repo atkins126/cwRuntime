@@ -32,7 +32,7 @@ unit cwSockets.Standard;
 
 interface
 uses
-  cwLog
+  cwStatus
 , cwSockets
 ;
 
@@ -49,7 +49,7 @@ uses
 class function TSocket.Construct( var Socket: ISocket; const Domain: TSocketDomain; const Kind: TSocketKind; const Protocol: TPacketProtocol ): TStatus;
 begin
   Socket := cwSockets.Socket.Standard.TSocket.Create( Domain, Kind, Protocol, Result );
-  if not Result.IsSuccess then begin
+  if not Result then begin
     Socket := nil;
   end;
 end;

@@ -52,7 +52,7 @@ type
       function GetMessage(const Translations: IUnicodeStream; out Message: string): boolean;
       function ParseEntry(const Translations: IUnicodeStream): boolean;
     public
-      GUIDS: array of string;
+      GUIDS: array of TGUID;
       Texts: array of string;
       EntryCount: nativeuint;
 
@@ -186,6 +186,7 @@ function TTranslationParser.ParseEntry(const Translations: IUnicodeStream): bool
 var
   UUID: string;
   MessageText: string;
+  S: string;
   L: nativeuint;
 begin
   Result := False;
@@ -264,7 +265,8 @@ begin
     SetLength(GUIDS,Length(GUIDS)+cEntryGranularity);
     SetLength(Texts,Length(Texts)+cEntryGranularity);
   end;
-  GUIDS[EntryCount] := '{'+UUID+'}';
+  S := '{'+UUID+'}';
+  GUIDS[EntryCount] := StringToGUID(S.AsAnsiString);
   Texts[EntryCount] := MessageText;
   inc(EntryCount);
   Result := True;

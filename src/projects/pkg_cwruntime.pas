@@ -18,7 +18,7 @@ uses
   cwCollections.List.Standard, cwCollections.RingBuffer.Standard, 
   cwIO.FileStream.Standard, cwIO.MemoryStream.Standard, cwIO.Stream.Custom, 
   cwIO.UnicodeStream.Custom, cwIO.Buffer.Standard, cwIO.CyclicBuffer.Standard, 
-  cwIO, cwIO.Standard, cwRuntime.LogEntries, cwThreading.Standard, 
+  cwIO, cwIO.Standard, cwThreading.Standard,
   cwThreading, cwThreading.SignaledCriticalSection.Windows, 
   cwThreading.ThreadedLoop.Executor, cwThreading.ThreadedLoop.Standard, 
   cwThreading.ThreadMethod.Posix, cwThreading.ThreadMethod.Windows, 
@@ -32,7 +32,7 @@ uses
   cwlog.logtarget.event, cwLog.LogTarget.Stream, 
   cwlog.translationparser.standard, cwTiming.posix, cwTiming, 
   cwTiming.standard, cwIO.TypedBuffer.Standard, cwSockets, cwSockets.Standard, 
-  cwSockets.Socket.Standard, cwsockets.common;
+  cwSockets.Socket.Standard, cwsockets.common, cwStatus;
 
 implementation
 

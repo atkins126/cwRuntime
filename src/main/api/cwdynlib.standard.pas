@@ -36,7 +36,7 @@ unit cwDynLib.Standard;
 interface
 uses
   cwDynLib
-, cwLog
+, cwStatus
 ;
 
 type
@@ -56,8 +56,8 @@ type
 implementation
 uses
   sysutils
+, cwLog
 , cwLog.Standard
-, cwRuntime.LogEntries
   {$ifndef MSWINDOWS}
   {$ifndef fpc}
   , posix.errno

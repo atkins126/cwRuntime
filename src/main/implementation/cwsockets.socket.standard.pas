@@ -31,7 +31,7 @@ unit cwSockets.Socket.Standard;
 
 interface
 uses
-  cwLog
+  cwStatus
 , cwIO
 , cwSockets
 ;
@@ -86,10 +86,10 @@ type
 implementation
 uses
   sysutils
+, cwLog
+, cwLog.Standard
 , cwTypes
 , cwIO.Standard
-, cwLog.Standard
-, cwRuntime.LogEntries
 , cwSockets.Common
 ;
 
@@ -342,7 +342,7 @@ begin
     end;
     //- If we got here, we have a new socket
     NewSocket := TSocket.CreateWithHandle(NewHandle,Address.DataPtr,fBlocking,Result);
-    if not Result.IsSuccess then begin
+    if not Result then begin
       NewSocket := nil;
     end;
   finally

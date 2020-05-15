@@ -87,13 +87,14 @@ implementation
 uses
   sysutils
 , cwTest.Standard
+, cwStatus
 , cwLog
 , cwLog.Standard
 ;
 
-resourcestring
-  le_TestLogEntry = '{68D3D83C-4109-4EB5-AB8E-F5F9EDE5E540} This is a test log entry.';
-  le_Alphabet = '{4CAC6378-7500-4BAB-B0C8-8F15BB051B1A} (%a%) (%b%) (%c%) (%d%) (%e%) (%f%) (%g%) (%h%) (%i%) (%j%) (%k%) (%l%) (%m%) (%n%) (%o%) (%p%) (%q%) (%r%) (%s%) (%t%) (%u%) (%v%) (%w%) (%x%) (%y%) (%z%) (%a%) (%b%) (%c%).';
+const
+  le_TestLogEntry: TGUID = '{68D3D83C-4109-4EB5-AB8E-F5F9EDE5E540}';
+  le_Alphabet: TGUID = '{4CAC6378-7500-4BAB-B0C8-8F15BB051B1A}';
 
 const
   cle_TestLogEntryGUID = '{68D3D83C-4109-4EB5-AB8E-F5F9EDE5E540}';
@@ -214,10 +215,8 @@ end;
 
 initialization
   TestSuite.RegisterTestCase( TTest_cwLog_Insert );
-  {$ifndef fpc}
-  Log.RegisterLogEntry(le_TestLogEntry);
-  Log.RegisterLogEntry(le_Alphabet);
-  {$endif}
+  Log.RegisterLogEntry(le_TestLogEntry,'This is a test log entry.');
+  Log.RegisterLogEntry(le_Alphabet,'(%a%) (%b%) (%c%) (%d%) (%e%) (%f%) (%g%) (%h%) (%i%) (%j%) (%k%) (%l%) (%m%) (%n%) (%o%) (%p%) (%q%) (%r%) (%s%) (%t%) (%u%) (%v%) (%w%) (%x%) (%y%) (%z%) (%a%) (%b%) (%c%).');
 
 end.
 

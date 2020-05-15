@@ -31,7 +31,8 @@ unit cwThreading.MessageBus.Standard;
 
 interface
 uses
-  cwCollections
+  cwStatus
+, cwCollections
 , cwThreading
 ;
 
@@ -39,7 +40,7 @@ type
   TMessageBus = class( TInterfacedObject, IMessageBus )
   private
     fEnabled: boolean;
-    fMessageChannels: ICollection;
+    fMessageChannels: IDictionary<string,IMessageChannel>;
   private //- IMessageBus -//
     function getEnabled: boolean;
     procedure setEnabled( value: boolean );
@@ -57,12 +58,7 @@ uses
 , cwCollections.standard
 , cwLog
 , cwLog.Standard
-, cwRuntime.LogEntries
 ;
-
-type
-  IMessageChannelDictionary = IDictionary<string,IMessageChannel>;
-  TMessageChannelDictionary = TDictionary<string,IMessageChannel>;
 
 { TMessageBus }
 
@@ -70,23 +66,21 @@ constructor TMessageBus.Create;
 begin
   inherited Create;
   fEnabled := True;
-  fMessageChannels := TMessageChannelDictionary.Create({$ifdef fpc}@{$endif}TCompare.CompareStrings,16);
+  fMessageChannels := TDictionary<string,IMessageChannel>.Create({$ifdef fpc}@{$endif}TCompare.CompareStrings,16);
 end;
 
 function TMessageBus.CreateChannel(ChannelName: string): IMessageChannel;
 var
   NewChannel: IMessageChannel;
-  Dictionary: IMessageChannelDictionary;
   utChannelName: string;
 begin
   Result := nil;
   utChannelName := uppercase(trim(ChannelName));
-  Dictionary := (fMessageChannels as IMessageChannelDictionary);
-  if Dictionary.KeyExists[utChannelName] then begin
+  if fMessageChannels.KeyExists[utChannelName] then begin
     Log.Insert(le_DuplicateMessageChannel,lsFatal,[ChannelName]);
   end;
   NewChannel := TMessageChannel.Create;
-  Dictionary.setValueByKey(utChannelName,NewChannel);
+  fMessageChannels.setValueByKey(utChannelName,NewChannel);
   Result := NewChannel;
 end;
 
@@ -103,33 +97,29 @@ end;
 
 function TMessageBus.GetMessagePipe(ChannelName: string): IMessagePipe;
 var
-  Dictionary: IMessageChannelDictionary;
   utChannelName: string;
 begin
   Result := nil;
   utChannelName := uppercase(trim(ChannelName));
-  Dictionary := (fMessageChannels as IMessageChannelDictionary);
-  if not Dictionary.KeyExists[utChannelName] then begin
+  if not fMessageChannels.KeyExists[utChannelName] then begin
     exit;
   end;
-  Result := Dictionary.ValueByKey[utChannelName].GetMessagePipe;
+  Result := fMessageChannels.ValueByKey[utChannelName].GetMessagePipe;
 end;
 
 procedure TMessageBus.setEnabled(value: boolean);
 var
   idx: nativeuint;
-  Dictionary: IMessageChannelDictionary;
 begin
   if fEnabled=value then begin
     exit;
   end;
   fEnabled := Value;
-  Dictionary := (fMessageChannels as IMessageChannelDictionary);
-  if Dictionary.Count=0 then begin
+  if fMessageChannels.Count=0 then begin
     exit;
   end;
-  for idx := 0 to pred(Dictionary.Count) do begin
-    Dictionary.ValueByIndex[idx].Enabled := fEnabled;
+  for idx := 0 to pred(fMessageChannels.Count) do begin
+    fMessageChannels.ValueByIndex[idx].Enabled := fEnabled;
   end;
 end;
 

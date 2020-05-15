@@ -32,7 +32,8 @@ unit cwTiming.windows;
 interface
 {$ifdef MSWINDOWS}
 uses
-  cwTiming
+  cwStatus
+, cwTiming
 ;
 
 type
@@ -58,7 +59,6 @@ implementation
 uses
   cwLog
 , cwLog.Standard
-, cwRuntime.LogEntries
 , cwWin32.kernel32
 ;
 

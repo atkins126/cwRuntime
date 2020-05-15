@@ -31,7 +31,8 @@ unit cwThreading.ThreadPool.Standard;
 
 interface
 uses
-  cwCollections
+  cwStatus
+, cwCollections
 , cwThreading
 ;
 
@@ -40,7 +41,7 @@ type
   TThreadPool = class( TInterfacedObject, IThreadPool )
   private
     fRunning: boolean;
-    fThreads: ICollection;
+    fThreads: IList<IPoolThread>;
     fThreadMethods: array of IThreadMethod;
   private
     procedure CreateThreadMethods;
@@ -58,8 +59,7 @@ type
 
 implementation
 uses
-  cwRuntime.LogEntries
-, cwCollections.standard
+  cwCollections.standard
 {$ifdef MSWINDOWS}
 , cwThreading.threadmethod.windows
 {$else}
@@ -76,10 +76,6 @@ type
 {$else}
   TThreadMethod = TPosixThreadMethod;
 {$endif}
-
-type
-  IPoolThreadList = IList<IPoolThread>;
-  TPoolThreadList = TList<IPoolThread>;
 
 type
   TPoolThread = class( TThreadMethod )
@@ -110,7 +106,7 @@ end;
 constructor TThreadPool.Create;
 begin
   inherited Create;
-  fThreads := TPoolThreadList.Create;
+  fThreads := TList<IPoolThread>.Create;
   fRunning := False;
   SetLength(fThreadMethods,0);
 end;
@@ -122,12 +118,12 @@ begin
   if fRunning then begin
     exit;
   end;
-  if IPoolThreadList(fThreads).Count=0 then begin
+  if fThreads.Count=0 then begin
     exit;
   end;
-  SetLength(fThreadMethods,IPoolThreadList(fThreads).Count);
-  for idx := 0 to pred(IPoolThreadList(fThreads).Count) do begin
-    fThreadMethods[idx] := TPoolThread.Create( IPoolThreadList(fThreads).Items[idx] );
+  SetLength(fThreadMethods,fThreads.Count);
+  for idx := 0 to pred(fThreads.Count) do begin
+    fThreadMethods[idx] := TPoolThread.Create( fThreads.Items[idx] );
   end;
   fRunning := True;
 end;
@@ -162,12 +158,12 @@ end;
 
 function TThreadPool.getThread(idx: uint64): IPoolThread;
 begin
-  Result := IPoolThreadList(fThreads).Items[idx];
+  Result := fThreads.Items[idx];
 end;
 
 function TThreadPool.getThreadCount: uint64;
 begin
-  Result := IPoolThreadList(fThreads).Count;
+  Result := fThreads.Count;
 end;
 
 function TThreadPool.InstallThread(aThread: IPoolThread): boolean;
@@ -176,7 +172,7 @@ begin
   if fRunning then begin
     exit;
   end;
-  IPoolThreadList(fThreads).Add(aThread);
+  fThreads.Add(aThread);
 end;
 
 function TThreadPool.Start: boolean;
@@ -186,8 +182,8 @@ var
 begin
   Result := False;
   InitializeFailed := False;
-  for idx := 0 to pred(IPoolThreadList(fThreads).Count) do begin
-    if not IPoolThreadList(fThreads).Items[idx].Initialize then begin
+  for idx := 0 to pred(fThreads.Count) do begin
+    if not fThreads.Items[idx].Initialize then begin
       InitializeFailed := True;
     end;
   end;
@@ -203,11 +199,11 @@ var
   idx: int32;
 begin
   DisposeThreadMethods;
-  if IPoolThreadList(fThreads).Count=0 then begin
+  if fThreads.Count=0 then begin
     exit;
   end;
-  for idx := 0 to pred(IPoolThreadList(fThreads).Count) do begin
-    IPoolThreadList(fThreads).Items[idx].Finalize;
+  for idx := 0 to pred(fThreads.Count) do begin
+    fThreads.Items[idx].Finalize;
   end;
 end;
 

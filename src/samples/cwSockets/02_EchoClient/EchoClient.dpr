@@ -51,7 +51,7 @@ const
   cMaxBuffer = 511;
 
 var
-  ClientSocket: ISocket;
+  ClientSocket: ISocket = nil;
   MessageText: string;
   RecvBuffer: IUnicodeBuffer;
   SendBuffer: IUnicodeBuffer;
@@ -60,14 +60,14 @@ begin
   //- Start by creating a new socket for our client to connect through.
   //- Because this sample is intended to run on multiple target platforms, we
   //- select IPv6 (because some platforms have depricated IPv4).
-  if not TSocket.Construct( ClientSocket, cSocketDomain ).IsSuccess then begin
+  if not TSocket.Construct( ClientSocket, cSocketDomain ) then begin
     Writeln('Failed to create socket.');
     exit;
   end;
 
   try
     //- Connect our client to the server.
-    if not ClientSocket.Connect( TNetworkAddress.Create(cIPAddress,cPort) ).IsSuccess then begin
+    if not ClientSocket.Connect( TNetworkAddress.Create(cIPAddress,cPort) ) then begin
       Writeln('Unable to connect to server.');
       exit;
     end;
@@ -86,7 +86,7 @@ begin
 
         //- Create a buffer to send our message
         SendBuffer.WriteString(MessageText,TUnicodeFormat.utf8,True);
-        if not ClientSocket.Send(SendBuffer).IsSuccess then begin
+        if not ClientSocket.Send(SendBuffer) then begin
           Writeln('Connection to server lost.');
           break;
         end;
@@ -97,7 +97,7 @@ begin
         //- simply state that the client socket disconected, and break the
         //- loop.
         RecvBuffer.Size := 512;
-        if not ClientSocket.Recv(RecvBuffer).IsSuccess then begin
+        if not ClientSocket.Recv(RecvBuffer) then begin
           Writeln('The client socket was disconnected.');
           break;
         end;

@@ -35,6 +35,7 @@ unit cwlog.standard;
 interface
 uses
   sysutils // for Exception
+, cwStatus
 , cwLog
 , cwLog.Common
 ;

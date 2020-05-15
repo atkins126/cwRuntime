@@ -73,7 +73,6 @@ uses
   sysutils
 , cwTypes
 , cwCollections.List.Standard
-, cwIO.Standard
 ;
 
 constructor TStandardStringList.Create(const Granularity: nativeuint; const isOrdered: boolean; const isPruned: boolean);

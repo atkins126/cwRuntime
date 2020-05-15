@@ -183,7 +183,7 @@ begin
   p := fBuffer.getDataPointer;
   for idx := 0 to pred(fCount) do begin
     p^ := Value;
-    p := pointer(nativeuint(p)+fItemSize);
+    p := {$hints off} pointer(nativeuint(p)+fItemSize); {$hints on}
   end;
 end;
 
@@ -215,7 +215,7 @@ begin
     raise
       Exception.Create('Index out of bounds');
   end;
-  p := pointer(nativeuint(p)+fItemSize*Index);
+  p := {$hints off} pointer(nativeuint(p)+fItemSize*Index); {$hints on}
   Result := p^;
 end;
 
@@ -228,7 +228,7 @@ begin
     raise
       Exception.Create('Index out of bounds');
   end;
-  p := pointer(nativeuint(p)+fItemSize*Index);
+  p := {$hints off} pointer(nativeuint(p)+fItemSize*Index); {$hints on}
   p^ := value;
 end;
 

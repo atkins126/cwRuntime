@@ -38,60 +38,19 @@ unit cwLog;
 interface
 uses
   sysutils //[RTL] for Exception
+, cwStatus
 , cwTypes
 ;
 
 type
-
-{$region ' TStatus'}
-
-  ///   <summary>
-  ///     TStatus is a data-type intended for return from functions/procedures/methods in place
-  ///     of the typically used boolean or int32 return types. <br/>
-  ///     TStatus is implemented as a 128-bit integer GUID, which is also the return type of the
-  ///     ILog.Insert() method, which returns the GUID of the log entry which was inserted. <br/>
-  ///     For example, a function may return as follows...<br/>
-  ///     <br/>
-  ///     if Index>Count then begin <br/>
-  ///       Result := Log.Insert( le_IndexOutOfBounds, lsError, [ Index.AsString ] );<br/>
-  ///     end;<br/>
-  ///     <br/>
-  ///   </summary>
-  ///   <remarks>
-  ///     It should be noted that while the status values and log entry GUIDS are compatible,
-  ///     the TStatus type does not carry sufficient information to translate a log entry which
-  ///     has parameters. In case the status places the application into an exception state, you may
-  ///     either refer the end user to the log, or alternatively call Log.GetLast() to retrieve the
-  ///     most recently inserted log entry.
-  ///   </remarks>
-  TStatus = record
+  ///  <summary>
+  ///    Represents a log entry which must be registered with the log before
+  ///    it may be inserted.
+  ///  </summary>
+  TLogEntry = record
     Value: TGUID;
-  public
-
-    ///  <summary>
-    ///    This is a convenience method to return a TStatus representing an unknown
-    ///    result state. This is typically the initialization state of a function which
-    ///    returns TStatus.
-    ///  </summary>
-    class function Unknown: TStatus; static;
-
-    ///  <summary>
-    ///    This is a convenience method to return a TStatus representing a successful
-    ///    result state. Note that the GUID for a success state is always the
-    ///    '{00000000-0000-0000-0000-000000000000}' GUID. This can make debug-time
-    ///    inspection of results easier, as all components of the TStatus should
-    ///    be zero for Success.
-    ///  </summary>
-    class function Success: TStatus; static;
-
-    ///  <summary>
-    ///    This is a convenience method for determining if the TStatus represents
-    ///    a success state or not.
-    ///  </summary>
-    function IsSuccess: boolean; overload;
+    Text: string;
   end;
-
-{$endregion}
 
 {$region ' TLogSeverity'}
 
@@ -147,10 +106,15 @@ type
 {$region ' Exceptions'}
 
   ///  <summary>
-  ///    Exception raised when a log entry is inserted which cannot be
-  ///    parsed as a log entry.
+  ///    Exception raised when a log entry is inserted which has not been
+  ///    registered for insertion.
   ///  </summary>
-  EInvalidLogEntry = class(Exception);
+  ELogEntryNotFound = class(Exception);
+
+  ///  <summary>
+  ///    Exception raised when an entry is inserted with log severity 'lsFatal'
+  ///  </summary>
+  ELogEntryFatal = class(Exception);
 
 {$endregion}
 
@@ -210,30 +174,20 @@ type
     ///    This method may be used to manually add entries to the log if required. <br/>
     ///    Returns FALSE if a log entry with the provided GUID has already been registered.
     ///  </summary>
-    function RegisterLogEntry( const EntryString: string ): boolean;
-
-    {$if defined(fpc) or defined(MSWINDOWS)}
-    /// <exclude/> - A convenience overload to prevent the need for type-casting ansi-strings to unicode strings under fpc
-    function Insert( const LogEntry: AnsiString; const Severity: TLogSeverity ): TStatus; overload;
-    {$endif}
-
-    {$if defined(fpc) or defined(MSWINDOWS)}
-    /// <exclude/> - A convenience overload to prevent the need for type-casting ansi-strings to unicode strings under fpc
-    function Insert( const LogEntry: AnsiString; const Severity: TLogSeverity; const Parameters: array of string ): TStatus; overload;
-    {$endif}
+    function RegisterLogEntry( const LogEntry: TGUID; const DefaultText: string ): boolean;
 
     ///  <summary>
     ///    Inserts a log entry into the log. <br/>
     ///    Note: For log entries which do not require parameters, see the overloaded Insert method.
     ///  </summary>
-    function Insert( const LogEntry: string; const Severity: TLogSeverity; const Parameters: array of string ): TStatus; overload;
+    function Insert( const LogEntry: TGUID; const Severity: TLogSeverity; const Parameters: array of string ): TStatus; overload;
 
     ///  <summary>
     ///    Inserts a log entry into the log, just like the overload by the same name, however
     ///    this overload does not require parameters to be provided. This method may be convenient
     ///    for inserting log entries which do not require parameters.
     ///  </summary>
-    function Insert( const LogEntry: string; const Severity: TLogSeverity ): TStatus; overload;
+    function Insert( const LogEntry: TGUID; const Severity: TLogSeverity ): TStatus; overload;
 
     ///  <summary>
     ///    When log entries are registered (currently done automatically for fpc
@@ -271,27 +225,5 @@ type
 
 implementation
 
-{$region ' TStatus implementation'}
-
-const
-  cSuccessUUID = '{00000000-0000-0000-0000-000000000000}';
-  cUnknownUUID = '{A334E3A7-D11E-4106-B021-C737523CB51B}';
-
-function TStatus.IsSuccess: boolean;
-begin
-  Result := string(GUIDToString(Value)) = cSuccessUUID;
-end;
-
-class function TStatus.Success: TStatus;
-begin
-  Result.Value := StringToGUID(cSuccessUUID);
-end;
-
-class function TStatus.Unknown: TStatus;
-begin
-  Result.Value := StringToGUID(cUnknownUUID);
-end;
-
-{$endregion}
 
 end.

@@ -31,7 +31,8 @@ unit cwThreading.MessageChannel.Standard;
 
 interface
 uses
-  cwThreading
+  cwStatus
+, cwThreading
 , cwCollections
 , cwThreading.Messaging.Internal
 ;
@@ -40,7 +41,7 @@ type
   TMessageChannel = class( TInterfacedObject, IMessageChannel )
   private
     fEnabled: boolean;
-    fMessagePipes: ICollection;
+    fMessagePipes: IList<IMessagePipe>;
     fPushCS: ISignaledCriticalSection;
     fPullCS: ISignaledCriticalSection;
   private //- IMessageChannel -//
@@ -66,19 +67,13 @@ uses
 , cwThreading.MessagePipe.Standard
 ;
 
-type
-  IMessagePipeList = IList<IMessagePipe>;
-  TMessagePipeList = TList<IMessagePipe>;
-
-{ TMessageChannel }
-
 constructor TMessageChannel.Create;
 begin
   inherited Create;
   fEnabled := True;
   fPushCS := TSignaledCriticalSection.Create;
   fPullCS := TSignaledCriticalSection.Create;
-  fMessagePipes := TMessagePipeList.Create(16);
+  fMessagePipes := TList<IMessagePipe>.Create(16);
 end;
 
 destructor TMessageChannel.Destroy;
@@ -99,7 +94,7 @@ var
   NewPipe: IMessagePipe;
 begin
   NewPipe := TMessagePipe.Create(fPushCS,fPullCS);
-  IMessagePipeList(fMessagePipes).Add(NewPipe);
+  fMessagePipes.Add(NewPipe);
   Result := NewPipe;
 end;
 
@@ -148,13 +143,13 @@ begin
   if not fEnabled then begin
     exit;
   end;
-  Count := IMessagePipeList(fMessagePipes).Count;
+  Count := fMessagePipes.Count;
   if Count=0 then begin
     exit;
   end;
   //- Loop through pipes.
   for idx := 0 to pred(Count) do begin
-    CurrentPipe := IMessagePipeList(fMessagePipes).Items[idx];
+    CurrentPipe := fMessagePipes.Items[idx];
     PipeRing := (CurrentPipe as IMessageRingBuffer).GetRingBuffer;
     if PipeRing.Pull(aMessageRec) then begin
       exit;
@@ -173,13 +168,13 @@ begin
   if not fEnabled then begin
     exit;
   end;
-  Count := IMessagePipeList(fMessagePipes).Count;
+  Count := fMessagePipes.Count;
   if Count=0 then begin
     exit;
   end;
   //- Loop through pipes.
   for idx := 0 to pred(Count) do begin
-    CurrentPipe := IMessagePipeList(fMessagePipes).Items[idx];
+    CurrentPipe := fMessagePipes.Items[idx];
     PipeRing := (CurrentPipe as IMessageRingBuffer).GetRingBuffer;
     if not PipeRing.IsEmpty then begin
       Result := True;
@@ -196,9 +191,9 @@ begin
     exit;
   end;
   fEnabled := Value;
-  if IMessagePipeList(fMessagePipes).Count>0 then begin
-    for idx := 0 to pred(IMessagePipeList(fMessagePipes).Count) do begin
-      IMessagePipeList(fMessagePipes)[idx].Enabled := Value;
+  if fMessagePipes.Count>0 then begin
+    for idx := 0 to pred(fMessagePipes.Count) do begin
+      fMessagePipes[idx].Enabled := Value;
     end;
   end;
   if not fEnabled then begin

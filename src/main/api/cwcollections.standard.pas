@@ -70,7 +70,7 @@ type
     /// <returns>
     ///   An instance of IList&lt;T&gt;
     /// </returns>
-    class function Create(const Granularity: nativeuint = 32; const isOrdered: boolean = false; const isPruned: boolean = false): IList<T>; static;
+    class function Create( const Granularity: nativeuint = 32; const isOrdered: boolean = false; const isPruned: boolean = false ): IList<T>; static;
   end;
 {$endregion}
 
@@ -141,7 +141,7 @@ type
     ///   (Optional) <br />The number of items to pre-allocate space for within
     ///   the buffer.
     /// </param>
-    class function Create( ItemCount: nativeuint = 128 ): IRingBuffer<T>; static;
+    class function Create( const ItemCount: nativeuint = 128 ): IRingBuffer<T>; static;
   end;
 {$endregion}
 
@@ -165,7 +165,7 @@ type
     ///   of "granularity" items as items are pulled off of the stack. If set
     ///   false, any memory allocated is retained until the stack is disposed.
     /// </param>
-    class function Create( Granularity: nativeuint = 0; IsPruned: boolean = false ): IStack<T>; static;
+    class function Create( const Granularity: nativeuint = 0; const IsPruned: boolean = false ): IStack<T>; static;
   end;
 {$endregion}
 
@@ -210,6 +210,7 @@ type
 implementation
 uses
   sysutils
+, cwTypes
 , cwCollections.List.standard
 , cwCollections.StringList.standard
 , cwCollections.Dictionary.standard
@@ -218,7 +219,7 @@ uses
 ;
 
 {$region ' TList<T>'}
-class function TList<T>.Create(const Granularity: nativeuint = 32; const isOrdered: boolean = false; const isPruned: boolean = false): IList<T>;
+class function TList<T>.Create( const Granularity: nativeuint = 32; const isOrdered: boolean = false; const isPruned: boolean = false): IList<T>;
 begin
   Result := TStandardList<T>.Create( Granularity, isOrdered, isPruned );
 end;
@@ -287,17 +288,18 @@ end;
 {$endregion}
 
 {$region ' TRingBuffer<T>'}
-class function TRingBuffer<T>.Create(ItemCount: nativeuint): IRingBuffer<T>;
+class function TRingBuffer<T>.Create( const ItemCount: nativeuint = 128 ): IRingBuffer<T>; static;
 begin
   Result := TStandardRingBuffer<T>.Create( ItemCount );
 end;
 {$endregion}
 
 {$region ' TStack<T>'}
-class function TStack<T>.Create( Granularity: nativeuint = 0; IsPruned: boolean = false ): IStack<T>;
+class function TStack<T>.Create( const Granularity: nativeuint = 0; const IsPruned: boolean = false ): IStack<T>; static;
 begin
   Result := TStandardStack<T>.Create( Granularity, isPruned );
 end;
+
 {$endregion}
 
 end.

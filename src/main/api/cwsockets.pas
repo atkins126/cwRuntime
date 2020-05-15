@@ -34,7 +34,7 @@ unit cwSockets;
 
 interface
 uses
-  cwLog
+  cwStatus
 , cwIO
 ;
 

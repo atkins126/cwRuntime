@@ -31,14 +31,13 @@ unit cwIO.Stream.Custom;
 
 interface
 uses
-  cwLog
+  cwStatus
 , cwIO
 ;
 
 type
   TCustomStream = class( TInterfacedObject, IStream )
   private
-    fLog: ILog;
     fName: string;
   protected //- IStream -//
     procedure Clear; virtual;
@@ -57,7 +56,7 @@ type
     function CopyFrom( const Source: IStream ): nativeuint; virtual;
     function getEndOfStream: boolean; virtual;
   public
-    constructor Create(const Log: ILog = nil); reintroduce;
+    constructor Create; reintroduce;
     destructor Destroy; override;
   public
     property EndOfStream: boolean read getEndOfStream;
@@ -68,7 +67,7 @@ type
 implementation
 uses
   sysutils  //[RTL]
-, cwRuntime.LogEntries
+, cwLog
 , cwLog.Standard
 ;
 
@@ -132,16 +131,14 @@ begin
   end;
 end;
 
-constructor TCustomStream.Create(const Log: ILog = nil);
+constructor TCustomStream.Create;
 begin
   inherited Create;
-  fLog := Log;
   fName := '';
 end;
 
 destructor TCustomStream.Destroy;
 begin
-  fLog := nil;
   inherited Destroy;
 end;
 

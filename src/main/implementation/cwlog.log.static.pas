@@ -33,6 +33,7 @@ interface
 uses
   syncobjs
 , cwLog
+, cwStatus
 , cwCollections
 ;
 
@@ -52,23 +53,15 @@ type
     fLogEntryCount: nativeuint;
     fInsertionCS: TCriticalSection;
   private
-    function ParseLogEntryDeclaration(const SourceStr: string; out GUID: string; out MessageText: string): boolean;
     function ParseParameters(const SourceString: string): TArrayOfString;
     function FindLogEntry( const GUID: TGUID; out FoundIdx: nativeuint ): boolean;
   strict private //- ILog -//
-    function RegisterLogEntry( const EntryString: string ): boolean;
+    function RegisterLogEntry( const LogEntry: TGUID; const DefaultText: string ): boolean;
     procedure AddLogTarget( const LogTarget: ILogTarget );
     function ExportTranslationFile( const FilePath: string ): TStatus;
     function ImportTranslationFile( const FilePath: string ): TStatus;
-    function Insert( const LogEntry: TGUID; const EntryText: string; const Severity: TLogSeverity; const Parameters: array of string ): TStatus; overload;
-    function Insert( const LogEntry: string; const Severity: TLogSeverity; const Parameters: array of string ): TStatus; overload;
-    function Insert( const LogEntry: string; const Severity: TLogSeverity ): TStatus; overload;
-    {$if defined(fpc) or defined(MSWINDOWS)}
-    function Insert( const LogEntry: AnsiString; const Severity: TLogSeverity ): TStatus; overload;
-    {$endif}
-    {$if defined(fpc) or defined(MSWINDOWS)}
-    function Insert( const LogEntry: AnsiString; const Severity: TLogSeverity; const Parameters: array of string ): TStatus; overload;
-    {$endif}
+    function Insert( const LogEntry: TGUID; const Severity: TLogSeverity; const Parameters: array of string ): TStatus; overload;
+    function Insert( const LogEntry: TGUID; const Severity: TLogSeverity ): TStatus; overload;
     function getLastEntry: string;
   public
     constructor Create; reintroduce;
@@ -122,25 +115,14 @@ begin
   end;
 end;
 
-function TLog.RegisterLogEntry(const EntryString: string): boolean;
+function TLog.RegisterLogEntry( const LogEntry: TGUID; const DefaultText: string ): boolean;
 var
   foundIdx: nativeuint;
-  GUID: TGUID;
-  UIDStr: string;
-  MessageStr: string;
   L: nativeuint;
 begin
   Result := False;
-  if not ParseLogEntryDeclaration(EntryString,UIDStr,MessageStr) then begin
-    exit;
-  end;
-  {$ifdef fpc}
-  GUID := StringToGUID(ansistring(UIDStr));
-  {$else}
-  GUID := StringToGUID(UIDStr);
-  {$endif}
-  if FindLogEntry( GUID, foundIdx ) then begin
-    fLogEntryTexts[foundIdx] := MessageStr;
+  if FindLogEntry( LogEntry, foundIdx ) then begin
+    fLogEntryTexts[foundIdx] := DefaultText;
     exit;
   end;
   //- Ensure there is space in the arrays.
@@ -149,8 +131,8 @@ begin
     SetLength( fLogEntryIDs, Length(fLogEntryIDs)+cLogEntryGranularity );
     SetLength( fLogEntryTexts, Length(fLogEntryTexts)+cLogEntryGranularity );
   end;
-  fLogEntryIDs[fLogEntryCount] := GUID;
-  fLogEntryTexts[fLogEntryCount] := MessageStr;
+  fLogEntryIDs[fLogEntryCount] := LogEntry;
+  fLogEntryTexts[fLogEntryCount] := DefaultText;
   inc( fLogEntryCount );
   Result := True;
 end;
@@ -222,7 +204,7 @@ begin
       exit;
     end;
     for idx := 0 to pred(TranslationParser.EntryCount) do begin
-      RegisterLogEntry(TranslationParser.GUIDs[idx]+' '+TranslationParser.Texts[idx]);
+      RegisterLogEntry(TranslationParser.GUIDs[idx],TranslationParser.Texts[idx]);
     end;
   finally
     FS := nil;
@@ -230,9 +212,8 @@ begin
   Result := TStatus.Success;
 end;
 
-function TLog.Insert(const LogEntry: TGUID; const EntryText: string; const Severity: TLogSeverity; const Parameters: array of string): TStatus;
+function TLog.Insert(const LogEntry: TGUID; const Severity: TLogSeverity; const Parameters: array of string): TStatus;
 var
-  ErrorStr: string;
   MessageText: string;
   ParameterPlaceholders: TArrayOfString;
   foundIdx: nativeuint;
@@ -243,20 +224,12 @@ begin
   TS := Now;
 
   //- Get the message translation
-  MessageText := EntryText;
-  if FindLogEntry( Result.Value, foundIdx ) then begin
-    MessageText := fLogEntryTexts[foundIdx];
-  end else begin
-    {$ifdef fpc}
-    ErrorStr := 'Unable to locate log entry for insertion "'+GuidToString(LogEntry).AsString+'".';
+  MessageText := '';
+  if not FindLogEntry( Result.Value, foundIdx ) then begin
     raise
-      Exception.Create(ErrorStr.AsAnsiString);
-    {$else}
-    ErrorStr := 'Unable to locate log entry for insertion "'+GuidToString(LogEntry)+'".';
-    raise
-      Exception.Create(ErrorStr);
-    {$endif}
+      ELogEntryNotFound.Create(GuidToString(LogEntry));
   end;
+  MessageText := fLogEntryTexts[foundIdx];
 
   //- Parse Parameters and substitute.
   ParameterPlaceholders := ParseParameters(MessageText);
@@ -290,59 +263,65 @@ begin
   finally
     fInsertionCS.Release;
   end;
+
+  //- If log entry is fatal
+  if Severity=lsFatal then begin
+    raise
+      ELogEntryFatal.Create(MessageText.AsAnsiString);
+  end;
 end;
 
-function TLog.ParseLogEntryDeclaration(const SourceStr: string; out GUID: string; out MessageText: string): boolean;
-const
-  cGUIDLen = 38;
-var
-  RemainingChars: nativeuint;
-begin
-  GUID := '';
-  MessageText := '';
-  Result := False;
-  if Length(SourceStr)<cGUIDLen then begin
-    exit;
-  end;
-  //- No opening brace means this is not a log entry.
-  if SourceStr.LeftStr(1)<>'{' then begin
-    exit;
-  end;
-  //- 38th character should be closing brace else, not a log entry.
-  {$ifdef NEXTGEN}
-  {$ifndef LINUX}
-  if SourceStr[pred(cGUIDLen)]<>'}' then begin
-  {$else}
-  if SourceStr[cGUIDLen]<>'}' then begin
-  {$endif}
-  {$else}
-  if SourceStr[cGUIDLen]<>'}' then begin
-  {$endif}
-    exit;
-  end;
-  //- Get the GUID.
-  {$ifdef NEXTGEN}
-  GUID := Copy(SourceStr,0,cGUIDLen);
-  {$else}
-  GUID := Copy(SourceStr,1,cGUIDLen);
-  {$endif}
-  //- Get the remaining text.
-  if Length(SourceStr)=cGUIDLen then begin
-    Result := True;
-    exit;
-  end;
-  RemainingChars := Length(SourceStr)-cGUIDLen;
-  {$ifdef NEXTGEN}
-  {$ifndef LINUX}
-    MessageText := Trim(Copy(SourceStr,cGUIDLen,RemainingChars));
-  {$else}
-    MessageText := Trim(Copy(SourceStr,succ(cGUIDLen),RemainingChars));
-  {$endif}
-  {$else}
-  MessageText := Trim(Copy(SourceStr,succ(cGUIDLen),RemainingChars));
-  {$endif}
-  Result := True;
-end;
+//function TLog.ParseLogEntryDeclaration(const SourceStr: string; out GUID: string; out MessageText: string): boolean;
+//const
+//  cGUIDLen = 38;
+//var
+//  RemainingChars: nativeuint;
+//begin
+//  GUID := '';
+//  MessageText := '';
+//  Result := False;
+//  if Length(SourceStr)<cGUIDLen then begin
+//    exit;
+//  end;
+//  //- No opening brace means this is not a log entry.
+//  if SourceStr.LeftStr(1)<>'{' then begin
+//    exit;
+//  end;
+//  //- 38th character should be closing brace else, not a log entry.
+//  {$ifdef NEXTGEN}
+//  {$ifndef LINUX}
+//  if SourceStr[pred(cGUIDLen)]<>'}' then begin
+//  {$else}
+//  if SourceStr[cGUIDLen]<>'}' then begin
+//  {$endif}
+//  {$else}
+//  if SourceStr[cGUIDLen]<>'}' then begin
+//  {$endif}
+//    exit;
+//  end;
+//  //- Get the GUID.
+//  {$ifdef NEXTGEN}
+//  GUID := Copy(SourceStr,0,cGUIDLen);
+//  {$else}
+//  GUID := Copy(SourceStr,1,cGUIDLen);
+//  {$endif}
+//  //- Get the remaining text.
+//  if Length(SourceStr)=cGUIDLen then begin
+//    Result := True;
+//    exit;
+//  end;
+//  RemainingChars := Length(SourceStr)-cGUIDLen;
+//  {$ifdef NEXTGEN}
+//  {$ifndef LINUX}
+//    MessageText := Trim(Copy(SourceStr,cGUIDLen,RemainingChars));
+//  {$else}
+//    MessageText := Trim(Copy(SourceStr,succ(cGUIDLen),RemainingChars));
+//  {$endif}
+//  {$else}
+//  MessageText := Trim(Copy(SourceStr,succ(cGUIDLen),RemainingChars));
+//  {$endif}
+//  Result := True;
+//end;
 
 (* Returns an array of strings containing the names of parameters within the
    Source string. The parameter names are uppercased and trimmed *)
@@ -412,49 +391,10 @@ begin
   end;
 end;
 
-function TLog.Insert(const LogEntry: string; const Severity: TLogSeverity; const Parameters: array of string): TStatus;
-var
-  GUID: TGUID;
-  GUIDStr: string;
-  EntryString: string;
-begin
-  Result := TStatus.Unknown;
-  //- Separate out the GUID and MessageText.
-  if not ParseLogEntryDeclaration(string(LogEntry), GUIDStr, EntryString) then begin
-    {$ifdef fpc}
-    raise
-      EInvalidLogEntry.Create(ansistring('Unable to parse log entry "'+LogEntry+'"'));
-    {$else}
-    raise
-      EInvalidLogEntry.Create('Unable to parse log entry "'+LogEntry+'"');
-    {$endif}
-  end;
-  {$ifdef fpc}
-  GUID := StringToGUID(ansistring(GUIDStr));
-  {$else}
-  GUID := StringToGUID(GUIDStr);
-  {$endif}
-  Result := Insert( GUID, EntryString, Severity, Parameters );
-end;
-
-function TLog.Insert(const LogEntry: string; const Severity: TLogSeverity): TStatus;
+function TLog.Insert(const LogEntry: TGUID; const Severity: TLogSeverity): TStatus;
 begin
   Result := Insert( LogEntry, Severity, [] );
 end;
-
-{$if defined(fpc) or defined(MSWINDOWS)}
-function TLog.Insert(const LogEntry: AnsiString; const Severity: TLogSeverity ): TStatus;
-begin
-  Result := Insert( string(LogEntry), Severity );
-end;
-{$endif}
-
-{$if defined(fpc) or defined(MSWINDOWS)}
-function TLog.Insert(const LogEntry: AnsiString; const Severity: TLogSeverity; const Parameters: array of string): TStatus;
-begin
-  Result := Insert( string(LogEntry), Severity, Parameters );
-end;
-{$endif}
 
 function TLog.getLastEntry: string;
 begin
@@ -487,21 +427,8 @@ begin
   inherited Destroy;
 end;
 
-{$ifdef fpc}
-{$hints off}
-function IterateResourceStrings( Name, Value: AnsiString; Hash: Longint; arg: pointer ): AnsiString;
-var
-  ValueStr: string;
-begin
-  Result := Value;
-  ValueStr := string(Value);
-  Log.RegisterLogEntry(ValueStr);
-end;
-{$hints on}
-{$endif}
-
 initialization
-  {$ifdef fpc}SetResourceStrings(IterateResourceStrings,nil);{$endif}
+  SingletonLog := nil;
 
 finalization
   SingletonLog := nil;

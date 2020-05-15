@@ -33,6 +33,7 @@ interface
 uses
   cwUnicode
 , cwIO
+, cwStatus
 , cwLog
 ;
 
@@ -76,7 +77,6 @@ type
 implementation
 uses
   cwUnicode.Standard
-, cwRuntime.LogEntries
 , cwLog.Standard
 ;
 
