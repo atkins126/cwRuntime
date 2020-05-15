@@ -52,6 +52,7 @@ resourcestring
   le_SocketAcceptError                = '{A8C9CE48-133A-4495-B8B1-794A53409A7D} The socket library failed to accept with return code "(%returncode%)"';
   le_SocketConnectError               = '{99BC6926-BB39-4380-92B9-A266BBA9D8AB} The socket library failed to connect with return code "(%returncode%)"';
   le_SocketCloseError                 = '{E913A85A-070A-451C-9E86-B13BE58FA334} The socket library failed to close with return code "(%returncode%)"';
+  le_SocketShutdownError              = '{882F80C9-8D42-4BBE-B3C4-54DCD4CE3422} The socket library failed to shutdown with return code "(%returncode%)"';
   le_UnknownSocketDomain              = '{FB0055EC-4F5B-479C-8DA0-8E0811B5B61A} Unknown socket domain / address family.';
   le_SocketClosed                     = '{2AB4A7BA-F66A-4E5A-933C-22D4FB1B7C32} Socket closed on Recv().';
   le_FailedToConvertNetworkAddress    = '{E801EDB2-2BEF-4180-A6D6-E7FCBBEC325C} Failed to convert network address "(%IPAddress%)" on port "(%port%)"';

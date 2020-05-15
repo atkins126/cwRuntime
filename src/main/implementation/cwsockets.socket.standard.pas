@@ -68,16 +68,19 @@ type
     function Listen: TStatus;
     function Accept(out NewSocket: ISocket): TStatus;
     function Connect(const NetworkAddress: TNetworkAddress): TStatus;
+    function Shutdown(const Options: TShutdownOptions): TStatus;
     function Close: TStatus;
     function Send(const Data: IBuffer): TStatus;
     function Recv(const Data: IBuffer): TStatus;
-    function setBlocking( const value: boolean ): TStatus;
+    function setBlocking(const value: boolean): TStatus;
     function getBlocking: boolean;
     function getNetworkAddress: TNetworkAddress;
   protected
-    constructor CreateWithHandle( const Handle: TSocketHandle; const Address: pointer; const AddrSize: Int32; out Status: TStatus );
+    {$warnings off} // fpc warns constructor should be public, this constructor is intentionally protected.
+    constructor CreateWithHandle(const Handle: TSocketHandle; const Address: pointer; const Blocking: boolean; out Status: TStatus);
+    {$warnings on}
   public
-    constructor Create( const Domain: TSocketDomain; const Kind: TSocketKind; const Protocol: TPacketProtocol; out Status: TStatus ); reintroduce;
+    constructor Create(const Domain: TSocketDomain; const Kind: TSocketKind; const Protocol: TPacketProtocol; out Status: TStatus); reintroduce;
   end;
 
 implementation
@@ -103,7 +106,6 @@ begin
     skRaw:       Result := SOCK_RAW;
     skRDM:       Result := SOCK_RDM;
     skSeqPacket: Result := SOCK_SEQPACKET;
-    else raise Exception.Create('Unknown socket kind!');
   end;
 end;
 
@@ -139,7 +141,6 @@ begin
     ppRSVP:     Result := IPPROTO_RSVP;
     ppSCTP:     Result := IPPROTO_SCTP;
     ppTP:       Result := IPPROTO_TP;
-    else raise Exception.Create('Unknown packet protocol!');
   end;
 end;
 
@@ -337,7 +338,7 @@ begin
       end;
     end;
     //- If we got here, we have a new socket
-    NewSocket := TSocket.CreateWithHandle(NewHandle,Address.DataPtr,Address.Size,Result);
+    NewSocket := TSocket.CreateWithHandle(NewHandle,Address.DataPtr,fBlocking,Result);
     if not Result.IsSuccess then begin
       NewSocket := nil;
     end;
@@ -386,6 +387,23 @@ begin
   end;
 end;
 
+function TSocket.Shutdown(const Options: TShutdownOptions): TStatus;
+var
+  Opts: uint32;
+  retCode: int32;
+begin
+  case Options of
+         soBoth: Opts := SD_BOTH;
+      soSending: Opts := SD_SEND;
+    soReceiving: Opts := SD_RECEIVE;
+  end;
+  retCode := sktShutdown(fHandle,Opts);
+  if retCode<>0 then begin
+    Result := Log.Insert(le_SocketShutdownError,lsError,[retCode.AsString]);
+    exit;
+  end;
+end;
+
 function TSocket.Close: TStatus;
 var
   retCode: int32;
@@ -422,9 +440,9 @@ begin
   TotalSent := 0;
   while (TotalSent<Data.Size) do begin
       if TotalSent>0 then begin
-        DataPtr := pointer( nativeuint(Data.DataPtr) + pred(TotalSent) );
+        DataPtr := {$hints off} pointer( nativeuint(Data.DataPtr) + pred(TotalSent) ); {$hints on} // nativeuint is ptr sized.
       end else begin
-        DataPtr := pointer( nativeuint(Data.DataPtr) );
+        DataPtr := {$hints off} pointer( nativeuint(Data.DataPtr) ); {$hints on} // nativeuint is ptr sized.
       end;
       DataSize := Data.Size - TotalSent;
       Sent := sktSend(fHandle,DataPtr,DataSize,0); // todo - correct flags
@@ -460,8 +478,8 @@ begin
     exit;
   end;
   if Recvd = SOCKET_ERROR then begin
-    {$ifdef MSWINDOWS}
     retCode := GetLastError();
+    {$ifdef MSWINDOWS}
     if retCode=WSAEWOULDBLOCK then begin
     {$else}
     if (retCode=EAGAIN) or (retCode=EWOULDBLOCK) then begin
@@ -548,6 +566,10 @@ begin
   case Domain of
     sdIPv4: Result := IPv4AddressBuffer;
     sdIPv6: Result := IPv6AddressBuffer;
+    else begin
+      raise
+        Exception.Create('Address format is not supported.');
+    end;
   end;
 end;
 
@@ -613,10 +635,11 @@ begin
   Result := TStatus.Success;
 end;
 
-constructor TSocket.CreateWithHandle(const Handle: TSocketHandle; const Address: pointer; const AddrSize: Int32; out Status: TStatus);
+constructor TSocket.CreateWithHandle(const Handle: TSocketHandle; const Address: pointer; const Blocking: boolean; out Status: TStatus);
 begin
   inherited Create;
   fHandle := Handle;
+  fBlocking := Blocking;
   Status := DecodeAddress( Address );
 end;
 

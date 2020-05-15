@@ -549,6 +549,12 @@ type
     ///  </summary>
     function Connect( const NetworkAddress: TNetworkAddress ): TStatus;
 
+
+    ///  <summary>
+    ///    Disables sends or recieves (or both) on a socket.
+    ///  </summary>
+    function Shutdown(const Options: TShutdownOptions): TStatus;
+
     ///  <summary>
     ///    Closes the socket (disconnects from remote, or stops listening)
     ///  </summary>

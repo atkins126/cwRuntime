@@ -51,7 +51,6 @@ const
 {$endif}
 {$endregion}
 
-
 {$region ' IP Protocols '}
 const //- IP Protocols
   IPPROTO_UNSPEC   = 0;   // Unspecified, let the system handle it.
@@ -171,6 +170,11 @@ const
   FIONBIO         = $5421;
   FIONREAD        = $541B;
   {$endif}
+
+const
+  SD_RECEIVE = 0;
+  SD_SEND    = 1;
+  SD_BOTH    = 2;
 
 {$endregion}
 
@@ -472,6 +476,7 @@ function sktConnect( const Socket: TSocketHandle; const lpAddr: pTSockAddr; cons
 function sktCloseSocket( const Socket: TSocketHandle ): int32;                                                      {$ifdef MSWINDOWS} stdcall; {$else} cdecl; {$endif} external cLibName name {$ifdef MSWINDOWS} 'closesocket' {$else} 'close' {$endif};
 function sktSend( const Socket: TSocketHandle; const lpData: pointer; const len: int32; const flags: int32): int32; {$ifdef MSWINDOWS} stdcall; {$else} cdecl; {$endif} external cLibName name 'send';
 function sktRecv( const Socket: TSocketHandle; const lpData: pointer; const len: int32; const flags: int32): int32; {$ifdef MSWINDOWS} stdcall; {$else} cdecl; {$endif} external cLibName name 'recv';
+function sktShutdown( const Socket: TSocketHandle; const Method: uint32 ): int32;                                   {$ifdef MSWINDOWS} stdcall; {$else} cdecl; {$endif} external cLibName name 'shutdown';
 function ioctl( Socket: TSocketHandle; const cmd: int32; var argp: uint32 ): int32;                                 {$ifdef MSWINDOWS} stdcall; {$else} cdecl; {$endif} external {$ifdef MSWINDOWS} cLibName  name 'ioctlsocket' {$else} cLibCName name 'ioctl' {$endif};
 {$endregion}
 
@@ -499,6 +504,8 @@ function cwCleanup(): int32; stdcall; external cLibName name 'WSACleanup';
 {$endif}
 {$endregion}
 
+
+
 ///  <summary>
 ///    Returns the most recent error raised within the platform API for the
 ///    given thread.
@@ -506,8 +513,10 @@ function cwCleanup(): int32; stdcall; external cLibName name 'WSACleanup';
 function GetLastError: int32;
 
 implementation
+{$ifndef MSWINDOWS}
 uses
   BaseUnix;
+{$endif}
 
 function GetLastError: int32;
 begin

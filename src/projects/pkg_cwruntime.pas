@@ -32,7 +32,7 @@ uses
   cwlog.logtarget.event, cwLog.LogTarget.Stream, 
   cwlog.translationparser.standard, cwTiming.posix, cwTiming, 
   cwTiming.standard, cwIO.TypedBuffer.Standard, cwSockets, cwSockets.Standard, 
-  cwSockets.Socket.Standard, cwsockets.common, cwTiming.windows;
+  cwSockets.Socket.Standard, cwsockets.common;
 
 implementation
 

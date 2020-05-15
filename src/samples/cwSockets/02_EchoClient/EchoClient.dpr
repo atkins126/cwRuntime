@@ -59,25 +59,54 @@ begin
       exit;
     end;
 
-    repeat
-      //- Wait for something to send to the server.
-      Write('Message: ');
-      Readln(MessageText);
-      if Length(MessageText)>cMaxBuffer then begin
-        Writeln('Keep it short please!');
-        continue;
-      end;
-      //- Create a buffer to send our message
-      SendBuffer := TBuffer.Create;
-      SendBuffer.WriteString(MessageText,TUnicodeFormat.utf8,True);
-      if not ClientSocket.Send(SendBuffer).IsSuccess then begin
-        Writeln('Connection to server lost.');
-        break;
-      end;
+    SendBuffer := TBuffer.Create;
+    RecvBuffer := TBuffer.Create;
+    try
+      repeat
+        //- Wait for something to send to the server.
+        Write('Message: ');
+        Readln(MessageText);
+        if Length(MessageText)>cMaxBuffer then begin
+          Writeln('Keep it short please!');
+          continue;
+        end;
 
-    until False;
+        //- Create a buffer to send our message
+        SendBuffer.WriteString(MessageText,TUnicodeFormat.utf8,True);
+        if not ClientSocket.Send(SendBuffer).IsSuccess then begin
+          Writeln('Connection to server lost.');
+          break;
+        end;
 
+        //- If Recv returns any non success code, the client has disconnected.
+        //- We could check the status returned from Recv() to see if the
+        //- disconnection was graceful or not, however, for this example we
+        //- simply state that the client socket disconected, and break the
+        //- loop.
+        RecvBuffer.Size := 512;
+        if not ClientSocket.Recv(RecvBuffer).IsSuccess then begin
+          Writeln('The client socket was disconnected.');
+          break;
+        end;
+
+        //- If the socket is non-blocking, we may receive zero bytes of data,
+        //- in which case, do nothing more, start the loop over and attempt
+        //- recv again
+        if RecvBuffer.Size=0 then begin
+          continue;
+        end;
+
+        //- If we got here, there is data in the recv buffer. Write this
+        //- to the console.
+        Writeln( RecvBuffer.ReadString( TUnicodeFormat.utf8, FALSE ) );
+
+      until False;
+    finally
+      SendBuffer := nil;
+      RecvBuffer := nil;
+    end;
   finally
     ClientSocket := nil;
   end;
+  Readln;
 end.
