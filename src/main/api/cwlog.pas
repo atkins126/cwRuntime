@@ -103,21 +103,6 @@ type
 
 {$endregion}
 
-{$region ' Exceptions'}
-
-  ///  <summary>
-  ///    Exception raised when a log entry is inserted which has not been
-  ///    registered for insertion.
-  ///  </summary>
-  ELogEntryNotFound = class(Exception);
-
-  ///  <summary>
-  ///    Exception raised when an entry is inserted with log severity 'lsFatal'
-  ///  </summary>
-  ELogEntryFatal = class(Exception);
-
-{$endregion}
-
 {$region ' TOnLogInsertEvent'}
 type
   {$ifdef fpc}

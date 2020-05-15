@@ -111,6 +111,7 @@ type
 {$region ' Constants for pre-defined status codes which may be returned from cwRuntime'}
 
 const
+  le_LogEntryNotRegistered            : TGUID = '{59B9A72C-B7E5-46F1-9D2C-12C4B40C8F4E}'; //<- This one is registered in cwLog.Log.Standard
   le_DependencyNotMet                 : TGUID = '{3E1E0236-4A9E-4646-ABCF-D380BFF9E78A}';
   le_IndexOutOfBounds                 : TGUID = '{D2A48812-D065-4DE6-9EA1-473A34B8273C}';
   le_FactoryConstructException        : TGUID = '{51FF694C-97DC-4654-B1C3-A797730B3A52}';

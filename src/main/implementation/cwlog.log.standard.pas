@@ -26,7 +26,7 @@
   IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 *)
 {$endif}
-unit cwlog.log.static;
+unit cwLog.Log.Standard;
 {$ifdef fpc}{$mode delphiunicode}{$endif}
 
 interface
@@ -78,6 +78,7 @@ function Log: ILog;
 implementation
 uses
   sysutils  //[RTL] For IsEqualGUID
+, cwStatus
 , cwTypes
 , cwCollections.Standard
 , cwIO
@@ -226,8 +227,8 @@ begin
   //- Get the message translation
   MessageText := '';
   if not FindLogEntry( Result.Value, foundIdx ) then begin
-    Result := Insert(le_LogEntryNotRegistered, lsFatal, [GUIDToString(LogEntry)] );
-    exit;
+    raise
+      ELogEntryNotFound.Create(GuidToString(LogEntry));
   end;
   MessageText := fLogEntryTexts[foundIdx];
 
@@ -371,6 +372,7 @@ end;
 
 initialization
   SingletonLog := nil;
+  Log.RegisterLogEntry(le_LogEntryNotRegistered,'An attempt was made to insert entry "(%GUID%)" into the log, but it has not been registered.');
 
 finalization
   SingletonLog := nil;
