@@ -34,7 +34,7 @@ unit cwDynLib;
 
 interface
 uses
-  cwStatus
+  cwLog
 ;
 
 type

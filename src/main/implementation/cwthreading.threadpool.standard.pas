@@ -31,7 +31,7 @@ unit cwThreading.ThreadPool.Standard;
 
 interface
 uses
-  cwStatus
+  cwLog
 , cwCollections
 , cwThreading
 ;
@@ -66,7 +66,6 @@ uses
 , cwThreading.threadmethod.posix
 {$endif}
 , cwTypes
-, cwLog
 , cwLog.Standard
 ;
 
@@ -151,7 +150,7 @@ begin
   end;
   for idx := pred(Length(fThreadMethods)) downto 0 do begin
     if not fThreadMethods[idx].Terminate(3000) then begin
-      Log.Insert(le_FailedThreadTerminate,lsFatal,[idx.AsString]);
+      Log.Insert(stFailedThreadTerminate,lsFatal,[idx.AsString]);
     end;
   end;
 end;

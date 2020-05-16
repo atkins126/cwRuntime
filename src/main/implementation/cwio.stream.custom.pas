@@ -31,8 +31,7 @@ unit cwIO.Stream.Custom;
 
 interface
 uses
-  cwStatus
-, cwIO
+  cwIO
 ;
 
 type
@@ -104,7 +103,7 @@ end;
 
 procedure TCustomStream.Clear;
 begin
-  Log.Insert( le_StreamDoesNotSupportClear, TLogSeverity.lsFatal );
+  Log.Insert( stStreamDoesNotSupportClear, TLogSeverity.lsFatal );
 end;
 
 function TCustomStream.CopyFrom(const Source: IStream): nativeuint;

@@ -87,20 +87,19 @@ implementation
 uses
   sysutils
 , cwTest.Standard
-, cwStatus
 , cwLog
 , cwLog.Standard
 ;
 
 const
-  le_TestLogEntry: TGUID = '{68D3D83C-4109-4EB5-AB8E-F5F9EDE5E540}';
-  le_Alphabet: TGUID = '{4CAC6378-7500-4BAB-B0C8-8F15BB051B1A}';
+  stTestLogEntry: TStatus = ( Value: '{68D3D83C-4109-4EB5-AB8E-F5F9EDE5E540}');
+  stAlphabet: TStatus = ( Value: '{4CAC6378-7500-4BAB-B0C8-8F15BB051B1A}');
 
 const
-  cle_TestLogEntryGUID = '{68D3D83C-4109-4EB5-AB8E-F5F9EDE5E540}';
-  cle_TestLogEntryText = 'This is a test log entry.';
-  cle_AlphabetGUID = '{4CAC6378-7500-4BAB-B0C8-8F15BB051B1A}';
-  cle_AlphabetText = 'A B C D E F G H I J K L M N O P Q R S T U V W X Y Z A B C.';
+  cstTestLogEntryGUID = '{68D3D83C-4109-4EB5-AB8E-F5F9EDE5E540}';
+  cstTestLogEntryText = 'This is a test log entry.';
+  cstAlphabetGUID = '{4CAC6378-7500-4BAB-B0C8-8F15BB051B1A}';
+  cstAlphabetText = 'A B C D E F G H I J K L M N O P Q R S T U V W X Y Z A B C.';
 
 
 procedure TTest_cwLog_Insert.Test_InsertLogEntry_Info;
@@ -108,10 +107,10 @@ var
   R: TStatus;
 begin
   // Act
-  R := Log.Insert(le_TestLogEntry,lsInfo);
+  R := Log.Insert(stTestLogEntry,lsInfo);
   // Assert
-  TTest.Expect( cle_TestLogEntryGUID, string(GUIDToString(R.Value)) );
-  TTest.Expect( '[INFO] '+cle_TestLogEntryText, Log.getLastEntry );
+  TTest.Expect( cstTestLogEntryGUID, string(GUIDToString(R.Value)) );
+  TTest.Expect( '[INFO] '+cstTestLogEntryText, Log.getLastEntry );
 end;
 
 procedure TTest_cwLog_Insert.Test_InsertLogEntry_Hint;
@@ -119,10 +118,10 @@ var
   R: TStatus;
 begin
   // Act
-  R := Log.Insert(le_TestLogEntry,lsHint);
+  R := Log.Insert(stTestLogEntry,lsHint);
   // Assert
-  TTest.Expect( cle_TestLogEntryGUID, string(GUIDToString(R.Value)) );
-  TTest.Expect( '[HINT] '+cle_TestLogEntryText, Log.getLastEntry );
+  TTest.Expect( cstTestLogEntryGUID, string(GUIDToString(R.Value)) );
+  TTest.Expect( '[HINT] '+cstTestLogEntryText, Log.getLastEntry );
 end;
 
 procedure TTest_cwLog_Insert.Test_InsertLogEntry_Warning;
@@ -130,10 +129,10 @@ var
   R: TStatus;
 begin
   // Act
-  R := Log.Insert(le_TestLogEntry,lsWarning);
+  R := Log.Insert(stTestLogEntry,lsWarning);
   // Assert
-  TTest.Expect( cle_TestLogEntryGUID, string(GUIDToString(R.Value)) );
-  TTest.Expect( '[WARNING] '+cle_TestLogEntryText, Log.getLastEntry );
+  TTest.Expect( cstTestLogEntryGUID, string(GUIDToString(R.Value)) );
+  TTest.Expect( '[WARNING] '+cstTestLogEntryText, Log.getLastEntry );
 end;
 
 procedure TTest_cwLog_Insert.Test_InsertLogEntry_Error;
@@ -141,10 +140,10 @@ var
   R: TStatus;
 begin
   // Act
-  R := Log.Insert(le_TestLogEntry,lsError);
+  R := Log.Insert(stTestLogEntry,lsError);
   // Assert
-  TTest.Expect( cle_TestLogEntryGUID, string(GUIDToString(R.Value)) );
-  TTest.Expect( '[ERROR] '+cle_TestLogEntryText, Log.getLastEntry );
+  TTest.Expect( cstTestLogEntryGUID, string(GUIDToString(R.Value)) );
+  TTest.Expect( '[ERROR] '+cstTestLogEntryText, Log.getLastEntry );
 end;
 
 procedure TTest_cwLog_Insert.Test_InsertLogEntry_Fatal;
@@ -152,10 +151,10 @@ var
   R: TStatus;
 begin
   // Act
-  R := Log.Insert(le_TestLogEntry,lsFatal);
+  R := Log.Insert(stTestLogEntry,lsFatal);
   // Assert
-  TTest.Expect( cle_TestLogEntryGUID, string(GUIDToString(R.Value)) );
-  TTest.Expect( '[FATAL] '+cle_TestLogEntryText, Log.getLastEntry );
+  TTest.Expect( cstTestLogEntryGUID, string(GUIDToString(R.Value)) );
+  TTest.Expect( '[FATAL] '+cstTestLogEntryText, Log.getLastEntry );
 end;
 
 procedure TTest_cwLog_Insert.Test_InsertLogEntry_Info_Substitution;
@@ -163,10 +162,10 @@ var
   R: TStatus;
 begin
   // Act
-  R := Log.Insert(le_Alphabet,lsInfo,['A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z']);
+  R := Log.Insert(stAlphabet,lsInfo,['A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z']);
   // Assert
-  TTest.Expect( cle_AlphabetGUID, string(GUIDToString(R.Value)) );
-  TTest.Expect( '[INFO] '+cle_AlphabetText, Log.getLastEntry );
+  TTest.Expect( cstAlphabetGUID, string(GUIDToString(R.Value)) );
+  TTest.Expect( '[INFO] '+cstAlphabetText, Log.getLastEntry );
 end;
 
 procedure TTest_cwLog_Insert.Test_InsertLogEntry_Hint_Substitution;
@@ -174,10 +173,10 @@ var
   R: TStatus;
 begin
   // Act
-  R := Log.Insert(le_Alphabet,lsHint,['A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z']);
+  R := Log.Insert(stAlphabet,lsHint,['A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z']);
   // Assert
-  TTest.Expect( cle_AlphabetGUID, string(GUIDToString(R.Value)) );
-  TTest.Expect( '[HINT] '+cle_AlphabetText, Log.getLastEntry );
+  TTest.Expect( cstAlphabetGUID, string(GUIDToString(R.Value)) );
+  TTest.Expect( '[HINT] '+cstAlphabetText, Log.getLastEntry );
 end;
 
 procedure TTest_cwLog_Insert.Test_InsertLogEntry_Warning_Substitution;
@@ -185,10 +184,10 @@ var
   R: TStatus;
 begin
   // Act
-  R := Log.Insert(le_Alphabet,lsWarning,['A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z']);
+  R := Log.Insert(stAlphabet,lsWarning,['A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z']);
   // Assert
-  TTest.Expect( cle_AlphabetGUID, string(GUIDToString(R.Value)) );
-  TTest.Expect( '[WARNING] '+cle_AlphabetText, Log.getLastEntry );
+  TTest.Expect( cstAlphabetGUID, string(GUIDToString(R.Value)) );
+  TTest.Expect( '[WARNING] '+cstAlphabetText, Log.getLastEntry );
 end;
 
 procedure TTest_cwLog_Insert.Test_InsertLogEntry_Error_Substitution;
@@ -196,10 +195,10 @@ var
   R: TStatus;
 begin
   // Act
-  R := Log.Insert(le_Alphabet,lsError,['A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z']);
+  R := Log.Insert(stAlphabet,lsError,['A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z']);
   // Assert
-  TTest.Expect( cle_AlphabetGUID, string(GUIDToString(R.Value)) );
-  TTest.Expect( '[ERROR] '+cle_AlphabetText, Log.getLastEntry );
+  TTest.Expect( cstAlphabetGUID, string(GUIDToString(R.Value)) );
+  TTest.Expect( '[ERROR] '+cstAlphabetText, Log.getLastEntry );
 end;
 
 procedure TTest_cwLog_Insert.Test_InsertLogEntry_Fatal_Substitution;
@@ -207,16 +206,16 @@ var
   R: TStatus;
 begin
   // Act
-  R := Log.Insert(le_Alphabet,lsFatal,['A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z']);
+  R := Log.Insert(stAlphabet,lsFatal,['A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z']);
   // Assert
-  TTest.Expect( cle_AlphabetGUID, string(GUIDToString(R.Value)) );
-  TTest.Expect( '[FATAL] '+cle_AlphabetText, Log.getLastEntry );
+  TTest.Expect( cstAlphabetGUID, string(GUIDToString(R.Value)) );
+  TTest.Expect( '[FATAL] '+cstAlphabetText, Log.getLastEntry );
 end;
 
 initialization
   TestSuite.RegisterTestCase( TTest_cwLog_Insert );
-  Log.RegisterLogEntry(le_TestLogEntry,'This is a test log entry.');
-  Log.RegisterLogEntry(le_Alphabet,'(%a%) (%b%) (%c%) (%d%) (%e%) (%f%) (%g%) (%h%) (%i%) (%j%) (%k%) (%l%) (%m%) (%n%) (%o%) (%p%) (%q%) (%r%) (%s%) (%t%) (%u%) (%v%) (%w%) (%x%) (%y%) (%z%) (%a%) (%b%) (%c%).');
+  Log.RegisterLogEntry(stTestLogEntry,'This is a test log entry.');
+  Log.RegisterLogEntry(stAlphabet,'(%a%) (%b%) (%c%) (%d%) (%e%) (%f%) (%g%) (%h%) (%i%) (%j%) (%k%) (%l%) (%m%) (%n%) (%o%) (%p%) (%q%) (%r%) (%s%) (%t%) (%u%) (%v%) (%w%) (%x%) (%y%) (%z%) (%a%) (%b%) (%c%).');
 
 end.
 

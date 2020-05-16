@@ -35,23 +35,24 @@ unit cwlog.standard;
 interface
 uses
   sysutils // for Exception
-, cwStatus
 , cwLog
 , cwLog.Common
 ;
 
 /// <summary>
-///   When this type of exception is raised it will read the most recent
-///   log entry for an exception message. It also carries the status value
-///   (message GUID) should this need to be passed to a handler.
+///   TLoggedException will insert an entry into the log with severity
+///   lsFatal, and then raise an exception using the log entry text.
+///   Using TLoggedException enables translation of exception messages
+///   through the log translation functionality.
 /// <summary>
 {$region ' TException'}
 type  
-  TException = class(Exception)
+  TLoggedException = class(Exception)
   private
     fStatus: TStatus;
   public
-    constructor Create( const Status: TStatus ); reintroduce;
+    constructor Create( const Status: TStatus ); reintroduce; overload;
+    constructor Create( const Status: TStatus; const Parameters: array of string ); reintroduce; overload;
     property Status: TStatus read fStatus;
   end;  
 {$endregion}
@@ -75,16 +76,68 @@ begin
 end;
 
 {$region ' TException'}
-constructor TException.Create( const Status: TStatus );
+constructor TLoggedException.Create(const Status: TStatus);
+var
+  aStatus: TStatus;
 begin
+  aStatus := Log.Insert(Status,lsFatal);
   {$ifdef fpc}
   inherited Create( Log.LastEntry.AsAnsiString );
   {$else}
   inherited Create( Log.LastEntry );
   {$endif}
-  fStatus := Status;
+  fStatus := aStatus;
+end;
+
+constructor TLoggedException.Create(const Status: TStatus; const Parameters: array of string);
+var
+  aStatus: TStatus;
+begin
+  aStatus := Log.Insert(Status,lsFatal,Parameters);
+  {$ifdef fpc}
+  inherited Create( Log.LastEntry.AsAnsiString );
+  {$else}
+  inherited Create( Log.LastEntry );
+  {$endif}
+  fStatus := aStatus;
 end;
 {$endregion}
 
+initialization
+{$region ' Register these status codes as log entries with the logging system.'}
+
+  Log.RegisterLogEntry(stDependencyNotMet,                 'An error occured while constructing a required dependency.');
+  Log.RegisterLogEntry(stIndexOutOfBounds,                 'Index out of bounds "(%index%)".');
+  Log.RegisterLogEntry(stFactoryConstructException,        'An exception occurred while attempting to construct an object, with message "(%message%)"');
+  Log.RegisterLogEntry(stObjectNotAssigned,                'Object "(%object%)" is not assigned.');
+  Log.RegisterLogEntry(stStreamDoesNotSupportClear,        'Stream does not support the Clear() method.');
+  Log.RegisterLogEntry(stCannotEncodeUnknownUnicodeFormat, 'Cannot encode to unicode format utfUnknown.');
+  Log.RegisterLogEntry(stUnableToDetermineUnicodeFormat,   'Unable to determine the unicode format.');
+  Log.RegisterLogEntry(stFailedThreadTerminate,            'Thread (%index%) failed to terminate gracefully.');
+  Log.RegisterLogEntry(stOSAPIError,                       'An Operating System error occurred on (%call%) value (%value%).');
+  Log.RegisterLogEntry(stDuplicateMessageChannel,          'Message channel name must be unique. (%channel%) is already in use.');
+  Log.RegisterLogEntry(stThreadAlreadyStarted,             'Thread is already started.');
+  Log.RegisterLogEntry(stFileNotFound,                     'File not found "(%filename%)"');
+  Log.RegisterLogEntry(stModuleNotLoaded,                  'DynLib failed to load module "(%module%)"');
+  Log.RegisterLogEntry(stFailedToLoadEntryPoint,           'Failed to locate entrypoint "(%entrypoint%)" in library "(%library%)"');
+  Log.RegisterLogEntry(stNoHighPrecisionTimer,             'Unable to access high-precision timer device.');
+  Log.RegisterLogEntry(stSocketError,                      'A socket API error occurred (%apierrno%)');
+  Log.RegisterLogEntry(stInvalidSocket,                    'Attempt to "(%operation%)" on invalid socket.');
+  Log.RegisterLogEntry(stBindNotSupportedOnDomain,         'The bind operation is not yet supported for this domain / address family.');
+  Log.RegisterLogEntry(stSocketBindError,                  'The socket library failed to bind with return code "(%returncode%)"');
+  Log.RegisterLogEntry(stSocketListenError,                'The socket library failed to listen with return code "(%returncode%)"');
+  Log.RegisterLogEntry(stSocketAcceptError,                'The socket library failed to accept with return code "(%returncode%)"');
+  Log.RegisterLogEntry(stSocketConnectError,               'The socket library failed to connect with return code "(%returncode%)"');
+  Log.RegisterLogEntry(stSocketCloseError,                 'The socket library failed to close with return code "(%returncode%)"');
+  Log.RegisterLogEntry(stSocketShutdownError,              'The socket library failed to shutdown with return code "(%returncode%)"');
+  Log.RegisterLogEntry(stUnknownSocketDomain,              'Unknown socket domain / address family.');
+  Log.RegisterLogEntry(stUnsupportedAddressFormat,         'The socket library does not support this address format');
+  Log.RegisterLogEntry(stSocketClosed,                     'Socket closed on Recv().');
+  Log.RegisterLogEntry(stFailedToConvertNetworkAddress,    'Failed to convert network address "(%IPAddress%)" on port "(%port%)"');
+  Log.RegisterLogEntry(stInvalidArrayForVector,            'Array passed to vector has incorrect length.');
+
+{$endregion}
+
+finalization
 end.
 

@@ -291,10 +291,6 @@
         <Filename Value="..\main\implementation\cwsockets.common.pas"/>
         <UnitName Value="cwsockets.common"/>
       </Item>
-      <Item>
-        <Filename Value="..\main\api\cwstatus.pas"/>
-        <UnitName Value="cwStatus"/>
-      </Item>
     </Files>
     <UsageOptions>
       <UnitPath Value="$(PkgOutDir)"/>

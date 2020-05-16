@@ -31,7 +31,7 @@ unit cwSockets.Socket.Standard;
 
 interface
 uses
-  cwStatus
+  cwLog
 , cwIO
 , cwSockets
 ;
@@ -86,7 +86,6 @@ type
 implementation
 uses
   sysutils
-, cwLog
 , cwLog.Standard
 , cwTypes
 , cwIO.Standard
@@ -189,7 +188,7 @@ begin
   Result := TStatus.Unknown;
   fHandle := sktSocket( SocketDomainToInt(fDomain), SocketKindToInt(fKind), PacketProtocolToInt(fProtocol) );
   if fHandle=INVALID_SOCKET then begin
-    Result := Log.Insert(le_SocketError,lsError,[GetLastError().AsString]);
+    Result := Log.Insert(stSocketError,lsError,[GetLastError().AsString]);
     exit;
   end;
   Result := TStatus.Success;
@@ -262,7 +261,7 @@ var
 begin
   Result := TStatus.Unknown;
   if fHandle=INVALID_SOCKET then begin
-    Result := Log.Insert(le_InvalidSocket,lsError,['bind']);
+    Result := Log.Insert(stInvalidSocket,lsError,['bind']);
     exit;
   end;
   //- Configure the address record for the domain (address family)
@@ -270,19 +269,19 @@ begin
     sdIPv4: Address := PrepareAddressIPv4( NetworkAddress );
     sdIPv6: Address := PrepareAddressIPv6( NetworkAddress );
     else begin
-      Result := Log.Insert(le_BindNotSupportedOnDomain,lsError);
+      Result := Log.Insert(stBindNotSupportedOnDomain,lsError);
       exit;
     end;
   end;
   if not assigned(Address) then begin
-    Result := Log.Insert(le_FailedToConvertNetworkAddress,lsError,[NetworkAddress.IPAddress,NetworkAddress.Port.AsString]);
+    Result := Log.Insert(stFailedToConvertNetworkAddress,lsError,[NetworkAddress.IPAddress,NetworkAddress.Port.AsString]);
     exit;
   end;
   try
     //- Bind
     retCode := sktBind( fHandle, Address.DataPtr, Address.Size );
     if retCode<>0 then begin
-      Result := Log.Insert(le_SocketBindError,lsError,[retCode.AsString]);
+      Result := Log.Insert(stSocketBindError,lsError,[retCode.AsString]);
       exit;
     end;
     fAddress := NetworkAddress.IPAddress;
@@ -298,12 +297,12 @@ var
   retCode: int32;
 begin
   if fHandle=INVALID_SOCKET then begin
-    Result := Log.Insert(le_InvalidSocket,lsError,['listen']);
+    Result := Log.Insert(stInvalidSocket,lsError,['listen']);
     exit;
   end;
   retCode := sktListen(fHandle,SOMAXCONN);
   if retCode<>0 then begin
-    Result := Log.Insert(le_SocketListenError,lsError,[retCode.AsString]);
+    Result := Log.Insert(stSocketListenError,lsError,[retCode.AsString]);
     exit;
   end;
   Result := TStatus.Success;
@@ -317,7 +316,7 @@ var
   retCode: int32;
 begin
   if fHandle=INVALID_SOCKET then begin
-    Result := Log.Insert(le_InvalidSocket,lsError,['accept']);
+    Result := Log.Insert(stInvalidSocket,lsError,['accept']);
     exit;
   end;
   //- Accept socket
@@ -336,7 +335,7 @@ begin
         Result := TStatus.Success;
         exit;
       end else begin
-        Result := Log.Insert(le_SocketAcceptError,lsError,[retCode.AsString]);
+        Result := Log.Insert(stSocketAcceptError,lsError,[retCode.AsString]);
         exit;
       end;
     end;
@@ -358,7 +357,7 @@ var
 begin
   Result := TStatus.Unknown;
   if fHandle=INVALID_SOCKET then begin
-    Result := Log.Insert(le_InvalidSocket,lsError,['connect']);
+    Result := Log.Insert(stInvalidSocket,lsError,['connect']);
     exit;
   end;
   //- Configure the address record for the domain (address family)
@@ -366,12 +365,12 @@ begin
     sdIPv4: Address := PrepareAddressIPv4( NetworkAddress );
     sdIPv6: Address := PrepareAddressIPv6( NetworkAddress );
     else begin
-      Result := Log.Insert(le_BindNotSupportedOnDomain,lsError);
+      Result := Log.Insert(stBindNotSupportedOnDomain,lsError);
       exit;
     end;
   end;
   if not assigned(Address) then begin
-    Result := Log.Insert(le_FailedToConvertNetworkAddress,lsError,[NetworkAddress.IPAddress,NetworkAddress.Port.AsString]);
+    Result := Log.Insert(stFailedToConvertNetworkAddress,lsError,[NetworkAddress.IPAddress,NetworkAddress.Port.AsString]);
     exit;
   end;
   try
@@ -379,7 +378,7 @@ begin
     AddrSize := Address.Size;
     retCode := sktConnect( fHandle, Address.DataPtr, AddrSize );
     if retCode<>0 then begin
-      Result := Log.Insert(le_SocketError,lsError,[GetLastError().AsString]);
+      Result := Log.Insert(stSocketError,lsError,[GetLastError().AsString]);
       exit;
     end;
     fAddress := NetworkAddress.IPAddress;
@@ -403,7 +402,7 @@ begin
   end;
   retCode := sktShutdown(fHandle,Opts);
   if retCode<>0 then begin
-    Result := Log.Insert(le_SocketShutdownError,lsError,[retCode.AsString]);
+    Result := Log.Insert(stSocketShutdownError,lsError,[retCode.AsString]);
     exit;
   end;
 end;
@@ -414,7 +413,7 @@ var
 begin
   retCode := sktCloseSocket(fHandle);
   if retCode<>0 then begin
-    Result := Log.Insert(le_SocketCloseError,lsError,[retCode.AsString]);
+    Result := Log.Insert(stSocketCloseError,lsError,[retCode.AsString]);
     exit;
   end;
   fHandle := INVALID_SOCKET;
@@ -429,11 +428,11 @@ var
   DataSize: int32;
 begin
   if fHandle=INVALID_SOCKET then begin
-    Result := Log.Insert(le_InvalidSocket,lsError,['send']);
+    Result := Log.Insert(stInvalidSocket,lsError,['send']);
     exit;
   end;
   if not assigned(Data) then begin
-    Result := Log.Insert(le_ObjectNotAssigned,lsError,['IBuffer']);
+    Result := Log.Insert(stObjectNotAssigned,lsError,['IBuffer']);
     exit;
   end;
   if Data.Size=0 then begin
@@ -451,7 +450,7 @@ begin
       DataSize := {$warnings off} Data.Size - TotalSent; {$warnings on} //- Delphi signed/unsigned warning W1073
       Sent := sktSend(fHandle,DataPtr,DataSize,0); // todo - correct flags
       if Sent = SOCKET_ERROR then begin
-        Result := Log.Insert(le_SocketError,lsError,[GetLastError().AsString]);
+        Result := Log.Insert(stSocketError,lsError,[GetLastError().AsString]);
         exit;
       end;
       TotalSent := TotalSent + Sent;
@@ -465,11 +464,11 @@ var
   retCode: int32;
 begin
   if fHandle=INVALID_SOCKET then begin
-    Result := Log.Insert(le_InvalidSocket,lsError,['recv']);
+    Result := Log.Insert(stInvalidSocket,lsError,['recv']);
     exit;
   end;
   if not assigned(Data) then begin
-    Result := Log.Insert(le_ObjectNotAssigned,lsError,['IBuffer']);
+    Result := Log.Insert(stObjectNotAssigned,lsError,['IBuffer']);
     exit;
   end;
   if Data.Size=0 then begin
@@ -478,7 +477,7 @@ begin
   end;
   Recvd := sktRecv(fHandle,Data.DataPtr,Data.Size,0); // todo - correct flags
   if (Recvd=0) and (not fBlocking) then begin
-    Result := Log.Insert(le_SocketClosed,lsInfo);
+    Result := Log.Insert(stSocketClosed,lsInfo);
     exit;
   end;
   if Recvd = SOCKET_ERROR then begin
@@ -492,7 +491,7 @@ begin
       Result := TStatus.Success;
       exit;
     end;
-    Result := Log.Insert(le_SocketError,lsError,[retCode.AsString]);
+    Result := Log.Insert(stSocketError,lsError,[retCode.AsString]);
     exit;
   end;
   Data.Size := Recvd;
@@ -516,7 +515,7 @@ begin
     Option := cBlockingDisabled;
   end;
   if ioctl(fHandle, FIONBIO, Option)=SOCKET_ERROR then begin
-    Result := Log.Insert(le_SocketError,lsError,[GetLastError().AsString]);
+    Result := Log.Insert(stSocketError,lsError,[GetLastError().AsString]);
     exit;
   end;
   fBlocking := Value;
@@ -573,7 +572,7 @@ begin
     sdIPv6: Result := IPv6AddressBuffer;
     else begin
       raise
-        Exception.Create('Address format is not supported.');
+        TLoggedException.Create(stUnsupportedAddressFormat);
     end;
   end;
 end;
@@ -633,7 +632,7 @@ begin
     sdIPv4: DecodeIPv4Address( Address );
     sdIPv6: DecodeIPv6Address( Address );
     else begin
-      Result := Log.Insert(le_UnknownSocketDomain,lsError);
+      Result := Log.Insert(stUnknownSocketDomain,lsError);
       exit;
     end;
   end;

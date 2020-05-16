@@ -33,7 +33,6 @@ interface
 uses
   cwUnicode
 , cwIO
-, cwStatus
 , cwLog
 ;
 
@@ -360,7 +359,7 @@ begin
     case Format of
 
       TUnicodeFormat.utfUnknown: begin
-        Log.Insert(le_CannotEncodeUnknownUnicodeFormat,TLogSeverity.lsError);
+        Log.Insert(stCannotEncodeUnknownUnicodeFormat,TLogSeverity.lsError);
         exit;
       end;
 

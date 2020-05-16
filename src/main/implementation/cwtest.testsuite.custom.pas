@@ -60,7 +60,8 @@ type
 
 implementation
 uses
-  cwTypes
+  sysutils //- For Exception
+, cwTypes
 , cwLog.Standard
 ;
 
@@ -157,7 +158,7 @@ begin
   try
     Result := ExecuteTestMethod( TestCaseClass, aMethodName, WithSetup, WithTearDown, Reason );
   except
-    on E: TException do begin
+    on E: Exception do begin
       Reason := string(E.Message);
       Result := TTestResult.trError;
     end else begin

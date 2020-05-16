@@ -33,7 +33,6 @@ interface
 uses
   syncobjs
 , cwLog
-, cwStatus
 , cwCollections
 ;
 
@@ -56,12 +55,12 @@ type
     function ParseParameters(const SourceString: string): TArrayOfString;
     function FindLogEntry( const GUID: TGUID; out FoundIdx: nativeuint ): boolean;
   strict private //- ILog -//
-    function RegisterLogEntry( const LogEntry: TGUID; const DefaultText: string ): boolean;
+    function RegisterLogEntry( const LogEntry: TStatus; const DefaultText: string ): boolean;
     procedure AddLogTarget( const LogTarget: ILogTarget );
     function ExportTranslationFile( const FilePath: string ): TStatus;
     function ImportTranslationFile( const FilePath: string ): TStatus;
-    function Insert( const LogEntry: TGUID; const Severity: TLogSeverity; const Parameters: array of string ): TStatus; overload;
-    function Insert( const LogEntry: TGUID; const Severity: TLogSeverity ): TStatus; overload;
+    function Insert( const LogEntry: TStatus; const Severity: TLogSeverity; const Parameters: array of string ): TStatus; overload;
+    function Insert( const LogEntry: TStatus; const Severity: TLogSeverity ): TStatus; overload;
     function getLastEntry: string;
   public
     constructor Create; reintroduce;
@@ -115,7 +114,7 @@ begin
   end;
 end;
 
-function TLog.RegisterLogEntry( const LogEntry: TGUID; const DefaultText: string ): boolean;
+function TLog.RegisterLogEntry( const LogEntry: TStatus; const DefaultText: string ): boolean;
 var
   foundIdx: nativeuint;
   L: nativeuint;
@@ -212,7 +211,7 @@ begin
   Result := TStatus.Success;
 end;
 
-function TLog.Insert(const LogEntry: TGUID; const Severity: TLogSeverity; const Parameters: array of string): TStatus;
+function TLog.Insert(const LogEntry: TStatus; const Severity: TLogSeverity; const Parameters: array of string): TStatus;
 var
   MessageText: string;
   ParameterPlaceholders: TArrayOfString;
@@ -226,7 +225,7 @@ begin
   //- Get the message translation
   MessageText := '';
   if not FindLogEntry( Result.Value, foundIdx ) then begin
-    Result := Insert(le_LogEntryNotRegistered, lsFatal, [GUIDToString(LogEntry)] );
+    Result := Insert(stLogEntryNotRegistered, lsFatal, [GUIDToString(LogEntry).AsString] );
     exit;
   end;
   MessageText := fLogEntryTexts[foundIdx];
@@ -333,7 +332,7 @@ begin
   end;
 end;
 
-function TLog.Insert(const LogEntry: TGUID; const Severity: TLogSeverity): TStatus;
+function TLog.Insert(const LogEntry: TStatus; const Severity: TLogSeverity): TStatus;
 begin
   Result := Insert( LogEntry, Severity, [] );
 end;

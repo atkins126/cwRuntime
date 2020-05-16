@@ -32,7 +32,7 @@ unit cwSockets.Standard;
 
 interface
 uses
-  cwStatus
+  cwLog
 , cwSockets
 ;
 

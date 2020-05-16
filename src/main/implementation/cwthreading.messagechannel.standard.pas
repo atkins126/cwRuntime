@@ -31,8 +31,7 @@ unit cwThreading.MessageChannel.Standard;
 
 interface
 uses
-  cwStatus
-, cwThreading
+  cwThreading
 , cwCollections
 , cwThreading.Messaging.Internal
 ;

@@ -35,15 +35,15 @@ uses
 ;
 
 const
-  le_Test: TGUID = '{A4ABC7F4-599E-4621-AE2A-5AC90F05A1CB}';
-  le_TestWithParam: TGUID = '{62576856-C1CF-450A-9A65-1A48F0F442E8}';
+  stTest: TStatus = ( Value: '{A4ABC7F4-599E-4621-AE2A-5AC90F05A1CB}');
+  stTestWithParam: TStatus = ( Value: '{62576856-C1CF-450A-9A65-1A48F0F442E8}');
 
 begin
-  Log.RegisterLogEntry(le_Test,'This is a test entry.');
-  Log.RegisterLogEntry(le_TestWithParam,'This is a test entry with a parameter (%param%).');
+  Log.RegisterLogEntry(stTest,'This is a test entry.');
+  Log.RegisterLogEntry(stTestWithParam,'This is a test entry with a parameter (%param%).');
   Log.AddLogTarget( TLogTarget.Console );
-  Log.Insert(le_test,lsError);
-  Log.Insert(le_testWithParam,lsError,['value']);
+  Log.Insert(sttest,lsError);
+  Log.Insert(sttestWithParam,lsError,['value']);
   Readln;
 end.
 

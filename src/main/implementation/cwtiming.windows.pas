@@ -32,7 +32,7 @@ unit cwTiming.windows;
 interface
 {$ifdef MSWINDOWS}
 uses
-  cwStatus
+  cwLog
 , cwTiming
 ;
 
@@ -57,8 +57,7 @@ type
 implementation
 {$ifdef MSWINDOWS}
 uses
-  cwLog
-, cwLog.Standard
+  cwLog.Standard
 , cwWin32.kernel32
 ;
 
@@ -77,7 +76,7 @@ end;
 procedure TTimer.internalGetResolution;
 begin
   if not QueryPerformanceFrequency(fTicksPerSecond) then begin
-    Log.Insert(le_NoHighPrecisionTimer,TLogSeverity.lsFatal);
+    Log.Insert(stNoHighPrecisionTimer,TLogSeverity.lsFatal);
   end;
 end;
 

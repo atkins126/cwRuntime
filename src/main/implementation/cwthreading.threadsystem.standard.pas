@@ -31,7 +31,7 @@ unit cwThreading.ThreadSystem.Standard;
 
 interface
 uses
-  cwStatus
+  cwLog
 , cwCollections
 , cwThreading
 ;
@@ -82,7 +82,6 @@ uses
 , cwThreading.ThreadPool.Standard
 , cwThreading.MessageBus.Standard
 , cwCollections.Standard
-, cwLog
 , cwLog.Standard
 ;
 
@@ -317,7 +316,7 @@ end;
 procedure TThreadSystem.Start;
 begin
   if fRunning then begin
-    Log.Insert(le_ThreadAlreadyStarted,lsFatal);
+    Log.Insert(stThreadAlreadyStarted,lsFatal);
   end;
   fRunning := True;
   //- Start auxhillary threads.

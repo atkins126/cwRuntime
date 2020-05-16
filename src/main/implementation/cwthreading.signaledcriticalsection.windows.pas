@@ -32,7 +32,7 @@ unit cwThreading.SignaledCriticalSection.Windows;
 interface
 {$ifdef MSWINDOWS}
 uses
-  cwStatus
+  cwLog
 , cwWin32.Types
 , cwWin32.Kernel32
 , cwThreading
@@ -58,7 +58,6 @@ implementation
 uses
   cwWin32.Constants
 , cwTypes
-, cwLog
 , cwLog.Standard
 ;
 
@@ -86,7 +85,7 @@ begin
   if not SleepConditionVariableSRW(fCondition, fMutex, INFINITE, 0) then begin
     Error:=GetLastError;
     if Error<>ERROR_TIMEOUT then begin
-      Log.Insert(le_OSAPIError,lsFatal,['SleepConditionVariableSRW',Error.AsString]);
+      Log.Insert(stOSAPIError,lsFatal,['SleepConditionVariableSRW',Error.AsString]);
     end;
   end;
 end;

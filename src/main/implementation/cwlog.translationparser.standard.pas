@@ -34,6 +34,7 @@ unit cwlog.translationparser.standard;
 interface
 uses
   cwIO
+, cwLog
 , sysutils
 , cwTypes
 ;
@@ -52,7 +53,7 @@ type
       function GetMessage(const Translations: IUnicodeStream; out Message: string): boolean;
       function ParseEntry(const Translations: IUnicodeStream): boolean;
     public
-      GUIDS: array of TGUID;
+      GUIDS: array of TStatus;
       Texts: array of string;
       EntryCount: nativeuint;
 
@@ -186,7 +187,6 @@ function TTranslationParser.ParseEntry(const Translations: IUnicodeStream): bool
 var
   UUID: string;
   MessageText: string;
-  S: string;
   L: nativeuint;
 begin
   Result := False;
@@ -265,8 +265,7 @@ begin
     SetLength(GUIDS,Length(GUIDS)+cEntryGranularity);
     SetLength(Texts,Length(Texts)+cEntryGranularity);
   end;
-  S := '{'+UUID+'}';
-  GUIDS[EntryCount] := StringToGUID(S{$ifdef fpc}.AsAnsiString{$endif});
+  GUIDS[EntryCount] := '{'+UUID+'}';
   Texts[EntryCount] := MessageText;
   inc(EntryCount);
   Result := True;

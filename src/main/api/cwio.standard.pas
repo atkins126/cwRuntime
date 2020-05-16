@@ -99,6 +99,9 @@ type
 implementation
 uses
   sysutils
+, cwTypes
+, cwLog
+, cwLog.Standard
 , cwIO.MemoryStream.Standard
 , cwIO.FileStream.Standard
 , cwIO.CyclicBuffer.Standard
@@ -213,7 +216,7 @@ begin
   p := fBuffer.getDataPointer;
   if Index>=fCount then begin
     raise
-      Exception.Create('Index out of bounds');
+      TLoggedException.Create(stIndexOutOfBounds,[Index.AsString]);
   end;
   p := {$hints off} pointer(nativeuint(p)+fItemSize*Index); {$hints on}
   Result := p^;
@@ -226,7 +229,7 @@ begin
   p := fBuffer.getDataPointer;
   if Index>=fCount then begin
     raise
-      Exception.Create('Index out of bounds');
+      TLoggedException.Create(stIndexOutOfBounds,[Index.AsString]);
   end;
   p := {$hints off} pointer(nativeuint(p)+fItemSize*Index); {$hints on}
   p^ := value;

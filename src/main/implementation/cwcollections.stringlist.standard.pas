@@ -71,6 +71,8 @@ type
 implementation
 uses
   sysutils
+, cwLog
+, cwLog.Standard
 , cwTypes
 , cwCollections.List.Standard
 ;
@@ -137,7 +139,7 @@ var
 begin
   if Format=TUnicodeFormat.utfUnknown then begin
     raise
-      Exception.Create('Cannot save the string list in an unknown format.');
+      TLoggedException.Create(stCannotEncodeUnknownUnicodeFormat);
   end;
   Stream.WriteBOM(Format);
   if getCount()=0 then begin
@@ -161,7 +163,7 @@ begin
   end;
   if ActualFormat=TUnicodeFormat.utfUnknown then begin
     raise
-      Exception.Create('Cannot determine stream unicode format.');
+      TLoggedException.Create(stUnableToDetermineUnicodeFormat);
   end;
   Self.Clear;
   while not Stream.getEndOfStream do begin

@@ -36,7 +36,7 @@ unit cwDynLib.Standard;
 interface
 uses
   cwDynLib
-, cwStatus
+, cwLog
 ;
 
 type
@@ -56,7 +56,6 @@ type
 implementation
 uses
   sysutils
-, cwLog
 , cwLog.Standard
   {$ifndef MSWINDOWS}
   {$ifndef fpc}
@@ -147,7 +146,7 @@ begin
   {$endif}
   if not assigned(ptrProc) then begin
     if assigned(Log()) then begin
-      Result := Log.Insert(le_FailedToLoadEntryPoint,TLogSeverity.lsError,[funcName,fLibrary]);
+      Result := Log.Insert(stFailedToLoadEntryPoint,TLogSeverity.lsError,[funcName,fLibrary]);
     end;
     exit;
   end;
@@ -166,7 +165,7 @@ begin
   {$endif}
   if fHandle=0 then begin
     if assigned(Log()) then begin
-      Result := Log.Insert(le_ModuleNotLoaded,TLogSeverity.lsError,[Filepath]);
+      Result := Log.Insert(stModuleNotLoaded,TLogSeverity.lsError,[Filepath]);
     end;
     exit;
   end;

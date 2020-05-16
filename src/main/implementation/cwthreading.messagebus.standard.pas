@@ -31,7 +31,7 @@ unit cwThreading.MessageBus.Standard;
 
 interface
 uses
-  cwStatus
+  cwLog
 , cwCollections
 , cwThreading
 ;
@@ -56,7 +56,6 @@ uses
   sysutils
 , cwThreading.messagechannel.standard
 , cwCollections.standard
-, cwLog
 , cwLog.Standard
 ;
 
@@ -77,7 +76,7 @@ begin
   Result := nil;
   utChannelName := uppercase(trim(ChannelName));
   if fMessageChannels.KeyExists[utChannelName] then begin
-    Log.Insert(le_DuplicateMessageChannel,lsFatal,[ChannelName]);
+    Log.Insert(stDuplicateMessageChannel,lsFatal,[ChannelName]);
   end;
   NewChannel := TMessageChannel.Create;
   fMessageChannels.setValueByKey(utChannelName,NewChannel);

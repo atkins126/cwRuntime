@@ -33,7 +33,7 @@ interface
 {$ifdef MSWINDOWS}
 uses
   Windows
-, cwStatus
+, cwLog
 , cwThreading
 ;
 
@@ -60,8 +60,7 @@ type
 implementation
 {$ifdef MSWINDOWS}
 uses
-  cwLog
-, cwLog.Standard
+  cwLog.Standard
 ;
 
 function InternalHandler( threadmethod: pointer ): uint32; stdcall;
@@ -103,7 +102,7 @@ end;
 destructor TWindowsThreadMethod.Destroy;
 begin
   if not Terminate( 500 ) then begin
-    Log.Insert(le_FailedThreadTerminate,lsFatal,['?']);
+    Log.Insert(stFailedThreadTerminate,lsFatal,['?']);
   end;
   Windows.CloseHandle(fThreadHandle);
   inherited Destroy;
