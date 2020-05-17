@@ -35,8 +35,8 @@ uses
 ;
 
 const
-  stTest: TStatus = ( Value: '{A4ABC7F4-599E-4621-AE2A-5AC90F05A1CB}');
-  stTestWithParam: TStatus = ( Value: '{62576856-C1CF-450A-9A65-1A48F0F442E8}');
+  stTest: TStatus = (Value: '{A4ABC7F4-599E-4621-AE2A-5AC90F05A1CB}');
+  stTestWithParam: TStatus = (Value: '{62576856-C1CF-450A-9A65-1A48F0F442E8}');
 
 begin
   Log.RegisterEntry(stTest,'This is a test entry.');

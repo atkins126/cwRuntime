@@ -225,7 +225,7 @@ begin
   //- Get the message translation
   MessageText := '';
   if not FindLogEntry( Result.Value, foundIdx ) then begin
-    Result := Insert(stLogEntryNotRegistered, lsFatal, [GUIDToString(LogEntry).AsString] );
+    Result := Insert(stLogEntryNotRegistered, lsFatal, [LogEntry] );
     exit;
   end;
   MessageText := fLogEntryTexts[foundIdx];

@@ -362,12 +362,12 @@ end;
 
 class operator TStatus.Implicit(const a: TStatus): string;
 begin
-  Result := GuidToString(a).AsString;
+  Result := GuidToString(a){$ifdef fpc}.AsString{$endif};
 end;
 
 class operator TStatus.Explicit(const a: TStatus): string;
 begin
-  Result := GuidToString(a).AsString;
+  Result := GuidToString(a){$ifdef fpc}.AsString{$endif};
 end;
 
 class operator TStatus.Implicit(const a: string): TStatus;
