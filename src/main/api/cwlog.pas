@@ -128,6 +128,11 @@ type
     ///  </summary>
     class function Success: TStatus; static;
 
+    ///  <summary>
+    ///    Raises an exception if the status is not a success code.
+    ///  </summary>
+    procedure ExceptionOnFail;
+
   end;
 
 {$endregion}
@@ -348,6 +353,15 @@ const
 class function TStatus.Success: TStatus;
 begin
   Result.Value := cSuccessUUID;
+end;
+
+procedure TStatus.ExceptionOnFail;
+begin
+  if IsEqualGUID(Value,cSuccessUUID) then begin
+    exit;
+  end;
+  raise
+    Exception.Create( GUIDToString(Value) );
 end;
 
 class operator TStatus.Implicit(const a: TStatus): TGUID;
