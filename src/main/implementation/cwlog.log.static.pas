@@ -55,8 +55,8 @@ type
     function ParseParameters(const SourceString: string): TArrayOfString;
     function FindLogEntry( const GUID: TGUID; out FoundIdx: nativeuint ): boolean;
   strict private //- ILog -//
-    function RegisterLogEntry( const LogEntry: TStatus; const DefaultText: string ): boolean;
-    procedure AddLogTarget( const LogTarget: ILogTarget );
+    function RegisterEntry( const LogEntry: TStatus; const DefaultText: string ): boolean;
+    procedure AddTarget( const LogTarget: ILogTarget );
     function ExportTranslationFile( const FilePath: string ): TStatus;
     function ImportTranslationFile( const FilePath: string ): TStatus;
     function Insert( const LogEntry: TStatus; const Severity: TLogSeverity; const Parameters: array of string ): TStatus; overload;
@@ -114,7 +114,7 @@ begin
   end;
 end;
 
-function TLog.RegisterLogEntry( const LogEntry: TStatus; const DefaultText: string ): boolean;
+function TLog.RegisterEntry( const LogEntry: TStatus; const DefaultText: string ): boolean;
 var
   foundIdx: nativeuint;
   L: nativeuint;
@@ -136,7 +136,7 @@ begin
   Result := True;
 end;
 
-procedure TLog.AddLogTarget(const LogTarget: ILogTarget);
+procedure TLog.AddTarget(const LogTarget: ILogTarget);
 begin
   fInsertionCS.Acquire;
   try
@@ -203,7 +203,7 @@ begin
       exit;
     end;
     for idx := 0 to pred(TranslationParser.EntryCount) do begin
-      RegisterLogEntry(TranslationParser.GUIDs[idx],TranslationParser.Texts[idx]);
+      RegisterEntry(TranslationParser.GUIDs[idx],TranslationParser.Texts[idx]);
     end;
   finally
     FS := nil;

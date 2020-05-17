@@ -39,9 +39,9 @@ const
   stTestWithParam: TStatus = ( Value: '{62576856-C1CF-450A-9A65-1A48F0F442E8}');
 
 begin
-  Log.RegisterLogEntry(stTest,'This is a test entry.');
-  Log.RegisterLogEntry(stTestWithParam,'This is a test entry with a parameter (%param%).');
-  Log.AddLogTarget( TLogTarget.Console );
+  Log.RegisterEntry(stTest,'This is a test entry.');
+  Log.RegisterEntry(stTestWithParam,'This is a test entry with a parameter (%param%).');
+  Log.AddTarget( TLogTarget.Console );
   Log.Insert(sttest,lsError);
   Log.Insert(sttestWithParam,lsError,['value']);
   Readln;

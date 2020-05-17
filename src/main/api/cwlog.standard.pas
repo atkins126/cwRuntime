@@ -106,35 +106,35 @@ end;
 initialization
 {$region ' Register these status codes as log entries with the logging system.'}
 
-  Log.RegisterLogEntry(stDependencyNotMet,                 'An error occured while constructing a required dependency.');
-  Log.RegisterLogEntry(stIndexOutOfBounds,                 'Index out of bounds "(%index%)".');
-  Log.RegisterLogEntry(stFactoryConstructException,        'An exception occurred while attempting to construct an object, with message "(%message%)"');
-  Log.RegisterLogEntry(stObjectNotAssigned,                'Object "(%object%)" is not assigned.');
-  Log.RegisterLogEntry(stStreamDoesNotSupportClear,        'Stream does not support the Clear() method.');
-  Log.RegisterLogEntry(stCannotEncodeUnknownUnicodeFormat, 'Cannot encode to unicode format utfUnknown.');
-  Log.RegisterLogEntry(stUnableToDetermineUnicodeFormat,   'Unable to determine the unicode format.');
-  Log.RegisterLogEntry(stFailedThreadTerminate,            'Thread (%index%) failed to terminate gracefully.');
-  Log.RegisterLogEntry(stOSAPIError,                       'An Operating System error occurred on (%call%) value (%value%).');
-  Log.RegisterLogEntry(stDuplicateMessageChannel,          'Message channel name must be unique. (%channel%) is already in use.');
-  Log.RegisterLogEntry(stThreadAlreadyStarted,             'Thread is already started.');
-  Log.RegisterLogEntry(stFileNotFound,                     'File not found "(%filename%)"');
-  Log.RegisterLogEntry(stModuleNotLoaded,                  'DynLib failed to load module "(%module%)"');
-  Log.RegisterLogEntry(stFailedToLoadEntryPoint,           'Failed to locate entrypoint "(%entrypoint%)" in library "(%library%)"');
-  Log.RegisterLogEntry(stNoHighPrecisionTimer,             'Unable to access high-precision timer device.');
-  Log.RegisterLogEntry(stSocketError,                      'A socket API error occurred (%apierrno%)');
-  Log.RegisterLogEntry(stInvalidSocket,                    'Attempt to "(%operation%)" on invalid socket.');
-  Log.RegisterLogEntry(stBindNotSupportedOnDomain,         'The bind operation is not yet supported for this domain / address family.');
-  Log.RegisterLogEntry(stSocketBindError,                  'The socket library failed to bind with return code "(%returncode%)"');
-  Log.RegisterLogEntry(stSocketListenError,                'The socket library failed to listen with return code "(%returncode%)"');
-  Log.RegisterLogEntry(stSocketAcceptError,                'The socket library failed to accept with return code "(%returncode%)"');
-  Log.RegisterLogEntry(stSocketConnectError,               'The socket library failed to connect with return code "(%returncode%)"');
-  Log.RegisterLogEntry(stSocketCloseError,                 'The socket library failed to close with return code "(%returncode%)"');
-  Log.RegisterLogEntry(stSocketShutdownError,              'The socket library failed to shutdown with return code "(%returncode%)"');
-  Log.RegisterLogEntry(stUnknownSocketDomain,              'Unknown socket domain / address family.');
-  Log.RegisterLogEntry(stUnsupportedAddressFormat,         'The socket library does not support this address format');
-  Log.RegisterLogEntry(stSocketClosed,                     'Socket closed on Recv().');
-  Log.RegisterLogEntry(stFailedToConvertNetworkAddress,    'Failed to convert network address "(%IPAddress%)" on port "(%port%)"');
-  Log.RegisterLogEntry(stInvalidArrayForVector,            'Array passed to vector has incorrect length.');
+  Log.RegisterEntry(stDependencyNotMet,                 'An error occured while constructing a required dependency.');
+  Log.RegisterEntry(stIndexOutOfBounds,                 'Index out of bounds "(%index%)".');
+  Log.RegisterEntry(stFactoryConstructException,        'An exception occurred while attempting to construct an object, with message "(%message%)"');
+  Log.RegisterEntry(stObjectNotAssigned,                'Object "(%object%)" is not assigned.');
+  Log.RegisterEntry(stStreamDoesNotSupportClear,        'Stream does not support the Clear() method.');
+  Log.RegisterEntry(stCannotEncodeUnknownUnicodeFormat, 'Cannot encode to unicode format utfUnknown.');
+  Log.RegisterEntry(stUnableToDetermineUnicodeFormat,   'Unable to determine the unicode format.');
+  Log.RegisterEntry(stFailedThreadTerminate,            'Thread (%index%) failed to terminate gracefully.');
+  Log.RegisterEntry(stOSAPIError,                       'An Operating System error occurred on (%call%) value (%value%).');
+  Log.RegisterEntry(stDuplicateMessageChannel,          'Message channel name must be unique. (%channel%) is already in use.');
+  Log.RegisterEntry(stThreadAlreadyStarted,             'Thread is already started.');
+  Log.RegisterEntry(stFileNotFound,                     'File not found "(%filename%)"');
+  Log.RegisterEntry(stModuleNotLoaded,                  'DynLib failed to load module "(%module%)"');
+  Log.RegisterEntry(stFailedToLoadEntryPoint,           'Failed to locate entrypoint "(%entrypoint%)" in library "(%library%)"');
+  Log.RegisterEntry(stNoHighPrecisionTimer,             'Unable to access high-precision timer device.');
+  Log.RegisterEntry(stSocketError,                      'A socket API error occurred (%apierrno%)');
+  Log.RegisterEntry(stInvalidSocket,                    'Attempt to "(%operation%)" on invalid socket.');
+  Log.RegisterEntry(stBindNotSupportedOnDomain,         'The bind operation is not yet supported for this domain / address family.');
+  Log.RegisterEntry(stSocketBindError,                  'The socket library failed to bind with return code "(%returncode%)"');
+  Log.RegisterEntry(stSocketListenError,                'The socket library failed to listen with return code "(%returncode%)"');
+  Log.RegisterEntry(stSocketAcceptError,                'The socket library failed to accept with return code "(%returncode%)"');
+  Log.RegisterEntry(stSocketConnectError,               'The socket library failed to connect with return code "(%returncode%)"');
+  Log.RegisterEntry(stSocketCloseError,                 'The socket library failed to close with return code "(%returncode%)"');
+  Log.RegisterEntry(stSocketShutdownError,              'The socket library failed to shutdown with return code "(%returncode%)"');
+  Log.RegisterEntry(stUnknownSocketDomain,              'Unknown socket domain / address family.');
+  Log.RegisterEntry(stUnsupportedAddressFormat,         'The socket library does not support this address format');
+  Log.RegisterEntry(stSocketClosed,                     'Socket closed on Recv().');
+  Log.RegisterEntry(stFailedToConvertNetworkAddress,    'Failed to convert network address "(%IPAddress%)" on port "(%port%)"');
+  Log.RegisterEntry(stInvalidArrayForVector,            'Array passed to vector has incorrect length.');
 
 {$endregion}
 

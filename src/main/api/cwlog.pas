@@ -288,7 +288,7 @@ type
     ///    This method may be used to manually add entries to the log if required. <br/>
     ///    Returns FALSE if a log entry with the provided GUID has already been registered.
     ///  </summary>
-    function RegisterLogEntry( const LogEntry: TStatus; const DefaultText: string ): boolean;
+    function RegisterEntry( const LogEntry: TStatus; const DefaultText: string ): boolean;
 
     ///  <summary>
     ///    Inserts a log entry into the log. <br/>
@@ -326,7 +326,7 @@ type
     ///  <summary>
     ///    Add a log target to the log.
     ///  </summary>
-    procedure AddLogTarget( const LogTarget: ILogTarget );
+    procedure AddTarget( const LogTarget: ILogTarget );
 
     ///  <summary>
     ///    Returns the most recently inserted log entry for the current running thread, post translation.

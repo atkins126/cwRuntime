@@ -214,8 +214,8 @@ end;
 
 initialization
   TestSuite.RegisterTestCase( TTest_cwLog_Insert );
-  Log.RegisterLogEntry(stTestLogEntry,'This is a test log entry.');
-  Log.RegisterLogEntry(stAlphabet,'(%a%) (%b%) (%c%) (%d%) (%e%) (%f%) (%g%) (%h%) (%i%) (%j%) (%k%) (%l%) (%m%) (%n%) (%o%) (%p%) (%q%) (%r%) (%s%) (%t%) (%u%) (%v%) (%w%) (%x%) (%y%) (%z%) (%a%) (%b%) (%c%).');
+  Log.RegisterEntry(stTestLogEntry,'This is a test log entry.');
+  Log.RegisterEntry(stAlphabet,'(%a%) (%b%) (%c%) (%d%) (%e%) (%f%) (%g%) (%h%) (%i%) (%j%) (%k%) (%l%) (%m%) (%n%) (%o%) (%p%) (%q%) (%r%) (%s%) (%t%) (%u%) (%v%) (%w%) (%x%) (%y%) (%z%) (%a%) (%b%) (%c%).');
 
 end.
 
