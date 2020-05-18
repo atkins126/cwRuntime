@@ -206,7 +206,7 @@ begin
   HasSetup := False;
   HasTearDown := False;
   methodTablePtr := pMethodNameTable((Pointer(TestCaseClass) + vmtMethodTable)^);
-  if methodTablePtr^.Count = 0 then begin
+  if (not assigned(methodTablePtr)) or (methodTablePtr^.Count = 0) then begin
     {$warnings off} SetLength(Result,0); {$warnings on}
     exit;
   end;
