@@ -64,7 +64,7 @@ function Log: ILog;
 
 implementation
 uses
-  cwLog.Log.Static
+  cwLog.Log.Standard
 {$ifdef fpc}
 , cwTypes
 {$endif}
@@ -72,7 +72,7 @@ uses
 
 function Log: ILog;
 begin
-  Result := cwLog.Log.Static.Log;
+  Result := cwLog.Log.Standard.Log;
 end;
 
 {$region ' TException'}

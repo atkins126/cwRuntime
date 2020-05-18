@@ -68,10 +68,6 @@
         <UnitName Value="cwCollections.StringList.Standard"/>
       </Item>
       <Item>
-        <Filename Value="..\main\implementation\cwlog.log.static.pas"/>
-        <UnitName Value="cwlog.log.static"/>
-      </Item>
-      <Item>
         <Filename Value="..\main\implementation\cwlog.logtarget.console.pas"/>
         <UnitName Value="cwLog.LogTarget.Console"/>
       </Item>
