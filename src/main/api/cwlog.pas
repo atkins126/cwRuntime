@@ -308,6 +308,12 @@ type
     ///  </summary>
     function Insert( const LogEntry: TStatus; const Severity: TLogSeverity ): TStatus; overload;
 
+    /// <exclude/> - Allows insertion of a GUID as a TStatus so long as it's registered.
+    function Insert( const LogEntry: TGUID; const Severity: TLogSeverity ): TStatus; overload;
+    /// <exclude/> - Allows insertion of a GUID as a TStatus so long as it's registered.
+    function Insert( const LogEntry: TGUID; const Severity: TLogSeverity; const Parameters: array of string ): TStatus; overload;
+
+
     ///  <summary>
     ///    When log entries are registered (currently done automatically for fpc
     ///    but manually for Delphi), this method will save those registered entries

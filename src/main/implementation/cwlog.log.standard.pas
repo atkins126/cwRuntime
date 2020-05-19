@@ -61,6 +61,8 @@ type
     function ImportTranslationFile( const FilePath: string ): TStatus;
     function Insert( const LogEntry: TStatus; const Severity: TLogSeverity; const Parameters: array of string ): TStatus; overload;
     function Insert( const LogEntry: TStatus; const Severity: TLogSeverity ): TStatus; overload;
+    function Insert( const LogEntry: TGUID; const Severity: TLogSeverity ): TStatus; overload;
+    function Insert( const LogEntry: TGUID; const Severity: TLogSeverity; const Parameters: array of string ): TStatus; overload;
     function getLastEntry: string;
   public
     constructor Create; reintroduce;
@@ -335,6 +337,16 @@ end;
 function TLog.Insert(const LogEntry: TStatus; const Severity: TLogSeverity): TStatus;
 begin
   Result := Insert( LogEntry, Severity, [] );
+end;
+
+function TLog.Insert(const LogEntry: TGUID; const Severity: TLogSeverity): TStatus;
+begin
+  Result := Insert( TStatus(LogEntry), Severity );
+end;
+
+function TLog.Insert(const LogEntry: TGUID; const Severity: TLogSeverity; const Parameters: array of string): TStatus;
+begin
+  Result := Insert( TStatus(LogEntry), Severity, Parameters );
 end;
 
 function TLog.getLastEntry: string;
