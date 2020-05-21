@@ -226,7 +226,15 @@ type
     /// <summary>
     ///   Values A and B are equal.
     /// </summary>
-    crAEqualToB
+    crAEqualToB,
+    /// <summary>
+    ///   The two values are not equal, but it cannot be determined
+    ///   if one or the other is higher as the comparison does not
+    ///   make sense. This could be returned when comparing classes or
+    ///   GUIDS, in which case the collection may not be able to perform
+    ///   a sort operation, but might still use a comparison for search.
+    /// </summary>
+    cwANotEqualB
   );
 
   {$ifdef fpc}

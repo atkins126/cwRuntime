@@ -31,31 +31,21 @@ unit cwlog.log.standard;
 
 interface
 uses
-  syncobjs
-, cwLog
+  cwLog
 , cwCollections
 ;
-
-const
-  cLogEntryGranularity = 32;
 
 type
   (* Duplicate in cwTypes, but here to prevent circular reference *)
   TArrayOfString = array of string;
 
 type
-  TLog = class( TInterfacedObject, ILog )
-  private
-    fLogTargets: IList<ILogTarget>;
-    fLogEntryIDs: array of TGUID;
-    fLogEntryTexts: array of string;
-    fLogEntryCount: nativeuint;
-    fInsertionCS: TCriticalSection;
-  private
-    function ParseParameters(const SourceString: string): TArrayOfString;
-    function FindLogEntry( const GUID: TGUID; out FoundIdx: nativeuint ): boolean;
+  TLog = class( TInterfacedObject, ILog, IChainLog )
+  strict private //- IChainLog -//
+    procedure setChainLog( const ChainLog: pointer );
+    function getChainLog: pointer;
   strict private //- ILog -//
-    function RegisterEntry( const LogEntry: TStatus; const DefaultText: string ): boolean;
+    procedure RegisterEntry( const LogEntry: TStatus; const DefaultText: string );
     procedure AddTarget( const LogTarget: ILogTarget );
     function ExportTranslationFile( const FilePath: string ): TStatus;
     function ImportTranslationFile( const FilePath: string ): TStatus;
@@ -66,13 +56,10 @@ type
     function getLastEntry: string;
   public
     constructor Create; reintroduce;
-    destructor Destroy; override;
   end;
 
 ///  <summary>
-///    Returns a singleton instance of ILog.
-///    Ignore the override log parameter, this is used internally to
-///    override a static log with a dynamic log.
+///    Returns the singleton instance of ILog for the current thread.
 ///  </summary>
 function Log: ILog;
 
@@ -85,190 +72,56 @@ uses
 , cwIO.Standard
 , cwlog.translationparser.standard
 , cwLog.Common
+, cwThreading
+, cwThreading.Standard
+, cwUnicode
+, cwUnicode.Standard
 ;
 
-//- Record last log entry for each thread so that it may be recalled if required.
+
+{$region ' Unit Global...'}
+threadvar
+  SingletonLog: ILog;
+
+//------------------------------------------------------------------------------
+//  Log Entries and Targets have been made global now that Log is a threadvar
+//  singleton. This allows multiple threads to each have their own instance
+//  of log, but for those instances to share targets and entries as though
+//  they were a global singleton.
+//  Critical Sections must be used to ensure that no two instances of ILog
+//  attempt to add log entries or send entries to log targets at the same time.
+//------------------------------------------------------------------------------
 threadvar
   LastEntry: string;
 
-function Log: ILog;
-begin
-  if not assigned(SingletonLog) then begin
-    SingletonLog := TLog.Create;
+type
+  TChainLog = record
+    gInsert: function (const LogEntry: TGUID; const Severity: TLogSeverity; const lparParameters: pointer; const ParamCount: nativeuint ): TStatus; {$ifdef MSWINDOWS} stdcall; {$else} cdecl; {$endif}
+    gRegisterEntry: procedure ( const LogEntry: TGUID; const lpszDefaultText: pointer ); {$ifdef MSWINDOWS} stdcall; {$else} cdecl; {$endif}
   end;
-  Result := SingletonLog;
-end;
+  pChainLog = ^TChainLog;
 
-function TLog.FindLogEntry(const GUID: TGUID; out FoundIdx: nativeuint): boolean;
 var
-  idx: nativeuint;
+  LocalChain: TChainLog;
+  ChainLogPtr: pChainLog;
+  LogEntries: IDictionary<TGUID,string> = nil;
+  LogTargets: IList<ILogTarget> = nil;
+  InsertionCS: ICriticalSection = nil;
+  RegisterCS: ICriticalSection = nil;
+
+
+function CompareGUIDS( const GUIDA: TGUID; const GUIDB: TGUID ): TComparisonResult;
 begin
-  Result := False;
-  if fLogEntryCount=0 then begin
-    exit;
-  end;
-  for idx := 0 to pred(fLogEntryCount) do begin
-    if IsEqualGUID(GUID,fLogEntryIDs[idx]) then begin
-      FoundIdx := idx;
-      Result := True;
-      exit;
-    end;
-  end;
-end;
-
-function TLog.RegisterEntry( const LogEntry: TStatus; const DefaultText: string ): boolean;
-var
-  foundIdx: nativeuint;
-  L: nativeuint;
-begin
-  Result := False;
-  if FindLogEntry( LogEntry, foundIdx ) then begin
-    fLogEntryTexts[foundIdx] := DefaultText;
-    exit;
-  end;
-  //- Ensure there is space in the arrays.
-  L := Length(fLogEntryIDs);
-  if fLogEntryCount>=L then begin
-    SetLength( fLogEntryIDs, Length(fLogEntryIDs)+cLogEntryGranularity );
-    SetLength( fLogEntryTexts, Length(fLogEntryTexts)+cLogEntryGranularity );
-  end;
-  fLogEntryIDs[fLogEntryCount] := LogEntry;
-  fLogEntryTexts[fLogEntryCount] := DefaultText;
-  inc( fLogEntryCount );
-  Result := True;
-end;
-
-procedure TLog.AddTarget(const LogTarget: ILogTarget);
-begin
-  fInsertionCS.Acquire;
-  try
-    fLogTargets.Add(LogTarget);
-  finally
-    fInsertionCS.Release;
-  end;
-end;
-
-function TLog.ExportTranslationFile(const FilePath: string): TStatus;
-var
-  FS: IUnicodeStream;
-  idx: nativeuint;
-  GUIDStr: string;
-  EntryText: string;
-begin
-  Result := TStatus.Unknown;
-  if FileExists(FilePath) then begin
-    DeleteFile(FilePath);
-  end;
-  FS := TFileStream.Create(FilePath,False);
-  try
-    FS.WriteBOM( TUnicodeFormat.utf8 );
-    FS.WriteString('['+CR+LF, TUnicodeFormat.utf8 );
-    for idx := 0 to pred( fLogEntryCount ) do begin
-      {$ifdef fpc}
-      GUIDStr := GUIDToString(fLogEntryIDs[idx]).AsString;
-      {$else}
-      GUIDStr := GUIDToString(fLogEntryIDs[idx]);
-      {$endif}
-      EntryText := fLogEntryTexts[idx];
-      EntryText := EntryText.StringReplace('"','\"',TRUE,TRUE);
-      FS.WriteString('{ "EntryID": "'+GUIDStr+'", "EntryText": "'+EntryText+'"}', TUnicodeFormat.utf8 );
-      if idx<pred(fLogEntryCount) then begin
-        FS.WriteString(','+CR+LF, TUnicodeFormat.utf8 );
-      end else begin
-        FS.WriteString(','+CR+LF, TUnicodeFormat.utf8 );
-      end;
-    end;
-    FS.WriteString(']'+CR+LF, TUnicodeFormat.utf8 );
-  finally
-    FS := nil;
-  end;
-  Result := TStatus.Success;
-end;
-
-function TLog.ImportTranslationFile(const FilePath: string): TStatus;
-var
-  FS: IUnicodeStream;
-  TranslationParser: TTranslationParser;
-  idx: nativeuint;
-begin
-  Result := TStatus.Unknown;
-  if not FileExists(FilePath) then begin
-    exit;
-  end;
-  FS := TFileStream.Create(FilePath,TRUE);
-  try
-    if not TranslationParser.ParseTranslations(FS) then begin
-      exit;
-    end;
-    if TranslationParser.EntryCount=0 then begin
-      Result := TStatus.Success;
-      exit;
-    end;
-    for idx := 0 to pred(TranslationParser.EntryCount) do begin
-      RegisterEntry(TranslationParser.GUIDs[idx],TranslationParser.Texts[idx]);
-    end;
-  finally
-    FS := nil;
-  end;
-  Result := TStatus.Success;
-end;
-
-function TLog.Insert(const LogEntry: TStatus; const Severity: TLogSeverity; const Parameters: array of string): TStatus;
-var
-  MessageText: string;
-  ParameterPlaceholders: TArrayOfString;
-  foundIdx: nativeuint;
-  idx: nativeuint;
-  TS: TDateTime;
-begin
-  Result.Value := LogEntry;
-  TS := Now;
-
-  //- Get the message translation
-  MessageText := '';
-  if not FindLogEntry( Result.Value, foundIdx ) then begin
-    Result := Insert(stLogEntryNotRegistered, lsFatal, [LogEntry] );
-    exit;
-  end;
-  MessageText := fLogEntryTexts[foundIdx];
-
-  //- Parse Parameters and substitute.
-  ParameterPlaceholders := ParseParameters(MessageText);
-  if Length(ParameterPlaceholders)<=Length(Parameters) then begin
-    if Length(ParameterPlaceholders)>0 then begin
-      for idx := 0 to pred(Length(ParameterPlaceholders)) do begin
-        MessageText := MessageText.StringReplace('(%'+ParameterPlaceholders[idx]+'%)',Parameters[idx],True,True);
-      end;
-    end;
-  end;
-
-  //- Embelish translated string.
-  case Severity of
-    TLogSeverity.lsInfo:    MessageText := '[INFO] '+MessageText;
-    TLogSeverity.lsHint:    MessageText := '[HINT] '+MessageText;
-    TLogSeverity.lsWarning: MessageText := '[WARNING] '+MessageText;
-    TLogSeverity.lsError:   MessageText := '[ERROR] '+MessageText;
-    TLogSeverity.lsFatal:   MessageText := '[FATAL] '+MessageText;
-  end;
-  LastEntry := MessageText;
-  MessageText := '('+ string(FormatDateTime('YYYY-MM-DD HH:nn:SS:ssss',TS)) +') ' + MessageText;
-
-  //- Insert using log insertion handler.
-  fInsertionCS.Acquire;
-  try
-    if fLogTargets.Count>0 then begin
-      for idx := 0 to pred(fLogTargets.Count) do begin
-        fLogTargets[idx].Insert(Result.Value,MessageText,TS,Severity,Parameters);
-      end;
-    end;
-  finally
-    fInsertionCS.Release;
+  if IsEqualGUID(GUIDA,GUIDB) then begin
+    Result := TComparisonResult.crAEqualToB;
+  end else begin
+    Result := TComparisonResult.cwANotEqualB;
   end;
 end;
 
 (* Returns an array of strings containing the names of parameters within the
    Source string. The parameter names are uppercased and trimmed *)
-function TLog.ParseParameters( const SourceString: string ): TArrayOfString;
+function ParseParameters( const SourceString: string ): TArrayOfString;
   function AlreadyExists( const Parameters: TArrayOfString; const ParameterName: string ): boolean;
   var
     idx: nativeuint;
@@ -334,6 +187,295 @@ begin
   end;
 end;
 
+
+procedure gRegisterEntry( const LogEntry: TGUID; const lpszDefaultText: pointer ); {$ifdef MSWINDOWS} stdcall; {$else} cdecl; {$endif}
+var
+  uDefaultText: TUnicodeString;
+begin
+  uDefaultText.UnicodeFormat := TUnicodeFormat.utf8;
+  uDefaultText.AsPtr := lpszDefaultText;
+  RegisterCS.Acquire;
+  try
+    LogEntries.setValueByKey(LogEntry,uDefaultText.AsString);
+  finally
+    RegisterCS.Release;
+  end;
+end;
+
+//- Parameters are passed as a pointer to an array of pchar (utf8 zero terminated)
+function gInsert(const LogEntry: TGUID; const Severity: TLogSeverity; const lparParameters: pointer; const ParamCount: nativeuint ): TStatus; {$ifdef MSWINDOWS} stdcall; {$else} cdecl; {$endif}
+var
+  LogEntryStr: string;
+  uLogEntryStr: TUnicodeString;
+  Parameters: TArrayOfString;
+  ParametersPtr: pointer;
+  uParameter: TUnicodeString;
+  MessageText: string;
+  ParameterPlaceholders: TArrayOfString;
+  Max: nativeuint;
+  idx: nativeuint;
+  TS: TDateTime;
+begin
+  Result.Value := LogEntry;
+  TS := Now;
+
+  //- Decode the parameters passed as a LF separated array in a utf8 zero-terminated string.
+  {$hints off} SetLength(Parameters,ParamCount); {$hints on} //- Managed type is initialized here.
+  try
+    if ParamCount>0 then begin
+      ParametersPtr := lparParameters;
+      for idx := 0 to pred(ParamCount) do begin
+        uParameter.UnicodeFormat := TUnicodeFormat.utf8;
+        uParameter.AsPtr := pointer(ParametersPtr^);
+        Parameters[idx] := uParameter.AsString;
+        {$hints off} ParametersPtr := pointer( nativeuint(ParametersPtr) + sizeof(Pointer) ); {$hints on} //- Conversion betwen ordinals and pointers is portable if the ordinal is pointer sized.
+      end;
+    end;
+
+    //- Get the message translation
+    MessageText := '';
+    RegisterCS.Acquire;
+    try
+      if not LogEntries.getKeyExists(Result.Value) then begin
+        {$ifdef fpc}
+        LogEntryStr := GUIDToString(LogEntry).AsString;
+        {$else}
+        LogEntryStr := GUIDToString(LogEntry);
+        {$endif}
+        uLogEntryStr.UnicodeFormat := TUnicodeFormat.utf8;
+        uLogEntryStr.AsString := LogEntryStr;
+        Result := gInsert(stLogEntryNotRegistered.Value, lsFatal, uLogEntryStr.AsPtr, 1 );
+        exit;
+      end;
+      MessageText := LogEntries.getValueByKey(Result.Value);
+    finally
+      RegisterCS.Release;
+    end;
+
+    //- Parse Parameters and substitute.
+    ParameterPlaceholders := ParseParameters(MessageText);
+    if Length(ParameterPlaceholders)<=Length(Parameters) then begin
+      if Length(ParameterPlaceholders)>0 then begin
+        for idx := 0 to pred(Length(ParameterPlaceholders)) do begin
+          MessageText := MessageText.StringReplace('(%'+ParameterPlaceholders[idx]+'%)',Parameters[idx],True,True);
+        end;
+      end;
+    end;
+
+    //- Embelish translated string.
+    case Severity of
+      TLogSeverity.lsInfo:    MessageText := '[INFO] '+MessageText;
+      TLogSeverity.lsHint:    MessageText := '[HINT] '+MessageText;
+      TLogSeverity.lsWarning: MessageText := '[WARNING] '+MessageText;
+      TLogSeverity.lsError:   MessageText := '[ERROR] '+MessageText;
+      TLogSeverity.lsFatal:   MessageText := '[FATAL] '+MessageText;
+    end;
+    LastEntry := MessageText;
+    MessageText := '('+ string(FormatDateTime('YYYY-MM-DD HH:nn:SS:ssss',TS)) +') ' + MessageText;
+
+    //- Insert using log insertion handler.
+    Max := LogTargets.Count;
+    if Max=0 then begin
+      exit;
+    end;
+    for idx := 0 to pred(Max) do begin
+      InsertionCS.Acquire;
+      try
+        LogTargets[idx].Insert(Result.Value,MessageText,TS,Severity,Parameters);
+      finally
+        InsertionCS.Release;
+      end;
+    end;
+  finally
+    SetLength(Parameters,0);
+  end;
+end;
+
+
+//------------------------------------------------------------------------------
+{$endregion}
+
+function Log: ILog;
+begin
+  //- Ensure the critical sections are created for the first call to the log.
+  if not assigned(InsertionCS) then begin
+    InsertionCS := TCriticalSection.Create;
+  end;
+  if not assigned(RegisterCS) then begin
+    RegisterCS := TCriticalSection.Create;
+  end;
+  //- Ensure log targets list is created
+  if not assigned(LogTargets) then begin
+    InsertionCS.Acquire;
+    try
+      LogTargets := TList<ILogTarget>.Create;
+    finally
+      InsertionCS.Release;
+    end;
+  end;
+  //- Ensure the log entries dictionary is created
+  if not assigned(LogEntries) then begin
+    RegisterCS.Acquire;
+    try
+      LogEntries := TDictionary<TGUID,string>.Create(CompareGUIDS);
+    finally
+      RegisterCS.Release;
+    end;
+  end;
+  //- Instance a log if one is not already instanced for this thread.
+  if not assigned(SingletonLog) then begin
+    SingletonLog := cwLog.Log.Standard.TLog.Create;
+  end;
+  //- Return the log instance.
+  Result := SingletonLog;
+end;
+
+procedure TLog.setChainLog(const ChainLog: pointer);
+var
+  uDefaultText: TUnicodeString;
+  idx: nativeuint;
+begin
+  // Set the chain log pointer to the new log.
+  ChainLogPtr := ChainLog;
+  if ChainLogPtr=@LocalChain then begin
+    exit;
+  end;
+  //- Re-register all local messages with the new log.
+  //- No need to critical section as all log calls are now being
+  //- handled by the chain target.
+  if LogEntries.Count=0 then begin
+    exit;
+  end;
+  for idx := 0 to pred(LogEntries.Count) do begin
+    uDefaultText.AsString := LogEntries.getValueByIndex(idx);
+    uDefaultText.UnicodeFormat := TUnicodeFormat.utf8;
+    pChainLog(ChainLogPtr)^.gRegisterEntry(LogEntries.getKeyByIndex(idx),uDefaultText.AsPtr);
+  end;
+  LogEntries.Clear;
+  LogTargets.Clear;
+end;
+
+function TLog.getChainLog: pointer;
+begin
+  Result := @LocalChain;
+end;
+
+procedure TLog.RegisterEntry( const LogEntry: TStatus; const DefaultText: string );
+var
+  uDefaultText: TUnicodeString;
+begin
+  uDefaultText.AsString := DefaultText;
+  uDefaultText.UnicodeFormat := TUnicodeFormat.utf8;
+  pChainLog(ChainLogPtr)^.gRegisterEntry( LogEntry.Value, uDefaultText.AsPtr );
+end;
+
+procedure TLog.AddTarget(const LogTarget: ILogTarget);
+begin
+  InsertionCS.Acquire;
+  try
+    LogTargets.Add(LogTarget);
+  finally
+    InsertionCS.Release;
+  end;
+end;
+
+function TLog.ExportTranslationFile(const FilePath: string): TStatus;
+var
+  FS: IUnicodeStream;
+  Max: nativeuint;
+  idx: nativeuint;
+  GUIDStr: string;
+  EntryText: string;
+begin
+  Result := TStatus.Unknown;
+  if FileExists(FilePath) then begin
+    DeleteFile(FilePath);
+  end;
+  FS := TFileStream.Create(FilePath,False);
+  try
+    FS.WriteBOM( TUnicodeFormat.utf8 );
+    FS.WriteString('['+CR+LF, TUnicodeFormat.utf8 );
+    Max := LogEntries.Count;
+    for idx := 0 to pred( Max ) do begin
+      RegisterCS.Acquire;
+      try
+        {$ifdef fpc}
+        GUIDStr := GUIDToString(LogEntries.getKeyByIndex(idx)).AsString;
+        {$else}
+        GUIDStr := GUIDToString(LogEntries.getKeyByIndex(idx));
+        {$endif}
+        EntryText := LogEntries.getValueByIndex(idx);
+        EntryText := EntryText.StringReplace('"','\"',TRUE,TRUE);
+      finally
+        RegisterCS.Release;
+      end;
+      FS.WriteString('{ "EntryID": "'+GUIDStr+'", "EntryText": "'+EntryText+'"}', TUnicodeFormat.utf8 );
+      if idx<pred(Max) then begin
+        FS.WriteString(','+CR+LF, TUnicodeFormat.utf8 );
+      end else begin
+        FS.WriteString(','+CR+LF, TUnicodeFormat.utf8 );
+      end;
+    end;
+    FS.WriteString(']'+CR+LF, TUnicodeFormat.utf8 );
+  finally
+    FS := nil;
+  end;
+  Result := TStatus.Success;
+end;
+
+function TLog.ImportTranslationFile(const FilePath: string): TStatus;
+var
+  FS: IUnicodeStream;
+  TranslationParser: TTranslationParser;
+  idx: nativeuint;
+begin
+  Result := TStatus.Unknown;
+  if not FileExists(FilePath) then begin
+    exit;
+  end;
+  FS := TFileStream.Create(FilePath,TRUE);
+  try
+    if not TranslationParser.ParseTranslations(FS) then begin
+      exit;
+    end;
+    if TranslationParser.EntryCount=0 then begin
+      Result := TStatus.Success;
+      exit;
+    end;
+    for idx := 0 to pred(TranslationParser.EntryCount) do begin
+      RegisterEntry(TranslationParser.GUIDs[idx],TranslationParser.Texts[idx]);
+    end;
+  finally
+    FS := nil;
+  end;
+  Result := TStatus.Success;
+end;
+
+function TLog.Insert(const LogEntry: TStatus; const Severity: TLogSeverity; const Parameters: array of string): TStatus;
+var
+  idx: nativeuint;
+  uParameterArray: array of TUnicodeString;
+  ParameterArray: array of pointer;
+begin
+  if Length(Parameters)=0 then begin
+    Result := pChainLog(ChainLogPtr)^.gInsert( LogEntry.Value, Severity, nil, 0 );
+    exit;
+  end;
+  {$hints off} SetLength(uParameterArray,Length(Parameters)); {$hints on} // Managed type is initialized here.
+  {$hints off} SetLength(ParameterArray,Length(Parameters));  {$hints on} // Managed type is initialized here.
+  try
+    for idx := 0 to pred( Length(Parameters) ) do begin
+      uParameterArray[idx].UnicodeFormat := TUnicodeFormat.utf8;
+      uParameterArray[idx].AsString := Parameters[idx];
+      ParameterArray[idx] := uParameterArray[idx].AsPtr;
+    end;
+    Result := pChainLog(ChainLogPtr)^.gInsert( LogEntry.Value, Severity, @ParameterArray[0], Length(Parameters) );
+  finally
+    SetLength(uParameterArray,Length(Parameters));
+    SetLength(ParameterArray,Length(Parameters));
+  end;
+end;
+
 function TLog.Insert(const LogEntry: TStatus; const Severity: TLogSeverity): TStatus;
 begin
   Result := Insert( LogEntry, Severity, [] );
@@ -357,33 +499,23 @@ end;
 constructor TLog.Create;
 begin
   inherited Create;
-  fInsertionCS := TCriticalSection.Create;
   LastEntry := '';
-  //- Insertion handler
-  fLogTargets := TList<ILogTarget>.Create;
-  //- Initialize dynamic arrays
-  fLogEntryCount := 0;
-  SetLength( fLogEntryIDs, cLogEntryGranularity );
-  SetLength( fLogEntryTexts, cLogEntryGranularity );
-end;
-
-destructor TLog.Destroy;
-begin
-  fLogTargets := nil;
-  SetLength( fLogEntryIDs, 0 );
-  SetLength( fLogEntryTexts, 0 );
-  {$ifdef fpc}
-  fInsertionCS.Free;
-  {$else}
-  fInsertionCS.DisposeOf;
-  {$endif}
-  inherited Destroy;
+  if not assigned(ChainLogPtr) then begin
+    ChainLogPtr := @LocalChain;
+    pChainLog(ChainLogPtr)^.gInsert := @gInsert;
+    pChainLog(ChainLogPtr)^.gRegisterEntry := @gRegisterEntry;
+  end;
 end;
 
 initialization
   SingletonLog := nil;
+  InsertionCS := nil;
+  RegisterCS := nil;
+  ChainLogPtr := nil;
 
 finalization
   SingletonLog := nil;
+  InsertionCS := nil;
+  RegisterCS := nil;
 
 end.

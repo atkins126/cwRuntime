@@ -282,18 +282,16 @@ type
     ['{587FD133-6206-461F-A9F7-7D07CF60F93B}']
 
     ///  <summary>
-    ///    Adds a log entry by UUID and default text 'MessageStr' to the log. <br/>
-    ///    You should not need to call this method directly for log entries which are
-    ///    declared as resourcestring. The log will automatically collect resource strings
-    ///    which match the log entry format '<UUID><text>' for example:
-    ///
-    ///    resourcestring
-    ///      le_IndexOutOfBounds = '{C55508DE-73AE-4770-B623-B864077C4177} Index out of bounds ((%index%))';
-    ///
-    ///    This method may be used to manually add entries to the log if required. <br/>
-    ///    Returns FALSE if a log entry with the provided GUID has already been registered.
+    ///    Adds a log entry by GUID and default text 'MessageStr' to the log. <br/>
+    ///    Overloads allow log entries to be registered either as GUID's or using
+    ///    a TStatus (which is essentially a GUID with helper methods).
+    ///    If the same GUID is registered twice, this method will update the
+    ///    log entry with the new value passed as DefaultText. This allows
+    ///    translations to be loaded by simply calling RegisterEntry with the
+    ///    new translated text (This is what the ImportTranslationFile() method
+    ///    does).
     ///  </summary>
-    function RegisterEntry( const LogEntry: TStatus; const DefaultText: string ): boolean;
+    procedure RegisterEntry( const LogEntry: TStatus; const DefaultText: string );
 
     ///  <summary>
     ///    Inserts a log entry into the log. <br/>
@@ -344,6 +342,65 @@ type
     ///  </summary>
     property LastEntry: string read getLastEntry;
 
+  end;
+
+{$endregion}
+
+{$region ' Chain Log'}
+type
+
+  /// <summary>
+  ///   Regardless of the threading model, ultimately there is only one log in
+  ///   an application. Each thread gets an instance of ILog and is able to
+  ///   use that instance operate the thread-global singleton logging
+  ///   system. (With the exception of LastEntry which is per instance, and
+  ///   therefore per thread).
+  ///   When using logging within a dynamic library however, things are
+  ///   different. The compiler builds one instance of the runtime into the
+  ///   calling executable, and another instance of the runtime into the
+  ///   dynamic library. This means that Log entries inserted within the
+  ///   library are retained within the library and never make it back to
+  ///   the main application.
+  ///   IChainLog is an experimental feature to resolve this problem.
+  ///   Your library would need to provide an exported procedure which accepts
+  ///   a pointer in order to chain logs together. For example, inside the
+  ///   library you could code:
+  ///
+  ///     procedure ChainLog( const Chain: pointer ); export;
+  ///     begin
+  ///       IChainLog(Log).setChainLog(Chain);
+  ///     end;
+  ///
+  ///   This code would tell the log inside the library to simply foward all
+  ///   logging activity to the chained log passed as a parameter.
+  ///   From the calling executable you can then do this:
+  ///
+  ///     MyLibraryBinding.ChainLog( Log.getChainLog );
+  ///
+  ///   At the time that the log chain is formed, the log within the library
+  ///   will call to register it's known log entries with the log in the
+  ///   main application. Duplicate entries in the library would cause the
+  ///   entires in the main application to be overwritten with new message
+  ///   text, and therefore the loading of any translation file would need
+  ///   to be done (or repeated) after chaining logs together. Similarly,
+  ///   the export of a translation file will be incomplete if it is
+  ///   exported before all log-enabled libraries are loaded.
+  /// </summary>
+  IChainLog = interface
+    ['{8A305076-5FFB-4BB8-878D-AC4B9ABEB4FA}']
+
+    ///  <summary>
+    ///    Tells the log to forward all logging activity to another instance
+    ///    for crossing the module boundary. Pass as a parameter the value
+    ///    obtained by calling getChainLog on the target log.
+    ///  </summary>
+    procedure setChainLog( const ChainLog: pointer );
+
+    ///  <summary>
+    ///    Returns a pointer which represents the log as a target for
+    ///    chaining.
+    ///  </summary>
+    function getChainLog: pointer;
   end;
 
 {$endregion}

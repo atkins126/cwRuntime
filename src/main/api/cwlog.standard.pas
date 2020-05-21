@@ -72,7 +72,7 @@ uses
 
 function Log: ILog;
 begin
-  Result := cwLog.Log.Standard.Log;
+  Result := cwLog.Log.Standard.Log();
 end;
 
 {$region ' TException'}
