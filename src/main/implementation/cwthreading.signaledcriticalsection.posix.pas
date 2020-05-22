@@ -61,7 +61,6 @@ implementation
 uses
   cwLog
 , cwLog.Standard
-, cwRuntime.LogEntries
 , cwTypes
 {$ifdef fpc}
 , pthreads
@@ -81,10 +80,10 @@ constructor TSignaledCriticalSection.Create;
 begin
   inherited Create;
   if pthread_mutex_init({$ifdef fpc}@{$endif}fMutex, nil)<>0 then begin
-    Log.Insert(le_OSAPIError,lsFatal,['pthread_mutex_init',errno.AsString]);
+    Log.Insert(stOSAPIError,lsFatal,['pthread_mutex_init',errno.AsString]);
   end;
   if pthread_cond_init({$ifdef fpc}@{$endif}fCondition,nil)<>0 then begin
-    Log.Insert(le_OSAPIError,lsFatal,['pthread_cond_init',errno.AsString]);
+    Log.Insert(stOSAPIError,lsFatal,['pthread_cond_init',errno.AsString]);
   end;
 end;
 
@@ -103,7 +102,7 @@ end;
 procedure TSignaledCriticalSection.Sleep;
 begin
   if pthread_cond_wait({$ifdef fpc}@{$endif}fCondition,{$ifdef fpc}@{$endif}fMutex)<>0 then begin
-    Log.Insert(le_OSAPIError,lsFatal,['pthread_cond_wait',errno.AsString]);
+    Log.Insert(stOSAPIError,lsFatal,['pthread_cond_wait',errno.AsString]);
   end;
 end;
 

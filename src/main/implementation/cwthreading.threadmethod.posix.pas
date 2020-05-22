@@ -74,7 +74,6 @@ uses
 , cwTypes
 , cwLog
 , cwLog.Standard
-, cwRuntime.LogEntries
 ;
 
 const
@@ -94,16 +93,16 @@ begin
   fThreadedMethod := nil;
   //- Define and create thread.
   if pthread_attr_init({$ifdef fpc}@{$endif}attr)<>0 then begin
-    Log.Insert(le_OSAPIError,lsFatal,['pthread_attr_init',errno.AsString]);
+    Log.Insert(stOSAPIError,lsFatal,['pthread_attr_init',errno.AsString]);
   end;
   if pthread_attr_setstacksize({$ifdef fpc}@{$endif}attr,cDefaultStackSize)<>0 then begin
-    Log.Insert(le_OSAPIError,lsFatal,['pthread_attr_setstacksize',errno.AsString]);
+    Log.Insert(stOSAPIError,lsFatal,['pthread_attr_setstacksize',errno.AsString]);
   end;
   if pthread_create({$ifdef fpc}@{$endif}fHandle,{$ifdef fpc}@{$endif}attr,@InternalHandler,Self)<>0 then begin
-    Log.Insert(le_OSAPIError,lsFatal,['pthread_create',errno.AsString]);
+    Log.Insert(stOSAPIError,lsFatal,['pthread_create',errno.AsString]);
   end;
   if pthread_attr_destroy({$ifdef fpc}@{$endif}attr)<>0 then begin
-    Log.Insert(le_OSAPIError,lsFatal,['pthread_attr_destroy',errno.AsString]);
+    Log.Insert(stOSAPIError,lsFatal,['pthread_attr_destroy',errno.AsString]);
   end;
 end;
 
@@ -128,7 +127,7 @@ end;
 destructor TPosixThreadMethod.Destroy;
 begin
   if not Terminate( 500 ) then begin
-    Log.Insert(le_FailedThreadTerminate,lsFatal,['?']);
+    Log.Insert(stFailedThreadTerminate,lsFatal,['?']);
   end;
   inherited Destroy;
 end;
