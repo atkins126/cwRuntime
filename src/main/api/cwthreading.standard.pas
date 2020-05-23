@@ -26,6 +26,9 @@
   IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 *)
 {$endif}
+/// <summary>
+///   Provides standard platform-agnostic implementations of the cwThreading interfaces.
+/// </summary>
 unit cwThreading.Standard;
 {$ifdef fpc}{$mode delphiunicode}{$endif}
 

@@ -519,6 +519,11 @@ type
     ['{55D4BA20-6942-4DD5-9068-5D9C91FD8C4E}']
 
     ///  <summary>
+    ///    Initializes a socket for use. (CreateSocket() call)
+    ///  </summary>
+    function Initialize: TStatus;
+
+    ///  <summary>
     ///    Binds the socket to an address, such that it may accept new
     ///    connections to that address.
     ///  </summary>

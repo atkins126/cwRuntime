@@ -26,6 +26,10 @@
   IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 *)
 {$endif}
+///  <summary>
+///    Target specific implementations of IStream / IUnicodeStream for
+///    addressing memory or file I/O.
+///  </summary>
 unit cwIO.Standard;
 {$ifdef fpc}{$mode delphiunicode}{$endif}
 

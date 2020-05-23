@@ -26,6 +26,9 @@
   IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 *)
 {$endif}
+/// <summary>
+///   Provides a target agnostic implementation for ITimer.
+/// </summary>
 unit cwTiming.standard;
 {$ifdef fpc}{$mode delphiunicode}{$endif}
 

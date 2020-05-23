@@ -26,6 +26,9 @@
   IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 *)
 {$endif}
+/// <summary>
+///   Essential threading primitives and systems for marshalling thread pools.
+/// </summary>
 unit cwThreading;
 {$ifdef fpc}{$mode delphiunicode}{$endif}
 
