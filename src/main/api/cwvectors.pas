@@ -53,9 +53,7 @@ type
 
     /// <summary>
     ///   Assigns an array of two single precision floats to an sVector2.
-    ///   @longcode(
-    ///      MyVector := [ 3.5, 4.5 ];
-    ///   )
+    ///   <code lang="Delphi"> MyVector := [ 3.5, 4.5 ]; </code>
     /// </summary>
     /// <param name="a">
     ///   An array of two single-precision floating point values to assign to
