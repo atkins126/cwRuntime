@@ -1,5 +1,4 @@
 .\src\main\api\cwcollections.pas
-.\src\main\api\cwcollections.pas
 .\src\main\api\cwcollections.standard.pas
 .\src\main\api\cwdynlib.pas
 .\src\main\api\cwdynlib.standard.pas
@@ -13,5 +12,11 @@
 .\src\main\api\cwtest.standard.pas
 .\src\main\api\cwunicode.pas
 .\src\main\api\cwunicode.standard.pas
-.\src\main\api\cwtimings.pas
+.\src\main\api\cwtiming.pas
 .\src\main\api\cwtiming.standard.pas
+.\src\main\api\cwtypes.pas
+.\src\main\api\cwsockets.pas
+.\src\main\api\cwsockets.standard.pas
+.\src\main\api\cwthreading.pas
+.\src\main\api\cwthreading.standard.pas
+.\src\main\api\cwvectors.pas
