@@ -46,141 +46,417 @@ type
 
 {$region ' sVector2'}
 
-  ///  <summary>
-  ///    Represents a vector with 2 elements (X,Y / U,V)
-  ///  </summary>
+  /// <summary>
+  ///   Represents a single-precision vector with 2 elements (X,Y / U,V)
+  /// </summary>
   sVector2 = record
 
-    ///  <summary>
-    ///    Allows creation of a vector from an array of floats.
-    ///    (Size of array must match size of vector)
-    ///  </summary>
+    /// <summary>
+    ///   Assigns an array of two single precision floats to an sVector2.
+    ///   <code lang="Delphi">MyVector := [ 3.5, 4.5 ];</code>
+    /// </summary>
+    /// <param name="a">
+    ///   An array of two single-precision floating point values to assign to
+    ///   the vector.
+    /// </param>
+    /// <returns>
+    ///   The vector is returned with it's elements set to those provided in
+    ///   the array.
+    /// </returns>
+    /// <exception cref="TLoggedException">
+    ///   When the array of floats to be assigned does not have a length of
+    ///   two, a logged exception is raised with status stInvalidArrayForVector
+    ///   (Invalid array for vector).
+    /// </exception>
+    /// <remarks>
+    ///   The length of the array must match size of vector (two elements)
+    /// </remarks>
     class operator Explicit( const a: array of single ): sVector2;
 
-    ///  <summary>
-    ///    Allows creation of a vector from an array of floats.
-    ///    (Size of array must match size of vector)
-    ///  </summary>
+    /// <summary>
+    ///   Assigns an array of two single precision floats to an sVector2. <br /><code lang="Delphi">MyVector := [ 3.5, 4.5 ];</code>
+    /// </summary>
+    /// <param name="a">
+    ///   An array of two single-precision floating point values to assign to
+    ///   the vector.
+    /// </param>
+    /// <returns>
+    ///   The vector is returned with it's elements set to those provided in
+    ///   the array.
+    /// </returns>
+    /// <exception cref="TLoggedException">
+    ///   When the array of floats to be assigned does not have a length of
+    ///   two, a logged exception is raised with status stInvalidArrayForVector
+    ///   (Invalid array for vector).
+    /// </exception>
+    /// <remarks>
+    ///   The length of the array must match size of vector (two elements)
+    /// </remarks>
     class operator Implicit( const a: array of single ): sVector2;
 
-    ///  <summary>
-    ///    Allows addition of a vector to an array, and returns the
-    //     resulting vector.
-    ///  </summary>
+    /// <summary>
+    ///   Adds an array of two single precision floating point values to an
+    ///   sVector2 in an element wise addition operation. <br /><code lang="Delphi">MyVectorA := MyVectorB + [ 1.2, 1.3 ];</code>
+    /// </summary>
+    /// <param name="a">
+    ///   The sVector2 to which the values of the array 'b' will be added.
+    /// </param>
+    /// <param name="b">
+    ///   An array of two single-precision floats to be added to the the vector
+    ///   'a'.
+    /// </param>
+    /// <returns>
+    ///   An sVector2 which contains the result of addition of the array 'b' to
+    ///   the vector 'a'. <br />
+    /// </returns>
+    /// <exception cref="TLoggedException">
+    ///   If the array of floats does not have a length of two, a logged
+    ///   exception is raised with status stInvalidArrayForVector (Invalid
+    ///   array for vector).
+    /// </exception>
     class operator Add( const a: sVector2; const b: array of single ): sVector2; overload;
 
-    ///  <summary>
-    ///    Allows addition of a vector to an array, and returns the
-    ///    resulting vector.
-    ///  </summary>
+    /// <summary>
+    ///   Adds an sVector2 to an array of two single precision floats for
+    ///   assignment to an sVector2 in an element wise addition operation. <br /><br /><code lang="Delphi">MyVectorA := [ 1.2, 1.3 ] + MyVectorB;</code>
+    /// </summary>
+    /// <param name="a">
+    ///   An array of two single-precision floats to which the vector 'b' will
+    ///   be added.
+    /// </param>
+    /// <param name="b">
+    ///   The sVector2 which will be added to the array 'b'.
+    /// </param>
+    /// <returns>
+    ///   An sVector2 which contains the result of the addition of the vector
+    ///   'b' to the array 'a'. <br />
+    /// </returns>
+    /// <exception cref="TLoggedException">
+    ///   If the array of floats does not have a length of two, a logged
+    ///   exception is raised with status stInvalidArrayForVector (Invalid
+    ///   array for vector).
+    /// </exception>
     class operator Add( const a: array of single; const b: sVector2 ): sVector2; overload;
 
-    ///  <summary>
-    ///    Allows subtraction of an array from a vector and returns
-    ///    the resulting vector.
-    ///  </summary>
+    /// <summary>
+    ///   Subtracts an array of two single precision floats from an sVector2
+    ///   for assignment to an sVector2 in an element wise subtraction
+    ///   operation. <br /><code lang="Delphi">MyVectorA := MyVectorB - [ 1.2, 1.3 ];</code>
+    /// </summary>
+    /// <param name="a">
+    ///   The sVector2 from which the values of the array 'b' will be
+    ///   subtracted.
+    /// </param>
+    /// <param name="b">
+    ///   An array of two single-precision floats to be subtracted from the
+    ///   vector 'a'.
+    /// </param>
+    /// <returns>
+    ///   An sVector2 which contains the result of the subtraction of the array
+    ///   'b' from the vector 'a'.
+    /// </returns>
+    /// <exception cref="TLoggedException">
+    ///   If the array of floats does not have a length of two, a logged
+    ///   exception is raised with status stInvalidArrayForVector (Invalid
+    ///   array for vector).
+    /// </exception>
     class operator Subtract( const a: sVector2; const b: array of single ): sVector2;
 
-    ///  <summary>
-    ///    Allows subtraction of a vector from an array and returns
-    ///    the resulting vector.
-    ///  </summary>
+    /// <summary>
+    ///   Subtracts an sVector2 from an array of two single precision floats
+    ///   for assignment to an sVector2 in an element wise subtraction
+    ///   operation. <br /><code lang="Delphi">MyVectorA := [ 1.2, 1.3 ] - MyVectorB;</code>
+    /// </summary>
+    /// <param name="a">
+    ///   An array of two single-precision floats from which the vector 'b'
+    ///   will be subtracted.
+    /// </param>
+    /// <param name="b">
+    ///   The sVector2 which will be subtracted from the array 'a'.
+    /// </param>
+    /// <returns>
+    ///   An sVector2 which contains the result of the subtraction of vector
+    ///   'b' from the array 'a'.
+    /// </returns>
+    /// <exception cref="TLoggedException">
+    ///   If the array of floats does not have a length of two, a logged
+    ///   exception is raised with status stInvalidArrayForVector (Invalid
+    ///   array for vector).
+    /// </exception>
     class operator Subtract( const a: array of single; const b: sVector2 ): sVector2;
 
-    ///  <summary>
-    ///    Allows the multiplication of a vector and an array, and returns
-    ///    the resulting vector. (hadamard)
-    ///  </summary>
+    /// <summary>
+    ///   Multiplies an sVector2 by an array of two single precision floats for
+    ///   assignment to an sVector2, in an element wise multiplication
+    ///   operation. <br /><code lang="Delphi">MyVectorA := MyVectorB * [ 2.0, 2.0 ];</code>
+    /// </summary>
+    /// <param name="a">
+    ///   An sVector2 which will be multiplied by the array 'b'.
+    /// </param>
+    /// <param name="b">
+    ///   An array of two single precision floats to be multiplied with the
+    ///   vector 'a'.
+    /// </param>
+    /// <returns>
+    ///   An sVector2 which contains the result of the multiplication of the
+    ///   vector 'a' with the array 'b'
+    /// </returns>
+    /// <exception cref="TLoggedException">
+    ///   If the array of floats does not have a length of two, a logged
+    ///   exception is raised with status stInvalidArrayForVector (Invalid
+    ///   array for vector).
+    /// </exception>
     class operator Multiply( const a: sVector2; const b: array of single ): sVector2;
 
-    ///  <summary>
-    ///    Allows the multiplication of an array and a vector, and returns
-    ///    the resulting vector. (hadamard)
-    ///  </summary>
+    /// <summary>
+    ///   Multiplies an array of two single precision floats by an sVector2 for
+    ///   assignment to an sVector2, in an element wise multiplication
+    ///   operation. <br /><code lang="Delphi">MyVectorA := [ 2.0, 2.0 ] * MyVectorB;</code>
+    /// </summary>
+    /// <param name="a">
+    ///   An array of two single precision floats to be multiplied with the
+    ///   vector 'b'.
+    /// </param>
+    /// <param name="b">
+    ///   An sVector2 which will be multiplied by the array 'b'.
+    /// </param>
+    /// <returns>
+    ///   An sVector2 which contains the result of the multiplication of the
+    ///   array 'a' with the vector 'b' <br />
+    /// </returns>
+    /// <exception cref="TLoggedException">
+    ///   If the array of floats does not have a length of two, a logged
+    ///   exception is raised with status stInvalidArrayForVector (Invalid
+    ///   array for vector).
+    /// </exception>
     class operator Multiply( const a: array of single; const b: sVector2 ): sVector2;
 
-    ///  <summary>
-    ///    Allows the division of a vector by an array and returns the
-    ///    resulting vector.
-    ///  </summary>
+    /// <summary>
+    ///   Divides an sVector2 by an array of two single precision floats for
+    ///   assignment to an sVector2, in an element wise division operation. <br /><code lang="Delphi">MyVectorA := MyVectorB / [ 2.0, 2.0 ];</code>
+    /// </summary>
+    /// <param name="a">
+    ///   An sVector2 which will be divided by the array 'b'.
+    /// </param>
+    /// <param name="b">
+    ///   An array of two single precision floats by which the vector 'a' will
+    ///   be divided.
+    /// </param>
+    /// <returns>
+    ///   An sVector2 which contains the result of the division of vector 'a'
+    ///   by the array 'b'
+    /// </returns>
+    /// <exception cref="TLoggedException">
+    ///   If the array of floats does not have a length of two, a logged
+    ///   exception is raised with status stInvalidArrayForVector (Invalid
+    ///   array for vector).
+    /// </exception>
     class operator Divide( const a: sVector2; const b: array of single ): sVector2;
 
-    ///  <summary>
-    ///    Allows the division of an array by a vector and returns the
-    ///    resulting vector.
-    ///  </summary>
+    /// <summary>
+    ///   Divides an array of two single precision floats by an sVector2 for
+    ///   assignment to an sVector2, in an element wise division operation. <br /><code lang="Delphi">MyVectorA := [ 2.0, 2.0 ] / MyVectorB;</code>
+    /// </summary>
+    /// <param name="a">
+    ///   An array of two single precision floats to be divided by the vector
+    ///   'b'.
+    /// </param>
+    /// <param name="b">
+    ///   An sVector2 by which the array 'a' will be divided.
+    /// </param>
+    /// <returns>
+    ///   An sVector2 which contains the result of the division of the array
+    ///   'a' by the vector 'b'.
+    /// </returns>
+    /// <exception cref="TLoggedException">
+    ///   If the array of floats does not have a length of two, a logged
+    ///   exception is raised with status stInvalidArrayForVector (Invalid
+    ///   array for vector).
+    /// </exception>
     class operator Divide( const a: array of single; const b: sVector2 ): sVector2;
 
-    ///  <summary>
-    ///    Operator overload provides for addition of one vector to another.
-    ///  </summary>
+    /// <summary>
+    ///   Adds an sVector2 to another sVector2 for assignment to an sVector2,
+    ///   in an element wise addition operation. <br /><code lang="Delphi">MyVectorA := MyVectorB + MVectorC;</code>
+    /// </summary>
+    /// <param name="a">
+    ///   The sVector2 to which the vector 'b' will be added.
+    /// </param>
+    /// <param name="b">
+    ///   An sVector2 for addition to the vector 'a'
+    /// </param>
+    /// <returns>
+    ///   An sVector2 which contains the result of the addition of vector 'b'
+    ///   to vector 'a'.
+    /// </returns>
     class operator Add( const a: sVector2; const b: sVector2 ): sVector2;
 
-    ///  <summary>
-    ///    Operator overload provides for addition of a single to a vector.
-    ///  </summary>
+    /// <summary>
+    ///   Adds a single precision float to each element of a vector for
+    ///   assignment to an sVector2. <br /><code lang="Delphi">MyVectorA := MyVectorB + 6.2;</code>
+    /// </summary>
+    /// <param name="a">
+    ///   The sVector2 to which the single 'b' will be added.
+    /// </param>
+    /// <param name="b">
+    ///   A single precision float to be added to the elements of vector 'a'
+    /// </param>
+    /// <returns>
+    ///   An sVector2 which contains the result of the addition of single 'b'
+    ///   to the elements of vector 'a'.
+    /// </returns>
     class operator Add( const a: sVector2; const b: single ): sVector2;
 
-    ///  <summary>
-    ///    Operator overload provides for subtraction of one vector from
-    ///    another.
-    ///  </summary>
+    /// <summary>
+    ///   Subtracts an sVector2 from another sVector2 for assignment to an
+    ///   sVector2, in an element wise subtraction operation. <br /><code lang="Delphi">MyVectorA := MyVectorB - MyVectorC;</code>
+    /// </summary>
+    /// <param name="a">
+    ///   The sVector2 from which the vector 'b' will be subtracted.
+    /// </param>
+    /// <param name="b">
+    ///   An sVector2 for subtraction from the vector 'a'
+    /// </param>
+    /// <returns>
+    ///   An sVector2 which contains the result of the subtraction of vector
+    ///   'b' from vector 'a'.
+    /// </returns>
     class operator Subtract( const a: sVector2; const b: sVector2 ): sVector2;
 
-    ///  <summary>
-    ///    Operator overload provides for subtraction of a float from
-    //     a vector.
-    ///  </summary>
+    /// <summary>
+    ///   Subtracts a single precision float from each element of a vector for
+    ///   assignment to an sVector2. <br /><code lang="Delphi">MyVectorA := MyVectorB - 6.2;</code>
+    /// </summary>
+    /// <param name="a">
+    ///   The sVector2 from which the single 'b' will be subtracted.
+    /// </param>
+    /// <param name="b">
+    ///   A single precision float to be subtracted from the elements of vector
+    ///   'a'.
+    /// </param>
+    /// <returns>
+    ///   An sVector2 which contains the result of the subtraction of single
+    ///   'b' from the elements of vector 'a'.
+    /// </returns>
     class operator Subtract(const a: sVector2; const b: single ): sVector2;
 
-    ///  <summary>
-    ///    Operator overload to provide for multiplication of one vector by
-    ///    another (hadamard multiplication/scale).
-    ///  </summary>
+    /// <summary>
+    ///   Multiplies an sVector2 by an sVector2 for assignment to an sVector2
+    ///   in an element wise (hadamard) multiplication operation. <br /><code lang="Delphi">MyVectorA := MyVectorB * MyVectorC;</code>
+    /// </summary>
+    /// <param name="a">
+    ///   The sVector2 which will be multiplied by the the vector 'b'.
+    /// </param>
+    /// <param name="b">
+    ///   An sVector2 by which the vector 'a' will be multiplied.
+    /// </param>
+    /// <returns>
+    ///   An sVector2 which contains the result of the multiplication of vector
+    ///   'a' by vector 'b'.
+    /// </returns>
     class operator Multiply( const a: sVector2; const b: sVector2 ): sVector2;
 
-    ///  <summary>
-    ///    Operator overload to provide for multiplication of a vector by
-    ///    a float. (scale)
-    ///  </summary>
+    /// <summary>
+    ///   Multiplies an sVector2 by a single precision float for assignment to
+    ///   an sVector2 in an element wise (hadamard) multiplication operation. <br /><code lang="Delphi">MyVectorA := MyVectorB * 6.2;</code>
+    /// </summary>
+    /// <param name="a">
+    ///   The sVector2 which will be multiplied by the the single 'b'.
+    /// </param>
+    /// <param name="b">
+    ///   A single precision float by which the vector 'a' will be multiplied.
+    /// </param>
+    /// <returns>
+    ///   An sVector2 which contains the result of the multiplication of vector
+    ///   'a' by single 'b'.
+    /// </returns>
     class operator Multiply( const a: sVector2; const b: single ): sVector2;
 
-    ///  <summary>
-    ///    Operator overload to provide for division of one vector by
-    ///    another.
-    ///  </summary>
+    /// <summary>
+    ///   Divides an sVector2 by an sVector2 for assignment to an sVector2 in
+    ///   an element wise division operation. <br /><code lang="Delphi">MyVectorA := MyVectorB / MyVectorC;</code>
+    /// </summary>
+    /// <param name="a">
+    ///   The sVector2 which will be divided by the the vector 'b'.
+    /// </param>
+    /// <param name="b">
+    ///   An sVector2 by which the vector 'a' will be divided.
+    /// </param>
+    /// <returns>
+    ///   An sVector2 which contains the result of the division of vector 'a'
+    ///   by vector 'b'.
+    /// </returns>
     class operator Divide( const a: sVector2; const b: sVector2 ): sVector2;
 
-    ///  <summary>
-    ///    Operator overload to provide for division of a vector by a
-    ///    float.
-    ///  </summary>
+    /// <summary>
+    ///   Divides an sVector2 by a single precision float for assignment to an
+    ///   sVector2 in an element wise division operation. <br /><code lang="Delphi">MyVectorA := MyVectorB / 6.2;</code>
+    /// </summary>
+    /// <param name="a">
+    ///   The sVector2 which will be divided by the the single 'b'.
+    /// </param>
+    /// <param name="b">
+    ///   A single precision float by which the vector 'a' will be divided.
+    /// </param>
+    /// <returns>
+    ///   An sVector2 which contains the result of the division of vector 'a'
+    ///   by single 'b'.
+    /// </returns>
     class operator Divide( const a: sVector2; const b: single ): sVector2;
 
-    ///  <summary>
-    ///    Creates a new vector based on X,Y values.
-    ///  </summary>
+    /// <summary>
+    ///   Returns an sVector2 containing the parameter values X and Y, in that
+    ///   order. <br /><br /><code lang="Delphi">MyVector := sVector2.Create( 1.0, 2.0 );</code>
+    /// </summary>
+    /// <param name="X">
+    ///   Value for the first element of the vector.
+    /// </param>
+    /// <param name="Y">
+    ///   Value for the second element of the vector.
+    /// </param>
+    /// <returns>
+    ///   An sVector2 containing the two values supplied as parameters.
+    /// </returns>
     class function Create( const X: single; const Y: single ): sVector2; overload; static;
 
-    ///  <summary>
-    ///    Returns the dot product of this vector with another.
-    ///  </summary>
-    function dot( const a: sVector2 ): single;
+    /// <summary>
+    ///   Returns the dot product of this sVector2 with another sVector2. <br /><br /><code lang="Delphi">S := VectorA.Dot( VectorB );</code>
+    /// </summary>
+    /// <param name="a">
+    ///   An sVector2 with which to compute the dot product of this vector.
+    /// </param>
+    /// <returns>
+    ///   A single precision floating point result of the dot product of this
+    ///   vector with another.
+    /// </returns>
+    function Dot( const a: sVector2 ): single;
 
-    ///  <summary>
-    ///    Returns this vector normaized.
-    ///  </summary>
-    function normalized: sVector2;
+    /// <summary>
+    ///   Returns the Normal vector of this vector. <br /><code lang="Delphi">NormalVector := SomeVector.Normalized;</code>
+    /// </summary>
+    /// <returns>
+    ///   An sVector2 containing the normal of this vector.
+    /// </returns>
+    function Normalized: sVector2;
 
-    ///  <summary>
-    ///    Returns the unit vector of this one.
-    ///  </summary>
+    /// <summary>
+    ///   Returns the unit vector of this vector.
+    ///   <code lang="Delphi">UnitVector := SomeVector.UnitVector;</code>
+    /// </summary>
+    /// <returns>
+    ///   An sVector2 containing this vector scaled to the normal 1.
+    /// </returns>
     function UnitVector: sVector2;
 
-    ///  <summary>
-    ///    Returns the magnitude of the vector.
-    ///  </summary>
-    function magnitude: single;
+    /// <summary>
+    ///   <para>
+    ///     Returns the magnitude of the vector.
+    ///   </para>
+    ///   <para>
+    ///     M := VectorA.Magnitude;
+    ///   </para>
+    /// </summary>
+    function Magnitude: single;
 
     case uint8 of
       0: (
@@ -200,141 +476,413 @@ type
 
 {$region ' dVector2'}
 
-  ///  <summary>
-  ///    Represents a vector with 2 elements (X,Y / U,V)
-  ///  </summary>
+  /// <summary>
+  ///   Represents a double-precision vector with 2 elements (X,Y / U,V)
+  /// </summary>
   dVector2 = record
 
-    ///  <summary>
-    ///    Allows creation of a vector from an array of floats.
-    ///    (Size of array must match size of vector)
-    ///  </summary>
+    /// <summary>
+    ///   Assigns an array of two double precision floats to a dVector2.
+    ///   <code lang="Delphi">MyVector := [ 3.5, 4.5 ];</code>
+    /// </summary>
+    /// <param name="a">
+    ///   An array of two double precision floating point values to assign to
+    ///   the vector.
+    /// </param>
+    /// <returns>
+    ///   The vector is returned with it's elements set to those provided in
+    ///   the array.
+    /// </returns>
+    /// <exception cref="TLoggedException">
+    ///   When the array of floats to be assigned does not have a length of
+    ///   two, a logged exception is raised with status stInvalidArrayForVector
+    ///   (Invalid array for vector).
+    /// </exception>
+    /// <remarks>
+    ///   The length of the array must match size of vector (two elements)
+    /// </remarks>
     class operator Explicit( const a: array of double ): dVector2;
 
-    ///  <summary>
-    ///    Allows creation of a vector from an array of floats.
-    ///    (Size of array must match size of vector)
-    ///  </summary>
+    /// <summary>
+    ///   Assigns an array of two double precision floats to a dVector2. <br /><code lang="Delphi">MyVector := [ 3.5, 4.5 ];</code>
+    /// </summary>
+    /// <param name="a">
+    ///   An array of two double precision floating point values to assign to
+    ///   the vector.
+    /// </param>
+    /// <returns>
+    ///   The vector is returned with it's elements set to those provided in
+    ///   the array.
+    /// </returns>
+    /// <exception cref="TLoggedException">
+    ///   When the array of floats to be assigned does not have a length of
+    ///   two, a logged exception is raised with status stInvalidArrayForVector
+    ///   (Invalid array for vector).
+    /// </exception>
+    /// <remarks>
+    ///   The length of the array must match size of vector (two elements)
+    /// </remarks>
     class operator Implicit( const a: array of double ): dVector2;
 
-    ///  <summary>
-    ///    Allows addition of a vector to an array, and returns the
-    //     resulting vector.
-    ///  </summary>
+    /// <summary>
+    ///   Adds an array of two double precision floating point values to a
+    ///   dVector2 in an element wise addition operation. <br /><code lang="Delphi">MyVectorA := MyVectorB + [ 1.2, 1.3 ];</code>
+    /// </summary>
+    /// <param name="a">
+    ///   The dVector2 to which the values of the array 'b' will be added.
+    /// </param>
+    /// <param name="b">
+    ///   An array of two double precision floats to be added to the the vector
+    ///   'a'.
+    /// </param>
+    /// <returns>
+    ///   A dVector2 which contains the result of addition of the array 'b' to
+    ///   the vector 'a'. <br />
+    /// </returns>
+    /// <exception cref="TLoggedException">
+    ///   If the array of floats does not have a length of two, a logged
+    ///   exception is raised with status stInvalidArrayForVector (Invalid
+    ///   array for vector).
+    /// </exception>
     class operator Add( const a: dVector2; const b: array of double ): dVector2; overload;
 
-    ///  <summary>
-    ///    Allows addition of a vector to an array, and returns the
-    ///    resulting vector.
-    ///  </summary>
+    /// <summary>
+    ///   Adds a dVector2 to an array of two double precision floats for
+    ///   assignment to a dVector2 in an element wise addition operation. <br /><br /><code lang="Delphi">MyVectorA := [ 1.2, 1.3 ] - MyVectorB;</code>
+    /// </summary>
+    /// <param name="a">
+    ///   An array of two double precision floats to which the vector 'b' will
+    ///   be added.
+    /// </param>
+    /// <param name="b">
+    ///   The dVector2 which will be added to the array 'b'.
+    /// </param>
+    /// <returns>
+    ///   A dVector2 which contains the result of the addition of the vector
+    ///   'b' to the array 'a'. <br />
+    /// </returns>
+    /// <exception cref="TLoggedException">
+    ///   If the array of floats does not have a length of two, a logged
+    ///   exception is raised with status stInvalidArrayForVector (Invalid
+    ///   array for vector).
+    /// </exception>
     class operator Add( const a: array of double; const b: dVector2 ): dVector2; overload;
 
-    ///  <summary>
-    ///    Allows subtraction of an array from a vector and returns
-    ///    the resulting vector.
-    ///  </summary>
+    /// <summary>
+    ///   Subtracts an array of two double precision floats from a dVector2 for
+    ///   assignment to a dVector2 in an element wise subtraction operation. <br /><code lang="Delphi">MyVectorA := MyVectorB - [ 1.2, 1.3 ];</code>
+    /// </summary>
+    /// <param name="a">
+    ///   The dVector2 from which the values of the array 'b' will be
+    ///   subtracted.
+    /// </param>
+    /// <param name="b">
+    ///   An array of two double precision floats to be subtracted from the
+    ///   vector 'a'.
+    /// </param>
+    /// <returns>
+    ///   A dVector2 which contains the result of the subtraction of the array
+    ///   'b' from the vector 'a'.
+    /// </returns>
+    /// <exception cref="TLoggedException">
+    ///   If the array of floats does not have a length of two, a logged
+    ///   exception is raised with status stInvalidArrayForVector (Invalid
+    ///   array for vector).
+    /// </exception>
     class operator Subtract( const a: dVector2; const b: array of double ): dVector2;
 
-    ///  <summary>
-    ///    Allows subtraction of a vector from an array and returns
-    ///    the resulting vector.
-    ///  </summary>
+    /// <summary>
+    ///   Subtracts a dVector2 from an array of two double precision floats for
+    ///   assignment to a dVector2 in an element wise subtraction operation. <br /><code lang="Delphi">MyVectorA := [ 1.2, 1.3 ] - MyVectorB;</code>
+    /// </summary>
+    /// <param name="a">
+    ///   An array of two double precision floats from which the vector 'b'
+    ///   will be subtracted.
+    /// </param>
+    /// <param name="b">
+    ///   The dVector2 which will be subtracted from the array 'a'.
+    /// </param>
+    /// <returns>
+    ///   A dVector2 which contains the result of the subtraction of vector 'b'
+    ///   from the array 'a'.
+    /// </returns>
+    /// <exception cref="TLoggedException">
+    ///   If the array of floats does not have a length of two, a logged
+    ///   exception is raised with status stInvalidArrayForVector (Invalid
+    ///   array for vector).
+    /// </exception>
     class operator Subtract( const a: array of double; const b: dVector2 ): dVector2;
 
-    ///  <summary>
-    ///    Allows the multiplication of a vector and an array, and returns
-    ///    the resulting vector. (hadamard)
-    ///  </summary>
+    /// <summary>
+    ///   Multiplies a dVector2 by an array of two double precision floats for
+    ///   assignment to a dVector2, in an element wise multiplication
+    ///   operation. <br /><code lang="Delphi">MyVectorA := MyVectorB * [ 2.0, 2.0 ];</code>
+    /// </summary>
+    /// <param name="a">
+    ///   A dVector2 which will be multiplied by the array 'b'.
+    /// </param>
+    /// <param name="b">
+    ///   An array of two double precision floats to be multiplied with the
+    ///   vector 'a'.
+    /// </param>
+    /// <returns>
+    ///   A dVector2 which contains the result of the multiplication of the
+    ///   vector 'a' with the array 'b'
+    /// </returns>
+    /// <exception cref="TLoggedException">
+    ///   If the array of floats does not have a length of two, a logged
+    ///   exception is raised with status stInvalidArrayForVector (Invalid
+    ///   array for vector).
+    /// </exception>
     class operator Multiply( const a: dVector2; const b: array of double ): dVector2;
 
-    ///  <summary>
-    ///    Allows the multiplication of an array and a vector, and returns
-    ///    the resulting vector. (hadamard)
-    ///  </summary>
+    /// <summary>
+    ///   Multiplies an array of two double precision floats by a dVector2 for
+    ///   assignment to a dVector2, in an element wise multiplication
+    ///   operation. <br /><code lang="Delphi">MyVectorA := [ 2.0, 2.0 ] * MyVectorB;</code>
+    /// </summary>
+    /// <param name="a">
+    ///   An array of two double precision floats to be multiplied with the
+    ///   vector 'b'.
+    /// </param>
+    /// <param name="b">
+    ///   A dVector2 which will be multiplied by the array 'b'.
+    /// </param>
+    /// <returns>
+    ///   A dVector2 which contains the result of the multiplication of the
+    ///   array 'a' with the vector 'b' <br />
+    /// </returns>
+    /// <exception cref="TLoggedException">
+    ///   If the array of floats does not have a length of two, a logged
+    ///   exception is raised with status stInvalidArrayForVector (Invalid
+    ///   array for vector).
+    /// </exception>
     class operator Multiply( const a: array of double; const b: dVector2 ): dVector2;
 
-    ///  <summary>
-    ///    Allows the division of a vector by an array and returns the
-    ///    resulting vector.
-    ///  </summary>
+    /// <summary>
+    ///   Divides a dVector2 by an array of two double precision floats for
+    ///   assignment to a dVector2, in an element wise division operation. <br /><code lang="Delphi">MyVectorA := MyVectorB / [ 2.0, 2.0 ];</code>
+    /// </summary>
+    /// <param name="a">
+    ///   A dVector2 which will be divided by the array 'b'.
+    /// </param>
+    /// <param name="b">
+    ///   An array of two double precision floats by which the vector 'a' will
+    ///   be divided.
+    /// </param>
+    /// <returns>
+    ///   A dVector2 which contains the result of the division of vector 'a' by
+    ///   the array 'b'
+    /// </returns>
+    /// <exception cref="TLoggedException">
+    ///   If the array of floats does not have a length of two, a logged
+    ///   exception is raised with status stInvalidArrayForVector (Invalid
+    ///   array for vector).
+    /// </exception>
     class operator Divide( const a: dVector2; const b: array of double ): dVector2;
 
-    ///  <summary>
-    ///    Allows the division of an array by a vector and returns the
-    ///    resulting vector.
-    ///  </summary>
+    /// <summary>
+    ///   Divides an array of two double precision floats by a dVector2 for
+    ///   assignment to a dVector2, in an element wise division operation. <br /><code lang="Delphi">MyVectorA := [ 2.0, 2.0 ] / MyVectorB;</code>
+    /// </summary>
+    /// <param name="a">
+    ///   An array of two double precision floats to be divided by the vector
+    ///   'b'.
+    /// </param>
+    /// <param name="b">
+    ///   A dVector2 by which the array 'a' will be divided.
+    /// </param>
+    /// <returns>
+    ///   A dVector2 which contains the result of the division of the array 'a'
+    ///   by the vector 'b'.
+    /// </returns>
+    /// <exception cref="TLoggedException">
+    ///   If the array of floats does not have a length of two, a logged
+    ///   exception is raised with status stInvalidArrayForVector (Invalid
+    ///   array for vector).
+    /// </exception>
     class operator Divide( const a: array of double; const b: dVector2 ): dVector2;
 
-    ///  <summary>
-    ///    Operator overload provides for addition of one vector to another.
-    ///  </summary>
+    /// <summary>
+    ///   Adds a dVector2 to another dVector2 for assignment to a dVector2, in
+    ///   an element wise addition operation. <br /><code lang="Delphi">MyVectorA := MyVectorB + MyVectorC;</code>
+    /// </summary>
+    /// <param name="a">
+    ///   The dVector2 to which the vector 'b' will be added.
+    /// </param>
+    /// <param name="b">
+    ///   A dVector2 for addition to the vector 'a'
+    /// </param>
+    /// <returns>
+    ///   A dVector2 which contains the result of the addition of vector 'b' to
+    ///   vector 'a'.
+    /// </returns>
     class operator Add( const a: dVector2; const b: dVector2 ): dVector2;
 
-    ///  <summary>
-    ///    Operator overload provides for addition of a double to a vector.
-    ///  </summary>
+    /// <summary>
+    ///   Adds a double precision float to each element of a vector for
+    ///   assignment to a dVector2. <br /><code lang="Delphi">MyVectorA := MyVectorB + 6.2;</code>
+    /// </summary>
+    /// <param name="a">
+    ///   The dVector2 to which the double 'b' will be added.
+    /// </param>
+    /// <param name="b">
+    ///   A double precision float to be added to the elements of vector 'a'
+    /// </param>
+    /// <returns>
+    ///   A dVector2 which contains the result of the addition of double 'b' to
+    ///   the elements of vector 'a'.
+    /// </returns>
     class operator Add( const a: dVector2; const b: double ): dVector2;
 
-    ///  <summary>
-    ///    Operator overload provides for subtraction of one vector from
-    ///    another.
-    ///  </summary>
+    /// <summary>
+    ///   Subtracts a dVector2 from another dVector2 for assignment to a
+    ///   dVector2, in an element wise subtraction operation. <br /><code lang="Delphi">MyVectorA := MyVectorB - MyVectorC;</code>
+    /// </summary>
+    /// <param name="a">
+    ///   The dVector2 from which the vector 'b' will be subtracted.
+    /// </param>
+    /// <param name="b">
+    ///   A dVector2 for subtraction from the vector 'a'
+    /// </param>
+    /// <returns>
+    ///   A dVector2 which contains the result of the subtraction of vector 'b'
+    ///   from vector 'a'.
+    /// </returns>
     class operator Subtract( const a: dVector2; const b: dVector2 ): dVector2;
 
-    ///  <summary>
-    ///    Operator overload provides for subtraction of a float from
-    //     a vector.
-    ///  </summary>
+    /// <summary>
+    ///   Subtracts a double precision float from each element of a vector for
+    ///   assignment to a dVector2. <br /><code lang="Delphi">MyVectorA := MyVectorB - 6.2;</code>
+    /// </summary>
+    /// <param name="a">
+    ///   The dVector2 from which the double 'b' will be subtracted.
+    /// </param>
+    /// <param name="b">
+    ///   A double precision float to be subtracted from the elements of vector
+    ///   'a'.
+    /// </param>
+    /// <returns>
+    ///   A dVector2 which contains the result of the subtraction of double 'b'
+    ///   from the elements of vector 'a'.
+    /// </returns>
     class operator Subtract(const a: dVector2; const b: double ): dVector2;
 
-    ///  <summary>
-    ///    Operator overload to provide for multiplication of one vector by
-    ///    another (hadamard multiplication/scale).
-    ///  </summary>
+    /// <summary>
+    ///   Multiplies an dVector2 by a dVector2 for assignment to a dVector2 in
+    ///   an element wise (hadamard) multiplication operation. <br /><code lang="Delphi">MyVectorA := MyVectorB * MyVectorC;</code>
+    /// </summary>
+    /// <param name="a">
+    ///   The dVector2 which will be multiplied by the the vector 'b'.
+    /// </param>
+    /// <param name="b">
+    ///   A dVector2 by which the vector 'a' will be multiplied.
+    /// </param>
+    /// <returns>
+    ///   A dVector2 which contains the result of the multiplication of vector
+    ///   'a' by vector 'b'.
+    /// </returns>
     class operator Multiply( const a: dVector2; const b: dVector2 ): dVector2;
 
-    ///  <summary>
-    ///    Operator overload to provide for multiplication of a vector by
-    ///    a float. (scale)
-    ///  </summary>
+    /// <summary>
+    ///   Multiplies a dVector2 by a double precision float for assignment to a
+    ///   dVector2 in an element wise (hadamard) multiplication operation. <br /><code lang="Delphi">MyVectorA := MyVectorB * 6.2;</code>
+    /// </summary>
+    /// <param name="a">
+    ///   The dVector2 which will be multiplied by the the double 'b'.
+    /// </param>
+    /// <param name="b">
+    ///   A double precision float by which the vector 'a' will be multiplied.
+    /// </param>
+    /// <returns>
+    ///   A dVector2 which contains the result of the multiplication of vector
+    ///   'a' by double 'b'.
+    /// </returns>
     class operator Multiply( const a: dVector2; const b: double ): dVector2;
 
-    ///  <summary>
-    ///    Operator overload to provide for division of one vector by
-    ///    another.
-    ///  </summary>
+    /// <summary>
+    ///   Divides a dVector2 by a dVector2 for assignment to a dVector2 in an
+    ///   element wise division operation. <br /><code lang="Delphi">MyVectorA := MyVectorB / MyVectorC;</code>
+    /// </summary>
+    /// <param name="a">
+    ///   The dVector2 which will be divided by the the vector 'b'.
+    /// </param>
+    /// <param name="b">
+    ///   A dVector2 by which the vector 'a' will be divided.
+    /// </param>
+    /// <returns>
+    ///   A dVector2 which contains the result of the division of vector 'a' by
+    ///   vector 'b'.
+    /// </returns>
     class operator Divide( const a: dVector2; const b: dVector2 ): dVector2;
 
-    ///  <summary>
-    ///    Operator overload to provide for division of a vector by a
-    ///    float.
-    ///  </summary>
+    /// <summary>
+    ///   Divides a dVector2 by a double precision float for assignment to a
+    ///   dVector2 in an element wise division operation. <br /><code lang="Delphi">MyVectorA := MyVectorB / 6.2;</code>
+    /// </summary>
+    /// <param name="a">
+    ///   The dVector2 which will be divided by the the double 'b'.
+    /// </param>
+    /// <param name="b">
+    ///   A double precision float by which the vector 'a' will be divided.
+    /// </param>
+    /// <returns>
+    ///   A dVector2 which contains the result of the division of vector 'a' by
+    ///   double 'b'.
+    /// </returns>
     class operator Divide( const a: dVector2; const b: double ): dVector2;
 
-    ///  <summary>
-    ///    Creates a new vector based on X,Y values.
-    ///  </summary>
+    /// <summary>
+    ///   Returns an dVector2 containing the parameter values X and Y, in that
+    ///   order. <br /><br /><br /><code lang="Delphi">MyVector := dVector2.Create( 1.0, 2.0 );</code>
+    /// </summary>
+    /// <param name="X">
+    ///   Value for the first element of the vector.
+    /// </param>
+    /// <param name="Y">
+    ///   Value for the second element of the vector.
+    /// </param>
+    /// <returns>
+    ///   A dVector2 containing the two values supplied as parameters.
+    /// </returns>
     class function Create( const X: double; const Y: double ): dVector2; overload; static;
 
-    ///  <summary>
-    ///    Returns the dot product of this vector with another.
-    ///  </summary>
-    function dot( const a: dVector2 ): double;
+    /// <summary>
+    ///   Returns the dot product of this dVector2 with another dVector2.
+    ///   <code lang="Delphi">D := VectorA.Dot( VectorB );</code>
+    /// </summary>
+    /// <param name="a">
+    ///   A dVector2 with which to compute the dot product of this vector.
+    /// </param>
+    /// <returns>
+    ///   A double precision floating point result of the dot product of this
+    ///   vector with another.
+    /// </returns>
+    function Dot( const a: dVector2 ): double;
 
-    ///  <summary>
-    ///    Returns this vector normaized.
-    ///  </summary>
-    function normalized: dVector2;
+    /// <summary>
+    ///   Returns the Normal vector of this vector.
+    ///   <code lang="Delphi">NormalVector := SomeVector.Normalize;</code>
+    /// </summary>
+    /// <returns>
+    ///   A dVector2 containing the normal of this vector.
+    /// </returns>
+    function Normalized: dVector2;
 
-    ///  <summary>
-    ///    Returns the unit vector of this one.
-    ///  </summary>
+    /// <summary>
+    ///   Returns the unit vector of this vector.
+    ///   <code lang="Delphi">UnitVector := SomeVector.UnitVector;</code>
+    /// </summary>
+    /// <returns>
+    ///   A dVector2 containing this vector scaled to the normal 1.
+    /// </returns>
     function UnitVector: dVector2;
 
-    ///  <summary>
-    ///    Returns the magnitude of the vector.
-    ///  </summary>
-    function magnitude: double;
+    /// <summary>
+    ///   Returns the magnitude of the vector.
+    ///   <code lang="Delphi">M := SomeVector.Magnitude;</code>
+    /// </summary>
+    function Magnitude: double;
 
     case uint8 of
       0: (
@@ -354,141 +902,417 @@ type
 
 {$region ' eVector2'}
 
-  ///  <summary>
-  ///    Represents a vector with 2 elements (X,Y / U,V)
-  ///  </summary>
+  /// <summary>
+  ///   Represents a extended precision vector with 2 elements (X,Y / U,V)
+  /// </summary>
   eVector2 = record
 
-    ///  <summary>
-    ///    Allows creation of a vector from an array of floats.
-    ///    (Size of array must match size of vector)
-    ///  </summary>
+    /// <summary>
+    ///   Assigns an array of two extended precision floats to an eVector2.
+    ///   <code lang="Delphi">MyVector := [ 3.5, 4.5 ];</code>
+    /// </summary>
+    /// <param name="a">
+    ///   An array of two extended-precision floating point values to assign to
+    ///   the vector.
+    /// </param>
+    /// <returns>
+    ///   The vector is returned with it's elements set to those provided in
+    ///   the array.
+    /// </returns>
+    /// <exception cref="TLoggedException">
+    ///   When the array of floats to be assigned does not have a length of
+    ///   two, a logged exception is raised with status stInvalidArrayForVector
+    ///   (Invalid array for vector).
+    /// </exception>
+    /// <remarks>
+    ///   The length of the array must match size of vector (two elements)
+    /// </remarks>
     class operator Explicit( const a: array of extended ): eVector2;
 
-    ///  <summary>
-    ///    Allows creation of a vector from an array of floats.
-    ///    (Size of array must match size of vector)
-    ///  </summary>
+    /// <summary>
+    ///   Assigns an array of two extended precision floats to an eVector2. <br /><code lang="Delphi">MyVector := [ 3.5, 4.5 ];</code>
+    /// </summary>
+    /// <param name="a">
+    ///   An array of two extended-precision floating point values to assign to
+    ///   the vector.
+    /// </param>
+    /// <returns>
+    ///   The vector is returned with it's elements set to those provided in
+    ///   the array.
+    /// </returns>
+    /// <exception cref="TLoggedException">
+    ///   When the array of floats to be assigned does not have a length of
+    ///   two, a logged exception is raised with status stInvalidArrayForVector
+    ///   (Invalid array for vector).
+    /// </exception>
+    /// <remarks>
+    ///   The length of the array must match size of vector (two elements)
+    /// </remarks>
     class operator Implicit( const a: array of extended ): eVector2;
 
-    ///  <summary>
-    ///    Allows addition of a vector to an array, and returns the
-    //     resulting vector.
-    ///  </summary>
+    /// <summary>
+    ///   Adds an array of two extended precision floating point values to an
+    ///   eVector2 in an element wise addition operation. <br /><code lang="Delphi">MyVectorA := MyVectorB + [ 1.2, 1.3 ];</code>
+    /// </summary>
+    /// <param name="a">
+    ///   The eVector2 to which the values of the array 'b' will be added.
+    /// </param>
+    /// <param name="b">
+    ///   An array of two extended-precision floats to be added to the the
+    ///   vector 'a'.
+    /// </param>
+    /// <returns>
+    ///   An eVector2 which contains the result of addition of the array 'b' to
+    ///   the vector 'a'. <br />
+    /// </returns>
+    /// <exception cref="TLoggedException">
+    ///   If the array of floats does not have a length of two, a logged
+    ///   exception is raised with status stInvalidArrayForVector (Invalid
+    ///   array for vector).
+    /// </exception>
     class operator Add( const a: eVector2; const b: array of extended ): eVector2; overload;
 
-    ///  <summary>
-    ///    Allows addition of a vector to an array, and returns the
-    ///    resulting vector.
-    ///  </summary>
+    /// <summary>
+    ///   Adds an eVector2 to an array of two extended precision floats for
+    ///   assignment to an eVector2 in an element wise addition operation. <br /><br /><code lang="Delphi">MyVectorA := [ 1.2, 1.3 ] + MyVectorB;</code>
+    /// </summary>
+    /// <param name="a">
+    ///   An array of two extended-precision floats to which the vector 'b'
+    ///   will be added.
+    /// </param>
+    /// <param name="b">
+    ///   The eVector2 which will be added to the array 'b'.
+    /// </param>
+    /// <returns>
+    ///   An eVector2 which contains the result of the addition of the vector
+    ///   'b' to the array 'a'. <br />
+    /// </returns>
+    /// <exception cref="TLoggedException">
+    ///   If the array of floats does not have a length of two, a logged
+    ///   exception is raised with status stInvalidArrayForVector (Invalid
+    ///   array for vector).
+    /// </exception>
     class operator Add( const a: array of extended; const b: eVector2 ): eVector2; overload;
 
-    ///  <summary>
-    ///    Allows subtraction of an array from a vector and returns
-    ///    the resulting vector.
-    ///  </summary>
+    /// <summary>
+    ///   Subtracts an array of two extended precision floats from an eVector2
+    ///   for assignment to an eVector2 in an element wise subtraction
+    ///   operation. <br /><code lang="Delphi">MyVectorA := MyVectorB - [ 1.2, 1.3 ];</code>
+    /// </summary>
+    /// <param name="a">
+    ///   The eVector2 from which the values of the array 'b' will be
+    ///   subtracted.
+    /// </param>
+    /// <param name="b">
+    ///   An array of two extended-precision floats to be subtracted from the
+    ///   vector 'a'.
+    /// </param>
+    /// <returns>
+    ///   An eVector2 which contains the result of the subtraction of the array
+    ///   'b' from the vector 'a'.
+    /// </returns>
+    /// <exception cref="TLoggedException">
+    ///   If the array of floats does not have a length of two, a logged
+    ///   exception is raised with status stInvalidArrayForVector (Invalid
+    ///   array for vector).
+    /// </exception>
     class operator Subtract( const a: eVector2; const b: array of extended ): eVector2;
 
-    ///  <summary>
-    ///    Allows subtraction of a vector from an array and returns
-    ///    the resulting vector.
-    ///  </summary>
+    /// <summary>
+    ///   Subtracts an eVector2 from an array of two extended precision floats
+    ///   for assignment to an eVector2 in an element wise subtraction
+    ///   operation. <br /><code lang="Delphi">MyVectorA := [ 1.2, 1.3 ] - MyVectorB;</code>
+    /// </summary>
+    /// <param name="a">
+    ///   An array of two extended-precision floats from which the vector 'b'
+    ///   will be subtracted.
+    /// </param>
+    /// <param name="b">
+    ///   The eVector2 which will be subtracted from the array 'a'.
+    /// </param>
+    /// <returns>
+    ///   An eVector2 which contains the result of the subtraction of vector
+    ///   'b' from the array 'a'.
+    /// </returns>
+    /// <exception cref="TLoggedException">
+    ///   If the array of floats does not have a length of two, a logged
+    ///   exception is raised with status stInvalidArrayForVector (Invalid
+    ///   array for vector).
+    /// </exception>
     class operator Subtract( const a: array of extended; const b: eVector2 ): eVector2;
 
-    ///  <summary>
-    ///    Allows the multiplication of a vector and an array, and returns
-    ///    the resulting vector. (hadamard)
-    ///  </summary>
+    /// <summary>
+    ///   Multiplies an eVector2 by an array of two extended precision floats
+    ///   for assignment to an eVector2, in an element wise multiplication
+    ///   operation. <br /><code lang="Delphi">MyVectorA := MyVectorB * [ 2.0, 2.0 ];</code>
+    /// </summary>
+    /// <param name="a">
+    ///   An eVector2 which will be multiplied by the array 'b'.
+    /// </param>
+    /// <param name="b">
+    ///   An array of two extended precision floats to be multiplied with the
+    ///   vector 'a'.
+    /// </param>
+    /// <returns>
+    ///   An eVector2 which contains the result of the multiplication of the
+    ///   vector 'a' with the array 'b'
+    /// </returns>
+    /// <exception cref="TLoggedException">
+    ///   If the array of floats does not have a length of two, a logged
+    ///   exception is raised with status stInvalidArrayForVector (Invalid
+    ///   array for vector).
+    /// </exception>
     class operator Multiply( const a: eVector2; const b: array of extended ): eVector2;
 
-    ///  <summary>
-    ///    Allows the multiplication of an array and a vector, and returns
-    ///    the resulting vector. (hadamard)
-    ///  </summary>
+    /// <summary>
+    ///   Multiplies an array of two extended precision floats by an eVector2
+    ///   for assignment to an eVector2, in an element wise multiplication
+    ///   operation. <br /><code lang="Delphi">MyVectorA := [ 2.0, 2.0 ] * MyVectorB;</code>
+    /// </summary>
+    /// <param name="a">
+    ///   An array of two extended precision floats to be multiplied with the
+    ///   vector 'b'.
+    /// </param>
+    /// <param name="b">
+    ///   An eVector2 which will be multiplied by the array 'b'.
+    /// </param>
+    /// <returns>
+    ///   An eVector2 which contains the result of the multiplication of the
+    ///   array 'a' with the vector 'b' <br />
+    /// </returns>
+    /// <exception cref="TLoggedException">
+    ///   If the array of floats does not have a length of two, a logged
+    ///   exception is raised with status stInvalidArrayForVector (Invalid
+    ///   array for vector).
+    /// </exception>
     class operator Multiply( const a: array of extended; const b: eVector2 ): eVector2;
 
-    ///  <summary>
-    ///    Allows the division of a vector by an array and returns the
-    ///    resulting vector.
-    ///  </summary>
+    /// <summary>
+    ///   Divides an eVector2 by an array of two extended precision floats for
+    ///   assignment to an eVector2, in an element wise division operation. <br /><code lang="Delphi">MyVectorA := MyVectorB / [ 2.0, 2.0 ];</code>
+    /// </summary>
+    /// <param name="a">
+    ///   An eVector2 which will be divided by the array 'b'.
+    /// </param>
+    /// <param name="b">
+    ///   An array of two extended precision floats by which the vector 'a'
+    ///   will be divided.
+    /// </param>
+    /// <returns>
+    ///   An eVector2 which contains the result of the division of vector 'a'
+    ///   by the array 'b'
+    /// </returns>
+    /// <exception cref="TLoggedException">
+    ///   If the array of floats does not have a length of two, a logged
+    ///   exception is raised with status stInvalidArrayForVector (Invalid
+    ///   array for vector).
+    /// </exception>
     class operator Divide( const a: eVector2; const b: array of extended ): eVector2;
 
-    ///  <summary>
-    ///    Allows the division of an array by a vector and returns the
-    ///    resulting vector.
-    ///  </summary>
+    /// <summary>
+    ///   Divides an array of two extended precision floats by an eVector2 for
+    ///   assignment to an eVector2, in an element wise division operation. <br /><code lang="Delphi">MyVectorA := [ 2.0, 2.0 ] / MyVectorB;</code>
+    /// </summary>
+    /// <param name="a">
+    ///   An array of two extended precision floats to be divided by the vector
+    ///   'b'.
+    /// </param>
+    /// <param name="b">
+    ///   An eVector2 by which the array 'a' will be divided.
+    /// </param>
+    /// <returns>
+    ///   An eVector2 which contains the result of the division of the array
+    ///   'a' by the vector 'b'.
+    /// </returns>
+    /// <exception cref="TLoggedException">
+    ///   If the array of floats does not have a length of two, a logged
+    ///   exception is raised with status stInvalidArrayForVector (Invalid
+    ///   array for vector).
+    /// </exception>
     class operator Divide( const a: array of extended; const b: eVector2 ): eVector2;
 
-    ///  <summary>
-    ///    Operator overload provides for addition of one vector to another.
-    ///  </summary>
+    /// <summary>
+    ///   Adds an eVector2 to another eVector2 for assignment to an eVector2,
+    ///   in an element wise addition operation. <br /><code lang="Delphi">MyVectorA := MyVectorB + MyVectorC;</code>
+    /// </summary>
+    /// <param name="a">
+    ///   The eVector2 to which the vector 'b' will be added.
+    /// </param>
+    /// <param name="b">
+    ///   An eVector2 for addition to the vector 'a'
+    /// </param>
+    /// <returns>
+    ///   An eVector2 which contains the result of the addition of vector 'b'
+    ///   to vector 'a'.
+    /// </returns>
     class operator Add( const a: eVector2; const b: eVector2 ): eVector2;
 
-    ///  <summary>
-    ///    Operator overload provides for addition of a extended to a vector.
-    ///  </summary>
+    /// <summary>
+    ///   Adds a extended precision float to each element of a vector for
+    ///   assignment to an eVector2. <br /><code lang="Delphi">MyVectorA := MyVectorB + 6.2;</code>
+    /// </summary>
+    /// <param name="a">
+    ///   The eVector2 to which the extended 'b' will be added.
+    /// </param>
+    /// <param name="b">
+    ///   A extended precision float to be added to the elements of vector 'a'
+    /// </param>
+    /// <returns>
+    ///   An eVector2 which contains the result of the addition of extended 'b'
+    ///   to the elements of vector 'a'.
+    /// </returns>
     class operator Add( const a: eVector2; const b: extended ): eVector2;
 
-    ///  <summary>
-    ///    Operator overload provides for subtraction of one vector from
-    ///    another.
-    ///  </summary>
+    /// <summary>
+    ///   Subtracts an eVector2 from another eVector2 for assignment to an
+    ///   eVector2, in an element wise subtraction operation. <br /><code lang="Delphi">MyVectorA := MyVectorB - MyVectorC;</code>
+    /// </summary>
+    /// <param name="a">
+    ///   The eVector2 from which the vector 'b' will be subtracted.
+    /// </param>
+    /// <param name="b">
+    ///   An eVector2 for subtraction from the vector 'a'
+    /// </param>
+    /// <returns>
+    ///   An eVector2 which contains the result of the subtraction of vector
+    ///   'b' from vector 'a'.
+    /// </returns>
     class operator Subtract( const a: eVector2; const b: eVector2 ): eVector2;
 
-    ///  <summary>
-    ///    Operator overload provides for subtraction of a float from
-    //     a vector.
-    ///  </summary>
+    /// <summary>
+    ///   Subtracts a extended precision float from each element of a vector
+    ///   for assignment to an eVector2. <br /><code lang="Delphi">MyVectorA := MyVectorB - 6.2;</code>
+    /// </summary>
+    /// <param name="a">
+    ///   The eVector2 from which the extended 'b' will be subtracted.
+    /// </param>
+    /// <param name="b">
+    ///   A extended precision float to be subtracted from the elements of
+    ///   vector 'a'.
+    /// </param>
+    /// <returns>
+    ///   An eVector2 which contains the result of the subtraction of extended
+    ///   'b' from the elements of vector 'a'.
+    /// </returns>
     class operator Subtract(const a: eVector2; const b: extended ): eVector2;
 
-    ///  <summary>
-    ///    Operator overload to provide for multiplication of one vector by
-    ///    another (hadamard multiplication/scale).
-    ///  </summary>
+    /// <summary>
+    ///   Multiplies an eVector2 by an eVector2 for assignment to an eVector2
+    ///   in an element wise (hadamard) multiplication operation. <br /><code lang="Delphi">MyVectorA := MyVectorB * MyVectorC;</code>
+    /// </summary>
+    /// <param name="a">
+    ///   The eVector2 which will be multiplied by the the vector 'b'.
+    /// </param>
+    /// <param name="b">
+    ///   An eVector2 by which the vector 'a' will be multiplied.
+    /// </param>
+    /// <returns>
+    ///   An eVector2 which contains the result of the multiplication of vector
+    ///   'a' by vector 'b'.
+    /// </returns>
     class operator Multiply( const a: eVector2; const b: eVector2 ): eVector2;
 
-    ///  <summary>
-    ///    Operator overload to provide for multiplication of a vector by
-    ///    a float. (scale)
-    ///  </summary>
+    /// <summary>
+    ///   Multiplies an eVector2 by a extended precision float for assignment
+    ///   to an eVector2 in an element wise (hadamard) multiplication
+    ///   operation. <br /><code lang="Delphi">MyVectorA := MyVectorB * 6.2;</code>
+    /// </summary>
+    /// <param name="a">
+    ///   The eVector2 which will be multiplied by the the extended 'b'.
+    /// </param>
+    /// <param name="b">
+    ///   A extended precision float by which the vector 'a' will be
+    ///   multiplied.
+    /// </param>
+    /// <returns>
+    ///   An eVector2 which contains the result of the multiplication of vector
+    ///   'a' by extended 'b'.
+    /// </returns>
     class operator Multiply( const a: eVector2; const b: extended ): eVector2;
 
-    ///  <summary>
-    ///    Operator overload to provide for division of one vector by
-    ///    another.
-    ///  </summary>
+    /// <summary>
+    ///   Divides an eVector2 by an eVector2 for assignment to an eVector2 in
+    ///   an element wise division operation. <br /><code lang="Delphi">MyVectorA := MyVectorB / MyVectorC;</code>
+    /// </summary>
+    /// <param name="a">
+    ///   The eVector2 which will be divided by the the vector 'b'.
+    /// </param>
+    /// <param name="b">
+    ///   An eVector2 by which the vector 'a' will be divided.
+    /// </param>
+    /// <returns>
+    ///   An eVector2 which contains the result of the division of vector 'a'
+    ///   by vector 'b'.
+    /// </returns>
     class operator Divide( const a: eVector2; const b: eVector2 ): eVector2;
 
-    ///  <summary>
-    ///    Operator overload to provide for division of a vector by a
-    ///    float.
-    ///  </summary>
+    /// <summary>
+    ///   Divides an eVector2 by a extended precision float for assignment to
+    ///   an eVector2 in an element wise division operation. <br /><code lang="Delphi">MyVectorA := MyVectorB / 6.2;</code>
+    /// </summary>
+    /// <param name="a">
+    ///   The eVector2 which will be divided by the the extended 'b'.
+    /// </param>
+    /// <param name="b">
+    ///   A extended precision float by which the vector 'a' will be divided.
+    /// </param>
+    /// <returns>
+    ///   An eVector2 which contains the result of the division of vector 'a'
+    ///   by extended 'b'.
+    /// </returns>
     class operator Divide( const a: eVector2; const b: extended ): eVector2;
 
-    ///  <summary>
-    ///    Creates a new vector based on X,Y values.
-    ///  </summary>
+    /// <summary>
+    ///   Returns an eVector2 containing the parameter values X and Y, in that
+    ///   order. <br /><br /><br /><code lang="Delphi">MyVector := eVector2.Create( 1.0, 2.0 );</code>
+    /// </summary>
+    /// <param name="X">
+    ///   Value for the first element of the vector.
+    /// </param>
+    /// <param name="Y">
+    ///   Value for the second element of the vector.
+    /// </param>
+    /// <returns>
+    ///   An eVector2 containing the two values supplied as parameters.
+    /// </returns>
     class function Create( const X: extended; const Y: extended ): eVector2; overload; static;
 
-    ///  <summary>
-    ///    Returns the dot product of this vector with another.
-    ///  </summary>
-    function dot( const a: eVector2 ): extended;
+    /// <summary>
+    ///   Returns the dot product of this eVector2 with another eVector2.
+    ///   <code lang="Delphi">E := MyVectorA.Dot( MyVectorB );</code>
+    /// </summary>
+    /// <param name="a">
+    ///   An eVector2 with which to compute the dot product of this vector.
+    /// </param>
+    /// <returns>
+    ///   A extended precision floating point result of the dot product of this
+    ///   vector with another.
+    /// </returns>
+    function Dot( const a: eVector2 ): extended;
 
-    ///  <summary>
-    ///    Returns this vector normaized.
-    ///  </summary>
-    function normalized: eVector2;
+    /// <summary>
+    ///   Returns the Normal vector of this vector.
+    ///   <code lang="Delphi">NormalVector := SomeVector.Normalized;</code>
+    /// </summary>
+    /// <returns>
+    ///   An eVector2 containing the normal of this vector.
+    /// </returns>
+    function Normalized: eVector2;
 
-    ///  <summary>
-    ///    Returns the unit vector of this one.
-    ///  </summary>
+    /// <summary>
+    ///   Returns the unit vector of this vector.
+    ///   <code lang="Delphi">UnitVector := SomeVector.UnitVector;</code>
+    /// </summary>
+    /// <returns>
+    ///   An eVector2 containing this vector scaled to the normal 1.
+    /// </returns>
     function UnitVector: eVector2;
 
-    ///  <summary>
-    ///    Returns the magnitude of the vector.
-    ///  </summary>
-    function magnitude: extended;
+    /// <summary>
+    ///   Returns the magnitude of the vector.
+    ///   <code lang="Delphi">M := SomeVector.Magnitude;</code>
+    /// </summary>
+    function Magnitude: extended;
 
     case uint8 of
       0: (
@@ -508,170 +1332,485 @@ type
 
 {$region ' sVector3'}
 
-  ///  <summary>
-  ///    Represents a vector with 3 elements (X,Y,Z), (R,G,B).
-  ///  </summary>
+
+  /// <summary>
+  ///   Represents a single precision vector with three elements (X,Y,Z / R,G,B)
+  /// </summary>
   sVector3 = record
 
-    ///  <summary>
-    ///    Allows creation of a vector from an array of floats.
-    ///    (Size of array must match size of vector)
-    ///  </summary>
+    /// <summary>
+    ///   Assigns an array of three single precision floats to an sVector3.
+    ///   <code lang="Delphi">MyVector := [ 3.5, 4.5, 5.5 ];</code>
+    /// </summary>
+    /// <param name="a">
+    ///   An array of three single precision floating point values to assign to
+    ///   the vector.
+    /// </param>
+    /// <returns>
+    ///   The vector is returned with it's elements set to those provided in
+    ///   the array.
+    /// </returns>
+    /// <exception cref="TLoggedException">
+    ///   When the array of floats to be assigned does not have a length of
+    ///   three, a logged exception is raised with status
+    ///   stInvalidArrayForVector (Invalid array for vector).
+    /// </exception>
+    /// <remarks>
+    ///   The length of the array must match size of vector (three elements)
+    /// </remarks>
     class operator Implicit( const a: array of single ): sVector3;
 
-    ///  <summary>
-    ///    Allows creation of a vector from an array of floats.
-    ///    (Size of array must match size of vector)
-    ///  </summary>
+    /// <summary>
+    ///   Assigns an array of three single precision floats to an sVector3. <br /><code lang="Delphi">MyVector := [ 3.5, 4.5, 5.5 ];</code>
+    /// </summary>
+    /// <param name="a">
+    ///   An array of three single precision floating point values to assign to
+    ///   the vector.
+    /// </param>
+    /// <returns>
+    ///   The vector is returned with it's elements set to those provided in
+    ///   the array.
+    /// </returns>
+    /// <exception cref="TLoggedException">
+    ///   When the array of floats to be assigned does not have a length of
+    ///   three, a logged exception is raised with status
+    ///   stInvalidArrayForVector (Invalid array for vector).
+    /// </exception>
+    /// <remarks>
+    ///   The length of the array must match size of vector (three elements)
+    /// </remarks>
     class operator Explicit( const a: array of single ): sVector3;
 
-    ///  <summary>
-    ///    Allows addition of a vector to an array, and returns the
-    //     resulting vector.
-    ///  </summary>
+    /// <summary>
+    ///   Adds an array of three single precision floating point values to an
+    ///   sVector3 in an element wise addition operation. <br /><code lang="Delphi">MyVectorA := MyVectorB + [ 1.2, 1.3, 1.4 ];</code>
+    /// </summary>
+    /// <param name="a">
+    ///   The sVector3 to which the values of the array 'b' will be added.
+    /// </param>
+    /// <param name="b">
+    ///   An array of three single precision floats to be added to the the
+    ///   vector 'a'.
+    /// </param>
+    /// <returns>
+    ///   An sVector3 which contains the result of addition of the array 'b' to
+    ///   the vector 'a'. <br />
+    /// </returns>
+    /// <exception cref="TLoggedException">
+    ///   If the array of floats does not have a length of three, a logged
+    ///   exception is raised with status stInvalidArrayForVector (Invalid
+    ///   array for vector).
+    /// </exception>
     class operator Add( const a: sVector3; const b: array of single ): sVector3;
 
-    ///  <summary>
-    ///    Allows addition of a vector to an array, and returns the
-    ///    resulting vector.
-    ///  </summary>
+    /// <summary>
+    ///   Adds an sVector3 to an array of three single precision floats for
+    ///   assignment to an sVector3 in an element wise addition operation. <br /><code lang="Delphi">MyVector := [ 1.2, 1.3, 1.4 ] + MyVector;</code>
+    /// </summary>
+    /// <param name="a">
+    ///   An array of three single precision floats to which the vector 'b'
+    ///   will be added.
+    /// </param>
+    /// <param name="b">
+    ///   The sVector3 which will be added to the array 'b'.
+    /// </param>
+    /// <returns>
+    ///   An sVector3 which contains the result of the addition of the vector
+    ///   'b' to the array 'a'. <br />
+    /// </returns>
+    /// <exception cref="TLoggedException">
+    ///   If the array of floats does not have a length of three, a logged
+    ///   exception is raised with status stInvalidArrayForVector (Invalid
+    ///   array for vector).
+    /// </exception>
     class operator Add( const a: array of single; const b: sVector3 ): sVector3;
 
-    ///  <summary>
-    ///    Allows subtraction of an array from a vector and returns
-    ///    the resulting vector.
-    ///  </summary>
+    /// <summary>
+    ///   Subtracts an array of three single precision floats from an sVector3
+    ///   for assignment to an sVector3 in an element wise subtraction
+    ///   operation. <br /><code lang="Delphi">MyVector := MyVector - [ 1.2, 1.3, 1.4 ];</code>
+    /// </summary>
+    /// <param name="a">
+    ///   The sVector3 from which the values of the array 'b' will be
+    ///   subtracted.
+    /// </param>
+    /// <param name="b">
+    ///   An array of three single-precision floats to be subtracted from the
+    ///   vector 'a'.
+    /// </param>
+    /// <returns>
+    ///   An sVector3 which contains the result of the subtraction of the array
+    ///   'b' from the vector 'a'.
+    /// </returns>
+    /// <exception cref="TLoggedException">
+    ///   If the array of floats does not have a length of three, a logged
+    ///   exception is raised with status stInvalidArrayForVector (Invalid
+    ///   array for vector).
+    /// </exception>
     class operator Subtract( const a: sVector3; const b: array of single ): sVector3;
 
-    ///  <summary>
-    ///    Allows subtraction of a vector from an array and returns
-    ///    the resulting vector.
-    ///  </summary>
+    /// <summary>
+    ///   Subtracts an sVector3 from an array of three single precision floats
+    ///   for assignment to an sVector3 in an element wise subtraction
+    ///   operation. <br /><code lang="Delphi">MyVector := [ 1.2, 1.3, 1.4 ] - MyVector;</code>
+    /// </summary>
+    /// <param name="a">
+    ///   An array of three single-precision floats from which the vector 'b'
+    ///   will be subtracted.
+    /// </param>
+    /// <param name="b">
+    ///   The sVector3 which will be subtracted from the array 'a'.
+    /// </param>
+    /// <returns>
+    ///   An sVector3 which contains the result of the subtraction of vector
+    ///   'b' from the array 'a'.
+    /// </returns>
+    /// <exception cref="TLoggedException">
+    ///   If the array of floats does not have a length of three, a logged
+    ///   exception is raised with status stInvalidArrayForVector (Invalid
+    ///   array for vector).
+    /// </exception>
     class operator Subtract( const a: array of single; const b: sVector3 ): sVector3;
 
-    ///  <summary>
-    ///    Allows the multiplication of a vector and an array, and returns
-    ///    the resulting vector. (hadamard)
-    ///  </summary>
+    /// <summary>
+    ///   Multiplies an sVector3 by an array of three single precision floats
+    ///   for assignment to an sVector3, in an element wise multiplication
+    ///   operation. <br /><code lang="Delphi">MyVectorA := MyVectorB * [ 2.0, 2.1, 2.2 ];</code>
+    /// </summary>
+    /// <param name="a">
+    ///   An sVector3 which will be multiplied by the array 'b'.
+    /// </param>
+    /// <param name="b">
+    ///   An array of three single precision floats to be multiplied with the
+    ///   vector 'a'.
+    /// </param>
+    /// <returns>
+    ///   An sVector3 which contains the result of the multiplication of the
+    ///   vector 'a' with the array 'b'
+    /// </returns>
+    /// <exception cref="TLoggedException">
+    ///   If the array of floats does not have a length of three, a logged
+    ///   exception is raised with status stInvalidArrayForVector (Invalid
+    ///   array for vector).
+    /// </exception>
     class operator Multiply( const a: sVector3; const b: array of single ): sVector3;
 
-    ///  <summary>
-    ///    Allows the multiplication of an array and a vector, and returns
-    ///    the resulting vector. (hadamard)
-    ///  </summary>
+    /// <summary>
+    ///   Multiplies an array of three single precision floats by an sVector3
+    ///   for assignment to an sVector3, in an element wise multiplication
+    ///   operation. <br /><code lang="Delphi">MyVectorA := [ 2.0, 2.1, 2.2 ] * MyVectorB;</code>
+    /// </summary>
+    /// <param name="a">
+    ///   An array of three single precision floats to be multiplied with the
+    ///   vector 'b'.
+    /// </param>
+    /// <param name="b">
+    ///   An sVector3 which will be multiplied by the array 'b'.
+    /// </param>
+    /// <returns>
+    ///   An sVector3 which contains the result of the multiplication of the
+    ///   array 'a' with the vector 'b' <br />
+    /// </returns>
+    /// <exception cref="TLoggedException">
+    ///   If the array of floats does not have a length of three, a logged
+    ///   exception is raised with status stInvalidArrayForVector (Invalid
+    ///   array for vector).
+    /// </exception>
     class operator Multiply( const a: array of single; const b: sVector3 ): sVector3;
 
-    ///  <summary>
-    ///    Allows the division of a vector by an array and returns the
-    ///    resulting vector.
-    ///  </summary>
+    /// <summary>
+    ///   Divides an sVector3 by an array of three single precision floats for
+    ///   assignment to an sVector3, in an element wise division operation. <br /><code lang="Delphi">MyVectorA := MyVectorB / [ 2.0, 2.1, 2.2 ];</code>
+    /// </summary>
+    /// <param name="a">
+    ///   An sVector3 which will be divided by the array 'b'.
+    /// </param>
+    /// <param name="b">
+    ///   An array of three single precision floats by which the vector 'a'
+    ///   will be divided.
+    /// </param>
+    /// <returns>
+    ///   An sVector3 which contains the result of the division of vector 'a'
+    ///   by the array 'b'
+    /// </returns>
+    /// <exception cref="TLoggedException">
+    ///   If the array of floats does not have a length of three, a logged
+    ///   exception is raised with status stInvalidArrayForVector (Invalid
+    ///   array for vector).
+    /// </exception>
     class operator Divide( const a: sVector3; const b: array of single ): sVector3;
 
-    ///  <summary>
-    ///    Allows the division of an array by a vector and returns the
-    ///    resulting vector.
-    ///  </summary>
+    /// <summary>
+    ///   Divides an array of three single precision floats by an sVector3 for
+    ///   assignment to an sVector3, in an element wise division operation. <br /><code lang="Delphi">MyVectorA := [ 2.0, 2.1, 2.2 ] / MyVectorA;</code>
+    /// </summary>
+    /// <param name="a">
+    ///   An array of three single precision floats to be divided by the vector
+    ///   'b'.
+    /// </param>
+    /// <param name="b">
+    ///   An sVector3 by which the array 'a' will be divided.
+    /// </param>
+    /// <returns>
+    ///   An sVector3 which contains the result of the division of the array
+    ///   'a' by the vector 'b'.
+    /// </returns>
+    /// <exception cref="TLoggedException">
+    ///   If the array of floats does not have a length of three, a logged
+    ///   exception is raised with status stInvalidArrayForVector (Invalid
+    ///   array for vector).
+    /// </exception>
     class operator Divide( const a: array of single; const b: sVector3 ): sVector3;
 
-    ///  <summary>
-    ///    Operator overload provides for addition of one vector to another.
-    ///  </summary>
+    /// <summary>
+    ///   Adds an sVector3 to another sVector3 for assignment to an sVector3,
+    ///   in an element wise addition operation. <br /><code lang="Delphi">MyVectorA := MyVectorB + MyVectorC;</code>
+    /// </summary>
+    /// <param name="a">
+    ///   The sVector3 to which the vector 'b' will be added.
+    /// </param>
+    /// <param name="b">
+    ///   An sVector3 for addition to the vector 'a'
+    /// </param>
+    /// <returns>
+    ///   An sVector3 which contains the result of the addition of vector 'b'
+    ///   to vector 'a'.
+    /// </returns>
     class operator Add( const a: sVector3; const b: sVector3 ): sVector3;
 
-    ///  <summary>
-    ///    Operator overload provides for addition of a float to a vector.
-    ///  </summary>
+    /// <summary>
+    ///   Adds a single precision float to each element of a vector for
+    ///   assignment to an sVector3. <br /><code lang="Delphi">MyVectorA := MyVectorB + 6.2;</code>
+    /// </summary>
+    /// <param name="a">
+    ///   The sVector3 to which the single 'b' will be added.
+    /// </param>
+    /// <param name="b">
+    ///   A single precision float to be added to the elements of vector 'a'
+    /// </param>
+    /// <returns>
+    ///   An sVector3 which contains the result of the addition of single 'b'
+    ///   to the elements of vector 'a'.
+    /// </returns>
     class operator Add( const a: sVector3; const b: single ): sVector3;
 
-    ///  <summary>
-    ///    Operator overload provides for subtraction of one vector from
-    ///    another.
-    ///  </summary>
+    /// <summary>
+    ///   Subtracts an sVector3 from another sVector3 for assignment to an
+    ///   sVector3, in an element wise subtraction operation. <br /><code lang="Delphi">MyVectorA := MyVectorB - MyVectorC;</code>
+    /// </summary>
+    /// <param name="a">
+    ///   The sVector3 from which the vector 'b' will be subtracted.
+    /// </param>
+    /// <param name="b">
+    ///   An sVector3 for subtraction from the vector 'a'
+    /// </param>
+    /// <returns>
+    ///   An sVector3 which contains the result of the subtraction of vector
+    ///   'b' from vector 'a'.
+    /// </returns>
     class operator Subtract( const a: sVector3; const b: sVector3 ): sVector3;
 
-    ///  <summary>
-    ///    Operator overload provides for subtraction of a float from
-    //     a vector.
-    ///  </summary>
+    /// <summary>
+    ///   Subtracts a single precision float from each element of a vector for
+    ///   assignment to an sVector3. <br /><code lang="Delphi">MyVectorA := MyVectorB - 6.2;</code>
+    /// </summary>
+    /// <param name="a">
+    ///   The sVector3 from which the single 'b' will be subtracted.
+    /// </param>
+    /// <param name="b">
+    ///   A single precision float to be subtracted from the elements of vector
+    ///   'a'.
+    /// </param>
+    /// <returns>
+    ///   An sVector3 which contains the result of the subtraction of single
+    ///   'b' from the elements of vector 'a'.
+    /// </returns>
     class operator Subtract( const a: sVector3; const b: single ): sVector3;
 
-    ///  <summary>
-    ///    Operator overload to provide for multiplication of one vector by
-    ///    another (hadamard multiplication/scale).
-    ///  </summary>
+    /// <summary>
+    ///   Multiplies an sVector3 by an sVector3 for assignment to an sVector3
+    ///   in an element wise (hadamard) multiplication operation. <br /><code lang="Delphi">MyVectorA := MyVectorB * MyVectorC;</code>
+    /// </summary>
+    /// <param name="a">
+    ///   The sVector3 which will be multiplied by the the vector 'b'.
+    /// </param>
+    /// <param name="b">
+    ///   An sVector3 by which the vector 'a' will be multiplied.
+    /// </param>
+    /// <returns>
+    ///   An sVector3 which contains the result of the multiplication of vector
+    ///   'a' by vector 'b'.
+    /// </returns>
     class operator Multiply( const a: sVector3; const b: sVector3 ): sVector3;
 
-    ///  <summary>
-    ///    Operator overload to provide for multiplication of a vector by
-    ///    a float. (scale)
-    ///  </summary>
+    /// <summary>
+    ///   Multiplies an sVector3 by a single precision float for assignment to
+    ///   an sVector3 in an element wise (hadamard) multiplication operation. <br /><code lang="Delphi">MyVectorA := MyVectorB * 6.2;</code>
+    /// </summary>
+    /// <param name="a">
+    ///   The sVector3 which will be multiplied by the the single 'b'.
+    /// </param>
+    /// <param name="b">
+    ///   A single precision float by which the vector 'a' will be multiplied.
+    /// </param>
+    /// <returns>
+    ///   An sVector3 which contains the result of the multiplication of vector
+    ///   'a' by single 'b'.
+    /// </returns>
     class operator Multiply( const a: sVector3; const b: single ): sVector3;
 
-    ///  <summary>
-    ///    Operator overload to provide for division of one vector by
-    ///    another.
-    ///  </summary>
+    /// <summary>
+    ///   Divides an sVector3 by an sVector3 for assignment to an sVector3 in
+    ///   an element wise division operation. <br /><code lang="Delphi">MyVectorA := MyVectorB / MyVectorC;</code>
+    /// </summary>
+    /// <param name="a">
+    ///   The sVector3 which will be divided by the the vector 'b'.
+    /// </param>
+    /// <param name="b">
+    ///   An sVector3 by which the vector 'a' will be divided.
+    /// </param>
+    /// <returns>
+    ///   An sVector3 which contains the result of the division of vector 'a'
+    ///   by vector 'b'.
+    /// </returns>
     class operator Divide( const a: sVector3; const b: sVector3 ): sVector3;
 
-    ///  <summary>
-    ///    Operator overload to provide for division of a vector by a
-    ///    float.
-    ///  </summary>
+    /// <summary>
+    ///   Divides an sVector3 by a single precision float for assignment to an
+    ///   sVector3 in an element wise division operation. <br /><code lang="Delphi">MyVectorA := MyVectorB / 6.2;</code>
+    /// </summary>
+    /// <param name="a">
+    ///   The sVector3 which will be divided by the the single 'b'.
+    /// </param>
+    /// <param name="b">
+    ///   A single precision float by which the vector 'a' will be divided.
+    /// </param>
+    /// <returns>
+    ///   An sVector3 which contains the result of the division of vector 'a'
+    ///   by single 'b'.
+    /// </returns>
     class operator Divide( const a: sVector3; const b: single ): sVector3;
 
-    ///  <summary>
-    ///    Allows assignment of a Vector2 to the Vector3, dropping the Z
-    ///    element.
-    ///  </summary>
+    /// <summary>
+    ///   Assigns an sVector3 from an sVector2 while setting the Z element to
+    ///   zero.
+    ///   <code lang="Delphi">var
+    ///   VectorA: sVector3;
+    ///   VectorB: sVector2;
+    /// begin
+    ///   VectorB := [ 1.0, 2.0 ];
+    ///   VectorA := VectorB;
+    ///   //- At this point, VectorA = 1.0, 2.0, 0.0
+    /// end;</code>
+    /// </summary>
     class operator Implicit( const a: sVector2 ): sVector3;
 
-    ///  <summary>
-    ///    Allows assignment of a Vector2 to the Vector3, dropping the Z
-    ///    element.
-    ///  </summary>
+    /// <summary>
+    ///   Assigns an sVector3 from an sVector2 while setting the Z element to
+    ///   zero.
+    ///   <code lang="Delphi">var
+    ///   VectorA: sVector3;
+    ///   VectorB: sVector2;
+    /// begin
+    ///   VectorB := [ 1.0, 2.0 ];
+    ///   VectorA := VectorB;
+    ///   //- At this point, VectorA = 1.0, 2.0, 0.0
+    /// end;</code>
+    /// </summary>
     class operator Explicit( const a: sVector2 ): sVector3;
 
-    ///  <summary>
-    ///    Allows assignment of a Vector3 to the Vector2, setting the Z
-    ///    element to 0;
-    ///  </summary>
+    /// <summary>
+    ///   Assigns an sVector2 from an sVector3, dropping the Z value.
+    ///   <code lang="Delphi">var
+    ///   VectorA: sVector2;
+    ///   VectorB: sVector3;
+    /// begin
+    ///   VectorB := [ 1.0, 2.0, 3.0 ];
+    ///   VectorA := VectorB;
+    ///   //- At this point, VectorA = 1.0, 2.0
+    /// end;</code>
+    /// </summary>
     class operator Implicit( const a: sVector3 ): sVector2;
 
-    ///  <summary>
-    ///    Allows assignment of a Vector3 to the Vector2, setting the Z
-    ///    element to 0;
-    ///  </summary>
+    /// <summary>
+    ///   Assigns an sVector2 from an sVector3, dropping the Z value.
+    ///   <code lang="Delphi">var
+    ///   VectorA: sVector2;
+    ///   VectorB: sVector3;
+    /// begin
+    ///   VectorB := [ 1.0, 2.0, 3.0 ];
+    ///   VectorA := VectorB;
+    ///   //- At this point, VectorA = 1.0, 2.0
+    /// end;</code>
+    /// </summary>
     class operator Explicit( const a: sVector3 ): sVector2;
 
-    ///  <summary>
-    ///    Creates a new vector from X,Y,Z values.
-    ///  </summary>
+    /// <summary>
+    ///   Returns an sVector3 containing the parameter values X and Y, in that
+    ///   order.
+    ///   <code lang="Delphi">MyVectorA := sVector3.Create( 1.0, 2.0, 3.0 );</code>
+    /// </summary>
+    /// <param name="X">
+    ///   Value for the first element of the vector.
+    /// </param>
+    /// <param name="Y">
+    ///   Value for the second element of the vector.
+    /// </param>
+    /// <returns>
+    ///   An sVector3 containing the three values supplied as parameters.
+    /// </returns>
     class function Create( const X: single; const Y: single; const Z: single ): sVector3; overload; static;
 
-    ///  <summary>
-    ///    Returns the dot product of this vector with another.
-    ///  </summary>
-    function dot( const a: sVector3 ): single;
+    /// <summary>
+    ///   Returns the dot product of this sVector3 with another sVector3.
+    ///   <code lang="Delphi">S := VectorA.Dot( VectorB );</code>
+    /// </summary>
+    /// <param name="a">
+    ///   An sVector3 with which to compute the dot product of this vector.
+    /// </param>
+    /// <returns>
+    ///   A single precision floating point result of the dot product of this
+    ///   vector with another.
+    /// </returns>
+    function Dot( const a: sVector3 ): single;
 
-    ///  <summary>
-    ///    Returns the cross product of this vector with another.
-    ///  </summary>
-    function cross( const a: sVector3 ): sVector3;
+    /// <summary>
+    ///   Returns the cross product of this vector with another and returns an
+    ///   sVector3 for assignment.
+    ///   <code lang="Delphi">CrossVector := MyVectorA.Cross( MyVectorB );</code>
+    /// </summary>
+    /// <param name="a">
+    ///   The vector providing the right hand side of a dot product operation.
+    /// </param>
+    /// <returns>
+    ///   A vector containing the result of cross product computation between
+    ///   'this' vector and the 'a' vector.
+    /// </returns>
+    function Cross( const a: sVector3 ): sVector3;
 
-    ///  <summary>
-    ///    Returns this vector normaized.
-    ///  </summary>
-    function normalized: sVector3;
+    /// <summary>
+    ///   Returns the Normal vector of this vector.
+    ///   <code lang="Delphi">NormalVector := SomeVector.Normalized;</code>
+    /// </summary>
+    /// <returns>
+    ///   An sVector3 containing the normal of this vector.
+    /// </returns>
+    function Normalized: sVector3;
 
-    ///  <summary>
-    ///    Returns the unit vector of this one.
-    ///  </summary>
+    /// <summary>
+    ///   Returns the unit vector of this vector.
+    ///   <code lang="Delphi">UnitVector := SomeVector.UnitVector;</code>
+    /// </summary>
+    /// <returns>
+    ///   An sVector3 containing this vector scaled to the normal 1.
+    /// </returns>
     function UnitVector: sVector3;
 
-    ///  <summary>
-    ///    Returns the magnitude of the vector.
-    ///  </summary>
-    function magnitude: single;
+    /// <summary>
+    ///   Returns the magnitude of the vector.
+    ///   <code lang="Delphi">M := SomeVector.Magnitude;</code>
+    /// </summary>
+    function Magnitude: single;
 
       case uint8 of
       0: (
@@ -687,177 +1826,492 @@ type
   end;
 
   ///  <summary>
-  ///    An alias of Vector3 which represents a point in 3d space.
+  ///    An alias of sVector3 which represents a point in 3d space.
+  ///   (Single Precision Vertex)
   ///  </summary>
   sVertex = sVector3;
 {$endregion}
 
 {$region ' dVector3'}
 
-  ///  <summary>
-  ///    Represents a vector with 3 elements (X,Y,Z), (R,G,B).
-  ///  </summary>
+  /// <summary>
+  ///   Represents a double precision vector with three elements (X,Y,Z / R,G,B)
+  /// </summary>
   dVector3 = record
 
-    ///  <summary>
-    ///    Allows creation of a vector from an array of floats.
-    ///    (Size of array must match size of vector)
-    ///  </summary>
+    /// <summary>
+    ///   Assigns an array of three double precision floats to a dVector3.
+    ///   <code lang="Delphi">MyVector := [ 3.5, 4.5, 5.5 ];</code>
+    /// </summary>
+    /// <param name="a">
+    ///   An array of three double precision floating point values to assign to
+    ///   the vector.
+    /// </param>
+    /// <returns>
+    ///   The vector is returned with it's elements set to those provided in
+    ///   the array.
+    /// </returns>
+    /// <exception cref="TLoggedException">
+    ///   When the array of floats to be assigned does not have a length of
+    ///   three, a logged exception is raised with status
+    ///   stInvalidArrayForVector (Invalid array for vector).
+    /// </exception>
+    /// <remarks>
+    ///   The length of the array must match size of vector (three elements)
+    /// </remarks>
     class operator Implicit( const a: array of double ): dVector3;
 
-    ///  <summary>
-    ///    Allows creation of a vector from an array of floats.
-    ///    (Size of array must match size of vector)
-    ///  </summary>
+    /// <summary>
+    ///   Assigns an array of three double precision floats to a dVector3. <br /><code lang="Delphi">MyVector := [ 3.5, 4.5, 5.5 ];</code>
+    /// </summary>
+    /// <param name="a">
+    ///   An array of three double precision floating point values to assign to
+    ///   the vector.
+    /// </param>
+    /// <returns>
+    ///   The vector is returned with it's elements set to those provided in
+    ///   the array.
+    /// </returns>
+    /// <exception cref="TLoggedException">
+    ///   When the array of floats to be assigned does not have a length of
+    ///   three, a logged exception is raised with status
+    ///   stInvalidArrayForVector (Invalid array for vector).
+    /// </exception>
+    /// <remarks>
+    ///   The length of the array must match size of vector (three elements)
+    /// </remarks>
     class operator Explicit( const a: array of double ): dVector3;
 
-    ///  <summary>
-    ///    Allows addition of a vector to an array, and returns the
-    //     resulting vector.
-    ///  </summary>
+    /// <summary>
+    ///   Adds an array of three double precision floating point values to an
+    ///   dVector3 in an element wise addition operation. <br /><code lang="Delphi">MyVectorA := MyVectorB + [ 1.2, 1.3, 1.4 ];</code>
+    /// </summary>
+    /// <param name="a">
+    ///   The dVector3 to which the values of the array 'b' will be added.
+    /// </param>
+    /// <param name="b">
+    ///   An array of three double precision floats to be added to the the
+    ///   vector 'a'.
+    /// </param>
+    /// <returns>
+    ///   A dVector3 which contains the result of addition of the array 'b' to
+    ///   the vector 'a'. <br />
+    /// </returns>
+    /// <exception cref="TLoggedException">
+    ///   If the array of floats does not have a length of three, a logged
+    ///   exception is raised with status stInvalidArrayForVector (Invalid
+    ///   array for vector).
+    /// </exception>
     class operator Add( const a: dVector3; const b: array of double ): dVector3;
 
-    ///  <summary>
-    ///    Allows addition of a vector to an array, and returns the
-    ///    resulting vector.
-    ///  </summary>
+    /// <summary>
+    ///   Adds a dVector3 to an array of three double precision floats for
+    ///   assignment to a dVector3 in an element wise addition operation. <br /><code lang="Delphi">MyVector := [ 1.2, 1.3, 1.4 ] + MyVector;</code>
+    /// </summary>
+    /// <param name="a">
+    ///   An array of three double precision floats to which the vector 'b'
+    ///   will be added.
+    /// </param>
+    /// <param name="b">
+    ///   The dVector3 which will be added to the array 'b'.
+    /// </param>
+    /// <returns>
+    ///   A dVector3 which contains the result of the addition of the vector
+    ///   'b' to the array 'a'. <br />
+    /// </returns>
+    /// <exception cref="TLoggedException">
+    ///   If the array of floats does not have a length of three, a logged
+    ///   exception is raised with status stInvalidArrayForVector (Invalid
+    ///   array for vector).
+    /// </exception>
     class operator Add( const a: array of double; const b: dVector3 ): dVector3;
 
-    ///  <summary>
-    ///    Allows subtraction of an array from a vector and returns
-    ///    the resulting vector.
-    ///  </summary>
+    /// <summary>
+    ///   Subtracts an array of three double precision floats from a dVector3
+    ///   for assignment to a dVector3 in an element wise subtraction
+    ///   operation. <br /><code lang="Delphi">MyVector := MyVector - [ 1.2, 1.3, 1.4 ];</code>
+    /// </summary>
+    /// <param name="a">
+    ///   The dVector3 from which the values of the array 'b' will be
+    ///   subtracted.
+    /// </param>
+    /// <param name="b">
+    ///   An array of three double-precision floats to be subtracted from the
+    ///   vector 'a'.
+    /// </param>
+    /// <returns>
+    ///   A dVector3 which contains the result of the subtraction of the array
+    ///   'b' from the vector 'a'.
+    /// </returns>
+    /// <exception cref="TLoggedException">
+    ///   If the array of floats does not have a length of three, a logged
+    ///   exception is raised with status stInvalidArrayForVector (Invalid
+    ///   array for vector).
+    /// </exception>
     class operator Subtract( const a: dVector3; const b: array of double ): dVector3;
 
-    ///  <summary>
-    ///    Allows subtraction of a vector from an array and returns
-    ///    the resulting vector.
-    ///  </summary>
+    /// <summary>
+    ///   Subtracts a dVector3 from an array of three double precision floats
+    ///   for assignment to a dVector3 in an element wise subtraction
+    ///   operation. <br /><code lang="Delphi">MyVector := [ 1.2, 1.3, 1.4 ] - MyVector;</code>
+    /// </summary>
+    /// <param name="a">
+    ///   An array of three double-precision floats from which the vector 'b'
+    ///   will be subtracted.
+    /// </param>
+    /// <param name="b">
+    ///   The dVector3 which will be subtracted from the array 'a'.
+    /// </param>
+    /// <returns>
+    ///   A dVector3 which contains the result of the subtraction of vector
+    ///   'b' from the array 'a'.
+    /// </returns>
+    /// <exception cref="TLoggedException">
+    ///   If the array of floats does not have a length of three, a logged
+    ///   exception is raised with status stInvalidArrayForVector (Invalid
+    ///   array for vector).
+    /// </exception>
     class operator Subtract( const a: array of double; const b: dVector3 ): dVector3;
 
-    ///  <summary>
-    ///    Allows the multiplication of a vector and an array, and returns
-    ///    the resulting vector. (hadamard)
-    ///  </summary>
+    /// <summary>
+    ///   Multiplies a dVector3 by an array of three double precision floats
+    ///   for assignment to a dVector3, in an element wise multiplication
+    ///   operation. <br /><code lang="Delphi">MyVectorA := MyVectorB * [ 2.0, 2.1, 2.2 ];</code>
+    /// </summary>
+    /// <param name="a">
+    ///   A dVector3 which will be multiplied by the array 'b'.
+    /// </param>
+    /// <param name="b">
+    ///   An array of three double precision floats to be multiplied with the
+    ///   vector 'a'.
+    /// </param>
+    /// <returns>
+    ///   A dVector3 which contains the result of the multiplication of the
+    ///   vector 'a' with the array 'b'
+    /// </returns>
+    /// <exception cref="TLoggedException">
+    ///   If the array of floats does not have a length of three, a logged
+    ///   exception is raised with status stInvalidArrayForVector (Invalid
+    ///   array for vector).
+    /// </exception>
     class operator Multiply( const a: dVector3; const b: array of double ): dVector3;
 
-    ///  <summary>
-    ///    Allows the multiplication of an array and a vector, and returns
-    ///    the resulting vector. (hadamard)
-    ///  </summary>
+    /// <summary>
+    ///   Multiplies an array of three double precision floats by a dVector3
+    ///   for assignment to a dVector3, in an element wise multiplication
+    ///   operation. <br /><code lang="Delphi">MyVectorA := [ 2.0, 2.1, 2.2 ] * MyVectorB;</code>
+    /// </summary>
+    /// <param name="a">
+    ///   An array of three double precision floats to be multiplied with the
+    ///   vector 'b'.
+    /// </param>
+    /// <param name="b">
+    ///   A dVector3 which will be multiplied by the array 'b'.
+    /// </param>
+    /// <returns>
+    ///   A dVector3 which contains the result of the multiplication of the
+    ///   array 'a' with the vector 'b' <br />
+    /// </returns>
+    /// <exception cref="TLoggedException">
+    ///   If the array of floats does not have a length of three, a logged
+    ///   exception is raised with status stInvalidArrayForVector (Invalid
+    ///   array for vector).
+    /// </exception>
     class operator Multiply( const a: array of double; const b: dVector3 ): dVector3;
 
-    ///  <summary>
-    ///    Allows the division of a vector by an array and returns the
-    ///    resulting vector.
-    ///  </summary>
+    /// <summary>
+    ///   Divides A dVector3 by an array of three double precision floats for
+    ///   assignment to a dVector3, in an element wise division operation. <br /><code lang="Delphi">MyVectorA := MyVectorB / [ 2.0, 2.1, 2.2 ];</code>
+    /// </summary>
+    /// <param name="a">
+    ///   A dVector3 which will be divided by the array 'b'.
+    /// </param>
+    /// <param name="b">
+    ///   An array of three double precision floats by which the vector 'a'
+    ///   will be divided.
+    /// </param>
+    /// <returns>
+    ///   A dVector3 which contains the result of the division of vector 'a'
+    ///   by the array 'b'
+    /// </returns>
+    /// <exception cref="TLoggedException">
+    ///   If the array of floats does not have a length of three, a logged
+    ///   exception is raised with status stInvalidArrayForVector (Invalid
+    ///   array for vector).
+    /// </exception>
     class operator Divide( const a: dVector3; const b: array of double ): dVector3;
 
-    ///  <summary>
-    ///    Allows the division of an array by a vector and returns the
-    ///    resulting vector.
-    ///  </summary>
+    /// <summary>
+    ///   Divides an array of three double precision floats by a dVector3 for
+    ///   assignment to a dVector3, in an element wise division operation. <br /><code lang="Delphi">MyVectorA := [ 2.0, 2.1, 2.2 ] / MyVectorA;</code>
+    /// </summary>
+    /// <param name="a">
+    ///   An array of three double precision floats to be divided by the vector
+    ///   'b'.
+    /// </param>
+    /// <param name="b">
+    ///   A dVector3 by which the array 'a' will be divided.
+    /// </param>
+    /// <returns>
+    ///   A dVector3 which contains the result of the division of the array
+    ///   'a' by the vector 'b'.
+    /// </returns>
+    /// <exception cref="TLoggedException">
+    ///   If the array of floats does not have a length of three, a logged
+    ///   exception is raised with status stInvalidArrayForVector (Invalid
+    ///   array for vector).
+    /// </exception>
     class operator Divide( const a: array of double; const b: dVector3 ): dVector3;
 
-    ///  <summary>
-    ///    Operator overload provides for addition of one vector to another.
-    ///  </summary>
+    /// <summary>
+    ///   Adds a dVector3 to another dVector3 for assignment to a dVector3,
+    ///   in an element wise addition operation. <br /><code lang="Delphi">MyVectorA := MyVectorB + MyVectorC;</code>
+    /// </summary>
+    /// <param name="a">
+    ///   The dVector3 to which the vector 'b' will be added.
+    /// </param>
+    /// <param name="b">
+    ///   A dVector3 for addition to the vector 'a'
+    /// </param>
+    /// <returns>
+    ///   A dVector3 which contains the result of the addition of vector 'b'
+    ///   to vector 'a'.
+    /// </returns>
     class operator Add( const a: dVector3; const b: dVector3 ): dVector3;
 
-    ///  <summary>
-    ///    Operator overload provides for addition of a float to a vector.
-    ///  </summary>
+    /// <summary>
+    ///   Adds a double precision float to each element of a vector for
+    ///   assignment to a dVector3. <br /><code lang="Delphi">MyVectorA := MyVectorB + 6.2;</code>
+    /// </summary>
+    /// <param name="a">
+    ///   The dVector3 to which the double 'b' will be added.
+    /// </param>
+    /// <param name="b">
+    ///   A double precision float to be added to the elements of vector 'a'
+    /// </param>
+    /// <returns>
+    ///   A dVector3 which contains the result of the addition of double 'b'
+    ///   to the elements of vector 'a'.
+    /// </returns>
     class operator Add( const a: dVector3; const b: double ): dVector3;
 
-    ///  <summary>
-    ///    Operator overload provides for subtraction of one vector from
-    ///    another.
-    ///  </summary>
+    /// <summary>
+    ///   Subtracts a dVector3 from another dVector3 for assignment to an
+    ///   dVector3, in an element wise subtraction operation. <br /><code lang="Delphi">MyVectorA := MyVectorB - MyVectorC;</code>
+    /// </summary>
+    /// <param name="a">
+    ///   The dVector3 from which the vector 'b' will be subtracted.
+    /// </param>
+    /// <param name="b">
+    ///   A dVector3 for subtraction from the vector 'a'
+    /// </param>
+    /// <returns>
+    ///   A dVector3 which contains the result of the subtraction of vector
+    ///   'b' from vector 'a'.
+    /// </returns>
     class operator Subtract( const a: dVector3; const b: dVector3 ): dVector3;
 
-    ///  <summary>
-    ///    Operator overload provides for subtraction of a float from
-    //     a vector.
-    ///  </summary>
+    /// <summary>
+    ///   Subtracts a double precision float from each element of a vector for
+    ///   assignment to a dVector3. <br /><code lang="Delphi">MyVectorA := MyVectorB - 6.2;</code>
+    /// </summary>
+    /// <param name="a">
+    ///   The dVector3 from which the double 'b' will be subtracted.
+    /// </param>
+    /// <param name="b">
+    ///   A double precision float to be subtracted from the elements of vector
+    ///   'a'.
+    /// </param>
+    /// <returns>
+    ///   A dVector3 which contains the result of the subtraction of double
+    ///   'b' from the elements of vector 'a'.
+    /// </returns>
     class operator Subtract( const a: dVector3; const b: double ): dVector3;
 
-    ///  <summary>
-    ///    Operator overload to provide for multiplication of one vector by
-    ///    another (hadamard multiplication/scale).
-    ///  </summary>
+    /// <summary>
+    ///   Multiplies a dVector3 by a dVector3 for assignment to a dVector3
+    ///   in an element wise (hadamard) multiplication operation. <br /><code lang="Delphi">MyVectorA := MyVectorB * MyVectorC;</code>
+    /// </summary>
+    /// <param name="a">
+    ///   The dVector3 which will be multiplied by the the vector 'b'.
+    /// </param>
+    /// <param name="b">
+    ///   A dVector3 by which the vector 'a' will be multiplied.
+    /// </param>
+    /// <returns>
+    ///   A dVector3 which contains the result of the multiplication of vector
+    ///   'a' by vector 'b'.
+    /// </returns>
     class operator Multiply( const a: dVector3; const b: dVector3 ): dVector3;
 
-    ///  <summary>
-    ///    Operator overload to provide for multiplication of a vector by
-    ///    a float. (scale)
-    ///  </summary>
+    /// <summary>
+    ///   Multiplies a dVector3 by a double precision float for assignment to
+    ///   a dVector3 in an element wise (hadamard) multiplication operation. <br /><code lang="Delphi">MyVectorA := MyVectorB * 6.2;</code>
+    /// </summary>
+    /// <param name="a">
+    ///   The dVector3 which will be multiplied by the the double 'b'.
+    /// </param>
+    /// <param name="b">
+    ///   A double precision float by which the vector 'a' will be multiplied.
+    /// </param>
+    /// <returns>
+    ///   A dVector3 which contains the result of the multiplication of vector
+    ///   'a' by double 'b'.
+    /// </returns>
     class operator Multiply( const a: dVector3; const b: double ): dVector3;
 
-    ///  <summary>
-    ///    Operator overload to provide for division of one vector by
-    ///    another.
-    ///  </summary>
+    /// <summary>
+    ///   Divides a dVector3 by a dVector3 for assignment to a dVector3 in
+    ///   an element wise division operation. <br /><code lang="Delphi">MyVectorA := MyVectorB / MyVectorC;</code>
+    /// </summary>
+    /// <param name="a">
+    ///   The dVector3 which will be divided by the the vector 'b'.
+    /// </param>
+    /// <param name="b">
+    ///   A dVector3 by which the vector 'a' will be divided.
+    /// </param>
+    /// <returns>
+    ///   A dVector3 which contains the result of the division of vector 'a'
+    ///   by vector 'b'.
+    /// </returns>
     class operator Divide( const a: dVector3; const b: dVector3 ): dVector3;
 
-    ///  <summary>
-    ///    Operator overload to provide for division of a vector by a
-    ///    float.
-    ///  </summary>
+    /// <summary>
+    ///   Divides a dVector3 by a double precision float for assignment to an
+    ///   dVector3 in an element wise division operation. <br /><code lang="Delphi">MyVectorA := MyVectorB / 6.2;</code>
+    /// </summary>
+    /// <param name="a">
+    ///   The dVector3 which will be divided by the the double 'b'.
+    /// </param>
+    /// <param name="b">
+    ///   A double precision float by which the vector 'a' will be divided.
+    /// </param>
+    /// <returns>
+    ///   A dVector3 which contains the result of the division of vector 'a'
+    ///   by double 'b'.
+    /// </returns>
     class operator Divide( const a: dVector3; const b: double ): dVector3;
 
-    ///  <summary>
-    ///    Allows assignment of a Vector2 to the Vector3, dropping the Z
-    ///    element.
-    ///  </summary>
+    /// <summary>
+    ///   Assigns a dVector3 from an dVector2 while setting the Z element to
+    ///   zero.
+    ///   <code lang="Delphi">var
+    ///   VectorA: dVector3;
+    ///   VectorB: dVector2;
+    /// begin
+    ///   VectorB := [ 1.0, 2.0 ];
+    ///   VectorA := VectorB;
+    ///   //- At this point, VectorA = 1.0, 2.0, 0.0
+    /// end;</code>
+    /// </summary>
     class operator Implicit( const a: dVector2 ): dVector3;
 
-    ///  <summary>
-    ///    Allows assignment of a Vector2 to the Vector3, dropping the Z
-    ///    element.
-    ///  </summary>
+    /// <summary>
+    ///   Assigns a dVector3 from an dVector2 while setting the Z element to
+    ///   zero.
+    ///   <code lang="Delphi">var
+    ///   VectorA: dVector3;
+    ///   VectorB: dVector2;
+    /// begin
+    ///   VectorB := [ 1.0, 2.0 ];
+    ///   VectorA := VectorB;
+    ///   //- At this point, VectorA = 1.0, 2.0, 0.0
+    /// end;</code>
+    /// </summary>
     class operator Explicit( const a: dVector2 ): dVector3;
 
-    ///  <summary>
-    ///    Allows assignment of a Vector3 to the Vector2, setting the Z
-    ///    element to 0;
-    ///  </summary>
+    /// <summary>
+    ///   Assigns an dVector2 from a dVector3, dropping the Z value.
+    ///   <code lang="Delphi">var
+    ///   VectorA: dVector2;
+    ///   VectorB: dVector3;
+    /// begin
+    ///   VectorB := [ 1.0, 2.0, 3.0 ];
+    ///   VectorA := VectorB;
+    ///   //- At this point, VectorA = 1.0, 2.0
+    /// end;</code>
+    /// </summary>
     class operator Implicit( const a: dVector3 ): dVector2;
 
-    ///  <summary>
-    ///    Allows assignment of a Vector3 to the Vector2, setting the Z
-    ///    element to 0;
-    ///  </summary>
+    /// <summary>
+    ///   Assigns an dVector2 from a dVector3, dropping the Z value.
+    ///   <code lang="Delphi">var
+    ///   VectorA: dVector2;
+    ///   VectorB: dVector3;
+    /// begin
+    ///   VectorB := [ 1.0, 2.0, 3.0 ];
+    ///   VectorA := VectorB;
+    ///   //- At this point, VectorA = 1.0, 2.0
+    /// end;</code>
+    /// </summary>
     class operator Explicit( const a: dVector3 ): dVector2;
 
-    ///  <summary>
-    ///    Creates a new vector from X,Y,Z values.
-    ///  </summary>
+    /// <summary>
+    ///   Returns a dVector3 containing the parameter values X and Y, in that
+    ///   order.
+    ///   <code lang="Delphi">MyVectorA := dVector3.Create( 1.0, 2.0, 3.0 );</code>
+    /// </summary>
+    /// <param name="X">
+    ///   Value for the first element of the vector.
+    /// </param>
+    /// <param name="Y">
+    ///   Value for the second element of the vector.
+    /// </param>
+    /// <returns>
+    ///   A dVector3 containing the three values supplied as parameters.
+    /// </returns>
     class function Create( const X: double; const Y: double; const Z: double ): dVector3; overload; static;
 
-    ///  <summary>
-    ///    Returns the dot product of this vector with another.
-    ///  </summary>
-    function dot( const a: dVector3 ): double;
+    /// <summary>
+    ///   Returns the dot product of this dVector3 with another dVector3.
+    ///   <code lang="Delphi">S := VectorA.Dot( VectorB );</code>
+    /// </summary>
+    /// <param name="a">
+    ///   A dVector3 with which to compute the dot product of this vector.
+    /// </param>
+    /// <returns>
+    ///   A double precision floating point result of the dot product of this
+    ///   vector with another.
+    /// </returns>
+    function Dot( const a: dVector3 ): double;
 
-    ///  <summary>
-    ///    Returns the cross product of this vector with another.
-    ///  </summary>
-    function cross( const a: dVector3 ): dVector3;
+    /// <summary>
+    ///   Returns the cross product of this vector with another and returns an
+    ///   dVector3 for assignment.
+    ///   <code lang="Delphi">CrossVector := MyVectorA.Cross( MyVectorB );</code>
+    /// </summary>
+    /// <param name="a">
+    ///   The vector providing the right hand side of a dot product operation.
+    /// </param>
+    /// <returns>
+    ///   A vector containing the result of cross product computation between
+    ///   'this' vector and the 'a' vector.
+    /// </returns>
+    function Cross( const a: dVector3 ): dVector3;
 
-    ///  <summary>
-    ///    Returns this vector normaized.
-    ///  </summary>
-    function normalized: dVector3;
+    /// <summary>
+    ///   Returns the Normal vector of this vector.
+    ///   <code lang="Delphi">NormalVector := SomeVector.Normalized;</code>
+    /// </summary>
+    /// <returns>
+    ///   A dVector3 containing the normal of this vector.
+    /// </returns>
+    function Normalized: dVector3;
 
-    ///  <summary>
-    ///    Returns the unit vector of this one.
-    ///  </summary>
+    /// <summary>
+    ///   Returns the unit vector of this vector.
+    ///   <code lang="Delphi">UnitVector := SomeVector.UnitVector;</code>
+    /// </summary>
+    /// <returns>
+    ///   A dVector3 containing this vector scaled to the normal 1.
+    /// </returns>
     function UnitVector: dVector3;
 
-    ///  <summary>
-    ///    Returns the magnitude of the vector.
-    ///  </summary>
-    function magnitude: double;
+    /// <summary>
+    ///   Returns the magnitude of the vector.
+    ///   <code lang="Delphi">M := SomeVector.Magnitude;</code>
+    /// </summary>
+    function Magnitude: double;
 
       case uint8 of
       0: (
@@ -873,177 +2327,492 @@ type
   end;
 
   ///  <summary>
-  ///    An alias of Vector3 which represents a point in 3d space.
+  ///    An alias of dVector3 which represents a point in 3d space.
+  ///   (Double Precision Vertex)
   ///  </summary>
   dVertex = dVector3;
 {$endregion}
 
 {$region ' eVector3'}
 
-  ///  <summary>
-  ///    Represents a vector with 3 elements (X,Y,Z), (R,G,B).
-  ///  </summary>
+  /// <summary>
+  ///   Represents a extended precision vector with three elements (X,Y,Z / R,G,B)
+  /// </summary>
   eVector3 = record
 
-    ///  <summary>
-    ///    Allows creation of a vector from an array of floats.
-    ///    (Size of array must match size of vector)
-    ///  </summary>
+    /// <summary>
+    ///   Assigns an array of three extended precision floats to an eVector3.
+    ///   <code lang="Delphi">MyVector := [ 3.5, 4.5, 5.5 ];</code>
+    /// </summary>
+    /// <param name="a">
+    ///   An array of three extended precision floating point values to assign to
+    ///   the vector.
+    /// </param>
+    /// <returns>
+    ///   The vector is returned with it's elements set to those provided in
+    ///   the array.
+    /// </returns>
+    /// <exception cref="TLoggedException">
+    ///   When the array of floats to be assigned does not have a length of
+    ///   three, a logged exception is raised with status
+    ///   stInvalidArrayForVector (Invalid array for vector).
+    /// </exception>
+    /// <remarks>
+    ///   The length of the array must match size of vector (three elements)
+    /// </remarks>
     class operator Implicit( const a: array of extended ): eVector3;
 
-    ///  <summary>
-    ///    Allows creation of a vector from an array of floats.
-    ///    (Size of array must match size of vector)
-    ///  </summary>
+    /// <summary>
+    ///   Assigns an array of three extended precision floats to an eVector3. <br /><code lang="Delphi">MyVector := [ 3.5, 4.5, 5.5 ];</code>
+    /// </summary>
+    /// <param name="a">
+    ///   An array of three extended precision floating point values to assign to
+    ///   the vector.
+    /// </param>
+    /// <returns>
+    ///   The vector is returned with it's elements set to those provided in
+    ///   the array.
+    /// </returns>
+    /// <exception cref="TLoggedException">
+    ///   When the array of floats to be assigned does not have a length of
+    ///   three, a logged exception is raised with status
+    ///   stInvalidArrayForVector (Invalid array for vector).
+    /// </exception>
+    /// <remarks>
+    ///   The length of the array must match size of vector (three elements)
+    /// </remarks>
     class operator Explicit( const a: array of extended ): eVector3;
 
-    ///  <summary>
-    ///    Allows addition of a vector to an array, and returns the
-    //     resulting vector.
-    ///  </summary>
+    /// <summary>
+    ///   Adds an array of three extended precision floating point values to an
+    ///   eVector3 in an element wise addition operation. <br /><code lang="Delphi">MyVectorA := MyVectorB + [ 1.2, 1.3, 1.4 ];</code>
+    /// </summary>
+    /// <param name="a">
+    ///   The eVector3 to which the values of the array 'b' will be added.
+    /// </param>
+    /// <param name="b">
+    ///   An array of three extended precision floats to be added to the the
+    ///   vector 'a'.
+    /// </param>
+    /// <returns>
+    ///   An eVector3 which contains the result of addition of the array 'b' to
+    ///   the vector 'a'. <br />
+    /// </returns>
+    /// <exception cref="TLoggedException">
+    ///   If the array of floats does not have a length of three, a logged
+    ///   exception is raised with status stInvalidArrayForVector (Invalid
+    ///   array for vector).
+    /// </exception>
     class operator Add( const a: eVector3; const b: array of extended ): eVector3;
 
-    ///  <summary>
-    ///    Allows addition of a vector to an array, and returns the
-    ///    resulting vector.
-    ///  </summary>
+    /// <summary>
+    ///   Adds an eVector3 to an array of three extended precision floats for
+    ///   assignment to an eVector3 in an element wise addition operation. <br /><code lang="Delphi">MyVector := [ 1.2, 1.3, 1.4 ] + MyVector;</code>
+    /// </summary>
+    /// <param name="a">
+    ///   An array of three extended precision floats to which the vector 'b'
+    ///   will be added.
+    /// </param>
+    /// <param name="b">
+    ///   The eVector3 which will be added to the array 'b'.
+    /// </param>
+    /// <returns>
+    ///   An eVector3 which contains the result of the addition of the vector
+    ///   'b' to the array 'a'. <br />
+    /// </returns>
+    /// <exception cref="TLoggedException">
+    ///   If the array of floats does not have a length of three, a logged
+    ///   exception is raised with status stInvalidArrayForVector (Invalid
+    ///   array for vector).
+    /// </exception>
     class operator Add( const a: array of extended; const b: eVector3 ): eVector3;
 
-    ///  <summary>
-    ///    Allows subtraction of an array from a vector and returns
-    ///    the resulting vector.
-    ///  </summary>
+    /// <summary>
+    ///   Subtracts an array of three extended precision floats from an eVector3
+    ///   for assignment to an eVector3 in an element wise subtraction
+    ///   operation. <br /><code lang="Delphi">MyVector := MyVector - [ 1.2, 1.3, 1.4 ];</code>
+    /// </summary>
+    /// <param name="a">
+    ///   The eVector3 from which the values of the array 'b' will be
+    ///   subtracted.
+    /// </param>
+    /// <param name="b">
+    ///   An array of three extended-precision floats to be subtracted from the
+    ///   vector 'a'.
+    /// </param>
+    /// <returns>
+    ///   An eVector3 which contains the result of the subtraction of the array
+    ///   'b' from the vector 'a'.
+    /// </returns>
+    /// <exception cref="TLoggedException">
+    ///   If the array of floats does not have a length of three, a logged
+    ///   exception is raised with status stInvalidArrayForVector (Invalid
+    ///   array for vector).
+    /// </exception>
     class operator Subtract( const a: eVector3; const b: array of extended ): eVector3;
 
-    ///  <summary>
-    ///    Allows subtraction of a vector from an array and returns
-    ///    the resulting vector.
-    ///  </summary>
+    /// <summary>
+    ///   Subtracts an eVector3 from an array of three extended precision floats
+    ///   for assignment to an eVector3 in an element wise subtraction
+    ///   operation. <br /><code lang="Delphi">MyVector := [ 1.2, 1.3, 1.4 ] - MyVector;</code>
+    /// </summary>
+    /// <param name="a">
+    ///   An array of three extended-precision floats from which the vector 'b'
+    ///   will be subtracted.
+    /// </param>
+    /// <param name="b">
+    ///   The eVector3 which will be subtracted from the array 'a'.
+    /// </param>
+    /// <returns>
+    ///   An eVector3 which contains the result of the subtraction of vector
+    ///   'b' from the array 'a'.
+    /// </returns>
+    /// <exception cref="TLoggedException">
+    ///   If the array of floats does not have a length of three, a logged
+    ///   exception is raised with status stInvalidArrayForVector (Invalid
+    ///   array for vector).
+    /// </exception>
     class operator Subtract( const a: array of extended; const b: eVector3 ): eVector3;
 
-    ///  <summary>
-    ///    Allows the multiplication of a vector and an array, and returns
-    ///    the resulting vector. (hadamard)
-    ///  </summary>
+    /// <summary>
+    ///   Multiplies an eVector3 by an array of three extended precision floats
+    ///   for assignment to an eVector3, in an element wise multiplication
+    ///   operation. <br /><code lang="Delphi">MyVectorA := MyVectorB * [ 2.0, 2.1, 2.2 ];</code>
+    /// </summary>
+    /// <param name="a">
+    ///   An eVector3 which will be multiplied by the array 'b'.
+    /// </param>
+    /// <param name="b">
+    ///   An array of three extended precision floats to be multiplied with the
+    ///   vector 'a'.
+    /// </param>
+    /// <returns>
+    ///   An eVector3 which contains the result of the multiplication of the
+    ///   vector 'a' with the array 'b'
+    /// </returns>
+    /// <exception cref="TLoggedException">
+    ///   If the array of floats does not have a length of three, a logged
+    ///   exception is raised with status stInvalidArrayForVector (Invalid
+    ///   array for vector).
+    /// </exception>
     class operator Multiply( const a: eVector3; const b: array of extended ): eVector3;
 
-    ///  <summary>
-    ///    Allows the multiplication of an array and a vector, and returns
-    ///    the resulting vector. (hadamard)
-    ///  </summary>
+    /// <summary>
+    ///   Multiplies an array of three extended precision floats by an eVector3
+    ///   for assignment to an eVector3, in an element wise multiplication
+    ///   operation. <br /><code lang="Delphi">MyVectorA := [ 2.0, 2.1, 2.2 ] * MyVectorB;</code>
+    /// </summary>
+    /// <param name="a">
+    ///   An array of three extended precision floats to be multiplied with the
+    ///   vector 'b'.
+    /// </param>
+    /// <param name="b">
+    ///   An eVector3 which will be multiplied by the array 'b'.
+    /// </param>
+    /// <returns>
+    ///   An eVector3 which contains the result of the multiplication of the
+    ///   array 'a' with the vector 'b' <br />
+    /// </returns>
+    /// <exception cref="TLoggedException">
+    ///   If the array of floats does not have a length of three, a logged
+    ///   exception is raised with status stInvalidArrayForVector (Invalid
+    ///   array for vector).
+    /// </exception>
     class operator Multiply( const a: array of extended; const b: eVector3 ): eVector3;
 
-    ///  <summary>
-    ///    Allows the division of a vector by an array and returns the
-    ///    resulting vector.
-    ///  </summary>
+    /// <summary>
+    ///   Divides an eVector3 by an array of three extended precision floats for
+    ///   assignment to an eVector3, in an element wise division operation. <br /><code lang="Delphi">MyVectorA := MyVectorB / [ 2.0, 2.1, 2.2 ];</code>
+    /// </summary>
+    /// <param name="a">
+    ///   An eVector3 which will be divided by the array 'b'.
+    /// </param>
+    /// <param name="b">
+    ///   An array of three extended precision floats by which the vector 'a'
+    ///   will be divided.
+    /// </param>
+    /// <returns>
+    ///   An eVector3 which contains the result of the division of vector 'a'
+    ///   by the array 'b'
+    /// </returns>
+    /// <exception cref="TLoggedException">
+    ///   If the array of floats does not have a length of three, a logged
+    ///   exception is raised with status stInvalidArrayForVector (Invalid
+    ///   array for vector).
+    /// </exception>
     class operator Divide( const a: eVector3; const b: array of extended ): eVector3;
 
-    ///  <summary>
-    ///    Allows the division of an array by a vector and returns the
-    ///    resulting vector.
-    ///  </summary>
+    /// <summary>
+    ///   Divides an array of three extended precision floats by an eVector3 for
+    ///   assignment to an eVector3, in an element wise division operation. <br /><code lang="Delphi">MyVectorA := [ 2.0, 2.1, 2.2 ] / MyVectorA;</code>
+    /// </summary>
+    /// <param name="a">
+    ///   An array of three extended precision floats to be divided by the vector
+    ///   'b'.
+    /// </param>
+    /// <param name="b">
+    ///   An eVector3 by which the array 'a' will be divided.
+    /// </param>
+    /// <returns>
+    ///   An eVector3 which contains the result of the division of the array
+    ///   'a' by the vector 'b'.
+    /// </returns>
+    /// <exception cref="TLoggedException">
+    ///   If the array of floats does not have a length of three, a logged
+    ///   exception is raised with status stInvalidArrayForVector (Invalid
+    ///   array for vector).
+    /// </exception>
     class operator Divide( const a: array of extended; const b: eVector3 ): eVector3;
 
-    ///  <summary>
-    ///    Operator overload provides for addition of one vector to another.
-    ///  </summary>
+    /// <summary>
+    ///   Adds an eVector3 to another eVector3 for assignment to an eVector3,
+    ///   in an element wise addition operation. <br /><code lang="Delphi">MyVectorA := MyVectorB + MyVectorC;</code>
+    /// </summary>
+    /// <param name="a">
+    ///   The eVector3 to which the vector 'b' will be added.
+    /// </param>
+    /// <param name="b">
+    ///   An eVector3 for addition to the vector 'a'
+    /// </param>
+    /// <returns>
+    ///   An eVector3 which contains the result of the addition of vector 'b'
+    ///   to vector 'a'.
+    /// </returns>
     class operator Add( const a: eVector3; const b: eVector3 ): eVector3;
 
-    ///  <summary>
-    ///    Operator overload provides for addition of a float to a vector.
-    ///  </summary>
+    /// <summary>
+    ///   Adds a extended precision float to each element of a vector for
+    ///   assignment to an eVector3. <br /><code lang="Delphi">MyVectorA := MyVectorB + 6.2;</code>
+    /// </summary>
+    /// <param name="a">
+    ///   The eVector3 to which the extended 'b' will be added.
+    /// </param>
+    /// <param name="b">
+    ///   A extended precision float to be added to the elements of vector 'a'
+    /// </param>
+    /// <returns>
+    ///   An eVector3 which contains the result of the addition of extended 'b'
+    ///   to the elements of vector 'a'.
+    /// </returns>
     class operator Add( const a: eVector3; const b: extended ): eVector3;
 
-    ///  <summary>
-    ///    Operator overload provides for subtraction of one vector from
-    ///    another.
-    ///  </summary>
+    /// <summary>
+    ///   Subtracts an eVector3 from another eVector3 for assignment to an
+    ///   eVector3, in an element wise subtraction operation. <br /><code lang="Delphi">MyVectorA := MyVectorB - MyVectorC;</code>
+    /// </summary>
+    /// <param name="a">
+    ///   The eVector3 from which the vector 'b' will be subtracted.
+    /// </param>
+    /// <param name="b">
+    ///   An eVector3 for subtraction from the vector 'a'
+    /// </param>
+    /// <returns>
+    ///   An eVector3 which contains the result of the subtraction of vector
+    ///   'b' from vector 'a'.
+    /// </returns>
     class operator Subtract( const a: eVector3; const b: eVector3 ): eVector3;
 
-    ///  <summary>
-    ///    Operator overload provides for subtraction of a float from
-    //     a vector.
-    ///  </summary>
+    /// <summary>
+    ///   Subtracts a extended precision float from each element of a vector for
+    ///   assignment to an eVector3. <br /><code lang="Delphi">MyVectorA := MyVectorB - 6.2;</code>
+    /// </summary>
+    /// <param name="a">
+    ///   The eVector3 from which the extended 'b' will be subtracted.
+    /// </param>
+    /// <param name="b">
+    ///   A extended precision float to be subtracted from the elements of vector
+    ///   'a'.
+    /// </param>
+    /// <returns>
+    ///   An eVector3 which contains the result of the subtraction of extended
+    ///   'b' from the elements of vector 'a'.
+    /// </returns>
     class operator Subtract( const a: eVector3; const b: extended ): eVector3;
 
-    ///  <summary>
-    ///    Operator overload to provide for multiplication of one vector by
-    ///    another (hadamard multiplication/scale).
-    ///  </summary>
+    /// <summary>
+    ///   Multiplies an eVector3 by an eVector3 for assignment to an eVector3
+    ///   in an element wise (hadamard) multiplication operation. <br /><code lang="Delphi">MyVectorA := MyVectorB * MyVectorC;</code>
+    /// </summary>
+    /// <param name="a">
+    ///   The eVector3 which will be multiplied by the the vector 'b'.
+    /// </param>
+    /// <param name="b">
+    ///   An eVector3 by which the vector 'a' will be multiplied.
+    /// </param>
+    /// <returns>
+    ///   An eVector3 which contains the result of the multiplication of vector
+    ///   'a' by vector 'b'.
+    /// </returns>
     class operator Multiply( const a: eVector3; const b: eVector3 ): eVector3;
 
-    ///  <summary>
-    ///    Operator overload to provide for multiplication of a vector by
-    ///    a float. (scale)
-    ///  </summary>
+    /// <summary>
+    ///   Multiplies an eVector3 by a extended precision float for assignment to
+    ///   an eVector3 in an element wise (hadamard) multiplication operation. <br /><code lang="Delphi">MyVectorA := MyVectorB * 6.2;</code>
+    /// </summary>
+    /// <param name="a">
+    ///   The eVector3 which will be multiplied by the the extended 'b'.
+    /// </param>
+    /// <param name="b">
+    ///   A extended precision float by which the vector 'a' will be multiplied.
+    /// </param>
+    /// <returns>
+    ///   An eVector3 which contains the result of the multiplication of vector
+    ///   'a' by extended 'b'.
+    /// </returns>
     class operator Multiply( const a: eVector3; const b: extended ): eVector3;
 
-    ///  <summary>
-    ///    Operator overload to provide for division of one vector by
-    ///    another.
-    ///  </summary>
+    /// <summary>
+    ///   Divides an eVector3 by an eVector3 for assignment to an eVector3 in
+    ///   an element wise division operation. <br /><code lang="Delphi">MyVectorA := MyVectorB / MyVectorC;</code>
+    /// </summary>
+    /// <param name="a">
+    ///   The eVector3 which will be divided by the the vector 'b'.
+    /// </param>
+    /// <param name="b">
+    ///   An eVector3 by which the vector 'a' will be divided.
+    /// </param>
+    /// <returns>
+    ///   An eVector3 which contains the result of the division of vector 'a'
+    ///   by vector 'b'.
+    /// </returns>
     class operator Divide( const a: eVector3; const b: eVector3 ): eVector3;
 
-    ///  <summary>
-    ///    Operator overload to provide for division of a vector by a
-    ///    float.
-    ///  </summary>
+    /// <summary>
+    ///   Divides an eVector3 by a extended precision float for assignment to an
+    ///   eVector3 in an element wise division operation. <br /><code lang="Delphi">MyVectorA := MyVectorB / 6.2;</code>
+    /// </summary>
+    /// <param name="a">
+    ///   The eVector3 which will be divided by the the extended 'b'.
+    /// </param>
+    /// <param name="b">
+    ///   A extended precision float by which the vector 'a' will be divided.
+    /// </param>
+    /// <returns>
+    ///   An eVector3 which contains the result of the division of vector 'a'
+    ///   by extended 'b'.
+    /// </returns>
     class operator Divide( const a: eVector3; const b: extended ): eVector3;
 
-    ///  <summary>
-    ///    Allows assignment of a Vector2 to the Vector3, dropping the Z
-    ///    element.
-    ///  </summary>
+    /// <summary>
+    ///   Assigns an eVector3 from an eVector2 while setting the Z element to
+    ///   zero.
+    ///   <code lang="Delphi">var
+    ///   VectorA: eVector3;
+    ///   VectorB: eVector2;
+    /// begin
+    ///   VectorB := [ 1.0, 2.0 ];
+    ///   VectorA := VectorB;
+    ///   //- At this point, VectorA = 1.0, 2.0, 0.0
+    /// end;</code>
+    /// </summary>
     class operator Implicit( const a: eVector2 ): eVector3;
 
-    ///  <summary>
-    ///    Allows assignment of a Vector2 to the Vector3, dropping the Z
-    ///    element.
-    ///  </summary>
+    /// <summary>
+    ///   Assigns an eVector3 from an eVector2 while setting the Z element to
+    ///   zero.
+    ///   <code lang="Delphi">var
+    ///   VectorA: eVector3;
+    ///   VectorB: eVector2;
+    /// begin
+    ///   VectorB := [ 1.0, 2.0 ];
+    ///   VectorA := VectorB;
+    ///   //- At this point, VectorA = 1.0, 2.0, 0.0
+    /// end;</code>
+    /// </summary>
     class operator Explicit( const a: eVector2 ): eVector3;
 
-    ///  <summary>
-    ///    Allows assignment of a Vector3 to the Vector2, setting the Z
-    ///    element to 0;
-    ///  </summary>
+    /// <summary>
+    ///   Assigns an eVector2 from an eVector3, dropping the Z value.
+    ///   <code lang="Delphi">var
+    ///   VectorA: eVector2;
+    ///   VectorB: eVector3;
+    /// begin
+    ///   VectorB := [ 1.0, 2.0, 3.0 ];
+    ///   VectorA := VectorB;
+    ///   //- At this point, VectorA = 1.0, 2.0
+    /// end;</code>
+    /// </summary>
     class operator Implicit( const a: eVector3 ): eVector2;
 
-    ///  <summary>
-    ///    Allows assignment of a Vector3 to the Vector2, setting the Z
-    ///    element to 0;
-    ///  </summary>
+    /// <summary>
+    ///   Assigns an eVector2 from an eVector3, dropping the Z value.
+    ///   <code lang="Delphi">var
+    ///   VectorA: eVector2;
+    ///   VectorB: eVector3;
+    /// begin
+    ///   VectorB := [ 1.0, 2.0, 3.0 ];
+    ///   VectorA := VectorB;
+    ///   //- At this point, VectorA = 1.0, 2.0
+    /// end;</code>
+    /// </summary>
     class operator Explicit( const a: eVector3 ): eVector2;
 
-    ///  <summary>
-    ///    Creates a new vector from X,Y,Z values.
-    ///  </summary>
+    /// <summary>
+    ///   Returns an eVector3 containing the parameter values X and Y, in that
+    ///   order.
+    ///   <code lang="Delphi">MyVectorA := eVector3.Create( 1.0, 2.0, 3.0 );</code>
+    /// </summary>
+    /// <param name="X">
+    ///   Value for the first element of the vector.
+    /// </param>
+    /// <param name="Y">
+    ///   Value for the second element of the vector.
+    /// </param>
+    /// <returns>
+    ///   An eVector3 containing the three values supplied as parameters.
+    /// </returns>
     class function Create( const X: extended; const Y: extended; const Z: extended ): eVector3; overload; static;
 
-    ///  <summary>
-    ///    Returns the dot product of this vector with another.
-    ///  </summary>
-    function dot( const a: eVector3 ): extended;
+    /// <summary>
+    ///   Returns the dot product of this eVector3 with another eVector3.
+    ///   <code lang="Delphi">S := VectorA.Dot( VectorB );</code>
+    /// </summary>
+    /// <param name="a">
+    ///   An eVector3 with which to compute the dot product of this vector.
+    /// </param>
+    /// <returns>
+    ///   A extended precision floating point result of the dot product of this
+    ///   vector with another.
+    /// </returns>
+    function Dot( const a: eVector3 ): extended;
 
-    ///  <summary>
-    ///    Returns the cross product of this vector with another.
-    ///  </summary>
-    function cross( const a: eVector3 ): eVector3;
+    /// <summary>
+    ///   Returns the cross product of this vector with another and returns an
+    ///   eVector3 for assignment.
+    ///   <code lang="Delphi">CrossVector := MyVectorA.Cross( MyVectorB );</code>
+    /// </summary>
+    /// <param name="a">
+    ///   The vector providing the right hand side of a dot product operation.
+    /// </param>
+    /// <returns>
+    ///   A vector containing the result of cross product computation between
+    ///   'this' vector and the 'a' vector.
+    /// </returns>
+    function Cross( const a: eVector3 ): eVector3;
 
-    ///  <summary>
-    ///    Returns this vector normaized.
-    ///  </summary>
-    function normalized: eVector3;
+    /// <summary>
+    ///   Returns the Normal vector of this vector.
+    ///   <code lang="Delphi">NormalVector := SomeVector.Normalized;</code>
+    /// </summary>
+    /// <returns>
+    ///   An eVector3 containing the normal of this vector.
+    /// </returns>
+    function Normalized: eVector3;
 
-    ///  <summary>
-    ///    Returns the unit vector of this one.
-    ///  </summary>
+    /// <summary>
+    ///   Returns the unit vector of this vector.
+    ///   <code lang="Delphi">UnitVector := SomeVector.UnitVector;</code>
+    /// </summary>
+    /// <returns>
+    ///   An eVector3 containing this vector scaled to the normal 1.
+    /// </returns>
     function UnitVector: eVector3;
 
-    ///  <summary>
-    ///    Returns the magnitude of the vector.
-    ///  </summary>
-    function magnitude: extended;
+    /// <summary>
+    ///   Returns the magnitude of the vector.
+    ///   <code lang="Delphi">M := SomeVector.Magnitude;</code>
+    /// </summary>
+    function Magnitude: extended;
 
       case uint8 of
       0: (
@@ -1059,194 +2828,531 @@ type
   end;
 
   ///  <summary>
-  ///    An alias of Vector3 which represents a point in 3d space.
+  ///    An alias of eVector3 which represents a point in 3d space.
+  ///   (Extended Precision Vertex)
   ///  </summary>
   eVertex = eVector3;
 {$endregion}
 
 {$region ' sVector4'}
-  ///  <summary>
-  ///    Represents a vector with four elements.
-  ///   (X,Y,Z,W or R,G,B,A or U1,V1,U2,V2)
-  ///  </summary>
+  /// <summary>
+  ///   Represents a single precision vector with four elements (X,Y,Z,W or R,G,B,A or U1,V1,U2,V2)
+  /// </summary>
   sVector4 = record
 
-    ///  <summary>
-    ///    Allows creation of a vector from an array of floats.
-    ///    (Size of array must match size of vector)
-    ///  </summary>
+    /// <summary>
+    ///   Assigns an array of four single precision floats to an sVector4.
+    ///   <code lang="Delphi">MyVector := [ 3.5, 4.5, 5.5, 6.5 ];</code>
+    /// </summary>
+    /// <param name="a">
+    ///   An array of four single precision floating point values to assign to
+    ///   the vector.
+    /// </param>
+    /// <returns>
+    ///   The vector is returned with it's elements set to those provided in
+    ///   the array.
+    /// </returns>
+    /// <exception cref="TLoggedException">
+    ///   When the array of floats to be assigned does not have a length of
+    ///   four, a logged exception is raised with status
+    ///   stInvalidArrayForVector (Invalid array for vector).
+    /// </exception>
+    /// <remarks>
+    ///   The length of the array must match size of vector (four elements)
+    /// </remarks>
     class operator Implicit( const a: array of single ): sVector4;
 
-    ///  <summary>
-    ///    Allows creation of a vector from an array of floats.
-    ///    (Size of array must match size of vector)
-    ///  </summary>
+    /// <summary>
+    ///   Assigns an array of four single precision floats to an sVector4. <br /><code lang="Delphi">MyVector := [ 3.5, 4.5, 5.5, 6.5 ];</code>
+    /// </summary>
+    /// <param name="a">
+    ///   An array of four single precision floating point values to assign to
+    ///   the vector.
+    /// </param>
+    /// <returns>
+    ///   The vector is returned with it's elements set to those provided in
+    ///   the array.
+    /// </returns>
+    /// <exception cref="TLoggedException">
+    ///   When the array of floats to be assigned does not have a length of
+    ///   four, a logged exception is raised with status
+    ///   stInvalidArrayForVector (Invalid array for vector).
+    /// </exception>
+    /// <remarks>
+    ///   The length of the array must match size of vector (four elements)
+    /// </remarks>
     class operator Explicit( const a: array of single ): sVector4;
 
-    ///  <summary>
-    ///    Allows addition of a vector to an array, and returns the
-    //     resulting vector.
-    ///  </summary>
+    /// <summary>
+    ///   Adds an array of four single precision floating point values to an
+    ///   sVector4 in an element wise addition operation. <br /><code lang="Delphi">MyVectorA := MyVectorB + [ 1.2, 1.3, 1.4, 1.5 ];</code>
+    /// </summary>
+    /// <param name="a">
+    ///   The sVector4 to which the values of the array 'b' will be added.
+    /// </param>
+    /// <param name="b">
+    ///   An array of four single precision floats to be added to the the
+    ///   vector 'a'.
+    /// </param>
+    /// <returns>
+    ///   An sVector4 which contains the result of addition of the array 'b' to
+    ///   the vector 'a'. <br />
+    /// </returns>
+    /// <exception cref="TLoggedException">
+    ///   If the array of floats does not have a length of four, a logged
+    ///   exception is raised with status stInvalidArrayForVector (Invalid
+    ///   array for vector).
+    /// </exception>
     class operator Add( const a: sVector4; const b: array of single ): sVector4;
 
-    ///  <summary>
-    ///    Allows addition of a vector to an array, and returns the
-    ///    resulting vector.
-    ///  </summary>
+    /// <summary>
+    ///   Adds an sVector4 to an array of four single precision floats for
+    ///   assignment to an sVector4 in an element wise addition operation. <br /><code lang="Delphi">MyVector := [ 1.2, 1.3, 1.4, 1.5 ] + MyVector;</code>
+    /// </summary>
+    /// <param name="a">
+    ///   An array of four single precision floats to which the vector 'b' will
+    ///   be added.
+    /// </param>
+    /// <param name="b">
+    ///   The sVector4 which will be added to the array 'b'.
+    /// </param>
+    /// <returns>
+    ///   An sVector4 which contains the result of the addition of the vector
+    ///   'b' to the array 'a'. <br />
+    /// </returns>
+    /// <exception cref="TLoggedException">
+    ///   If the array of floats does not have a length of four, a logged
+    ///   exception is raised with status stInvalidArrayForVector (Invalid
+    ///   array for vector).
+    /// </exception>
     class operator Add( const a: array of single; const b: sVector4 ): sVector4;
 
-    ///  <summary>
-    ///    Allows subtraction of an array from a vector and returns
-    ///    the resulting vector.
-    ///  </summary>
+    /// <summary>
+    ///   Subtracts an array of four single precision floats from an sVector4
+    ///   for assignment to an sVector4 in an element wise subtraction
+    ///   operation. <br /><code lang="Delphi">MyVector := MyVector - [ 1.2, 1.3, 1.4, 1.5 ];</code>
+    /// </summary>
+    /// <param name="a">
+    ///   The sVector4 from which the values of the array 'b' will be
+    ///   subtracted.
+    /// </param>
+    /// <param name="b">
+    ///   An array of four single-precision floats to be subtracted from the
+    ///   vector 'a'.
+    /// </param>
+    /// <returns>
+    ///   An sVector4 which contains the result of the subtraction of the array
+    ///   'b' from the vector 'a'.
+    /// </returns>
+    /// <exception cref="TLoggedException">
+    ///   If the array of floats does not have a length of four, a logged
+    ///   exception is raised with status stInvalidArrayForVector (Invalid
+    ///   array for vector).
+    /// </exception>
     class operator Subtract( const a: sVector4; const b: array of single ): sVector4;
 
-    ///  <summary>
-    ///    Allows subtraction of a vector from an array and returns
-    ///    the resulting vector.
-    ///  </summary>
+    /// <summary>
+    ///   Subtracts an sVector4 from an array of four single precision floats
+    ///   for assignment to an sVector4 in an element wise subtraction
+    ///   operation. <br /><code lang="Delphi">MyVector := [ 1.2, 1.3, 1.4, 1.5 ] - MyVector;</code>
+    /// </summary>
+    /// <param name="a">
+    ///   An array of four single-precision floats from which the vector 'b'
+    ///   will be subtracted.
+    /// </param>
+    /// <param name="b">
+    ///   The sVector4 which will be subtracted from the array 'a'.
+    /// </param>
+    /// <returns>
+    ///   An sVector4 which contains the result of the subtraction of vector
+    ///   'b' from the array 'a'.
+    /// </returns>
+    /// <exception cref="TLoggedException">
+    ///   If the array of floats does not have a length of four, a logged
+    ///   exception is raised with status stInvalidArrayForVector (Invalid
+    ///   array for vector).
+    /// </exception>
     class operator Subtract( const a: array of single; const b: sVector4 ): sVector4;
 
-    ///  <summary>
-    ///    Allows the multiplication of a vector and an array, and returns
-    ///    the resulting vector. (hadamard)
-    ///  </summary>
+    /// <summary>
+    ///   Multiplies an sVector4 by an array of four single precision floats
+    ///   for assignment to an sVector4, in an element wise multiplication
+    ///   operation. <br /><code lang="Delphi">MyVectorA := MyVectorB * [ 2.0, 2.1, 2.2, 2.3 ];</code>
+    /// </summary>
+    /// <param name="a">
+    ///   An sVector4 which will be multiplied by the array 'b'.
+    /// </param>
+    /// <param name="b">
+    ///   An array of four single precision floats to be multiplied with the
+    ///   vector 'a'.
+    /// </param>
+    /// <returns>
+    ///   An sVector4 which contains the result of the multiplication of the
+    ///   vector 'a' with the array 'b'
+    /// </returns>
+    /// <exception cref="TLoggedException">
+    ///   If the array of floats does not have a length of four, a logged
+    ///   exception is raised with status stInvalidArrayForVector (Invalid
+    ///   array for vector).
+    /// </exception>
     class operator Multiply( const a: sVector4; const b: array of single ): sVector4;
 
-    ///  <summary>
-    ///    Allows the multiplication of an array and a vector, and returns
-    ///    the resulting vector. (hadamard)
-    ///  </summary>
+    /// <summary>
+    ///   Multiplies an array of four single precision floats by an sVector4
+    ///   for assignment to an sVector4, in an element wise multiplication
+    ///   operation. <br /><code lang="Delphi">MyVectorA := [ 2.0, 2.1, 2.2, 2.3 ] * MyVectorB;</code>
+    /// </summary>
+    /// <param name="a">
+    ///   An array of four single precision floats to be multiplied with the
+    ///   vector 'b'.
+    /// </param>
+    /// <param name="b">
+    ///   An sVector4 which will be multiplied by the array 'b'.
+    /// </param>
+    /// <returns>
+    ///   An sVector4 which contains the result of the multiplication of the
+    ///   array 'a' with the vector 'b' <br />
+    /// </returns>
+    /// <exception cref="TLoggedException">
+    ///   If the array of floats does not have a length of four, a logged
+    ///   exception is raised with status stInvalidArrayForVector (Invalid
+    ///   array for vector).
+    /// </exception>
     class operator Multiply( const a: array of single; const b: sVector4 ): sVector4;
 
-    ///  <summary>
-    ///    Allows the division of a vector by an array and returns the
-    ///    resulting vector.
-    ///  </summary>
+    /// <summary>
+    ///   Divides an sVector4 by an array of four single precision floats for
+    ///   assignment to an sVector4, in an element wise division operation. <br /><code lang="Delphi">MyVectorA := MyVectorB / [ 2.0, 2.1, 2.2, 2.3 ];</code>
+    /// </summary>
+    /// <param name="a">
+    ///   An sVector4 which will be divided by the array 'b'.
+    /// </param>
+    /// <param name="b">
+    ///   An array of four single precision floats by which the vector 'a' will
+    ///   be divided.
+    /// </param>
+    /// <returns>
+    ///   An sVector4 which contains the result of the division of vector 'a'
+    ///   by the array 'b'
+    /// </returns>
+    /// <exception cref="TLoggedException">
+    ///   If the array of floats does not have a length of four, a logged
+    ///   exception is raised with status stInvalidArrayForVector (Invalid
+    ///   array for vector).
+    /// </exception>
     class operator Divide( const a: sVector4; const b: array of single ): sVector4;
 
-    ///  <summary>
-    ///    Allows the division of an array by a vector and returns the
-    ///    resulting vector.
-    ///  </summary>
+    /// <summary>
+    ///   Divides an array of four single precision floats by an sVector4 for
+    ///   assignment to an sVector4, in an element wise division operation. <br /><code lang="Delphi">MyVectorA := [ 2.0, 2.1, 2.2, 2.3 ] / MyVectorA;</code>
+    /// </summary>
+    /// <param name="a">
+    ///   An array of four single precision floats to be divided by the vector
+    ///   'b'.
+    /// </param>
+    /// <param name="b">
+    ///   An sVector4 by which the array 'a' will be divided.
+    /// </param>
+    /// <returns>
+    ///   An sVector4 which contains the result of the division of the array
+    ///   'a' by the vector 'b'.
+    /// </returns>
+    /// <exception cref="TLoggedException">
+    ///   If the array of floats does not have a length of four, a logged
+    ///   exception is raised with status stInvalidArrayForVector (Invalid
+    ///   array for vector).
+    /// </exception>
     class operator Divide( const a: array of single; const b: sVector4 ): sVector4;
 
-    ///  <summary>
-    ///    Operator overload provides for addition of one vector to another.
-    ///  </summary>
+    /// <summary>
+    ///   Adds an sVector4 to another sVector4 for assignment to an sVector4,
+    ///   in an element wise addition operation. <br /><code lang="Delphi">MyVectorA := MyVectorB + MyVectorC;</code>
+    /// </summary>
+    /// <param name="a">
+    ///   The sVector4 to which the vector 'b' will be added.
+    /// </param>
+    /// <param name="b">
+    ///   An sVector4 for addition to the vector 'a'
+    /// </param>
+    /// <returns>
+    ///   An sVector4 which contains the result of the addition of vector 'b'
+    ///   to vector 'a'.
+    /// </returns>
     class operator Add( const a: sVector4; const b: sVector4 ): sVector4;
 
-    ///  <summary>
-    ///    Operator overload provides for addition of a float to a vector.
-    ///  </summary>
+    /// <summary>
+    ///   Adds a single precision float to each element of a vector for
+    ///   assignment to an sVector4. <br /><code lang="Delphi">MyVectorA := MyVectorB + 6.2;</code>
+    /// </summary>
+    /// <param name="a">
+    ///   The sVector4 to which the single 'b' will be added.
+    /// </param>
+    /// <param name="b">
+    ///   A single precision float to be added to the elements of vector 'a'
+    /// </param>
+    /// <returns>
+    ///   An sVector4 which contains the result of the addition of single 'b'
+    ///   to the elements of vector 'a'.
+    /// </returns>
     class operator Add( const a: sVector4; const b: single ): sVector4;
 
-    ///  <summary>
-    ///    Operator overload provides for subtraction of one vector from
-    ///    another.
-    ///  </summary>
+    /// <summary>
+    ///   Subtracts an sVector4 from another sVector4 for assignment to an
+    ///   sVector4, in an element wise subtraction operation. <br /><code lang="Delphi">MyVectorA := MyVectorB - MyVectorC;</code>
+    /// </summary>
+    /// <param name="a">
+    ///   The sVector4 from which the vector 'b' will be subtracted.
+    /// </param>
+    /// <param name="b">
+    ///   An sVector4 for subtraction from the vector 'a'
+    /// </param>
+    /// <returns>
+    ///   An sVector4 which contains the result of the subtraction of vector
+    ///   'b' from vector 'a'.
+    /// </returns>
     class operator Subtract( const a: sVector4; const b: sVector4 ): sVector4;
 
-    ///  <summary>
-    ///    Operator overload provides for subtraction of a float from
-    //     a vector.
-    ///  </summary>
+    /// <summary>
+    ///   Subtracts a single precision float from each element of a vector for
+    ///   assignment to an sVector4. <br /><code lang="Delphi">MyVectorA := MyVectorB - 6.2;</code>
+    /// </summary>
+    /// <param name="a">
+    ///   The sVector4 from which the single 'b' will be subtracted.
+    /// </param>
+    /// <param name="b">
+    ///   A single precision float to be subtracted from the elements of vector
+    ///   'a'.
+    /// </param>
+    /// <returns>
+    ///   An sVector4 which contains the result of the subtraction of single
+    ///   'b' from the elements of vector 'a'.
+    /// </returns>
     class operator Subtract( const a: sVector4; const b: single ): sVector4;
 
-    ///  <summary>
-    ///    Operator overload to provide for multiplication of one vector by
-    ///    another (hadamard multiplication/scale).
-    ///  </summary>
+    /// <summary>
+    ///   Multiplies an sVector4 by an sVector4 for assignment to an sVector4
+    ///   in an element wise (hadamard) multiplication operation. <br /><code lang="Delphi">MyVectorA := MyVectorB * MyVectorC;</code>
+    /// </summary>
+    /// <param name="a">
+    ///   The sVector4 which will be multiplied by the the vector 'b'.
+    /// </param>
+    /// <param name="b">
+    ///   An sVector4 by which the vector 'a' will be multiplied.
+    /// </param>
+    /// <returns>
+    ///   An sVector4 which contains the result of the multiplication of vector
+    ///   'a' by vector 'b'.
+    /// </returns>
     class operator Multiply( const a: sVector4; const b: sVector4 ): sVector4;
 
-    ///  <summary>
-    ///    Operator overload to provide for multiplication of a vector by
-    ///    a float. (scale)
-    ///  </summary>
+    /// <summary>
+    ///   Multiplies an sVector4 by a single precision float for assignment to
+    ///   an sVector4 in an element wise (hadamard) multiplication operation. <br /><code lang="Delphi">MyVectorA := MyVectorB * 6.2;</code>
+    /// </summary>
+    /// <param name="a">
+    ///   The sVector4 which will be multiplied by the the single 'b'.
+    /// </param>
+    /// <param name="b">
+    ///   A single precision float by which the vector 'a' will be multiplied.
+    /// </param>
+    /// <returns>
+    ///   An sVector4 which contains the result of the multiplication of vector
+    ///   'a' by single 'b'.
+    /// </returns>
     class operator Multiply( const a: sVector4; const b: single ): sVector4;
 
-    ///  <summary>
-    ///    Operator overload to provide for division of one vector by
-    ///    another.
-    ///  </summary>
+    /// <summary>
+    ///   Divides an sVector4 by an sVector4 for assignment to an sVector4 in
+    ///   an element wise division operation. <br /><code lang="Delphi">MyVectorA := MyVectorB / MyVectorC;</code>
+    /// </summary>
+    /// <param name="a">
+    ///   The sVector4 which will be divided by the the vector 'b'.
+    /// </param>
+    /// <param name="b">
+    ///   An sVector4 by which the vector 'a' will be divided.
+    /// </param>
+    /// <returns>
+    ///   An sVector4 which contains the result of the division of vector 'a'
+    ///   by vector 'b'.
+    /// </returns>
     class operator Divide( const a: sVector4; const b: sVector4 ): sVector4;
 
-    ///  <summary>
-    ///    Operator overload to provide for division of a vector by a
-    ///    float.
-    ///  </summary>
+    /// <summary>
+    ///   Divides an sVector4 by a single precision float for assignment to an
+    ///   sVector4 in an element wise division operation. <br /><code lang="Delphi">MyVectorA := MyVectorB / 6.2;</code>
+    /// </summary>
+    /// <param name="a">
+    ///   The sVector4 which will be divided by the the single 'b'.
+    /// </param>
+    /// <param name="b">
+    ///   A single precision float by which the vector 'a' will be divided.
+    /// </param>
+    /// <returns>
+    ///   An sVector4 which contains the result of the division of vector 'a'
+    ///   by single 'b'.
+    /// </returns>
     class operator Divide( const a: sVector4; const b: single ): sVector4;
 
-    ///  <summary>
-    ///    Allows assignment of Vector3 to Vector4 in which W is set to 1.
-    ///  </summary>
+    /// <summary>
+    ///   Assigns an sVector4 from an sVector3 while setting the W element to
+    ///   zero.
+    ///   <code lang="Delphi">var
+    ///   VectorA: sVector4;
+    ///   VectorB: sVector3;
+    /// begin
+    ///   VectorB := [ 1.0, 2.0, 3.0 ];
+    ///   VectorA := VectorB;
+    ///   //- At this point, VectorA = 1.0, 2.0, 3.0, 0.0
+    /// end;</code>
+    /// </summary>
     class operator Implicit( const a: sVector3 ): sVector4;
 
-    ///  <summary>
-    ///    Allows assignment of Vector3 to Vector4 in which W is set to 1.
-    ///  </summary>
+    /// <summary>
+    ///   Assigns an sVector4 from an sVector3 while setting the W element to
+    ///   zero.
+    ///   <code lang="Delphi">var
+    ///   VectorA: sVector4;
+    ///   VectorB: sVector3;
+    /// begin
+    ///   VectorB := [ 1.0, 2.0, 3.0 ];
+    ///   VectorA := VectorB;
+    ///   //- At this point, VectorA = 1.0, 2.0, 3.0, 0.0
+    /// end;</code>
+    /// </summary>
     class operator Explicit( const a: sVector3 ): sVector4;
 
-    ///  <summary>
-    ///    Allows assignment of Vector2 to Vector4 in which Z is set 0 and W
-    ///    is set to 1.
-    ///  </summary>
+    /// <summary>
+    ///   Assigns an sVector4 from an sVector3 while setting the W element to
+    ///   zero.
+    ///   <code lang="Delphi">var
+    ///   VectorA: sVector4;
+    ///   VectorB: sVector2;
+    /// begin
+    ///   VectorB := [ 1.0, 2.0 ];
+    ///   VectorA := VectorB;
+    ///   //- At this point, VectorA = 1.0, 2.0, 0.0, 0.0
+    /// end;</code>
+    /// </summary>
     class operator Implicit( const a: sVector2 ): sVector4;
 
-    ///  <summary>
-    ///    Allows assignment of Vector2 to Vector4 in which Z is set 0 and W
-    ///    is set to 1.
-    ///  </summary>
+    /// <summary>
+    ///   Assigns an sVector4 from an sVector3 while setting the W element to
+    ///   zero.
+    ///   <code lang="Delphi">var
+    ///   VectorA: sVector4;
+    ///   VectorB: sVector2;
+    /// begin
+    ///   VectorB := [ 1.0, 2.0 ];
+    ///   VectorA := VectorB;
+    ///   //- At this point, VectorA = 1.0, 2.0, 0.0, 0.0
+    /// end;</code>
+    /// </summary>
     class operator Explicit( const a: sVector2 ): sVector4;
 
-    ///  <summary>
-    ///    Allows assignment of a Vector4 to a Vector3 in which the W
-    ///    coordinate is dropped.
-    ///  </summary>
+    /// <summary>
+    ///   Assigns an sVector3 from an sVector4 dropping the W element.
+    ///   <code lang="Delphi">var
+    ///   VectorA: sVector4;
+    ///   VectorB: sVector3;
+    /// begin
+    ///   VectorB := [ 1.0, 2.0, 3.0, 4.0 ];
+    ///   VectorA := VectorB;
+    ///   //- At this point, VectorA = 1.0, 2.0, 3.0
+    /// end;</code>
+    /// </summary>
     class operator Implicit( const a: sVector4 ): sVector3;
 
-    ///  <summary>
-    ///    Allows assignment of a Vector4 to a Vector3 in which the W
-    ///    coordinate is dropped.
-    ///  </summary>
+    /// <summary>
+    ///   Assigns an sVector3 from an sVector4 dropping the W element.
+    ///   <code lang="Delphi">var
+    ///   VectorA: sVector4;
+    ///   VectorB: sVector3;
+    /// begin
+    ///   VectorB := [ 1.0, 2.0, 3.0, 4.0 ];
+    ///   VectorA := VectorB;
+    ///   //- At this point, VectorA = 1.0, 2.0, 3.0
+    /// end;</code>
+    /// </summary>
     class operator Explicit( const a: sVector4 ): sVector3;
 
-    ///  <summary>
-    ///    Allows assignment of a Vector4 to a Vector2 in which the Z and W
-    ///    coordinates are dropped.
-    ///  </summary>
+    /// <summary>
+    ///   Assigns an sVector2 from an sVector4 dropping the Z and W elements.
+    ///   <code lang="Delphi">var
+    ///   VectorA: sVector4;
+    ///   VectorB: sVector2;
+    /// begin
+    ///   VectorB := [ 1.0, 2.0, 3.0, 4.0 ];
+    ///   VectorA := VectorB;
+    ///   //- At this point, VectorA = 1.0, 2.0
+    /// end;</code>
+    /// </summary>
     class operator Implicit( const a: sVector4 ): sVector2;
 
-    ///  <summary>
-    ///    Allows assignment of a Vector4 to a Vector2 in which the Z and W
-    ///    coordinates are dropped.
-    ///  </summary>
+    /// <summary>
+    ///   Assigns an sVector2 from an sVector4 dropping the Z and W elements.
+    ///   <code lang="Delphi">var
+    ///   VectorA: sVector4;
+    ///   VectorB: sVector2;
+    /// begin
+    ///   VectorB := [ 1.0, 2.0, 3.0, 4.0 ];
+    ///   VectorA := VectorB;
+    ///   //- At this point, VectorA = 1.0, 2.0
+    /// end;</code>
+    /// </summary>
     class operator Explicit( const a: sVector4 ): sVector2;
 
-    ///  <summary>
-    ///    Creates a new vector from X,Y,Z,W values.
-    ///  </summary>
+    /// <summary>
+    ///   Returns an sVector4 containing the parameter values X and Y, in that
+    ///   order.
+    ///   <code lang="Delphi">MyVectorA := sVector4.Create( 1.0, 2.0, 3.0, 4.0 );</code>
+    /// </summary>
+    /// <param name="X">
+    ///   Value for the first element of the vector.
+    /// </param>
+    /// <param name="Y">
+    ///   Value for the second element of the vector.
+    /// </param>
+    /// <returns>
+    ///   An sVector4 containing the four values supplied as parameters.
+    /// </returns>
     class function Create( const X: single; const Y: single; const Z: single; const W: single ): sVector4; overload; static;
 
-    ///  <summary>
-    ///    Returns the dot product of this vector with another.
-    ///  </summary>
-    function dot( const a: sVector4 ): single;
+    /// <summary>
+    ///   Returns the dot product of this sVector4 with another sVector4.
+    ///   <code lang="Delphi">S := VectorA.Dot( VectorB );</code>
+    /// </summary>
+    /// <param name="a">
+    ///   An sVector4 with which to compute the dot product of this vector.
+    /// </param>
+    /// <returns>
+    ///   A single precision floating point result of the dot product of this
+    ///   vector with another.
+    /// </returns>
+    function Dot( const a: sVector4 ): single;
 
-    ///  <summary>
-    ///    Returns this vector normaized.
-    ///  </summary>
-    function normalized: sVector4;
+    /// <summary>
+    ///   Returns the Normal vector of this vector.
+    ///   <code lang="Delphi">NormalVector := SomeVector.Normalized;</code>
+    /// </summary>
+    /// <returns>
+    ///   An sVector4 containing the normal of this vector.
+    /// </returns>
+    function Normalized: sVector4;
 
-    ///  <summary>
-    ///    Returns the unit vector of this vector.
-    ///  </summary>
+    /// <summary>
+    ///   Returns the unit vector of this vector.
+    ///   <code lang="Delphi">UnitVector := SomeVector.UnitVector;</code>
+    /// </summary>
+    /// <returns>
+    ///   An sVector4 containing this vector scaled to the normal 1.
+    /// </returns>
     function UnitVector: sVector4;
 
-    ///  <summary>
-    ///    Returns the magnitude of the vector.
-    ///  </summary>
-    function magnitude: single;
+    /// <summary>
+    ///   Returns the Magnitude of the vector.
+    ///   <code lang="Delphi">M := SomeVector.Magnitude;</code>
+    /// </summary>
+    function Magnitude: single;
 
       case uint8 of
       0: (
@@ -1272,187 +3378,523 @@ type
 {$endregion}
 
 {$region ' dVector4'}
-  ///  <summary>
-  ///    Represents a vector with four elements.
-  ///   (X,Y,Z,W or R,G,B,A or U1,V1,U2,V2)
-  ///  </summary>
+  /// <summary>
+  ///   Represents a double precision vector with four elements (X,Y,Z,W or R,G,B,A or U1,V1,U2,V2)
+  /// </summary>
   dVector4 = record
 
-    ///  <summary>
-    ///    Allows creation of a vector from an array of floats.
-    ///    (Size of array must match size of vector)
-    ///  </summary>
+    /// <summary>
+    ///   Assigns an array of four double precision floats to a dVector4.
+    ///   <code lang="Delphi">MyVector := [ 3.5, 4.5, 5.5, 6.5 ];</code>
+    /// </summary>
+    /// <param name="a">
+    ///   An array of four double precision floating point values to assign to
+    ///   the vector.
+    /// </param>
+    /// <returns>
+    ///   The vector is returned with it's elements set to those provided in
+    ///   the array.
+    /// </returns>
+    /// <exception cref="TLoggedException">
+    ///   When the array of floats to be assigned does not have a length of
+    ///   four, a logged exception is raised with status
+    ///   stInvalidArrayForVector (Invalid array for vector).
+    /// </exception>
+    /// <remarks>
+    ///   The length of the array must match size of vector (four elements)
+    /// </remarks>
     class operator Implicit( const a: array of double ): dVector4;
 
-    ///  <summary>
-    ///    Allows creation of a vector from an array of floats.
-    ///    (Size of array must match size of vector)
-    ///  </summary>
+    /// <summary>
+    ///   Assigns an array of four double precision floats to a dVector4. <br /><code lang="Delphi">MyVector := [ 3.5, 4.5, 5.5, 6.5 ];</code>
+    /// </summary>
+    /// <param name="a">
+    ///   An array of four double precision floating point values to assign to
+    ///   the vector.
+    /// </param>
+    /// <returns>
+    ///   The vector is returned with it's elements set to those provided in
+    ///   the array.
+    /// </returns>
+    /// <exception cref="TLoggedException">
+    ///   When the array of floats to be assigned does not have a length of
+    ///   four, a logged exception is raised with status
+    ///   stInvalidArrayForVector (Invalid array for vector).
+    /// </exception>
+    /// <remarks>
+    ///   The length of the array must match size of vector (four elements)
+    /// </remarks>
     class operator Explicit( const a: array of double ): dVector4;
 
-    ///  <summary>
-    ///    Allows addition of a vector to an array, and returns the
-    //     resulting vector.
-    ///  </summary>
+    /// <summary>
+    ///   Adds an array of four double precision floating point values to an
+    ///   dVector4 in an element wise addition operation. <br /><code lang="Delphi">MyVectorA := MyVectorB + [ 1.2, 1.3, 1.4, 1.5 ];</code>
+    /// </summary>
+    /// <param name="a">
+    ///   The dVector4 to which the values of the array 'b' will be added.
+    /// </param>
+    /// <param name="b">
+    ///   An array of four double precision floats to be added to the the
+    ///   vector 'a'.
+    /// </param>
+    /// <returns>
+    ///   A dVector4 which contains the result of addition of the array 'b' to
+    ///   the vector 'a'. <br />
+    /// </returns>
+    /// <exception cref="TLoggedException">
+    ///   If the array of floats does not have a length of four, a logged
+    ///   exception is raised with status stInvalidArrayForVector (Invalid
+    ///   array for vector).
+    /// </exception>
     class operator Add( const a: dVector4; const b: array of double ): dVector4;
 
-    ///  <summary>
-    ///    Allows addition of a vector to an array, and returns the
-    ///    resulting vector.
-    ///  </summary>
+    /// <summary>
+    ///   Adds a dVector4 to an array of four double precision floats for
+    ///   assignment to a dVector4 in an element wise addition operation. <br /><code lang="Delphi">MyVector := [ 1.2, 1.3, 1.4, 1.5 ] + MyVector;</code>
+    /// </summary>
+    /// <param name="a">
+    ///   An array of four double precision floats to which the vector 'b' will
+    ///   be added.
+    /// </param>
+    /// <param name="b">
+    ///   The dVector4 which will be added to the array 'b'.
+    /// </param>
+    /// <returns>
+    ///   A dVector4 which contains the result of the addition of the vector
+    ///   'b' to the array 'a'. <br />
+    /// </returns>
+    /// <exception cref="TLoggedException">
+    ///   If the array of floats does not have a length of four, a logged
+    ///   exception is raised with status stInvalidArrayForVector (Invalid
+    ///   array for vector).
+    /// </exception>
     class operator Add( const a: array of double; const b: dVector4 ): dVector4;
 
-    ///  <summary>
-    ///    Allows subtraction of an array from a vector and returns
-    ///    the resulting vector.
-    ///  </summary>
+    /// <summary>
+    ///   Subtracts an array of four double precision floats from a dVector4
+    ///   for assignment to a dVector4 in an element wise subtraction
+    ///   operation. <br /><code lang="Delphi">MyVector := MyVector - [ 1.2, 1.3, 1.4, 1.5 ];</code>
+    /// </summary>
+    /// <param name="a">
+    ///   The dVector4 from which the values of the array 'b' will be
+    ///   subtracted.
+    /// </param>
+    /// <param name="b">
+    ///   An array of four double-precision floats to be subtracted from the
+    ///   vector 'a'.
+    /// </param>
+    /// <returns>
+    ///   A dVector4 which contains the result of the subtraction of the array
+    ///   'b' from the vector 'a'.
+    /// </returns>
+    /// <exception cref="TLoggedException">
+    ///   If the array of floats does not have a length of four, a logged
+    ///   exception is raised with status stInvalidArrayForVector (Invalid
+    ///   array for vector).
+    /// </exception>
     class operator Subtract( const a: dVector4; const b: array of double ): dVector4;
 
-    ///  <summary>
-    ///    Allows subtraction of a vector from an array and returns
-    ///    the resulting vector.
-    ///  </summary>
+    /// <summary>
+    ///   Subtracts a dVector4 from an array of four double precision floats
+    ///   for assignment to a dVector4 in an element wise subtraction
+    ///   operation. <br /><code lang="Delphi">MyVector := [ 1.2, 1.3, 1.4, 1.5 ] - MyVector;</code>
+    /// </summary>
+    /// <param name="a">
+    ///   An array of four double-precision floats from which the vector 'b'
+    ///   will be subtracted.
+    /// </param>
+    /// <param name="b">
+    ///   The dVector4 which will be subtracted from the array 'a'.
+    /// </param>
+    /// <returns>
+    ///   A dVector4 which contains the result of the subtraction of vector
+    ///   'b' from the array 'a'.
+    /// </returns>
+    /// <exception cref="TLoggedException">
+    ///   If the array of floats does not have a length of four, a logged
+    ///   exception is raised with status stInvalidArrayForVector (Invalid
+    ///   array for vector).
+    /// </exception>
     class operator Subtract( const a: array of double; const b: dVector4 ): dVector4;
 
-    ///  <summary>
-    ///    Allows the multiplication of a vector and an array, and returns
-    ///    the resulting vector. (hadamard)
-    ///  </summary>
+    /// <summary>
+    ///   Multiplies a dVector4 by an array of four double precision floats
+    ///   for assignment to a dVector4, in an element wise multiplication
+    ///   operation. <br /><code lang="Delphi">MyVectorA := MyVectorB * [ 2.0, 2.1, 2.2, 2.3 ];</code>
+    /// </summary>
+    /// <param name="a">
+    ///   A dVector4 which will be multiplied by the array 'b'.
+    /// </param>
+    /// <param name="b">
+    ///   An array of four double precision floats to be multiplied with the
+    ///   vector 'a'.
+    /// </param>
+    /// <returns>
+    ///   A dVector4 which contains the result of the multiplication of the
+    ///   vector 'a' with the array 'b'
+    /// </returns>
+    /// <exception cref="TLoggedException">
+    ///   If the array of floats does not have a length of four, a logged
+    ///   exception is raised with status stInvalidArrayForVector (Invalid
+    ///   array for vector).
+    /// </exception>
     class operator Multiply( const a: dVector4; const b: array of double ): dVector4;
 
-    ///  <summary>
-    ///    Allows the multiplication of an array and a vector, and returns
-    ///    the resulting vector. (hadamard)
-    ///  </summary>
+    /// <summary>
+    ///   Multiplies an array of four double precision floats by a dVector4
+    ///   for assignment to a dVector4, in an element wise multiplication
+    ///   operation. <br /><code lang="Delphi">MyVectorA := [ 2.0, 2.1, 2.2, 2.3 ] * MyVectorB;</code>
+    /// </summary>
+    /// <param name="a">
+    ///   An array of four double precision floats to be multiplied with the
+    ///   vector 'b'.
+    /// </param>
+    /// <param name="b">
+    ///   A dVector4 which will be multiplied by the array 'b'.
+    /// </param>
+    /// <returns>
+    ///   A dVector4 which contains the result of the multiplication of the
+    ///   array 'a' with the vector 'b' <br />
+    /// </returns>
+    /// <exception cref="TLoggedException">
+    ///   If the array of floats does not have a length of four, a logged
+    ///   exception is raised with status stInvalidArrayForVector (Invalid
+    ///   array for vector).
+    /// </exception>
     class operator Multiply( const a: array of double; const b: dVector4 ): dVector4;
 
-    ///  <summary>
-    ///    Allows the division of a vector by an array and returns the
-    ///    resulting vector.
-    ///  </summary>
+    /// <summary>
+    ///   Divides a dVector4 by an array of four double precision floats for
+    ///   assignment to a dVector4, in an element wise division operation. <br /><code lang="Delphi">MyVectorA := MyVectorB / [ 2.0, 2.1, 2.2, 2.3 ];</code>
+    /// </summary>
+    /// <param name="a">
+    ///   A dVector4 which will be divided by the array 'b'.
+    /// </param>
+    /// <param name="b">
+    ///   An array of four double precision floats by which the vector 'a' will
+    ///   be divided.
+    /// </param>
+    /// <returns>
+    ///   A dVector4 which contains the result of the division of vector 'a'
+    ///   by the array 'b'
+    /// </returns>
+    /// <exception cref="TLoggedException">
+    ///   If the array of floats does not have a length of four, a logged
+    ///   exception is raised with status stInvalidArrayForVector (Invalid
+    ///   array for vector).
+    /// </exception>
     class operator Divide( const a: dVector4; const b: array of double ): dVector4;
 
-    ///  <summary>
-    ///    Allows the division of an array by a vector and returns the
-    ///    resulting vector.
-    ///  </summary>
+    /// <summary>
+    ///   Divides an array of four double precision floats by a dVector4 for
+    ///   assignment to a dVector4, in an element wise division operation. <br /><code lang="Delphi">MyVectorA := [ 2.0, 2.1, 2.2, 2.3 ] / MyVectorA;</code>
+    /// </summary>
+    /// <param name="a">
+    ///   An array of four double precision floats to be divided by the vector
+    ///   'b'.
+    /// </param>
+    /// <param name="b">
+    ///   A dVector4 by which the array 'a' will be divided.
+    /// </param>
+    /// <returns>
+    ///   A dVector4 which contains the result of the division of the array
+    ///   'a' by the vector 'b'.
+    /// </returns>
+    /// <exception cref="TLoggedException">
+    ///   If the array of floats does not have a length of four, a logged
+    ///   exception is raised with status stInvalidArrayForVector (Invalid
+    ///   array for vector).
+    /// </exception>
     class operator Divide( const a: array of double; const b: dVector4 ): dVector4;
 
-    ///  <summary>
-    ///    Operator overload provides for addition of one vector to another.
-    ///  </summary>
+    /// <summary>
+    ///   Adds a dVector4 to another dVector4 for assignment to a dVector4,
+    ///   in an element wise addition operation. <br /><code lang="Delphi">MyVectorA := MyVectorB + MyVectorC;</code>
+    /// </summary>
+    /// <param name="a">
+    ///   The dVector4 to which the vector 'b' will be added.
+    /// </param>
+    /// <param name="b">
+    ///   A dVector4 for addition to the vector 'a'
+    /// </param>
+    /// <returns>
+    ///   A dVector4 which contains the result of the addition of vector 'b'
+    ///   to vector 'a'.
+    /// </returns>
     class operator Add( const a: dVector4; const b: dVector4 ): dVector4;
 
-    ///  <summary>
-    ///    Operator overload provides for addition of a float to a vector.
-    ///  </summary>
+    /// <summary>
+    ///   Adds a double precision float to each element of a vector for
+    ///   assignment to a dVector4. <br /><code lang="Delphi">MyVectorA := MyVectorB + 6.2;</code>
+    /// </summary>
+    /// <param name="a">
+    ///   The dVector4 to which the double 'b' will be added.
+    /// </param>
+    /// <param name="b">
+    ///   A double precision float to be added to the elements of vector 'a'
+    /// </param>
+    /// <returns>
+    ///   A dVector4 which contains the result of the addition of double 'b'
+    ///   to the elements of vector 'a'.
+    /// </returns>
     class operator Add( const a: dVector4; const b: double ): dVector4;
 
-    ///  <summary>
-    ///    Operator overload provides for subtraction of one vector from
-    ///    another.
-    ///  </summary>
+    /// <summary>
+    ///   Subtracts a dVector4 from another dVector4 for assignment to an
+    ///   dVector4, in an element wise subtraction operation. <br /><code lang="Delphi">MyVectorA := MyVectorB - MyVectorC;</code>
+    /// </summary>
+    /// <param name="a">
+    ///   The dVector4 from which the vector 'b' will be subtracted.
+    /// </param>
+    /// <param name="b">
+    ///   A dVector4 for subtraction from the vector 'a'
+    /// </param>
+    /// <returns>
+    ///   A dVector4 which contains the result of the subtraction of vector
+    ///   'b' from vector 'a'.
+    /// </returns>
     class operator Subtract( const a: dVector4; const b: dVector4 ): dVector4;
 
-    ///  <summary>
-    ///    Operator overload provides for subtraction of a float from
-    //     a vector.
-    ///  </summary>
+    /// <summary>
+    ///   Subtracts a double precision float from each element of a vector for
+    ///   assignment to a dVector4. <br /><code lang="Delphi">MyVectorA := MyVectorB - 6.2;</code>
+    /// </summary>
+    /// <param name="a">
+    ///   The dVector4 from which the double 'b' will be subtracted.
+    /// </param>
+    /// <param name="b">
+    ///   A double precision float to be subtracted from the elements of vector
+    ///   'a'.
+    /// </param>
+    /// <returns>
+    ///   A dVector4 which contains the result of the subtraction of double
+    ///   'b' from the elements of vector 'a'.
+    /// </returns>
     class operator Subtract( const a: dVector4; const b: double ): dVector4;
 
-    ///  <summary>
-    ///    Operator overload to provide for multiplication of one vector by
-    ///    another (hadamard multiplication/scale).
-    ///  </summary>
+    /// <summary>
+    ///   Multiplies a dVector4 by a dVector4 for assignment to a dVector4
+    ///   in an element wise (hadamard) multiplication operation. <br /><code lang="Delphi">MyVectorA := MyVectorB * MyVectorC;</code>
+    /// </summary>
+    /// <param name="a">
+    ///   The dVector4 which will be multiplied by the the vector 'b'.
+    /// </param>
+    /// <param name="b">
+    ///   A dVector4 by which the vector 'a' will be multiplied.
+    /// </param>
+    /// <returns>
+    ///   A dVector4 which contains the result of the multiplication of vector
+    ///   'a' by vector 'b'.
+    /// </returns>
     class operator Multiply( const a: dVector4; const b: dVector4 ): dVector4;
 
-    ///  <summary>
-    ///    Operator overload to provide for multiplication of a vector by
-    ///    a float. (scale)
-    ///  </summary>
+    /// <summary>
+    ///   Multiplies a dVector4 by a double precision float for assignment to
+    ///   a dVector4 in an element wise (hadamard) multiplication operation. <br /><code lang="Delphi">MyVectorA := MyVectorB * 6.2;</code>
+    /// </summary>
+    /// <param name="a">
+    ///   The dVector4 which will be multiplied by the the double 'b'.
+    /// </param>
+    /// <param name="b">
+    ///   A double precision float by which the vector 'a' will be multiplied.
+    /// </param>
+    /// <returns>
+    ///   A dVector4 which contains the result of the multiplication of vector
+    ///   'a' by double 'b'.
+    /// </returns>
     class operator Multiply( const a: dVector4; const b: double ): dVector4;
 
-    ///  <summary>
-    ///    Operator overload to provide for division of one vector by
-    ///    another.
-    ///  </summary>
+    /// <summary>
+    ///   Divides a dVector4 by a dVector4 for assignment to a dVector4 in
+    ///   an element wise division operation. <br /><code lang="Delphi">MyVectorA := MyVectorB / MyVectorC;</code>
+    /// </summary>
+    /// <param name="a">
+    ///   The dVector4 which will be divided by the the vector 'b'.
+    /// </param>
+    /// <param name="b">
+    ///   A dVector4 by which the vector 'a' will be divided.
+    /// </param>
+    /// <returns>
+    ///   A dVector4 which contains the result of the division of vector 'a'
+    ///   by vector 'b'.
+    /// </returns>
     class operator Divide( const a: dVector4; const b: dVector4 ): dVector4;
 
-    ///  <summary>
-    ///    Operator overload to provide for division of a vector by a
-    ///    float.
-    ///  </summary>
+    /// <summary>
+    ///   Divides a dVector4 by a double precision float for assignment to an
+    ///   dVector4 in an element wise division operation. <br /><code lang="Delphi">MyVectorA := MyVectorB / 6.2;</code>
+    /// </summary>
+    /// <param name="a">
+    ///   The dVector4 which will be divided by the the double 'b'.
+    /// </param>
+    /// <param name="b">
+    ///   A double precision float by which the vector 'a' will be divided.
+    /// </param>
+    /// <returns>
+    ///   A dVector4 which contains the result of the division of vector 'a'
+    ///   by double 'b'.
+    /// </returns>
     class operator Divide( const a: dVector4; const b: double ): dVector4;
 
-    ///  <summary>
-    ///    Allows assignment of Vector3 to Vector4 in which W is set to 1.
-    ///  </summary>
+    /// <summary>
+    ///   Assigns a dVector4 from a dVector3 while setting the W element to
+    ///   zero.
+    ///   <code lang="Delphi">var
+    ///   VectorA: dVector4;
+    ///   VectorB: dVector3;
+    /// begin
+    ///   VectorB := [ 1.0, 2.0, 3.0 ];
+    ///   VectorA := VectorB;
+    ///   //- At this point, VectorA = 1.0, 2.0, 3.0, 0.0
+    /// end;</code>
+    /// </summary>
     class operator Implicit( const a: dVector3 ): dVector4;
 
-    ///  <summary>
-    ///    Allows assignment of Vector3 to Vector4 in which W is set to 1.
-    ///  </summary>
+    /// <summary>
+    ///   Assigns a dVector4 from a dVector3 while setting the W element to
+    ///   zero.
+    ///   <code lang="Delphi">var
+    ///   VectorA: dVector4;
+    ///   VectorB: dVector3;
+    /// begin
+    ///   VectorB := [ 1.0, 2.0, 3.0 ];
+    ///   VectorA := VectorB;
+    ///   //- At this point, VectorA = 1.0, 2.0, 3.0, 0.0
+    /// end;</code>
+    /// </summary>
     class operator Explicit( const a: dVector3 ): dVector4;
 
-    ///  <summary>
-    ///    Allows assignment of Vector2 to Vector4 in which Z is set 0 and W
-    ///    is set to 1.
-    ///  </summary>
+    /// <summary>
+    ///   Assigns a dVector4 from a dVector3 while setting the W element to
+    ///   zero.
+    ///   <code lang="Delphi">var
+    ///   VectorA: dVector4;
+    ///   VectorB: dVector2;
+    /// begin
+    ///   VectorB := [ 1.0, 2.0 ];
+    ///   VectorA := VectorB;
+    ///   //- At this point, VectorA = 1.0, 2.0, 0.0, 0.0
+    /// end;</code>
+    /// </summary>
     class operator Implicit( const a: dVector2 ): dVector4;
 
-    ///  <summary>
-    ///    Allows assignment of Vector2 to Vector4 in which Z is set 0 and W
-    ///    is set to 1.
-    ///  </summary>
+    /// <summary>
+    ///   Assigns a dVector4 from a dVector3 while setting the W element to
+    ///   zero.
+    ///   <code lang="Delphi">var
+    ///   VectorA: dVector4;
+    ///   VectorB: dVector2;
+    /// begin
+    ///   VectorB := [ 1.0, 2.0 ];
+    ///   VectorA := VectorB;
+    ///   //- At this point, VectorA = 1.0, 2.0, 0.0, 0.0
+    /// end;</code>
+    /// </summary>
     class operator Explicit( const a: dVector2 ): dVector4;
 
-    ///  <summary>
-    ///    Allows assignment of a Vector4 to a Vector3 in which the W
-    ///    coordinate is dropped.
-    ///  </summary>
+    /// <summary>
+    ///   Assigns a dVector3 from a dVector4 dropping the W element.
+    ///   <code lang="Delphi">var
+    ///   VectorA: dVector4;
+    ///   VectorB: dVector3;
+    /// begin
+    ///   VectorB := [ 1.0, 2.0, 3.0, 4.0 ];
+    ///   VectorA := VectorB;
+    ///   //- At this point, VectorA = 1.0, 2.0, 3.0
+    /// end;</code>
+    /// </summary>
     class operator Implicit( const a: dVector4 ): dVector3;
 
-    ///  <summary>
-    ///    Allows assignment of a Vector4 to a Vector3 in which the W
-    ///    coordinate is dropped.
-    ///  </summary>
+    /// <summary>
+    ///   Assigns a dVector3 from a dVector4 dropping the W element.
+    ///   <code lang="Delphi">var
+    ///   VectorA: dVector4;
+    ///   VectorB: dVector3;
+    /// begin
+    ///   VectorB := [ 1.0, 2.0, 3.0, 4.0 ];
+    ///   VectorA := VectorB;
+    ///   //- At this point, VectorA = 1.0, 2.0, 3.0
+    /// end;</code>
+    /// </summary>
     class operator Explicit( const a: dVector4 ): dVector3;
 
-    ///  <summary>
-    ///    Allows assignment of a Vector4 to a Vector2 in which the Z and W
-    ///    coordinates are dropped.
-    ///  </summary>
+    /// <summary>
+    ///   Assigns a dVector2 from a dVector4 dropping the Z and W elements.
+    ///   <code lang="Delphi">var
+    ///   VectorA: dVector4;
+    ///   VectorB: dVector2;
+    /// begin
+    ///   VectorB := [ 1.0, 2.0, 3.0, 4.0 ];
+    ///   VectorA := VectorB;
+    ///   //- At this point, VectorA = 1.0, 2.0
+    /// end;</code>
+    /// </summary>
     class operator Implicit( const a: dVector4 ): dVector2;
 
-    ///  <summary>
-    ///    Allows assignment of a Vector4 to a Vector2 in which the Z and W
-    ///    coordinates are dropped.
-    ///  </summary>
+    /// <summary>
+    ///   Assigns a dVector2 from a dVector4 dropping the Z and W elements.
+    ///   <code lang="Delphi">var
+    ///   VectorA: dVector4;
+    ///   VectorB: dVector2;
+    /// begin
+    ///   VectorB := [ 1.0, 2.0, 3.0, 4.0 ];
+    ///   VectorA := VectorB;
+    ///   //- At this point, VectorA = 1.0, 2.0
+    /// end;</code>
+    /// </summary>
     class operator Explicit( const a: dVector4 ): dVector2;
 
-    ///  <summary>
-    ///    Creates a new vector from X,Y,Z,W values.
-    ///  </summary>
+    /// <summary>
+    ///   Returns a dVector4 containing the parameter values X and Y, in that
+    ///   order.
+    ///   <code lang="Delphi">MyVectorA := dVector4.Create( 1.0, 2.0, 3.0, 4.0 );</code>
+    /// </summary>
+    /// <param name="X">
+    ///   Value for the first element of the vector.
+    /// </param>
+    /// <param name="Y">
+    ///   Value for the second element of the vector.
+    /// </param>
+    /// <returns>
+    ///   A dVector4 containing the four values supplied as parameters.
+    /// </returns>
     class function Create( const X: double; const Y: double; const Z: double; const W: double ): dVector4; overload; static;
 
-    ///  <summary>
-    ///    Returns the dot product of this vector with another.
-    ///  </summary>
-    function dot( const a: dVector4 ): double;
+    /// <summary>
+    ///   Returns the dot product of this dVector4 with another dVector4.
+    ///   <code lang="Delphi">S := VectorA.Dot( VectorB );</code>
+    /// </summary>
+    /// <param name="a">
+    ///   A dVector4 with which to compute the dot product of this vector.
+    /// </param>
+    /// <returns>
+    ///   A double precision floating point result of the dot product of this
+    ///   vector with another.
+    /// </returns>
+    function Dot( const a: dVector4 ): double;
 
-    ///  <summary>
-    ///    Returns this vector normaized.
-    ///  </summary>
+    /// <summary>
+    ///   Returns the Normal vector of this vector.
+    ///   <code lang="Delphi">NormalVector := SomeVector.Normalized;</code>
+    /// </summary>
+    /// <returns>
+    ///   A dVector4 containing the normal of this vector.
+    /// </returns>
     function normalized: dVector4;
 
-    ///  <summary>
-    ///    Returns the unit vector of this vector.
-    ///  </summary>
+    /// <summary>
+    ///   Returns the unit vector of this vector.
+    ///   <code lang="Delphi">UnitVector := SomeVector.UnitVector;</code>
+    /// </summary>
+    /// <returns>
+    ///   A dVector4 containing this vector scaled to the normal 1.
+    /// </returns>
     function UnitVector: dVector4;
 
-    ///  <summary>
-    ///    Returns the magnitude of the vector.
-    ///  </summary>
+    /// <summary>
+    ///   Returns the Magnitude of the vector.
+    ///   <code lang="Delphi">M := SomeVector.Magnitude;</code>
+    /// </summary>
     function magnitude: double;
 
       case uint8 of
@@ -1479,188 +3921,524 @@ type
 {$endregion}
 
 {$region ' eVector4'}
-  ///  <summary>
-  ///    Represents a vector with four elements.
-  ///   (X,Y,Z,W or R,G,B,A or U1,V1,U2,V2)
-  ///  </summary>
+  /// <summary>
+  ///   Represents a extended precision vector with four elements (X,Y,Z,W or R,G,B,A or U1,V1,U2,V2)
+  /// </summary>
   eVector4 = record
 
-    ///  <summary>
-    ///    Allows creation of a vector from an array of floats.
-    ///    (Size of array must match size of vector)
-    ///  </summary>
+    /// <summary>
+    ///   Assigns an array of four extended precision floats to an eVector4.
+    ///   <code lang="Delphi">MyVector := [ 3.5, 4.5, 5.5, 6.5 ];</code>
+    /// </summary>
+    /// <param name="a">
+    ///   An array of four extended precision floating point values to assign to
+    ///   the vector.
+    /// </param>
+    /// <returns>
+    ///   The vector is returned with it's elements set to those provided in
+    ///   the array.
+    /// </returns>
+    /// <exception cref="TLoggedException">
+    ///   When the array of floats to be assigned does not have a length of
+    ///   four, a logged exception is raised with status
+    ///   stInvalidArrayForVector (Invalid array for vector).
+    /// </exception>
+    /// <remarks>
+    ///   The length of the array must match size of vector (four elements)
+    /// </remarks>
     class operator Implicit( const a: array of extended ): eVector4;
 
-    ///  <summary>
-    ///    Allows creation of a vector from an array of floats.
-    ///    (Size of array must match size of vector)
-    ///  </summary>
+    /// <summary>
+    ///   Assigns an array of four extended precision floats to an eVector4. <br /><code lang="Delphi">MyVector := [ 3.5, 4.5, 5.5, 6.5 ];</code>
+    /// </summary>
+    /// <param name="a">
+    ///   An array of four extended precision floating point values to assign to
+    ///   the vector.
+    /// </param>
+    /// <returns>
+    ///   The vector is returned with it's elements set to those provided in
+    ///   the array.
+    /// </returns>
+    /// <exception cref="TLoggedException">
+    ///   When the array of floats to be assigned does not have a length of
+    ///   four, a logged exception is raised with status
+    ///   stInvalidArrayForVector (Invalid array for vector).
+    /// </exception>
+    /// <remarks>
+    ///   The length of the array must match size of vector (four elements)
+    /// </remarks>
     class operator Explicit( const a: array of extended ): eVector4;
 
-    ///  <summary>
-    ///    Allows addition of a vector to an array, and returns the
-    //     resulting vector.
-    ///  </summary>
+    /// <summary>
+    ///   Adds an array of four extended precision floating point values to an
+    ///   eVector4 in an element wise addition operation. <br /><code lang="Delphi">MyVectorA := MyVectorB + [ 1.2, 1.3, 1.4, 1.5 ];</code>
+    /// </summary>
+    /// <param name="a">
+    ///   The eVector4 to which the values of the array 'b' will be added.
+    /// </param>
+    /// <param name="b">
+    ///   An array of four extended precision floats to be added to the the
+    ///   vector 'a'.
+    /// </param>
+    /// <returns>
+    ///   An eVector4 which contains the result of addition of the array 'b' to
+    ///   the vector 'a'. <br />
+    /// </returns>
+    /// <exception cref="TLoggedException">
+    ///   If the array of floats does not have a length of four, a logged
+    ///   exception is raised with status stInvalidArrayForVector (Invalid
+    ///   array for vector).
+    /// </exception>
     class operator Add( const a: eVector4; const b: array of extended ): eVector4;
 
-    ///  <summary>
-    ///    Allows addition of a vector to an array, and returns the
-    ///    resulting vector.
-    ///  </summary>
+    /// <summary>
+    ///   Adds an eVector4 to an array of four extended precision floats for
+    ///   assignment to an eVector4 in an element wise addition operation. <br /><code lang="Delphi">MyVector := [ 1.2, 1.3, 1.4, 1.5 ] + MyVector;</code>
+    /// </summary>
+    /// <param name="a">
+    ///   An array of four extended precision floats to which the vector 'b' will
+    ///   be added.
+    /// </param>
+    /// <param name="b">
+    ///   The eVector4 which will be added to the array 'b'.
+    /// </param>
+    /// <returns>
+    ///   An eVector4 which contains the result of the addition of the vector
+    ///   'b' to the array 'a'. <br />
+    /// </returns>
+    /// <exception cref="TLoggedException">
+    ///   If the array of floats does not have a length of four, a logged
+    ///   exception is raised with status stInvalidArrayForVector (Invalid
+    ///   array for vector).
+    /// </exception>
     class operator Add( const a: array of extended; const b: eVector4 ): eVector4;
 
-    ///  <summary>
-    ///    Allows subtraction of an array from a vector and returns
-    ///    the resulting vector.
-    ///  </summary>
+    /// <summary>
+    ///   Subtracts an array of four extended precision floats from an eVector4
+    ///   for assignment to an eVector4 in an element wise subtraction
+    ///   operation. <br /><code lang="Delphi">MyVector := MyVector - [ 1.2, 1.3, 1.4, 1.5 ];</code>
+    /// </summary>
+    /// <param name="a">
+    ///   The eVector4 from which the values of the array 'b' will be
+    ///   subtracted.
+    /// </param>
+    /// <param name="b">
+    ///   An array of four extended-precision floats to be subtracted from the
+    ///   vector 'a'.
+    /// </param>
+    /// <returns>
+    ///   An eVector4 which contains the result of the subtraction of the array
+    ///   'b' from the vector 'a'.
+    /// </returns>
+    /// <exception cref="TLoggedException">
+    ///   If the array of floats does not have a length of four, a logged
+    ///   exception is raised with status stInvalidArrayForVector (Invalid
+    ///   array for vector).
+    /// </exception>
     class operator Subtract( const a: eVector4; const b: array of extended ): eVector4;
 
-    ///  <summary>
-    ///    Allows subtraction of a vector from an array and returns
-    ///    the resulting vector.
-    ///  </summary>
+    /// <summary>
+    ///   Subtracts an eVector4 from an array of four extended precision floats
+    ///   for assignment to an eVector4 in an element wise subtraction
+    ///   operation. <br /><code lang="Delphi">MyVector := [ 1.2, 1.3, 1.4, 1.5 ] - MyVector;</code>
+    /// </summary>
+    /// <param name="a">
+    ///   An array of four extended-precision floats from which the vector 'b'
+    ///   will be subtracted.
+    /// </param>
+    /// <param name="b">
+    ///   The eVector4 which will be subtracted from the array 'a'.
+    /// </param>
+    /// <returns>
+    ///   An eVector4 which contains the result of the subtraction of vector
+    ///   'b' from the array 'a'.
+    /// </returns>
+    /// <exception cref="TLoggedException">
+    ///   If the array of floats does not have a length of four, a logged
+    ///   exception is raised with status stInvalidArrayForVector (Invalid
+    ///   array for vector).
+    /// </exception>
     class operator Subtract( const a: array of extended; const b: eVector4 ): eVector4;
 
-    ///  <summary>
-    ///    Allows the multiplication of a vector and an array, and returns
-    ///    the resulting vector. (hadamard)
-    ///  </summary>
+    /// <summary>
+    ///   Multiplies an eVector4 by an array of four extended precision floats
+    ///   for assignment to an eVector4, in an element wise multiplication
+    ///   operation. <br /><code lang="Delphi">MyVectorA := MyVectorB * [ 2.0, 2.1, 2.2, 2.3 ];</code>
+    /// </summary>
+    /// <param name="a">
+    ///   An eVector4 which will be multiplied by the array 'b'.
+    /// </param>
+    /// <param name="b">
+    ///   An array of four extended precision floats to be multiplied with the
+    ///   vector 'a'.
+    /// </param>
+    /// <returns>
+    ///   An eVector4 which contains the result of the multiplication of the
+    ///   vector 'a' with the array 'b'
+    /// </returns>
+    /// <exception cref="TLoggedException">
+    ///   If the array of floats does not have a length of four, a logged
+    ///   exception is raised with status stInvalidArrayForVector (Invalid
+    ///   array for vector).
+    /// </exception>
     class operator Multiply( const a: eVector4; const b: array of extended ): eVector4;
 
-    ///  <summary>
-    ///    Allows the multiplication of an array and a vector, and returns
-    ///    the resulting vector. (hadamard)
-    ///  </summary>
+    /// <summary>
+    ///   Multiplies an array of four extended precision floats by an eVector4
+    ///   for assignment to an eVector4, in an element wise multiplication
+    ///   operation. <br /><code lang="Delphi">MyVectorA := [ 2.0, 2.1, 2.2, 2.3 ] * MyVectorB;</code>
+    /// </summary>
+    /// <param name="a">
+    ///   An array of four extended precision floats to be multiplied with the
+    ///   vector 'b'.
+    /// </param>
+    /// <param name="b">
+    ///   An eVector4 which will be multiplied by the array 'b'.
+    /// </param>
+    /// <returns>
+    ///   An eVector4 which contains the result of the multiplication of the
+    ///   array 'a' with the vector 'b' <br />
+    /// </returns>
+    /// <exception cref="TLoggedException">
+    ///   If the array of floats does not have a length of four, a logged
+    ///   exception is raised with status stInvalidArrayForVector (Invalid
+    ///   array for vector).
+    /// </exception>
     class operator Multiply( const a: array of extended; const b: eVector4 ): eVector4;
 
-    ///  <summary>
-    ///    Allows the division of a vector by an array and returns the
-    ///    resulting vector.
-    ///  </summary>
+    /// <summary>
+    ///   Divides an eVector4 by an array of four extended precision floats for
+    ///   assignment to an eVector4, in an element wise division operation. <br /><code lang="Delphi">MyVectorA := MyVectorB / [ 2.0, 2.1, 2.2, 2.3 ];</code>
+    /// </summary>
+    /// <param name="a">
+    ///   An eVector4 which will be divided by the array 'b'.
+    /// </param>
+    /// <param name="b">
+    ///   An array of four extended precision floats by which the vector 'a' will
+    ///   be divided.
+    /// </param>
+    /// <returns>
+    ///   An eVector4 which contains the result of the division of vector 'a'
+    ///   by the array 'b'
+    /// </returns>
+    /// <exception cref="TLoggedException">
+    ///   If the array of floats does not have a length of four, a logged
+    ///   exception is raised with status stInvalidArrayForVector (Invalid
+    ///   array for vector).
+    /// </exception>
     class operator Divide( const a: eVector4; const b: array of extended ): eVector4;
 
-    ///  <summary>
-    ///    Allows the division of an array by a vector and returns the
-    ///    resulting vector.
-    ///  </summary>
+    /// <summary>
+    ///   Divides an array of four extended precision floats by an eVector4 for
+    ///   assignment to an eVector4, in an element wise division operation. <br /><code lang="Delphi">MyVectorA := [ 2.0, 2.1, 2.2, 2.3 ] / MyVectorA;</code>
+    /// </summary>
+    /// <param name="a">
+    ///   An array of four extended precision floats to be divided by the vector
+    ///   'b'.
+    /// </param>
+    /// <param name="b">
+    ///   An eVector4 by which the array 'a' will be divided.
+    /// </param>
+    /// <returns>
+    ///   An eVector4 which contains the result of the division of the array
+    ///   'a' by the vector 'b'.
+    /// </returns>
+    /// <exception cref="TLoggedException">
+    ///   If the array of floats does not have a length of four, a logged
+    ///   exception is raised with status stInvalidArrayForVector (Invalid
+    ///   array for vector).
+    /// </exception>
     class operator Divide( const a: array of extended; const b: eVector4 ): eVector4;
 
-    ///  <summary>
-    ///    Operator overload provides for addition of one vector to another.
-    ///  </summary>
+    /// <summary>
+    ///   Adds an eVector4 to another eVector4 for assignment to an eVector4,
+    ///   in an element wise addition operation. <br /><code lang="Delphi">MyVectorA := MyVectorB + MyVectorC;</code>
+    /// </summary>
+    /// <param name="a">
+    ///   The eVector4 to which the vector 'b' will be added.
+    /// </param>
+    /// <param name="b">
+    ///   An eVector4 for addition to the vector 'a'
+    /// </param>
+    /// <returns>
+    ///   An eVector4 which contains the result of the addition of vector 'b'
+    ///   to vector 'a'.
+    /// </returns>
     class operator Add( const a: eVector4; const b: eVector4 ): eVector4;
 
-    ///  <summary>
-    ///    Operator overload provides for addition of a float to a vector.
-    ///  </summary>
+    /// <summary>
+    ///   Adds a extended precision float to each element of a vector for
+    ///   assignment to an eVector4. <br /><code lang="Delphi">MyVectorA := MyVectorB + 6.2;</code>
+    /// </summary>
+    /// <param name="a">
+    ///   The eVector4 to which the extended 'b' will be added.
+    /// </param>
+    /// <param name="b">
+    ///   A extended precision float to be added to the elements of vector 'a'
+    /// </param>
+    /// <returns>
+    ///   An eVector4 which contains the result of the addition of extended 'b'
+    ///   to the elements of vector 'a'.
+    /// </returns>
     class operator Add( const a: eVector4; const b: extended ): eVector4;
 
-    ///  <summary>
-    ///    Operator overload provides for subtraction of one vector from
-    ///    another.
-    ///  </summary>
+    /// <summary>
+    ///   Subtracts an eVector4 from another eVector4 for assignment to an
+    ///   eVector4, in an element wise subtraction operation. <br /><code lang="Delphi">MyVectorA := MyVectorB - MyVectorC;</code>
+    /// </summary>
+    /// <param name="a">
+    ///   The eVector4 from which the vector 'b' will be subtracted.
+    /// </param>
+    /// <param name="b">
+    ///   An eVector4 for subtraction from the vector 'a'
+    /// </param>
+    /// <returns>
+    ///   An eVector4 which contains the result of the subtraction of vector
+    ///   'b' from vector 'a'.
+    /// </returns>
     class operator Subtract( const a: eVector4; const b: eVector4 ): eVector4;
 
-    ///  <summary>
-    ///    Operator overload provides for subtraction of a float from
-    //     a vector.
-    ///  </summary>
+    /// <summary>
+    ///   Subtracts a extended precision float from each element of a vector for
+    ///   assignment to an eVector4. <br /><code lang="Delphi">MyVectorA := MyVectorB - 6.2;</code>
+    /// </summary>
+    /// <param name="a">
+    ///   The eVector4 from which the extended 'b' will be subtracted.
+    /// </param>
+    /// <param name="b">
+    ///   A extended precision float to be subtracted from the elements of vector
+    ///   'a'.
+    /// </param>
+    /// <returns>
+    ///   An eVector4 which contains the result of the subtraction of extended
+    ///   'b' from the elements of vector 'a'.
+    /// </returns>
     class operator Subtract( const a: eVector4; const b: extended ): eVector4;
 
-    ///  <summary>
-    ///    Operator overload to provide for multiplication of one vector by
-    ///    another (hadamard multiplication/scale).
-    ///  </summary>
+    /// <summary>
+    ///   Multiplies an eVector4 by an eVector4 for assignment to an eVector4
+    ///   in an element wise (hadamard) multiplication operation. <br /><code lang="Delphi">MyVectorA := MyVectorB * MyVectorC;</code>
+    /// </summary>
+    /// <param name="a">
+    ///   The eVector4 which will be multiplied by the the vector 'b'.
+    /// </param>
+    /// <param name="b">
+    ///   An eVector4 by which the vector 'a' will be multiplied.
+    /// </param>
+    /// <returns>
+    ///   An eVector4 which contains the result of the multiplication of vector
+    ///   'a' by vector 'b'.
+    /// </returns>
     class operator Multiply( const a: eVector4; const b: eVector4 ): eVector4;
 
-    ///  <summary>
-    ///    Operator overload to provide for multiplication of a vector by
-    ///    a float. (scale)
-    ///  </summary>
+    /// <summary>
+    ///   Multiplies an eVector4 by a extended precision float for assignment to
+    ///   an eVector4 in an element wise (hadamard) multiplication operation. <br /><code lang="Delphi">MyVectorA := MyVectorB * 6.2;</code>
+    /// </summary>
+    /// <param name="a">
+    ///   The eVector4 which will be multiplied by the the extended 'b'.
+    /// </param>
+    /// <param name="b">
+    ///   A extended precision float by which the vector 'a' will be multiplied.
+    /// </param>
+    /// <returns>
+    ///   An eVector4 which contains the result of the multiplication of vector
+    ///   'a' by extended 'b'.
+    /// </returns>
     class operator Multiply( const a: eVector4; const b: extended ): eVector4;
 
-    ///  <summary>
-    ///    Operator overload to provide for division of one vector by
-    ///    another.
-    ///  </summary>
+    /// <summary>
+    ///   Divides an eVector4 by an eVector4 for assignment to an eVector4 in
+    ///   an element wise division operation. <br /><code lang="Delphi">MyVectorA := MyVectorB / MyVectorC;</code>
+    /// </summary>
+    /// <param name="a">
+    ///   The eVector4 which will be divided by the the vector 'b'.
+    /// </param>
+    /// <param name="b">
+    ///   An eVector4 by which the vector 'a' will be divided.
+    /// </param>
+    /// <returns>
+    ///   An eVector4 which contains the result of the division of vector 'a'
+    ///   by vector 'b'.
+    /// </returns>
     class operator Divide( const a: eVector4; const b: eVector4 ): eVector4;
 
-    ///  <summary>
-    ///    Operator overload to provide for division of a vector by a
-    ///    float.
-    ///  </summary>
+    /// <summary>
+    ///   Divides an eVector4 by a extended precision float for assignment to an
+    ///   eVector4 in an element wise division operation. <br /><code lang="Delphi">MyVectorA := MyVectorB / 6.2;</code>
+    /// </summary>
+    /// <param name="a">
+    ///   The eVector4 which will be divided by the the extended 'b'.
+    /// </param>
+    /// <param name="b">
+    ///   A extended precision float by which the vector 'a' will be divided.
+    /// </param>
+    /// <returns>
+    ///   An eVector4 which contains the result of the division of vector 'a'
+    ///   by extended 'b'.
+    /// </returns>
     class operator Divide( const a: eVector4; const b: extended ): eVector4;
 
-    ///  <summary>
-    ///    Allows assignment of Vector3 to Vector4 in which W is set to 1.
-    ///  </summary>
+    /// <summary>
+    ///   Assigns an eVector4 from an eVector3 while setting the W element to
+    ///   zero.
+    ///   <code lang="Delphi">var
+    ///   VectorA: eVector4;
+    ///   VectorB: eVector3;
+    /// begin
+    ///   VectorB := [ 1.0, 2.0, 3.0 ];
+    ///   VectorA := VectorB;
+    ///   //- At this point, VectorA = 1.0, 2.0, 3.0, 0.0
+    /// end;</code>
+    /// </summary>
     class operator Implicit( const a: eVector3 ): eVector4;
 
-    ///  <summary>
-    ///    Allows assignment of Vector3 to Vector4 in which W is set to 1.
-    ///  </summary>
+    /// <summary>
+    ///   Assigns an eVector4 from an eVector3 while setting the W element to
+    ///   zero.
+    ///   <code lang="Delphi">var
+    ///   VectorA: eVector4;
+    ///   VectorB: eVector3;
+    /// begin
+    ///   VectorB := [ 1.0, 2.0, 3.0 ];
+    ///   VectorA := VectorB;
+    ///   //- At this point, VectorA = 1.0, 2.0, 3.0, 0.0
+    /// end;</code>
+    /// </summary>
     class operator Explicit( const a: eVector3 ): eVector4;
 
-    ///  <summary>
-    ///    Allows assignment of Vector2 to Vector4 in which Z is set 0 and W
-    ///    is set to 1.
-    ///  </summary>
+    /// <summary>
+    ///   Assigns an eVector4 from an eVector3 while setting the W element to
+    ///   zero.
+    ///   <code lang="Delphi">var
+    ///   VectorA: eVector4;
+    ///   VectorB: eVector2;
+    /// begin
+    ///   VectorB := [ 1.0, 2.0 ];
+    ///   VectorA := VectorB;
+    ///   //- At this point, VectorA = 1.0, 2.0, 0.0, 0.0
+    /// end;</code>
+    /// </summary>
     class operator Implicit( const a: eVector2 ): eVector4;
 
-    ///  <summary>
-    ///    Allows assignment of Vector2 to Vector4 in which Z is set 0 and W
-    ///    is set to 1.
-    ///  </summary>
+    /// <summary>
+    ///   Assigns an eVector4 from an eVector3 while setting the W element to
+    ///   zero.
+    ///   <code lang="Delphi">var
+    ///   VectorA: eVector4;
+    ///   VectorB: eVector2;
+    /// begin
+    ///   VectorB := [ 1.0, 2.0 ];
+    ///   VectorA := VectorB;
+    ///   //- At this point, VectorA = 1.0, 2.0, 0.0, 0.0
+    /// end;</code>
+    /// </summary>
     class operator Explicit( const a: eVector2 ): eVector4;
 
-    ///  <summary>
-    ///    Allows assignment of a Vector4 to a Vector3 in which the W
-    ///    coordinate is dropped.
-    ///  </summary>
+    /// <summary>
+    ///   Assigns an eVector3 from an eVector4 dropping the W element.
+    ///   <code lang="Delphi">var
+    ///   VectorA: eVector4;
+    ///   VectorB: eVector3;
+    /// begin
+    ///   VectorB := [ 1.0, 2.0, 3.0, 4.0 ];
+    ///   VectorA := VectorB;
+    ///   //- At this point, VectorA = 1.0, 2.0, 3.0
+    /// end;</code>
+    /// </summary>
     class operator Implicit( const a: eVector4 ): eVector3;
 
-    ///  <summary>
-    ///    Allows assignment of a Vector4 to a Vector3 in which the W
-    ///    coordinate is dropped.
-    ///  </summary>
+    /// <summary>
+    ///   Assigns an eVector3 from an eVector4 dropping the W element.
+    ///   <code lang="Delphi">var
+    ///   VectorA: eVector4;
+    ///   VectorB: eVector3;
+    /// begin
+    ///   VectorB := [ 1.0, 2.0, 3.0, 4.0 ];
+    ///   VectorA := VectorB;
+    ///   //- At this point, VectorA = 1.0, 2.0, 3.0
+    /// end;</code>
+    /// </summary>
     class operator Explicit( const a: eVector4 ): eVector3;
 
-    ///  <summary>
-    ///    Allows assignment of a Vector4 to a Vector2 in which the Z and W
-    ///    coordinates are dropped.
-    ///  </summary>
+    /// <summary>
+    ///   Assigns an eVector2 from an eVector4 dropping the Z and W elements.
+    ///   <code lang="Delphi">var
+    ///   VectorA: eVector4;
+    ///   VectorB: eVector2;
+    /// begin
+    ///   VectorB := [ 1.0, 2.0, 3.0, 4.0 ];
+    ///   VectorA := VectorB;
+    ///   //- At this point, VectorA = 1.0, 2.0
+    /// end;</code>
+    /// </summary>
     class operator Implicit( const a: eVector4 ): eVector2;
 
-    ///  <summary>
-    ///    Allows assignment of a Vector4 to a Vector2 in which the Z and W
-    ///    coordinates are dropped.
-    ///  </summary>
+    /// <summary>
+    ///   Assigns an eVector2 from an eVector4 dropping the Z and W elements.
+    ///   <code lang="Delphi">var
+    ///   VectorA: eVector4;
+    ///   VectorB: eVector2;
+    /// begin
+    ///   VectorB := [ 1.0, 2.0, 3.0, 4.0 ];
+    ///   VectorA := VectorB;
+    ///   //- At this point, VectorA = 1.0, 2.0
+    /// end;</code>
+    /// </summary>
     class operator Explicit( const a: eVector4 ): eVector2;
 
-    ///  <summary>
-    ///    Creates a new vector from X,Y,Z,W values.
-    ///  </summary>
+    /// <summary>
+    ///   Returns an eVector4 containing the parameter values X and Y, in that
+    ///   order.
+    ///   <code lang="Delphi">MyVectorA := eVector4.Create( 1.0, 2.0, 3.0, 4.0 );</code>
+    /// </summary>
+    /// <param name="X">
+    ///   Value for the first element of the vector.
+    /// </param>
+    /// <param name="Y">
+    ///   Value for the second element of the vector.
+    /// </param>
+    /// <returns>
+    ///   An eVector4 containing the four values supplied as parameters.
+    /// </returns>
     class function Create( const X: extended; const Y: extended; const Z: extended; const W: extended ): eVector4; overload; static;
 
-    ///  <summary>
-    ///    Returns the dot product of this vector with another.
-    ///  </summary>
-    function dot( const a: eVector4 ): extended;
+    /// <summary>
+    ///   Returns the dot product of this eVector4 with another eVector4.
+    ///   <code lang="Delphi">S := VectorA.Dot( VectorB );</code>
+    /// </summary>
+    /// <param name="a">
+    ///   An eVector4 with which to compute the dot product of this vector.
+    /// </param>
+    /// <returns>
+    ///   A extended precision floating point result of the dot product of this
+    ///   vector with another.
+    /// </returns>
+    function Dot( const a: eVector4 ): extended;
 
-    ///  <summary>
-    ///    Returns this vector normaized.
-    ///  </summary>
-    function normalized: eVector4;
+    /// <summary>
+    ///   Returns the Normal vector of this vector.
+    ///   <code lang="Delphi">NormalVector := SomeVector.Normalized;</code>
+    /// </summary>
+    /// <returns>
+    ///   An eVector4 containing the normal of this vector.
+    /// </returns>
+    function Normalized: eVector4;
 
-    ///  <summary>
-    ///    Returns the unit vector of this vector.
-    ///  </summary>
+    /// <summary>
+    ///   Returns the unit vector of this vector.
+    ///   <code lang="Delphi">UnitVector := SomeVector.UnitVector;</code>
+    /// </summary>
+    /// <returns>
+    ///   An eVector4 containing this vector scaled to the normal 1.
+    /// </returns>
     function UnitVector: eVector4;
 
-    ///  <summary>
-    ///    Returns the magnitude of the vector.
-    ///  </summary>
-    function magnitude: extended;
+    /// <summary>
+    ///   Returns the Magnitude of the vector.
+    ///   <code lang="Delphi">M := SomeVector.Magnitude;</code>
+    /// </summary>
+    function Magnitude: extended;
 
       case uint8 of
       0: (
@@ -2953,9 +5731,10 @@ type
 
 {$region ' sRay'}
 
-  ///  <summary>
-  ///    Represents a ray in 3D space.
-  ///  </summary>
+  /// <summary>
+  ///   Represents a ray in 3D space as a single precision origin vector, a
+  ///   single precision direction vector, and a single precision length value.
+  /// </summary>
   sRay = record
   private
     fDirection: sVector3;
@@ -2969,7 +5748,7 @@ type
 
     ///  <summary>
     ///    The length of the ray.
-    ///  </summmary>
+    ///  </summary>
     Length: single;
 
     ///  <summary>
@@ -2978,22 +5757,48 @@ type
     ///  </summary>
     property Direction: sVector3 read fDirection write setDirection;
 
-    ///  <summary>
-    ///    Creates a new ray between two vertices representing the
-    ///    start and end of the ray.
-    ///  </summary>
+    /// <summary>
+    ///   Returns an sRay between two sVertex vertices as origin and
+    ///   destination points.
+    /// </summary>
+    /// <param name="aOrigin">
+    ///   The origin of the ray represented as a vertex.
+    /// </param>
+    /// <param name="aDestination">
+    ///   The destination (end) of the ray represented as a vertex.
+    /// </param>
+    /// <returns>
+    ///   An sRay containing the origin, direction and length calculated from
+    ///   the origin and destination vertices.
+    /// </returns>
     class function Create( const aOrigin: sVertex; const aDestination: sVertex ): sRay; overload; static;
 
-    ///  <summary>
-    ///    Creates a new ray given an origin, direction and length.
-    ///  </summary>
+    /// <summary>
+    ///   Returns an sRay based on the provided origin vertex, direction vector
+    ///   and length value.
+    /// </summary>
+    /// <param name="aOrigin">
+    ///   The origin of the ray in 3d space.
+    /// </param>
+    /// <param name="aDirection">
+    ///   The direction of the ray as a 3d vector.
+    /// </param>
+    /// <param name="aLength">
+    ///   The length of the ray in units matching the origin vertex.
+    /// </param>
+    /// <returns>
+    ///   An sRay containing the values provided in the parameters.
+    /// </returns>
     class function Create( const aOrigin: sVertex; const aDirection: sVector3; const aLength: single ): sRay; overload; static;
 
-    ///  <summary>
-    ///    Performs Origin + (Direction * Length) to get the terminating
-    ///    vertex for the ray. This will raise an exception if Length is
-    ///    either INF (infinity) or NAN (not-a-number).
-    ///  </summary>
+    /// <summary>
+    ///   Returns the terminating vertex for this ray calculated as: <br />
+    ///   Performs Origin + (Direction * Length).
+    /// </summary>
+    /// <remarks>
+    ///   This will raise an exception if Length is either INF (infinity) or
+    ///   NAN (not-a-number).
+    /// </remarks>
     function Destination: sVertex;
   end;
 
@@ -3001,9 +5806,10 @@ type
 
 {$region ' dRay'}
 
-  ///  <summary>
-  ///    Represents a ray in 3D space.
-  ///  </summary>
+  /// <summary>
+  ///   Represents a ray in 3D space as a double precision origin vector, a
+  ///   double precision direction vector, and a double precision length value.
+  /// </summary>
   dRay = record
   private
     fDirection: dVector3;
@@ -3026,22 +5832,48 @@ type
     ///  </summary>
     property Direction: dVector3 read fDirection write setDirection;
 
-    ///  <summary>
-    ///    Creates a new ray between two vertices representing the
-    ///    start and end of the ray.
-    ///  </summary>
+    /// <summary>
+    ///   Returns a dRay between two dVertex vertices as origin and destination
+    ///   points.
+    /// </summary>
+    /// <param name="aOrigin">
+    ///   The origin of the ray represented as a vertex.
+    /// </param>
+    /// <param name="aDestination">
+    ///   The destination (end) of the ray represented as a vertex.
+    /// </param>
+    /// <returns>
+    ///   A dRay containing the origin, direction and length calculated from
+    ///   the origin and destination vertices.
+    /// </returns>
     class function Create( const aOrigin: dVertex; const aDestination: dVertex ): dRay; overload; static;
 
-    ///  <summary>
-    ///    Creates a new ray given an origin, direction and length.
-    ///  </summary>
+    /// <summary>
+    ///   Returns a dRay based on the provided origin vertex, direction vector
+    ///   and length value.
+    /// </summary>
+    /// <param name="aOrigin">
+    ///   The origin of the ray in 3d space.
+    /// </param>
+    /// <param name="aDirection">
+    ///   The direction of the ray as a 3d vector.
+    /// </param>
+    /// <param name="aLength">
+    ///   The length of the ray in units matching the origin vertex.
+    /// </param>
+    /// <returns>
+    ///   A dRay containing the values provided in the parameters.
+    /// </returns>
     class function Create( const aOrigin: dVertex; const aDirection: dVector3; const aLength: double ): dRay; overload; static;
 
-    ///  <summary>
-    ///    Performs Origin + (Direction * Length) to get the terminating
-    ///    vertex for the ray. This will raise an exception if Length is
-    ///    either INF (infinity) or NAN (not-a-number).
-    ///  </summary>
+    /// <summary>
+    ///   Returns the terminating vertex for this ray calculated as: <br />
+    ///   Performs Origin + (Direction * Length).
+    /// </summary>
+    /// <remarks>
+    ///   This will raise an exception if Length is either INF (infinity) or
+    ///   NAN (not-a-number).
+    /// </remarks>
     function Destination: dVertex;
   end;
 
@@ -3049,9 +5881,11 @@ type
 
 {$region ' eRay'}
 
-  ///  <summary>
-  ///    Represents a ray in 3D space.
-  ///  </summary>
+  /// <summary>
+  ///   Represents a ray in 3D space as an extended precision origin vector, an
+  ///   extended precision direction vector, and an extended precision length
+  ///   value.
+  /// </summary>
   eRay = record
   private
     fDirection: eVector3;
@@ -3074,22 +5908,48 @@ type
     ///  </summary>
     property Direction: eVector3 read fDirection write setDirection;
 
-    ///  <summary>
-    ///    Creates a new ray between two vertices representing the
-    ///    start and end of the ray.
-    ///  </summary>
+    /// <summary>
+    ///   Returns an eRay between two eVertex vertices as origin and
+    ///   destination points.
+    /// </summary>
+    /// <param name="aOrigin">
+    ///   The origin of the ray represented as a vertex.
+    /// </param>
+    /// <param name="aDestination">
+    ///   The destination (end) of the ray represented as a vertex.
+    /// </param>
+    /// <returns>
+    ///   An eRay containing the origin, direction and length calculated from
+    ///   the origin and destination vertices.
+    /// </returns>
     class function Create( const aOrigin: eVertex; const aDestination: eVertex ): eRay; overload; static;
 
-    ///  <summary>
-    ///    Creates a new ray given an origin, direction and length.
-    ///  </summary>
+    /// <summary>
+    ///   Returns an eRay based on the provided origin vertex, direction vector
+    ///   and length value.
+    /// </summary>
+    /// <param name="aOrigin">
+    ///   The origin of the ray in 3d space.
+    /// </param>
+    /// <param name="aDirection">
+    ///   The direction of the ray as a 3d vector.
+    /// </param>
+    /// <param name="aLength">
+    ///   The length of the ray in units matching the origin vertex.
+    /// </param>
+    /// <returns>
+    ///   An eRay containing the values provided in the parameters.
+    /// </returns>
     class function Create( const aOrigin: eVertex; const aDirection: eVector3; const aLength: extended ): eRay; overload; static;
 
-    ///  <summary>
-    ///    Performs Origin + (Direction * Length) to get the terminating
-    ///    vertex for the ray. This will raise an exception if Length is
-    ///    either INF (infinity) or NAN (not-a-number).
-    ///  </summary>
+    /// <summary>
+    ///   Returns the terminating vertex for this ray calculated as: <br />
+    ///   Performs Origin + (Direction * Length).
+    /// </summary>
+    /// <remarks>
+    ///   This will raise an exception if Length is either INF (infinity) or
+    ///   NAN (not-a-number).
+    /// </remarks>
     function Destination: eVertex;
   end;
 
