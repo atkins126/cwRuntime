@@ -26,6 +26,9 @@
   IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 *)
 {$endif}
+/// <summary>
+///   A high-precision timer interface.
+/// </summary>
 unit cwTiming;
 {$ifdef fpc}{$mode delphiunicode}{$endif}
 
