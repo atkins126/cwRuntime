@@ -33,10 +33,10 @@ interface
 {$ifdef MSWINDOWS}
 uses
   cwLog
-, cwWin32.Types
-, cwWin32.Kernel32
 , cwThreading
+, cwWin32.Binding
 ;
+
 
 type
   TSignaledCriticalSection = class( TInterfacedObject, ISignaledCriticalSection )
@@ -56,8 +56,7 @@ type
 implementation
 {$ifdef MSWINDOWS}
 uses
-  cwWin32.Constants
-, cwTypes
+  cwTypes
 , cwLog.Standard
 ;
 

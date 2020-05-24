@@ -35,8 +35,7 @@ unit cwSockets.Standard;
 
 interface
 uses
-  cwLog
-, cwSockets
+  cwSockets
 ;
 
 type
@@ -53,7 +52,6 @@ class function TSocket.Create( const Domain: TSocketDomain; const Kind: TSocketK
 begin
   Result := cwSockets.Socket.Standard.TSocket.Create( Domain, Kind, Protocol );
 end;
-
 
 end.
 

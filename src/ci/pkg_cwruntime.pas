@@ -26,13 +26,12 @@ uses
   cwThreading.Messaging.Internal, cwThreading.CriticalSection.Posix, 
   cwThreading.Criticalsection.Windows, cwThreading.MessageBus.Standard, 
   cwThreading.MessageChannel.Standard, cwThreading.MessagePipe.Standard, 
-  cwThreading.SignaledCriticalSection.Posix, cwWin32.Advapi32, 
-  cwWin32.Constants, cwWin32.Gdi32, cwWin32.Kernel32, cwWin32.Types, 
-  cwWin32.User32, cwVectors, cwLog.common, cwlog.targets, cwlog.standard, 
-  cwlog.logtarget.event, cwLog.LogTarget.Stream, 
-  cwlog.translationparser.standard, cwTiming.posix, cwTiming, 
-  cwTiming.standard, cwIO.TypedBuffer.Standard, cwSockets, cwSockets.Standard, 
-  cwSockets.Socket.Standard, cwsockets.common, cwHeap, cwHeap.Heap.Windows;
+  cwThreading.SignaledCriticalSection.Posix, cwVectors, cwLog.common, 
+  cwlog.targets, cwlog.standard, cwlog.logtarget.event, 
+  cwLog.LogTarget.Stream, cwlog.translationparser.standard, cwTiming.posix, 
+  cwTiming, cwTiming.standard, cwIO.TypedBuffer.Standard, cwSockets, 
+  cwSockets.Standard, cwSockets.Socket.Standard, cwsockets.common, cwHeap, 
+  cwHeap.Heap.Windows, cwWin32.Binding;
 
 implementation
 

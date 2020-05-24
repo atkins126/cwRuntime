@@ -32,8 +32,9 @@ unit cwThreading.Criticalsection.Windows;
 interface
 {$ifdef MSWINDOWS}
 uses
-  cwWin32.Types,
-  cwThreading;
+  cwThreading
+, cwWin32.Binding
+;
 
 type
   TWindowsCriticalSection = class( TInterfacedObject, ICriticalSection )
@@ -49,10 +50,6 @@ type
 {$endif}
 implementation
 {$ifdef MSWINDOWS}
-uses
-  cwWin32.Kernel32;
-
-{ TWindowsCriticalSection }
 
 procedure TWindowsCriticalSection.Acquire;
 begin

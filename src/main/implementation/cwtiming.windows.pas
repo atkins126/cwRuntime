@@ -58,7 +58,7 @@ implementation
 {$ifdef MSWINDOWS}
 uses
   cwLog.Standard
-, cwWin32.kernel32
+, cwWin32.Binding
 ;
 
 constructor TTimer.Create;

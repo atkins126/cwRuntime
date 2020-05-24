@@ -204,30 +204,6 @@
         <UnitName Value="cwThreading.SignaledCriticalSection.Posix"/>
       </Item>
       <Item>
-        <Filename Value="..\main\implementation\cwwin32.advapi32.pas"/>
-        <UnitName Value="cwWin32.Advapi32"/>
-      </Item>
-      <Item>
-        <Filename Value="..\main\implementation\cwwin32.constants.pas"/>
-        <UnitName Value="cwWin32.Constants"/>
-      </Item>
-      <Item>
-        <Filename Value="..\main\implementation\cwwin32.gdi32.pas"/>
-        <UnitName Value="cwWin32.Gdi32"/>
-      </Item>
-      <Item>
-        <Filename Value="..\main\implementation\cwwin32.kernel32.pas"/>
-        <UnitName Value="cwWin32.Kernel32"/>
-      </Item>
-      <Item>
-        <Filename Value="..\main\implementation\cwwin32.types.pas"/>
-        <UnitName Value="cwWin32.Types"/>
-      </Item>
-      <Item>
-        <Filename Value="..\main\implementation\cwwin32.user32.pas"/>
-        <UnitName Value="cwWin32.User32"/>
-      </Item>
-      <Item>
         <Filename Value="..\main\api\cwvectors.pas"/>
         <UnitName Value="cwVectors"/>
       </Item>
@@ -289,11 +265,15 @@
       </Item>
       <Item>
         <Filename Value="..\main\api\cwheap.pas"/>
-        <UnitName Value="cwheap"/>
+        <UnitName Value="cwHeap"/>
       </Item>
       <Item>
         <Filename Value="..\main\implementation\cwheap.heap.windows.pas"/>
-        <UnitName Value="cwheap.heap.windows"/>
+        <UnitName Value="cwHeap.Heap.Windows"/>
+      </Item>
+      <Item>
+        <Filename Value="..\main\implementation\cwwin32.binding.pas"/>
+        <UnitName Value="cwwin32.binding"/>
       </Item>
     </Files>
     <UsageOptions>
