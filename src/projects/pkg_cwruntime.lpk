@@ -287,6 +287,14 @@
         <Filename Value="..\main\implementation\cwsockets.common.pas"/>
         <UnitName Value="cwsockets.common"/>
       </Item>
+      <Item>
+        <Filename Value="..\main\api\cwheap.pas"/>
+        <UnitName Value="cwheap"/>
+      </Item>
+      <Item>
+        <Filename Value="..\main\implementation\cwheap.heap.windows.pas"/>
+        <UnitName Value="cwheap.heap.windows"/>
+      </Item>
     </Files>
     <UsageOptions>
       <UnitPath Value="$(PkgOutDir)"/>

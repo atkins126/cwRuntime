@@ -77,6 +77,8 @@ implementation
 uses
   cwUnicode.Standard
 , cwLog.Standard
+, cwHeap
+, cwHeap.Standard
 ;
 
 procedure TBuffer.AllocateBuffer(const NewSize: nativeuint);
@@ -87,14 +89,14 @@ begin
   if NewSize>0 then begin
     fSize := NewSize;
     if fAlign16 then begin
-      GetMem(fActualDataWhenAligned,fSize+$0F);
+      fActualDataWhenAligned := Heap.Allocate(fSize+$0F);
       {$ifdef CPU64}
       {$hints off}fData := pointer(((nativeuint(fActualDataWhenAligned) and $FFFFFFFFFFFFFFF0)+$0F));{$hints on}
       {$else}
       {$hints off}fData := pointer(((nativeuint(fActualDataWhenAligned) and $FFFFFFF0)+$0F));{$hints on}
       {$endif}
     end;
-    GetMem(fData,fSize);
+    fData := Heap.Allocate(fSize);
   end;
 end;
 
@@ -103,9 +105,9 @@ begin
   if (fSize>0) then begin
     if assigned(fData) then begin
       if fAlign16 then begin
-        FreeMem(fActualDataWhenAligned);
+        Heap.Deallocate(fActualDataWhenAligned);
       end else begin
-        FreeMem(fData);
+        Heap.Deallocate(fData);
       end;
     end;
     fSize := 0;
@@ -259,7 +261,7 @@ begin
   	DeallocateBuffer;
   end else begin
     // Create the new buffer and copy old data to it.
-    GetMem(fNewBuffer,NewSize);
+    fNewBuffer := Heap.Allocate(NewSize);
     FillChar(fNewBuffer^,NewSize,0);
     if NewSize>fSize then begin
     	Move(fData^,fNewBuffer^,fSize);
