@@ -75,7 +75,7 @@ end;
 function THeap.Deallocate( const P: pointer ): boolean;
 begin
   Result := True;
-  Dispoze( P );
+  Dispose( P );
 end;
 
 end.
