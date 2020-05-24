@@ -33,6 +33,7 @@ unit cwHeap.Heap.Posix;
 {$ifdef fpc}{$mode delphiunicode}{$endif}
 
 interface
+{$ifndef MSWINDOWS}
 uses
   cwHeap
 ;
@@ -44,7 +45,9 @@ type
     function Deallocate( const P: pointer ): boolean;
   end;
 
+{$endif}
 implementation
+{$ifndef MSWINDOWS}
 
 {$region ' Library names'}
 {$ifdef MACOS}
@@ -78,5 +81,6 @@ begin
   Dispoze( P );
 end;
 
+{$endif}
 end.
 
