@@ -25,9 +25,35 @@ package cwRuntime;
 {$IMAGEBASE $400000}
 {$DEFINE DEBUG}
 {$ENDIF IMPLICITBUILDING}
+{$DESCRIPTION 'Documentation Package for cwRuntime'}
+{$RUNONLY}
 {$IMPLICITBUILD ON}
 
 requires
   rtl;
+
+contains
+  cwlog.console in '..\main\api\cwlog.console.pas',
+  cwlog in '..\main\api\cwlog.pas',
+  cwlog.standard in '..\main\api\cwlog.standard.pas',
+  cwlog.targets in '..\main\api\cwlog.targets.pas',
+  cwsockets in '..\main\api\cwsockets.pas',
+  cwsockets.standard in '..\main\api\cwsockets.standard.pas',
+  cwtest in '..\main\api\cwtest.pas',
+  cwtest.standard in '..\main\api\cwtest.standard.pas',
+  cwthreading in '..\main\api\cwthreading.pas',
+  cwthreading.standard in '..\main\api\cwthreading.standard.pas',
+  cwtiming in '..\main\api\cwtiming.pas',
+  cwtiming.standard in '..\main\api\cwtiming.standard.pas',
+  cwtypes in '..\main\api\cwtypes.pas',
+  cwunicode in '..\main\api\cwunicode.pas',
+  cwunicode.standard in '..\main\api\cwunicode.standard.pas',
+  cwvectors in '..\main\api\cwvectors.pas',
+  cwcollections in '..\main\api\cwcollections.pas',
+  cwcollections.standard in '..\main\api\cwcollections.standard.pas',
+  cwdynlib in '..\main\api\cwdynlib.pas',
+  cwdynlib.standard in '..\main\api\cwdynlib.standard.pas',
+  cwio in '..\main\api\cwio.pas',
+  cwio.standard in '..\main\api\cwio.standard.pas';
 
 end.
