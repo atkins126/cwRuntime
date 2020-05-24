@@ -26,6 +26,9 @@
   IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 *)
 {$endif}
+///  <summary>
+///    Provides target specific implementations of the ISocket interface.
+///  </summary>
 unit cwSockets.Standard;
 {$ifdef fpc}{$mode delphiunicode}{$endif}
 
@@ -38,7 +41,7 @@ uses
 
 type
   TSocket = record
-    class function Construct( var Socket: ISocket; const Domain: TSocketDomain = sdIPv6; const Kind: TSocketKind = skStream; const Protocol: TPacketProtocol = ppTCP ): TStatus; static;
+    class function Create( const Domain: TSocketDomain; const Kind: TSocketKind = TSocketKind.skStream; const Protocol: TPacketProtocol = TPacketProtocol.ppTCP ): ISocket; static;
   end;
 
 implementation
@@ -46,12 +49,9 @@ uses
   cwSockets.Socket.Standard
 ;
 
-class function TSocket.Construct( var Socket: ISocket; const Domain: TSocketDomain; const Kind: TSocketKind; const Protocol: TPacketProtocol ): TStatus;
+class function TSocket.Create( const Domain: TSocketDomain; const Kind: TSocketKind; const Protocol: TPacketProtocol ): ISocket;
 begin
-  Socket := cwSockets.Socket.Standard.TSocket.Create( Domain, Kind, Protocol, Result );
-  if not Result then begin
-    Socket := nil;
-  end;
+  Result := cwSockets.Socket.Standard.TSocket.Create( Domain, Kind, Protocol );
 end;
 
 

@@ -26,6 +26,10 @@
   IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 *)
 {$endif}
+///  <summary>
+///    Provides routines for working with memory buffers and streams to
+///    memory or file I/O.
+///  </summary>
 unit cwIO;
 {$ifdef fpc}{$mode delphiunicode}{$endif}
 

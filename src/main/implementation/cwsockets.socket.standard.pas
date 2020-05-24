@@ -26,6 +26,9 @@
   IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 *)
 {$endif}
+/// <summary>
+///   Provides a target agnostic implementation of ISocket.
+/// </summary>
 unit cwSockets.Socket.Standard;
 {$ifdef fpc}{$mode delphiunicode}{$endif}
 
@@ -64,6 +67,7 @@ type
     function PrepareAddressIPv6(const NetworkAddress: TNetworkAddress): IBuffer;
     procedure DecodeIPv6Address(const Address: pointer);
   strict private //- ISocket -//
+    function Initialize: TStatus;
     function Bind(const NetworkAddress: TNetworkAddress): TStatus;
     function Listen: TStatus;
     function Accept(out NewSocket: ISocket): TStatus;
@@ -80,7 +84,7 @@ type
     constructor CreateWithHandle(const Handle: TSocketHandle; const Address: pointer; const Blocking: boolean; out Status: TStatus);
     {$warnings on}
   public
-    constructor Create(const Domain: TSocketDomain; const Kind: TSocketKind; const Protocol: TPacketProtocol; out Status: TStatus); reintroduce;
+    constructor Create(const Domain: TSocketDomain; const Kind: TSocketKind; const Protocol: TPacketProtocol); reintroduce;
   end;
 
 implementation
@@ -533,6 +537,15 @@ begin
   Result.Port := fPort;
 end;
 
+function TSocket.Initialize: TStatus;
+begin
+  if fHandle<>INVALID_SOCKET then begin
+    Result := TStatus.Success;
+    exit;
+  end;
+  Result := CreateSocket;
+end;
+
 function TSocket.IntToSocketDomain( const AddrFamily: uint16 ): TSocketDomain;
 begin
   Result := TSocketDomain.sdUnspecified;  //<- Just to avoid Delphi may be undefined warning).
@@ -647,7 +660,7 @@ begin
   Status := DecodeAddress( Address );
 end;
 
-constructor TSocket.Create( const Domain: TSocketDomain; const Kind: TSocketKind; const Protocol: TPacketProtocol; out Status: TStatus );
+constructor TSocket.Create( const Domain: TSocketDomain; const Kind: TSocketKind; const Protocol: TPacketProtocol );
 begin
   inherited Create;
   fBlocking := True;
@@ -657,7 +670,6 @@ begin
   fProtocol := Protocol;
   fAddress  := '';
   fPort     := 0;
-  Status := CreateSocket;
 end;
 
 

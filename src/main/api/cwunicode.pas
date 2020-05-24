@@ -27,6 +27,7 @@
 *)
 {$endif}
 /// <summary>
+///   Provides a unicode codec and a managed unicode string type.
 /// </summary>
 unit cwUnicode;
 {$ifdef fpc}{$mode delphiunicode}{$endif}

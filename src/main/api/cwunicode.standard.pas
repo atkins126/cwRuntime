@@ -27,6 +27,7 @@
 *)
 {$endif}
 /// <summary>
+///   Implementations of the IUnicodeCodec and TUnicodeString types.
 /// </summary>
 unit cwUnicode.Standard;
 {$ifdef fpc}{$mode delphiunicode}{$endif}

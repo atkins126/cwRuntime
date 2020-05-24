@@ -69,7 +69,8 @@ begin
   //- Start by creating a new socket for our server to run on.
   //- Because this sample is intended to run on multiple target platforms, we
   //- select IPv6 (because some platforms have depricated IPv4).
-  if not TSocket.Construct( ServerSocket, cSocketDomain ) then begin
+  ServerSocket := TSocket.Create( cSocketDomain );
+  if not ServerSocket.Initialize then begin
     Writeln('Failed to create a socket');
     exit;
   end;
