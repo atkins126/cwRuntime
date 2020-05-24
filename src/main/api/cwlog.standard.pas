@@ -106,9 +106,7 @@ end;
 initialization
 {$region ' Register these status codes as log entries with the logging system.'}
 
-  Log.RegisterEntry(stDependencyNotMet,                 'An error occured while constructing a required dependency.');
   Log.RegisterEntry(stIndexOutOfBounds,                 'Index out of bounds "(%index%)".');
-  Log.RegisterEntry(stFactoryConstructException,        'An exception occurred while attempting to construct an object, with message "(%message%)"');
   Log.RegisterEntry(stObjectNotAssigned,                'Object "(%object%)" is not assigned.');
   Log.RegisterEntry(stStreamDoesNotSupportClear,        'Stream does not support the Clear() method.');
   Log.RegisterEntry(stCannotEncodeUnknownUnicodeFormat, 'Cannot encode to unicode format utfUnknown.');
