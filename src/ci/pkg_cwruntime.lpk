@@ -275,6 +275,14 @@
         <Filename Value="..\main\implementation\cwwin32.binding.pas"/>
         <UnitName Value="cwwin32.binding"/>
       </Item>
+      <Item>
+        <Filename Value="..\main\implementation\cwheap.heap.posix.pas"/>
+        <UnitName Value="cwHeap.Heap.Posix"/>
+      </Item>
+      <Item>
+        <Filename Value="..\main\implementation\cwheap.standard.pas"/>
+        <UnitName Value="cwHeap.Standard"/>
+      </Item>
     </Files>
     <UsageOptions>
       <UnitPath Value="$(PkgOutDir)"/>
