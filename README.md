@@ -18,6 +18,8 @@ Current Features:
 	cwUnicode     - A Unicode Codec and string data type to convert between unicode formats.
 	cwVectors     - A simple vector math library.
 	cwTiming      - A high precision timer (where available on target).
+	cwSockets     - A low level sockets wrapper for WinSock2 / BSD Sockets.
+	cwHeap        - Simple wrapper around Windows API / cLib heap alllocation.
 
 (* Half precision floating point with permission from, and thanks to Marek Mauder
    at Galfar's Lair: https://galfar.vevb.net *)
