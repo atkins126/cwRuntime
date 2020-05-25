@@ -57,6 +57,10 @@
       <OtherUnitFiles Value="..\main\api;..\main\implementation;testcases\cwTest"/>
       <UnitOutputDirectory Value="..\..\out\lib\$(TargetCPU)-$(TargetOS)"/>
     </SearchPaths>
+    <CodeGeneration>
+      <TargetCPU Value="i386"/>
+      <TargetOS Value="linux"/>
+    </CodeGeneration>
   </CompilerOptions>
   <Debugging>
     <Exceptions>
