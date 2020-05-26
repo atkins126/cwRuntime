@@ -67,18 +67,18 @@ const
 {$endif}
 {$endregion}
 
-function Malloc( const Size: nativeuint ): pointer; cdecl; external cLibCName name cPrefix + 'malloc';
-procedure Dispose( const P: Pointer ); cdecl; external cLibCName name cPrefix + 'free';
+function MyMalloc( const Size: nativeuint ): pointer; cdecl; external cLibCName name {$ifdef LINUX} '__libc_malloc' {$else} cPrefix + 'malloc'{$endif};
+procedure MyFree( const P: Pointer ); cdecl; external cLibCName name {$ifdef LINUX} '__libc_free' {$else} cPrefix + 'free'{$endif};
 
 function THeap.Allocate( const Size: NativeUint  ): pointer;
 begin
-  Result := Malloc( Size );
+  Result := MyMalloc( Size );
 end;
 
 function THeap.Deallocate( const P: pointer ): boolean;
 begin
   Result := True;
-  Dispose( P );
+  MyFree( P );
 end;
 
 {$endif}
