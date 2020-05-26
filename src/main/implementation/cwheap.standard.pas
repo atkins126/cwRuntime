@@ -57,7 +57,7 @@ threadvar
 function Heap: IHeap;
 begin
   if not assigned(SingletonHeap) then begin
-    Heap := THeap.Create;
+    SingletonHeap := THeap.Create;
   end;
   Result := SingletonHeap;
 end;
