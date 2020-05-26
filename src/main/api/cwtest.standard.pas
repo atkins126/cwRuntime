@@ -295,7 +295,7 @@ end;
 
 class procedure TTest.Expect(const ExpectedValue: single; const GotValue: single; const precision: single);
 begin
-  if (GotValue>=(ExpectedValue-Precision)) or (GotValue<=(ExpectedValue+Precision)) then begin
+  if (GotValue>=(ExpectedValue-Precision)) and (GotValue<=(ExpectedValue+Precision)) then begin
     exit;
   end;
   Fail( string(Format(cExpected,[ExpectedValue.ToString,GotValue.ToString])) );
@@ -303,7 +303,7 @@ end;
 
 class procedure TTest.Expect(const ExpectedValue: double; const GotValue: double; const precision: double);
 begin
-  if (GotValue>=(ExpectedValue-Precision)) or (GotValue<=(ExpectedValue+Precision)) then begin
+  if (GotValue>=(ExpectedValue-Precision)) and (GotValue<=(ExpectedValue+Precision)) then begin
     exit;
   end;
   Fail( string(Format(cExpected,[ExpectedValue.ToString,GotValue.ToString])) );
