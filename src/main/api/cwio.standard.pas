@@ -222,7 +222,7 @@ begin
     raise
       TLoggedException.Create(stIndexOutOfBounds,[Index.AsString]);
   end;
-  p := {$hints off} pointer(nativeuint(p)+fItemSize*Index); {$hints on}
+  p := {$hints off} pointer(nativeuint(p)+(fItemSize*Index)); {$hints on}
   Result := p^;
 end;
 
