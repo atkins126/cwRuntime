@@ -592,31 +592,48 @@ type
     class operator GreaterThan(const a: half; const b: half): boolean;
     class operator GreaterThan(const a: half; const b: single): boolean;
     class operator GreaterThan(const a: half; const b: double): boolean;
+
+    class operator GreaterThanOrEqual(const a: half; const b: half): boolean;
+    class operator GreaterThanOrEqual(const a: half; const b: single): boolean;
+    class operator GreaterThanOrEqual(const a: half; const b: double): boolean;
+
     {$ifndef CPU64BITS}
     {$if (not defined(CPUAARCH64)) and (not defined(CPUARM))}
     class operator GreaterThan(const a: half; const b: extended): boolean;
+    class operator GreaterThanOrEqual(const a: half; const b: extended): boolean;
     {$endif}
     {$endif}
     class operator GreaterThan(const a: single; const b: half): boolean;
     class operator GreaterThan(const a: double; const b: half): boolean;
+    class operator GreaterThanOrEqual(const a: single; const b: half): boolean;
+    class operator GreaterThanOrEqual(const a: double; const b: half): boolean;
+
     {$ifndef CPU64BITS}
     {$if (not defined(CPUAARCH64)) and (not defined(CPUARM))}
     class operator GreaterThan(const a: extended; const b: half): boolean;
+    class operator GreaterThanOrEqual(const a: extended; const b: half): boolean;
     {$endif}
     {$endif}
     class operator LessThan(const a: half; const b: half): boolean;
     class operator LessThan(const a: half; const b: single): boolean;
     class operator LessThan(const a: half; const b: double): boolean;
+    class operator LessThanOrEqual(const a: half; const b: half): boolean;
+    class operator LessThanOrEqual(const a: half; const b: single): boolean;
+    class operator LessThanOrEqual(const a: half; const b: double): boolean;
     {$ifndef CPU64BITS}
     {$if (not defined(CPUAARCH64)) and (not defined(CPUARM))}
     class operator LessThan(const a: half; const b: extended): boolean;
+    class operator LessThanOrEqual(const a: half; const b: extended): boolean;
     {$endif}
     {$endif}
     class operator LessThan(const a: single; const b: half): boolean;
     class operator LessThan(const a: double; const b: half): boolean;
+    class operator LessThanOrEqual(const a: single; const b: half): boolean;
+    class operator LessThanOrEqual(const a: double; const b: half): boolean;
     {$ifndef CPU64BITS}
     {$if (not defined(CPUAARCH64)) and (not defined(CPUARM))}
     class operator LessThan(const a: extended; const b: half): boolean;
+    class operator LessThanOrEqual(const a: extended; const b: half): boolean;
     {$endif}
     {$endif}
     class operator Equal(const a, b: half): boolean;
@@ -1669,6 +1686,15 @@ begin
   Result := a>sB;
 end;
 
+class operator half.GreaterThanOrEqual(const a: double; const b: half): boolean;
+var
+  sB: single;
+begin
+  sB := b;
+  Result := a>=sB;
+end;
+
+
 {$ifndef CPU64BITS}
 {$if (not defined(CPUAARCH64)) and (not defined(CPUARM))}
 class operator half.GreaterThan(const a: extended; const b: half): boolean;
@@ -1678,6 +1704,15 @@ begin
   sB := b;
   Result := a>sB;
 end;
+
+class operator half.GreaterThanOrEqual(const a: extended; const b: half): boolean;
+var
+  sB: single;
+begin
+  sB := b;
+  Result := a>=sB;
+end;
+
 {$endif}
 {$endif}
 
@@ -1689,6 +1724,15 @@ begin
   Result := sA>b;
 end;
 
+class operator half.GreaterThanOrEqual(const a: half; const b: double): boolean;
+var
+  sA: single;
+begin
+  sA := a;
+  Result := sA>=b;
+end;
+
+
 {$ifndef CPU64BITS}
 {$if (not defined(CPUAARCH64)) and (not defined(CPUARM))}
 class operator half.GreaterThan(const a: half; const b: extended): boolean;
@@ -1697,6 +1741,14 @@ var
 begin
   sA := a;
   Result := sA>b;
+end;
+
+class operator half.GreaterThanOrEqual(const a: half; const b: extended): boolean;
+var
+  sA: single;
+begin
+  sA := a;
+  Result := sA>=b;
 end;
 {$endif}
 {$endif}
@@ -1711,12 +1763,30 @@ begin
   Result := sA>sB;
 end;
 
+class operator half.GreaterThanOrEqual(const a: half; const b: half): boolean;
+var
+  sA: single;
+  sB: single;
+begin
+  sA := a;
+  sB := b;
+  Result := sA>=sB;
+end;
+
 class operator half.GreaterThan(const a: half; const b: single): boolean;
 var
   sA: single;
 begin
   sA := a;
   Result := sA>b;
+end;
+
+class operator half.GreaterThanOrEqual(const a: half; const b: single): boolean;
+var
+  sA: single;
+begin
+  sA := a;
+  Result := sA>=b;
 end;
 
 class operator half.GreaterThan(const a: single; const b: half): boolean;
@@ -1727,6 +1797,14 @@ begin
   Result := a>sB;
 end;
 
+class operator half.GreaterThanOrEqual(const a: single; const b: half): boolean;
+var
+  sB: single;
+begin
+  sB := b;
+  Result := a>=sB;
+end;
+
 class operator half.LessThan(const a: double; const b: half): boolean;
 var
   sB: single;
@@ -1734,6 +1812,15 @@ begin
   sB := b;
   Result := a<sB;
 end;
+
+class operator half.LessThanOrEqual(const a: double; const b: half): boolean;
+var
+  sB: single;
+begin
+  sB := b;
+  Result := a<=sB;
+end;
+
 
 
 {$ifndef CPU64BITS}
@@ -1744,6 +1831,14 @@ var
 begin
   sB := b;
   Result := a<sB;
+end;
+
+class operator half.LessThanOrEqual(const a: extended; const b: half): boolean;
+var
+  sB: single;
+begin
+  sB := b;
+  Result := a<=sB;
 end;
 {$endif}
 {$endif}
@@ -1756,6 +1851,15 @@ begin
   Result := sA<b;
 end;
 
+class operator half.LessThanOrEqual(const a: half; const b: double): boolean;
+var
+  sA: single;
+begin
+  sA := a;
+  Result := sA<=b;
+end;
+
+
 {$ifndef CPU64BITS}
 {$if (not defined(CPUAARCH64)) and (not defined(CPUARM))}
 class operator half.LessThan(const a: half; const b: extended): boolean;
@@ -1765,6 +1869,15 @@ begin
   sA := a;
   Result := sA<b;
 end;
+
+class operator half.LessThanOrEqual(const a: half; const b: extended): boolean;
+var
+  sA: single;
+begin
+  sA := a;
+  Result := sA<=b;
+end;
+
 {$endif}
 {$endif}
 
@@ -1778,12 +1891,30 @@ begin
   Result := sA<sB;
 end;
 
+class operator half.LessThanOrEqual(const a: half; const b: half): boolean;
+var
+  sA: single;
+  sB: single;
+begin
+  sA := a;
+  sB := b;
+  Result := sA<=sB;
+end;
+
 class operator half.LessThan(const a: half; const b: single): boolean;
 var
   sA: single;
 begin
   sA := a;
   Result := sA<b;
+end;
+
+class operator half.LessThanOrEqual(const a: half; const b: single): boolean;
+var
+  sA: single;
+begin
+  sA := a;
+  Result := sA<=b;
 end;
 
 class operator half.LessThan(const a: single; const b: half): boolean;
@@ -1793,6 +1924,15 @@ begin
   sB := b;
   Result := a<sB;
 end;
+
+class operator half.LessThanOrEqual(const a: single; const b: half): boolean;
+var
+  sB: single;
+begin
+  sB := b;
+  Result := a<=sB;
+end;
+
 
 {$ifndef CPU64BITS}
 class operator half.Explicit(const a: half): single;
