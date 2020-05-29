@@ -32,7 +32,6 @@
 ///  </summary>
 unit cwIO.Standard;
 {$ifdef fpc}{$mode delphiunicode}{$endif}
-
 interface
 uses
   cwIO
@@ -190,7 +189,7 @@ begin
   p := fBuffer.getDataPointer;
   for idx := 0 to pred(fCount) do begin
     p^ := Value;
-    p := {$hints off} pointer(nativeuint(p)+fItemSize); {$hints on}
+    {$hints off} p := pointer(nativeuint(p)+fItemSize); {$hints on}
   end;
 end;
 
