@@ -34,7 +34,6 @@ unit cwCollections.Standard;
   {$mode delphiunicode}
   {$modeswitch nestedprocvars}
 {$endif}
-
 interface
 uses
   cwCollections
@@ -775,7 +774,7 @@ end;
 
 function TDictionary<K,V>.getKeyByIndex( const idx: nativeuint ): K;
 begin
-  Result := Default(K);
+  {$warnings off} Result := Default(K); {$warnings on}
   if idx<getCount then begin
     Result := fKeys[idx];
   end;
@@ -899,13 +898,13 @@ begin
     fKeys[idx] := fKeys[pred(fCount)];
     //- Clear last item
     fItems[pred(fCount)] := Default(V);
-    fKeys[pred(fCount)] := Default(K);
+    {$warnings off} fKeys[pred(fCount)] := Default(K); {$warnings on}
     dec(fCount);
     Result := True;
   end else if idx=pred(fCount) then begin
     //- if idx=fCount then simply remove the top item and decrement
     fItems[idx] := Default(V);
-    fKeys[idx] := Default(K);
+    {$warnings off} fKeys[idx] := Default(K); {$warnings on}
     dec(fCount);
     Result := True;
   end;
