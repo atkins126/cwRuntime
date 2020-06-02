@@ -31,20 +31,22 @@ unit cwThreading.ThreadedLoop.Executor;
 
 interface
 uses
-  cwThreading
+  cwLog
+, cwThreading
 ;
 
 
 type
   IThreadLoopExecutor = interface
     ['{28C414FF-79E1-4243-916C-59BC1F8442DD}']
+    function Status: TStatus;
     function IsJobRunning: boolean;
     function getWorkOffset: nativeuint;
     function getWorkTop: nativeuint;
     procedure SetWorkDimensions( const Offset: nativeuint; const Top: nativeuint; const Total: nativeuint; const UserOffset: nativeuint );
     procedure TerminateExecutor;
-    procedure Execute( Method: TThreadedLoopMethod ); overload;
-    procedure Execute( Method: TThreadedLoopMethodOfObject ); overload;
+    procedure Execute( const Method: TThreadedLoopMethod ); overload;
+    procedure Execute( const Method: TThreadedLoopMethodOfObject ); overload;
   end;
 
   TThreadLoopExecutor = class( TInterfacedObject, IThreadLoopExecutor )
@@ -61,17 +63,18 @@ type
     fWorkTotal: nativeuint;
     fThreadLoopMethod: TThreadedLoopMethod;
     fThreadLoopMethodOfObject: TThreadedLoopMethodOfObject;
-  private //- IThreadLoopExecutor -//
+    fStatus: TStatus;
+  strict private //- IThreadLoopExecutor -//
     function IsJobRunning: boolean;
     function getWorkOffset: nativeuint;
     function getWorkTop: nativeuint;
     procedure SetWorkDimensions( const Offset: nativeuint; const Top: nativeuint; const Total: nativeuint; const UserOffset: nativeuint );
     procedure TerminateExecutor;
-    procedure Execute( Method: TThreadedLoopMethod ); overload;
-    procedure Execute( Method: TThreadedLoopMethodOfObject ); overload;
+    function Status: TStatus;
+    procedure Execute( const Method: TThreadedLoopMethod ); overload;
+    procedure Execute( const Method: TThreadedLoopMethodOfObject ); overload;
   private
     function ThreadExecute: boolean;
-  strict private //- IThreadLoopExecutor -//
   public
     constructor Create( const ThreadIndex: uint32 ); reintroduce;
     destructor Destroy; override;
@@ -119,16 +122,23 @@ begin
   fSleepCS.Wake;
 end;
 
-procedure TThreadLoopExecutor.Execute( Method: TThreadedLoopMethod );
+function TThreadLoopExecutor.Status: TStatus;
 begin
+  Result := fStatus;
+end;
+
+procedure TThreadLoopExecutor.Execute( const Method: TThreadedLoopMethod );
+begin
+  fStatus := TStatus.Unknown;
   fThreadLoopMethod := Method;
   fThreadLoopMethodOfObject := nil;
   fJobRunning := True;
   fSleepCS.Wake;
 end;
 
-procedure TThreadLoopExecutor.Execute(Method: TThreadedLoopMethodOfObject);
+procedure TThreadLoopExecutor.Execute( const Method: TThreadedLoopMethodOfObject );
 begin
+  fStatus := TStatus.Unknown;
   fThreadLoopMethod := nil;
   fThreadLoopMethodOfObject := Method;
   fJobRunning := True;
@@ -162,9 +172,9 @@ begin
 
     {$region ' Do work'}
     if assigned(fThreadLoopMethodOfObject) then begin
-      fThreadLoopMethodOfObject( fWorkOffset+fUserOffset, pred(fWorkTop)+fUserOffset );
+      fStatus := fThreadLoopMethodOfObject( fWorkOffset+fUserOffset, pred(fWorkTop)+fUserOffset );
     end else if assigned(fThreadLoopMethod) then begin
-      fThreadLoopMethod( fWorkOffset+fUserOffset, pred(fWorkTop)+fUserOffset );
+      fStatus := fThreadLoopMethod( fWorkOffset+fUserOffset, pred(fWorkTop)+fUserOffset );
     end;
 
     //- We're done with this job.

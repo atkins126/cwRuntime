@@ -33,11 +33,12 @@ unit cwThreading;
 {$ifdef fpc}{$mode delphiunicode}{$endif}
 
 interface
-
-type
+uses
+  cwLog
+;
 
 {$region ' Critical Section'}
-
+type
   ///  <summary>
   ///    Represents a mutex lock which may be used to protect a critical
   ///    section of code, which must be executed by only one thread at any
@@ -555,8 +556,8 @@ type
   ///    The method will be called once by each thread with parameters indicating
   ///    the indicies of the total amount of work which the method should process.
   ///  </summary>
-  TThreadedLoopMethod = procedure( const start: nativeuint; const stop: nativeuint );
-  TThreadedLoopMethodOfObject = procedure( const start: nativeuint; const stop: nativeuint ) of object;
+  TThreadedLoopMethod = function( const start: nativeuint; const stop: nativeuint ): TStatus;
+  TThreadedLoopMethodOfObject = function( const start: nativeuint; const stop: nativeuint ): TStatus of object;
 
   ///  <summary>
   ///    Enables threaded execution of multi-dimensional loops for cases
@@ -575,10 +576,8 @@ type
     ///    When using the offset parameter, care should be taken to ensure that the
     ///    threads do not interfere with each other.
     ///  </summary>
-    procedure Execute( const Method: TThreadedLoopMethod; const Work: nativeuint; const Offset: nativeuint = 0 ); overload;
-    procedure Execute( const Method: TThreadedLoopMethodOfObject; const Work: nativeuint; const Offset: nativeuint = 0 ); overload;
-    procedure ExecuteDebug( const Method: TThreadedLoopMethod; const Work: nativeuint; const Offset: nativeuint = 0 ); overload;
-    procedure ExecuteDebug( const Method: TThreadedLoopMethodOfObject; const Work: nativeuint; const Offset: nativeuint = 0 ); overload;
+    function Execute( const Method: TThreadedLoopMethod; const Work: nativeuint; const Offset: nativeuint = 0 ): TStatus; overload;
+    function Execute( const Method: TThreadedLoopMethodOfObject; const Work: nativeuint; const Offset: nativeuint = 0 ): TStatus; overload;
   end;
 
 {$endregion}

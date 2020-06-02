@@ -31,7 +31,8 @@ unit cwThreading.ThreadedLoop.Standard;
 
 interface
 uses
-  cwCollections
+  cwLog
+, cwCollections
 , cwThreading
 , cwThreading.ThreadedLoop.Executor
 ;
@@ -48,10 +49,8 @@ type
     procedure DistributeWork(const Work: nativeuint);
     procedure KillExecutors(const ThreadExecutor: IThreadLoopExecutor);
   strict private //- IThreadedLoop -//
-    procedure Execute( const Method: TThreadedLoopMethod; const Work: nativeuint; const Offset: nativeuint ); overload;
-    procedure Execute( const Method: TThreadedLoopMethodOfObject; const Work: nativeuint; const Offset: nativeuint ); overload;
-    procedure ExecuteDebug( const Method: TThreadedLoopMethod; const Work: nativeuint; const Offset: nativeuint = 0 ); overload;
-    procedure ExecuteDebug( const Method: TThreadedLoopMethodOfObject; const Work: nativeuint; const Offset: nativeuint = 0 ); overload;
+    function Execute( const Method: TThreadedLoopMethod; const Work: nativeuint; const Offset: nativeuint ): TStatus; overload;
+    function Execute( const Method: TThreadedLoopMethodOfObject; const Work: nativeuint; const Offset: nativeuint ): TStatus; overload;
 
   public
     constructor Create( const ThreadCount: uint32 = 0 ); reintroduce;
@@ -119,10 +118,11 @@ begin
   end;
 end;
 
-procedure TThreadedLoop.Execute(const Method: TThreadedLoopMethod; const Work: nativeuint; const Offset: nativeuint);
+function TThreadedLoop.Execute(const Method: TThreadedLoopMethod; const Work: nativeuint; const Offset: nativeuint): TStatus;
 var
   idx: nativeuint;
 begin
+  Result := TStatus.Unknown;
   if Work=0 then begin
     exit;
   end;
@@ -132,12 +132,20 @@ begin
     fExecutors[idx].Execute(Method);
   end;
   WaitForThreads;
+  for idx := 0 to pred(fExecutors.Count) do begin
+    if not fExecutors[idx].Status then begin
+      Result := fExecutors[idx].Status;
+      exit;
+    end;
+  end;
+  Result := TStatus.Success;
 end;
 
-procedure TThreadedLoop.Execute( const Method: TThreadedLoopMethodOfObject; const Work: nativeuint; const Offset: nativeuint );
+function TThreadedLoop.Execute( const Method: TThreadedLoopMethodOfObject; const Work: nativeuint; const Offset: nativeuint ): TStatus;
 var
   idx: nativeuint;
 begin
+  Result := TStatus.Unknown;
   if Work=0 then begin
     exit;
   end;
@@ -147,16 +155,13 @@ begin
     fExecutors[idx].Execute(Method);
   end;
   WaitForThreads;
-end;
-
-procedure TThreadedLoop.ExecuteDebug(const Method: TThreadedLoopMethod; const Work: nativeuint; const Offset: nativeuint);
-begin
-  Method(Offset,Offset+Work);
-end;
-
-procedure TThreadedLoop.ExecuteDebug(const Method: TThreadedLoopMethodOfObject; const Work: nativeuint; const Offset: nativeuint);
-begin
-  Method(Offset,Offset+Work);
+  for idx := 0 to pred(fExecutors.Count) do begin
+    if not fExecutors[idx].Status then begin
+      Result := fExecutors[idx].Status;
+      exit;
+    end;
+  end;
+  Result := TStatus.Success;
 end;
 
 constructor TThreadedLoop.Create(const ThreadCount: uint32);
