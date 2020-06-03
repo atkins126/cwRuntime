@@ -107,13 +107,17 @@ begin
   Result := fWorkTop;
 end;
 
-
 procedure TThreadLoopExecutor.SetWorkDimensions(const Offset: nativeuint; const Top: nativeuint; const Total: nativeuint; const UserOffset: nativeuint);
 begin
   fUserOffset := UserOffset;
   fWorkTotal := Total;
   fWorkOffset := Offset;
   fWorkTop := Top;
+  if fWorkTotal = 0 then begin
+    fStatus := TStatus.Success;
+  end else begin
+    fStatus := TStatus.Unknown;
+  end;
 end;
 
 procedure TThreadLoopExecutor.TerminateExecutor;
@@ -129,7 +133,6 @@ end;
 
 procedure TThreadLoopExecutor.Execute( const Method: TThreadedLoopMethod );
 begin
-  fStatus := TStatus.Unknown;
   fThreadLoopMethod := Method;
   fThreadLoopMethodOfObject := nil;
   fJobRunning := True;
@@ -138,7 +141,6 @@ end;
 
 procedure TThreadLoopExecutor.Execute( const Method: TThreadedLoopMethodOfObject );
 begin
-  fStatus := TStatus.Unknown;
   fThreadLoopMethod := nil;
   fThreadLoopMethodOfObject := Method;
   fJobRunning := True;

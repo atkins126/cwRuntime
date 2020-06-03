@@ -670,17 +670,17 @@ type
     ///  <summary>
     ///    Returns an item from the buffer by it's index.
     ///  </summary>
-    function getValue( Index: nativeuint ): T;
+    function getValue( const Index: nativeuint ): T;
 
     ///  <summary>
     ///    Sets the value of an item from the buffer by index.
     ///  </summary>
-    procedure setValue( Index: nativeuint; const value: T );
+    procedure setValue( const Index: nativeuint; const value: T );
 
     ///  <summary>
     ///    Get/Set items in the buffer by index (array style access)
     ///  </summary>
-    property Values[ Index: nativeuint ]: T read getValue write setValue; default;
+    property Values[ const Index: nativeuint ]: T read getValue write setValue; default;
 
     ///  <summary>
     ///    Returns the number of iems for which there is space in the buffer.

@@ -59,7 +59,7 @@ type
     function getDataPointer: pointer;
     function getCount: nativeuint;
     procedure setCount( const value: nativeuint );
-    function getValue( Index: nativeuint ): T;
+    function getValue( const Index: nativeuint ): T;
     procedure setValue( Index: nativeuint; const value: T );
   public
     constructor Create(const Items: nativeuint; const Align16: boolean = FALSE); reintroduce;

@@ -92,6 +92,9 @@ var
   idx,idy: nativeuint;
 begin
   idy := 0;
+  for idx := 0 to pred(fExecutors.Count) do begin
+    fExecutors[idx].SetWorkDimensions(0,0,0,0);
+  end;
   //- Now work out how much work to give to each thread.
   if Work<fExecutors.Count then begin
     for idx := 0 to pred(Work) do begin
@@ -101,7 +104,7 @@ begin
     ItemsPerThread := Work div fExecutors.Count;
     Remainder := Work - (ItemsPerThread*fExecutors.Count);
     for idx := 0 to pred(fExecutors.Count) do begin
-      fExecutors[idx].SetWorkDimensions( (idx * ItemsPerThread), (succ(idx) * ItemsPerThread), Work,fUserOffset );
+      fExecutors[idx].SetWorkDimensions( (idx * ItemsPerThread), (succ(idx) * ItemsPerThread), Work, fUserOffset );
     end;
     //- Distribute Remainder over threads
     if Remainder>0 then begin
