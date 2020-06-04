@@ -62,7 +62,7 @@ type
     fMainThread: IPoolThread;
   strict private //- IThreadSystem -//
     function MessageBus: IMessageBus;
-    function InstallSubSystem( aSubSystem: IThreadSubsystem; Into: TInstallInto; ThreadIndex: uint64 = 0 ): boolean;
+    function InstallSubSystem( aSubSystem: IThreadSubsystem; Into: TInstallInto; ThreadIndex: nativeuint = 0 ): boolean;
     procedure Start;
     procedure Stop;
     function Progress: boolean;
@@ -178,7 +178,7 @@ begin
   Result := fThreadPool.ThreadCount;
 end;
 
-function TThreadSystem.InstallSubSystem( aSubSystem: IThreadSubsystem; Into: TInstallInto; ThreadIndex: uint64 = 0 ): boolean;
+function TThreadSystem.InstallSubSystem( aSubSystem: IThreadSubsystem; Into: TInstallInto; ThreadIndex: nativeuint = 0 ): boolean;
 var
   Executor: IThreadExecutor;
 begin
@@ -365,7 +365,7 @@ end;
 
 function TThreadExecutor.Execute: boolean;
 var
-  idx: uint64;
+  idx: nativeuint;
   SubSystem: IThreadSubSystem;
 begin
   Result := False;

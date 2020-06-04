@@ -49,8 +49,8 @@ type
   private //- IMessagePipe -//
     function getEnabled: boolean;
     procedure setEnabled( value: boolean );
-    function SendMessageWait( MessageValue: uint64; ParamA: uint64 = 0; ParamB: uint64 = 0; ParamC: uint64 = 0; ParamD: uint64 = 0 ): uint64;
-    function SendMessage( MessageValue: uint64; ParamA: uint64 = 0; ParamB: uint64 = 0; ParamC: uint64 = 0; ParamD: uint64 = 0 ): boolean;
+    function SendMessageWait( MessageValue: nativeuint; ParamA: nativeuint = 0; ParamB: nativeuint = 0; ParamC: nativeuint = 0; ParamD: nativeuint = 0 ): nativeuint;
+    function SendMessage( MessageValue: nativeuint; ParamA: nativeuint = 0; ParamB: nativeuint = 0; ParamC: nativeuint = 0; ParamD: nativeuint = 0 ): boolean;
   public
     constructor Create( PushCS: ISignaledCriticalSection; PullCS: ISignaledCriticalSection ); reintroduce;
     destructor Destroy; override;
@@ -89,7 +89,7 @@ begin
   Result := fPipeRing;
 end;
 
-function TMessagePipe.SendMessage(MessageValue: uint64; ParamA: uint64 = 0; ParamB: uint64 = 0; ParamC: uint64 = 0; ParamD: uint64 = 0): boolean;
+function TMessagePipe.SendMessage(MessageValue: nativeuint; ParamA: nativeuint = 0; ParamB: nativeuint = 0; ParamC: nativeuint = 0; ParamD: nativeuint = 0): boolean;
 var
   aMessageRec: TInternalMessageRecord;
 begin
@@ -108,7 +108,7 @@ begin
   fPushCS.Wake;
 end;
 
-function TMessagePipe.SendMessageWait(MessageValue: uint64; ParamA: uint64 = 0; ParamB: uint64 = 0; ParamC: uint64 = 0; ParamD: uint64 = 0): uint64;
+function TMessagePipe.SendMessageWait(MessageValue: nativeuint; ParamA: nativeuint = 0; ParamB: nativeuint = 0; ParamC: nativeuint = 0; ParamD: nativeuint = 0): nativeuint;
 var
   aMessageRec: TInternalMessageRecord;
   Handled: boolean;

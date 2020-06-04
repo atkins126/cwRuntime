@@ -149,11 +149,11 @@ type
   ///    Represents a message to be transferred along a message channel/pipe.
   ///  </summary>
   TMessage = record
-    Value: uint64;
-    ParamA: uint64;
-    ParamB: uint64;
-    ParamC: uint64;
-    ParamD: uint64;
+    Value: nativeuint;
+    ParamA: nativeuint;
+    ParamB: nativeuint;
+    ParamC: nativeuint;
+    ParamD: nativeuint;
   end;
 
   ///  <summary>
@@ -179,7 +179,7 @@ type
     ///    has been handled. The message handler may return a result value
     ///    in the result of this method.
     ///  </summary>
-    function SendMessageWait( MessageValue: uint64; ParamA: uint64 = 0; ParamB: uint64 = 0; ParamC: uint64 = 0; ParamD: uint64 = 0 ): uint64;
+    function SendMessageWait( MessageValue: nativeuint; ParamA: nativeuint = 0; ParamB: nativeuint = 0; ParamC: nativeuint = 0; ParamD: nativeuint = 0 ): nativeuint;
 
     ///  <summary>
     ///    Sends a message into the message pipe.
@@ -187,7 +187,7 @@ type
     ///    returns FALSE. This method returns immediately and therefore does not
     ///    wait for a response.
     ///  </summary>
-    function SendMessage( MessageValue: uint64; ParamA: uint64 = 0; ParamB: uint64 = 0; ParamC: uint64 = 0; ParamD: uint64 = 0 ): boolean;
+    function SendMessage( MessageValue: nativeuint; ParamA: nativeuint = 0; ParamB: nativeuint = 0; ParamC: nativeuint = 0; ParamD: nativeuint = 0 ): boolean;
 
     ///  <summary>
     ///    Enable / Disable sending on this message pipe.
@@ -198,7 +198,7 @@ type
   ///  <summary>
   ///    Callback used to handle messages coming from a message channel.
   ///  </summary>
-  TMessageHandler = function (aMessage: TMessage): uint64 of object;
+  TMessageHandler = function (aMessage: TMessage): nativeuint of object;
 
   ///  <summary>
   ///    An implementation of IMessageChannel represents a listener for a
@@ -321,12 +321,12 @@ type
     ///  <summary>
     ///    Returns the numnber of IPoolThreads that have been installed.
     ///  </summary>
-    function getThreadCount: uint64;
+    function getThreadCount: nativeuint;
 
     ///  <summary>
     ///    Returns one of the pool thread instances by index.
     ///  </summary>
-    function getThread( idx: uint64 ): IPoolThread;
+    function getThread( idx: nativeuint ): IPoolThread;
 
     ///  <summary>
     ///    Installs a thread into the thread pool.
@@ -344,8 +344,8 @@ type
     procedure Stop;
 
     //- Pascal Only, Properties -//
-    property ThreadCount: uint64 read getThreadCount;
-    property Threads[ idx: uint64 ]: IPoolThread read getThread;
+    property ThreadCount: nativeuint read getThreadCount;
+    property Threads[ idx: nativeuint ]: IPoolThread read getThread;
   end;
 
 {$endregion}
@@ -465,7 +465,7 @@ type
     ///   into (where zero is always the main thread). Otherwise, this
     ///   parameter is ignored.
     /// </param>
-    function InstallSubSystem( aSubSystem: IThreadSubsystem; Into: TInstallInto; ThreadIndex: uint64 = 0 ): boolean;
+    function InstallSubSystem( aSubSystem: IThreadSubsystem; Into: TInstallInto; ThreadIndex: nativeuint = 0 ): boolean;
 
     ///  <summary>
     ///    Starts the ancillary threads running. When using the Start()

@@ -47,8 +47,8 @@ type
     procedure CreateThreadMethods;
     procedure DisposeThreadMethods;
   private //- IThreadPool -//
-    function getThreadCount: uint64;
-    function getThread( idx: uint64 ): IPoolThread;
+    function getThreadCount: nativeuint;
+    function getThread( idx: nativeuint ): IPoolThread;
     function InstallThread( aThread: IPoolThread ): boolean;
     function Start: boolean;
     procedure Stop;
@@ -155,12 +155,12 @@ begin
   end;
 end;
 
-function TThreadPool.getThread(idx: uint64): IPoolThread;
+function TThreadPool.getThread(idx: nativeuint): IPoolThread;
 begin
   Result := fThreads.Items[idx];
 end;
 
-function TThreadPool.getThreadCount: uint64;
+function TThreadPool.getThreadCount: nativeuint;
 begin
   Result := fThreads.Count;
 end;
