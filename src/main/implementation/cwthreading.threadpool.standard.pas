@@ -32,8 +32,8 @@ unit cwThreading.ThreadPool.Standard;
 interface
 uses
   cwLog
-, cwCollections
 , cwThreading
+, cwRuntime.Collections
 ;
 
 
@@ -41,7 +41,7 @@ type
   TThreadPool = class( TInterfacedObject, IThreadPool )
   private
     fRunning: boolean;
-    fThreads: IList<IPoolThread>;
+    fThreads: IPoolThreadList;
     fThreadMethods: array of IThreadMethod;
   private
     procedure CreateThreadMethods;
@@ -59,13 +59,13 @@ type
 
 implementation
 uses
-  cwCollections.standard
+  cwTypes
+, cwRuntime.Collections.Standard
 {$ifdef MSWINDOWS}
 , cwThreading.threadmethod.windows
 {$else}
 , cwThreading.threadmethod.posix
 {$endif}
-, cwTypes
 , cwLog.Standard
 ;
 
@@ -105,7 +105,7 @@ end;
 constructor TThreadPool.Create;
 begin
   inherited Create;
-  fThreads := TList<IPoolThread>.Create;
+  fThreads := TPoolThreadList.Create;
   fRunning := False;
   SetLength(fThreadMethods,0);
 end;

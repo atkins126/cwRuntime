@@ -32,25 +32,9 @@ unit cwThreading.ThreadSystem.Standard;
 interface
 uses
   cwLog
-, cwCollections
 , cwThreading
+, cwRuntime.Collections
 ;
-
-type
-  /// Used internally to install sub-systems into the available pool threads.
-  IThreadExecutor = interface
-    ['{62101CBD-F657-42F0-A46B-4D22FF453FAE}']
-    ///  <summary>
-    ///    Returns true if the executor is dedicated to a sub-system already.
-    ///  </summary>
-    function isDedicated: boolean;
-    ///  <summary>
-    ///    Set dedicated to prevent additional sub-systems being added.
-    ///  </summary>
-    procedure setDedicated;
-    function getSubSystemCount: uint32;
-    function InstallSubSystem( aSubSystem: IThreadSubSystem ): boolean;
-  end;
 
 type
   TThreadSystem = class( TInterfacedObject, IThreadSystem )
@@ -79,22 +63,19 @@ type
 implementation
 uses
   SysUtils // [RTL]
+, cwRuntime.Collections.Standard
 , cwThreading.ThreadPool.Standard
 , cwThreading.MessageBus.Standard
-, cwCollections.Standard
 , cwLog.Standard
 ;
 
-type
-  IThreadSystemList = IList<IThreadSubSystem>;
-  TThreadSystemList = TList<IThreadSubSystem>;
 
 type
   TThreadExecutor = class( TInterfacedObject, IPoolThread, IThreadExecutor )
   private
     fDedicated: boolean;
     fMessageBus: IMessageBus;
-    fSubSystems: IThreadSystemList;
+    fSubSystems: IThreadSubSystemList;
   protected
     function IsDedicated: boolean;
     procedure setDedicated;
@@ -108,10 +89,6 @@ type
     constructor Create( MessageBus: IMessageBus ); reintroduce;
     destructor Destroy; override;
   end;
-
-type
-  IThreadExecutorList = IList<IThreadExecutor>;
-  TThreadExecutorList = TList<IThreadExecutor>;
 
 constructor TThreadSystem.Create(ThreadCount: uint32);
 var
@@ -354,7 +331,7 @@ begin
   inherited Create;
   fDedicated := False;
   fMessageBus := MessageBus;
-  fSubSystems := TThreadSystemList.Create;
+  fSubSystems := TThreadSubSystemList.Create;
 end;
 
 destructor TThreadExecutor.Destroy;

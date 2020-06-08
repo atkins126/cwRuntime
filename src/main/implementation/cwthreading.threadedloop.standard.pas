@@ -32,9 +32,9 @@ unit cwThreading.ThreadedLoop.Standard;
 interface
 uses
   cwLog
-, cwCollections
 , cwThreading
 , cwThreading.ThreadedLoop.Executor
+, cwRuntime.Collections
 ;
 
 type
@@ -42,7 +42,7 @@ type
   private
     fUserOffset: nativeuint;
     fJobsAreRunning: boolean;
-    fExecutors: IList<IThreadLoopExecutor>;
+    fExecutors: IThreadLoopExecutorList;
   private
     procedure WaitForThreads;
     procedure TerminateExecutors;
@@ -60,7 +60,7 @@ type
 implementation
 uses
   sysutils
-, cwCollections.Standard
+, cwRuntime.Collections.Standard
 ;
 
 procedure TThreadedLoop.KillExecutors(const ThreadExecutor: IThreadLoopExecutor );
@@ -83,7 +83,6 @@ begin
     end;
   until not fJobsAreRunning;
 end;
-
 
 procedure TThreadedLoop.DistributeWork( const Work: nativeuint );
 var
@@ -185,7 +184,7 @@ begin
     DesiredThreads := ThreadCount;
   end;
   //- Create the thread executors
-  fExecutors := TList<IThreadLoopExecutor>.Create;
+  fExecutors := TThreadLoopExecutorList.Create;
   for idx := 0 to pred(DesiredThreads) do begin
     NewExecutor := TThreadLoopExecutor.Create(idx);
     fExecutors.Add(NewExecutor);
@@ -193,9 +192,16 @@ begin
 end;
 
 procedure TThreadedLoop.TerminateExecutors;
+var
+  idx: nativeuint;
 begin
   //- Terminate executors
-  fExecutors.ForEach(KillExecutors);
+  if fExecutors.Count=0 then begin
+    exit;
+  end;
+  for idx := 0 to pred(fExecutors.Count) do begin
+     KillExecutors(fExecutors[idx]);
+  end;
 end;
 
 destructor TThreadedLoop.Destroy;

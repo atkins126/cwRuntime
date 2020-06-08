@@ -33,21 +33,11 @@ interface
 uses
   cwLog
 , cwThreading
+, cwRuntime.Collections
 ;
 
 
 type
-  IThreadLoopExecutor = interface
-    ['{28C414FF-79E1-4243-916C-59BC1F8442DD}']
-    function Status: TStatus;
-    function IsJobRunning: boolean;
-    function getWorkOffset: nativeuint;
-    function getWorkTop: nativeuint;
-    procedure SetWorkDimensions( const Offset: nativeuint; const Top: nativeuint; const Total: nativeuint; const UserOffset: nativeuint );
-    procedure TerminateExecutor;
-    procedure Execute( const Method: TThreadedLoopMethod ); overload;
-    procedure Execute( const Method: TThreadedLoopMethodOfObject ); overload;
-  end;
 
   TThreadLoopExecutor = class( TInterfacedObject, IThreadLoopExecutor )
   private

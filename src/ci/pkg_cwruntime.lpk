@@ -14,7 +14,7 @@
       </SearchPaths>
     </CompilerOptions>
     <Description Value="A compiler agnostic collection of runtime libraries for Delphi and Freepascal."/>
-    <Files Count="62">
+    <Files Count="65">
       <Item1>
         <Filename Value="..\main\api\cwlog.console.pas"/>
         <UnitName Value="cwlog.console"/>
@@ -253,7 +253,7 @@
       </Item59>
       <Item60>
         <Filename Value="..\main\implementation\cwwin32.binding.pas"/>
-        <UnitName Value="cwwin32.binding"/>
+        <UnitName Value="cwWin32.Binding"/>
       </Item60>
       <Item61>
         <Filename Value="..\main\implementation\cwheap.heap.posix.pas"/>
@@ -263,6 +263,18 @@
         <Filename Value="..\main\implementation\cwheap.standard.pas"/>
         <UnitName Value="cwHeap.Standard"/>
       </Item62>
+      <Item63>
+        <Filename Value="..\main\implementation\cwcollections.list.standard.pas"/>
+        <UnitName Value="cwcollections.list.standard"/>
+      </Item63>
+      <Item64>
+        <Filename Value="..\main\implementation\cwcollections.dictionary.standard.pas"/>
+        <UnitName Value="cwcollections.dictionary.standard"/>
+      </Item64>
+      <Item65>
+        <Filename Value="..\main\implementation\cwcollections.ringbuffer.standard.pas"/>
+        <UnitName Value="cwcollections.ringbuffer.standard"/>
+      </Item65>
     </Files>
     <UsageOptions>
       <UnitPath Value="$(PkgOutDir)"/>

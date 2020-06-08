@@ -40,7 +40,6 @@ uses
   cwIO
 ;
 
-
 type
 {$region ' TEnumerate<T>'}
   {$ifdef fpc}

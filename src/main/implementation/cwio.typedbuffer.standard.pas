@@ -60,7 +60,7 @@ type
     function getCount: nativeuint;
     procedure setCount( const value: nativeuint );
     function getValue( const Index: nativeuint ): T;
-    procedure setValue( Index: nativeuint; const value: T );
+    procedure setValue( const Index: nativeuint; const value: T );
   public
     constructor Create(const Items: nativeuint; const Align16: boolean = FALSE); reintroduce;
     destructor Destroy; override;
@@ -174,7 +174,7 @@ begin
   fBuffer.Size := fCount * fItemSize;
 end;
 
-function TTypedBuffer<T>.getValue(Index: nativeuint): T;
+function TTypedBuffer<T>.getValue(const Index: nativeuint): T;
 var
   p: ^T;
 begin
@@ -187,7 +187,7 @@ begin
   Result := p^;
 end;
 
-procedure TTypedBuffer<T>.setValue( Index: nativeuint; const value: T);
+procedure TTypedBuffer<T>.setValue( const Index: nativeuint; const value: T);
 var
   p: ^T;
 begin

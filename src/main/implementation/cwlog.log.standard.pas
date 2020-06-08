@@ -32,7 +32,6 @@ unit cwlog.log.standard;
 interface
 uses
   cwLog
-, cwCollections
 ;
 
 type
@@ -65,9 +64,8 @@ function Log: ILog;
 
 implementation
 uses
-  sysutils  //[RTL] For IsEqualGUID
+  sysutils //- for Now()
 , cwTypes
-, cwCollections.Standard
 , cwIO
 , cwIO.Standard
 , cwlog.translationparser.standard
@@ -76,6 +74,8 @@ uses
 , cwThreading.Standard
 , cwUnicode
 , cwUnicode.Standard
+, cwRuntime.Collections
+, cwRuntime.Collections.Standard
 ;
 
 
@@ -104,20 +104,10 @@ type
 var
   LocalChain: TChainLog;
   ChainLogPtr: pChainLog;
-  LogEntries: IDictionary<TGUID,string> = nil;
-  LogTargets: IList<ILogTarget> = nil;
+  LogEntries: ILogEntryDictionary = nil;
+  LogTargets: ILogTargetList = nil;
   InsertionCS: ICriticalSection = nil;
   RegisterCS: ICriticalSection = nil;
-
-
-function CompareGUIDS( const GUIDA: TGUID; const GUIDB: TGUID ): TComparisonResult;
-begin
-  if IsEqualGUID(GUIDA,GUIDB) then begin
-    Result := TComparisonResult.crAEqualToB;
-  end else begin
-    Result := TComparisonResult.cwANotEqualB;
-  end;
-end;
 
 (* Returns an array of strings containing the names of parameters within the
    Source string. The parameter names are uppercased and trimmed *)
@@ -176,9 +166,9 @@ begin
       end else begin
         Src := '';
       end;
-      ParamName := Uppercase(Trim(ParamName));
+      ParamName := ParamName.UppercaseTrim;
       if not AlreadyExists(Result,ParamName) then begin
-        Result[Counter] := Uppercase(Trim(ParamName));
+        Result[Counter] := ParamName.UppercaseTrim;
         inc(Counter);
       end else begin
         SetLength(Result,pred(Length(Result)));
@@ -308,7 +298,7 @@ begin
   if not assigned(LogTargets) then begin
     InsertionCS.Acquire;
     try
-      LogTargets := TList<ILogTarget>.Create;
+      LogTargets := TLogTargetList.Create;
     finally
       InsertionCS.Release;
     end;
@@ -317,7 +307,7 @@ begin
   if not assigned(LogEntries) then begin
     RegisterCS.Acquire;
     try
-      LogEntries := TDictionary<TGUID,string>.Create(CompareGUIDS);
+      LogEntries := TLogEntryDictionary.Create;
     finally
       RegisterCS.Release;
     end;

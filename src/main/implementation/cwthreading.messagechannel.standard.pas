@@ -32,15 +32,15 @@ unit cwThreading.MessageChannel.Standard;
 interface
 uses
   cwThreading
-, cwCollections
 , cwThreading.Messaging.Internal
+, cwRuntime.Collections
 ;
 
 type
   TMessageChannel = class( TInterfacedObject, IMessageChannel )
   private
     fEnabled: boolean;
-    fMessagePipes: IList<IMessagePipe>;
+    fMessagePipes: IMessagePipeList;
     fPushCS: ISignaledCriticalSection;
     fPullCS: ISignaledCriticalSection;
   private //- IMessageChannel -//
@@ -57,13 +57,13 @@ type
 
 implementation
 uses
-  cwCollections.standard
+  cwRuntime.Collections.Standard
+, cwThreading.MessagePipe.Standard
   {$ifdef MSWINDOWS}
 , cwThreading.SignaledCriticalSection.Windows
   {$else}
 , cwThreading.SignaledCriticalSection.Posix
   {$endif}
-, cwThreading.MessagePipe.Standard
 ;
 
 constructor TMessageChannel.Create;
@@ -72,7 +72,7 @@ begin
   fEnabled := True;
   fPushCS := TSignaledCriticalSection.Create;
   fPullCS := TSignaledCriticalSection.Create;
-  fMessagePipes := TList<IMessagePipe>.Create(16);
+  fMessagePipes := TMessagePipeList.Create(16);
 end;
 
 destructor TMessageChannel.Destroy;

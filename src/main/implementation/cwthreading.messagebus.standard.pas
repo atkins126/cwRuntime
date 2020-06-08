@@ -32,15 +32,15 @@ unit cwThreading.MessageBus.Standard;
 interface
 uses
   cwLog
-, cwCollections
 , cwThreading
+, cwRuntime.Collections
 ;
 
 type
   TMessageBus = class( TInterfacedObject, IMessageBus )
   private
     fEnabled: boolean;
-    fMessageChannels: IDictionary<string,IMessageChannel>;
+    fMessageChannels: IMessageChannelDictionary;
   private //- IMessageBus -//
     function getEnabled: boolean;
     procedure setEnabled( value: boolean );
@@ -54,8 +54,8 @@ type
 implementation
 uses
   sysutils
+, cwRuntime.Collections.Standard
 , cwThreading.messagechannel.standard
-, cwCollections.standard
 , cwLog.Standard
 ;
 
@@ -65,7 +65,7 @@ constructor TMessageBus.Create;
 begin
   inherited Create;
   fEnabled := True;
-  fMessageChannels := TDictionary<string,IMessageChannel>.Create({$ifdef fpc}@{$endif}TCompare.CompareStrings,16);
+  fMessageChannels := TMessageChannelDictionary(16);
 end;
 
 function TMessageBus.CreateChannel(ChannelName: string): IMessageChannel;

@@ -28,7 +28,9 @@ uses
   cwLog.LogTarget.Stream, cwlog.translationparser.standard, cwTiming.posix, 
   cwTiming, cwTiming.standard, cwIO.TypedBuffer.Standard, cwSockets, 
   cwSockets.Standard, cwSockets.Socket.Standard, cwsockets.common, cwHeap, 
-  cwHeap.Heap.Windows, cwWin32.Binding, cwHeap.Heap.Posix, cwHeap.Standard;
+  cwHeap.Heap.Windows, cwWin32.Binding, cwHeap.Heap.Posix, cwHeap.Standard, 
+  cwCollections.List.Standard, cwCollections.Dictionary.Standard, 
+  cwCollections.RingBuffer.Standard;
 
 implementation
 
