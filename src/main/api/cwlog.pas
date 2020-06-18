@@ -152,6 +152,11 @@ type
     ///  <exclude/>  - The opposing operation for the implicit boolean.
     class operator LogicalNot(const a: TStatus): Boolean;
 
+    ///  <exclude/> - For matching statuses
+    class operator Equal( const a: TStatus; const b: TStatus ): boolean;
+    ///  <exclude/> - For matching statuses
+    class operator NotEqual( const a: TStatus; const b: TStatus ): boolean;
+
     /// <summary>
     ///   <para>
     ///     This is a convenience method to return a TStatus representing an
@@ -777,6 +782,16 @@ end;
 class operator TStatus.LogicalNot(const a: TStatus): Boolean;
 begin
   Result := not IsEqualGUID(a.Value,cSuccessUUID);
+end;
+
+class operator TStatus.Equal(const a: TStatus; const b: TStatus): boolean;
+begin
+  Result := isEqualGUID(a,b);
+end;
+
+class operator TStatus.NotEqual(const a: TStatus; const b: TStatus): boolean;
+begin
+  Result := not isEqualGUID(a,b);
 end;
 
 class function TStatus.Unknown: TStatus;

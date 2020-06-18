@@ -42,6 +42,11 @@
       <OtherUnitFiles Value="..\main\api;..\main\implementation;testcases\cwCollections;testcases\cwIO;testcases\cwLog;testcases\cwTypes;testcases\cwUnicode;testcases\cwVectors"/>
       <UnitOutputDirectory Value="..\..\out\lib\$(TargetCPU)-$(TargetOS)"/>
     </SearchPaths>
+    <Linking>
+      <Debugging>
+        <UseHeaptrc Value="True"/>
+      </Debugging>
+    </Linking>
   </CompilerOptions>
   <Debugging>
     <Exceptions>

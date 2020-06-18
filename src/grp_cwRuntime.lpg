@@ -2,7 +2,7 @@
 <CONFIG>
   <ProjectGroup FileVersion="2">
     <Targets>
-      <Target FileName="ci\pkg_cwruntime.lpk"/>
+      <Target FileName="main\pkg_cwRuntime.lpk"/>
       <Target FileName="samples\cwTest\SampleTests\cwTest_SampleTests.lpi">
         <BuildModes>
           <Mode Name="Default"/>
@@ -39,11 +39,6 @@
         </BuildModes>
       </Target>
       <Target FileName="samples\cwSockets\02_EchoClient\EchoClient.lpi">
-        <BuildModes>
-          <Mode Name="Default"/>
-        </BuildModes>
-      </Target>
-      <Target FileName="..\..\..\..\spikes\genericsbug\genericsbug.lpi">
         <BuildModes>
           <Mode Name="Default"/>
         </BuildModes>

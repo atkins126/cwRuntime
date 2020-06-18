@@ -85,5 +85,5 @@ begin
   if ParamStr(1)='ide' then begin
     Readln;
   end;
-  Halt(R);
+  System.ExitCode := R;
 end.

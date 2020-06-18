@@ -38,27 +38,36 @@ uses
 type
   TStreamLogTarget = class( TInterfacedObject, ILogTarget )
   private
+    fIncludeCRLF: boolean;
     fStream: IUnicodeStream;
     fFormat: TUnicodeFormat;
   strict private //- ILogTarget -//
     {$hints off} procedure Insert( const LogEntry: TGUID; const TranslatedText: string; const TS: TDateTime; const Severity: TLogSeverity; const Parameters: array of string ); {$hints on}
   public
-    constructor Create( const TargetStream: IUnicodeStream; const Format: TUnicodeFormat ); reintroduce;
+    constructor Create( const TargetStream: IUnicodeStream; const Format: TUnicodeFormat; const IncludeCRLF: boolean = TRUE ); reintroduce;
   end;
 
 implementation
+uses
+  cwTypes
+;
 
-constructor TStreamLogTarget.Create(const TargetStream: IUnicodeStream; const Format: TUnicodeFormat);
+constructor TStreamLogTarget.Create(const TargetStream: IUnicodeStream; const Format: TUnicodeFormat; const IncludeCRLF: boolean = TRUE);
 begin
   inherited Create;
   fStream := TargetStream;
   fFormat := Format;
+  fIncludeCRLF := IncludeCRLF;
 end;
 
 {$hints off}
 procedure TStreamLogTarget.Insert(const LogEntry: TGUID; const TranslatedText: string; const TS: TDateTime; const Severity: TLogSeverity; const Parameters: array of string );
 begin
-  fStream.WriteString( TranslatedText, fFormat );
+  if fIncludeCRLF then begin
+    fStream.WriteString( TranslatedText+CR+LF, fFormat );
+  end else begin
+    fStream.WriteString( TranslatedText, fFormat );
+  end;
 end;
 {$hints on}
 

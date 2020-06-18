@@ -45,7 +45,8 @@ begin
     if ParamStr(1)='ide' then begin
       Readln;
     end;
-    Halt(1);
+    System.ExitCode := 1;
+    exit;
   end else begin
     if ParamStr(1)='ide' then begin
       Readln;
