@@ -101,7 +101,7 @@ begin
   fCurrentTestCase := '';
   dec(fCurrentDepth);
   WriteDepth;
-  Writeln('<TestCase/>');
+  Writeln('</TestCase>');
 end;
 
 procedure TStandardConsoleReport.EndTestSuite;
@@ -112,7 +112,7 @@ begin
   fCurrentTestCase := '';
   dec(fCurrentDepth);
   WriteDepth;
-  Writeln('<TestSuite/>');
+  Writeln('</TestSuite>');
 end;
 
 procedure TStandardConsoleReport.RecordTestResult(const TestName: string; const TestResultState: TTestResult; const Reason: string);
@@ -148,9 +148,9 @@ begin
   end;
   WriteDepth;
   if TestResultState<>trSucceeded then begin
-    Writeln('<Test name="',TestName,'" Result="',TestResultStr,'" Reason="'+Reason+'"/>');
+    Writeln('<Test Result="',TestResultStr,'" name="',TestName,'" Reason="'+Reason+'"/>');
   end else begin
-    Writeln('<Test name="',TestName,'" Result="',TestResultStr,'"/>');
+    Writeln('<Test Result="',TestResultStr,'" name="',TestName,'"/>');
   end;
 end;
 
