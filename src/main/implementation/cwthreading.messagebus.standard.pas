@@ -65,7 +65,7 @@ constructor TMessageBus.Create;
 begin
   inherited Create;
   fEnabled := True;
-  fMessageChannels := TMessageChannelDictionary(16);
+  fMessageChannels := TMessageChannelDictionary.Create(16);
 end;
 
 function TMessageBus.CreateChannel(ChannelName: string): IMessageChannel;

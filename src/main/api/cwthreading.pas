@@ -198,7 +198,7 @@ type
   ///  <summary>
   ///    Callback used to handle messages coming from a message channel.
   ///  </summary>
-  TMessageHandler = function (aMessage: TMessage): nativeuint of object;
+  TMessageHandler = function (const aMessage: TMessage): nativeuint of object;
 
   ///  <summary>
   ///    An implementation of IMessageChannel represents a listener for a
