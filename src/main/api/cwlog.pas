@@ -107,6 +107,17 @@ type
     class operator Explicit(const a: TStatus): TGUID;
 
     /// <summary>
+    ///   Operator overload enabling assignment of a TGUID to a TStatus.
+    /// </summary>
+    /// <param name="a">
+    ///   A TGUID to be returned as a TStatus
+    /// </param>
+    class operator Implicit(const a: TGUID): TStatus;
+
+    ///  <exclude/>  - for same purpose as implicit
+    class operator Explicit(const a: TGUID): TStatus;
+
+    /// <summary>
     ///   Operator overload enabling the TStatus to be assigned to a string. <br /><br /><code lang="Delphi">ShowMessage( 'Success = '+TStatus.Success );</code>
     /// </summary>
     /// <param name="a">
@@ -747,6 +758,16 @@ end;
 class operator TStatus.Explicit(const a: TStatus): TGUID;
 begin
   Result := a.Value;
+end;
+
+class operator TStatus.Implicit(const a: TGUID): TStatus;
+begin
+  Result.Value := a;
+end;
+
+class operator TStatus.Explicit(const a: TGUID): TStatus;
+begin
+  Result.Value := a;
 end;
 
 class operator TStatus.Implicit(const a: TStatus): string;
