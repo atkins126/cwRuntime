@@ -92,7 +92,7 @@ threadvar
 //  attempt to add log entries or send entries to log targets at the same time.
 //------------------------------------------------------------------------------
 threadvar
-  LastEntry: string;
+  fLastEntry: string;
 
 type
   TChainLog = record
@@ -260,7 +260,7 @@ begin
       TLogSeverity.lsError:   MessageText := '[ERROR] '+MessageText;
       TLogSeverity.lsFatal:   MessageText := '[FATAL] '+MessageText;
     end;
-    LastEntry := MessageText;
+    fLastEntry := MessageText;
     MessageText := '('+ string(FormatDateTime('YYYY-MM-DD HH:nn:SS:ssss',TS)) +') ' + MessageText;
 
     //- Insert using log insertion handler.
@@ -483,13 +483,13 @@ end;
 
 function TLog.getLastEntry: string;
 begin
-  Result := LastEntry;
+  Result := fLastEntry;
 end;
 
 constructor TLog.Create;
 begin
   inherited Create;
-  LastEntry := '';
+  fLastEntry := '';
   if not assigned(ChainLogPtr) then begin
     ChainLogPtr := @LocalChain;
     pChainLog(ChainLogPtr)^.gInsert := @gInsert;
