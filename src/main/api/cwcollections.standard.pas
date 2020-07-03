@@ -47,6 +47,7 @@ type
   TCompare = record
     class function ComparePointers( const AValue: pointer; const BValue: pointer ): TComparisonResult; static;
     class function CompareStrings( const AValue: string; const BValue: string ): TComparisonResult; static;
+    class function CompareGUIDS( const AValue: TGUID; const BValue: TGUID ): TComparisonResult; static;
   end;
 
   ///  <summary>
@@ -169,6 +170,15 @@ begin
     Result := TComparisonResult.crAGreaterThanB;
   end else begin
     Result := TComparisonResult.crBGreaterThanA;
+  end;
+end;
+
+class function TCompare.CompareGUIDS(const AValue: TGUID; const BValue: TGUID): TComparisonResult;
+begin
+  if IsEqualGUID(AValue,BValue) then begin
+    Result := TComparisonResult.crAEqualToB;
+  end else begin
+    Result := TComparisonResult.crAGreaterThanB;
   end;
 end;
 
