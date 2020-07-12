@@ -559,6 +559,9 @@ type
 {$region ' Helper for TArrayOfString'}
   TArrayOfStringHelper = record helper for TArrayOfString
   public
+    procedure TrimAll;
+    procedure UppercaseAll;
+    procedure LowercaseAll;
     procedure AssignArray(const value: array of string );
     function Find( const value: string; out FoundIdx: nativeuint; const CaseInsensitive: boolean = False ): boolean;
     function RemoveDuplicates( const CaseInsensitive: boolean = false ): TArrayOfString;
@@ -1420,6 +1423,36 @@ end;
 
 {$endregion}
 {$region ' Helper for TArrayOfString'}
+
+procedure TArrayOfStringHelper.TrimAll;
+var
+  idx: nativeuint;
+begin
+  if Length(Self)=0 then exit;
+  for idx := 0 to pred(length(Self)) do begin
+    Self[idx] := Trim(Self[idx]);
+  end;
+end;
+
+procedure TArrayOfStringHelper.UppercaseAll;
+var
+  idx: nativeuint;
+begin
+  if Length(Self)=0 then exit;
+  for idx := 0 to pred(length(Self)) do begin
+    Self[idx] := Uppercase(Self[idx]);
+  end;
+end;
+
+procedure TArrayOfStringHelper.LowercaseAll;
+var
+  idx: nativeuint;
+begin
+  if Length(Self)=0 then exit;
+  for idx := 0 to pred(length(Self)) do begin
+    Self[idx] := Lowercase(Self[idx]);
+  end;
+end;
 
 procedure TArrayOfStringHelper.AssignArray(const value: array of string );
 var
