@@ -1,4 +1,7 @@
 # cwRuntime
+
+* Currently undergoing some major edits on the master branch, please see cwRuntime/legacy branch for previous stable *
+
 Compiler agnostic and cross platform collection of utility libraries for Delphi and Freepascal.
 
 While this library does still depend on some parts of the Delphi / Freepascal rtl libraries, 
