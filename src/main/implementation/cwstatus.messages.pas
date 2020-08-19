@@ -83,6 +83,9 @@ type
 implementation
 uses
   sysutils //- For guid matching
+{$ifndef fpc}{$ifdef MSWINDOWS}
+ , cwWin32.Kernel32
+{$endif}{$endif}
 ;
 
 const
@@ -99,8 +102,11 @@ var
 // If translation to other targets is required, this code will need to be
 // altered!
 procedure Lock;
+var
+  ThreadID: TThreadID;
 begin
   repeat
+    ThreadID := GetCurrentThreadID;
     while LockPtr>0 do sleep(0); //- Hold until unlocked.
     LockPtr := ThreadID; // Set lock to threadID.
   until LockPtr=ThreadID; //- If we failed to set the lock ptr, another thread beat us to it.
@@ -108,7 +114,7 @@ end;
 
 procedure Unlock;
 begin
-  if LockPtr<>ThreadID then exit;
+  if LockPtr<>GetCurrentThreadID then exit;
   LockPtr := 0;
 end;
 
@@ -287,7 +293,11 @@ begin
   if Source[idx]<>'}' then exit;
   GUIDStr := GUIDStr + '}';
   inc(idx);
+  {$ifdef fpc}
   GUID := StringToGUID(ansistring(GuidStr));
+  {$else}
+  GUID := StringToGUID(GuidStr);
+  {$endif}
   //- Now read off message text in race to finish!
   while idx<=top do begin
     MessageStr := MessageStr + Source[idx];

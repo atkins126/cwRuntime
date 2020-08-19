@@ -93,12 +93,12 @@ type
     class function Success: TStatus; static;
     procedure Raize( const Parameters: array of string ); overload;
     procedure Raize; overload;
-    class procedure Raize( const Status: TStatus; const Parameters: array of string ); static; overload;
-    class procedure Raize( const Status: TStatus ); static; overload;
+    class procedure Raize( const Status: TStatus; const Parameters: array of string ); overload; static;
+    class procedure Raize( const Status: TStatus ); overload; static;
     function Return( const Parameters: array of string ): TStatus; overload;
     function Return: TStatus; overload;
-    class function Return( const Status: TStatus; const Parameters: array of string ): TStatus; static; overload;
-    class function Return( const Status: TStatus ): TStatus; static; overload;
+    class function Return( const Status: TStatus; const Parameters: array of string ): TStatus; overload; static;
+    class function Return( const Status: TStatus ): TStatus; overload; static;
     class procedure Register(const a: ansistring); static;
   end;
 

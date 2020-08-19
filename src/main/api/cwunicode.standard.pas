@@ -290,7 +290,7 @@ begin
   //- Ensure supported format
   if (SourceFormat = TUnicodeFormat.utfUnknown) or
      (TargetFormat = TUnicodeFormat.utfUnknown) then begin
-      TStatus(stUTFUnknownNotSupported).Raize('MeasureConvertedString');
+      TStatus(stUTFUnknownNotSupported).Raize(['MeasureConvertedString']);
   end;
   //- Check for no format change.
   if SourceFormat=TargetFormat then begin

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CONFIG>
+  <ProjectGroup FileVersion="1">
+    <Targets Count="3">
+      <Target0 FileName="main\pkg_cwruntime_lazarus_2_0_8.lpk"/>
+      <Target1 FileName="samples\cwDynLib\LoadLibSample\lib_testLoadLib_Lazarus_2_0_8.lpi">
+        <BuildModes Count="1"/>
+        <Mode1 Name="Default"/>
+      </Target1>
+      <Target2 FileName="samples\cwDynLib\LoadLibSample\cwDynLib_LoadLibSample_Lazarus_2_0_8.lpi">
+        <BuildModes Count="1"/>
+        <Mode1 Name="Default"/>
+      </Target2>
+    </Targets>
+  </ProjectGroup>
+</CONFIG>
