@@ -1,6 +1,6 @@
 # cwRuntime
 
-* Currently undergoing some major edits on the master branch, please see cwRuntime/legacy branch for previous stable *
+* Currently undergoing some major edits on the master branch, please see cwRuntime/legacy branch for previous stable.
 
 Compiler agnostic and cross platform collection of utility libraries for Delphi and Freepascal.
 
@@ -28,7 +28,7 @@ Current Features:
    at Galfar's Lair: https://galfar.vevb.net *)
 	
 Supported compilers:  
-    XE5, XE6, XE8, 10.0 Seattle, 10.2 Tokyo, 10.3 Rio, FPC 3.3.1-r44373 (Lazarus 2.1)
+    XE5, XE6, XE8, 10.0 Seattle, 10.2 Tokyo, 10.3 Rio, Lazarus 2.0.10
 	
 	Other compilers may also work - in particular the skipped Delphi compilers in the 
 	above sequence. These are merely the compilers I have access to install on the 
