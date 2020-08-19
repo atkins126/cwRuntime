@@ -12,11 +12,12 @@ stages but is not yet complete.
 Current Features:
 	
 	cwTest        - A light-weight unit testing framework.
+	cwStatus      - A TGUID/Boolean/String compatible type for function return enumeration.
 	cwTypes       - A collection of type-helpers and half-precision floating point type.
 	cwCollections - Generic collection classes List/Stack/Ring etc.
 	cwDynLib      - Dynamic library loading.
 	cwIO          - Classes for serialization/deserialzation of streams.
-	cwLog         - Logging and error reporting system with language translation.
+	cwLog         - (Currently refactoring) - Logging and error reporting system with language translation.
 	cwThreading   - A system for organizing multi-threaded code.
 	cwUnicode     - A Unicode Codec and string data type to convert between unicode formats.
 	cwVectors     - A simple vector math library.
