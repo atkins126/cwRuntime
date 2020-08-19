@@ -52,7 +52,8 @@ type
     fTerminateFlag: boolean;
     fRunning: boolean;
     fThreadExecuteMethod: TThreadExecuteMethod;
-  protected  //- IThread -//
+  strict private  //- IThread -//
+    function getSleepCS: ISignaledCriticalSection;
     function IsRunning: boolean;
     function getTerminateFlag: boolean;
     procedure setTerminateFlag( const value: boolean );
@@ -91,6 +92,11 @@ begin
   ThreadRef := TThread(Thread);
   if not assigned(ThreadRef) then exit;
   ThreadRef.Execute;
+end;
+
+function TThread.getSleepCS: ISignaledCriticalSection;
+begin
+  Result := fSleepCS;
 end;
 
 function TThread.IsRunning: boolean;

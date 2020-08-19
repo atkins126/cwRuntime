@@ -41,15 +41,26 @@ uses
 ;
 
 type
-  TLongThread = class( TThread, IThread, ILongThreadMatcher )
+  TLongThread = class( TInterfacedObject, IThread, ILongThreadMatcher )
   private
+    fThread: IThread;
     fLongThread: ILongThread;
+  strict private //- IThread -//
+    function getSleepCS: ISignaledCriticalSection;
+    procedure Acquire;
+    procedure Release;
+    procedure Sleep;
+    procedure Wake;
+    function IsRunning: boolean;
+    function getTerminateFlag: boolean;
+    procedure setTerminateFlag( const value: boolean );
   strict private //- ILongThreadMatcher -//
     function IsMatch(const LongThread: ILongThread): boolean;
   private
     procedure HandleThread( const Thread: IThread );
   public
     constructor Create( const LongThread: ILongThread ); reintroduce;
+    destructor Destroy; override;
   end;
 
 implementation
@@ -70,6 +81,46 @@ begin
   fLongThread := nil;
 end;
 
+function TLongThread.getSleepCS: ISignaledCriticalSection;
+begin
+  Result := fThread.getSleepCS;
+end;
+
+procedure TLongThread.Acquire;
+begin
+  fThread.Acquire;
+end;
+
+procedure TLongThread.Release;
+begin
+  fThread.Release;
+end;
+
+procedure TLongThread.Sleep;
+begin
+  fThread.Sleep;
+end;
+
+procedure TLongThread.Wake;
+begin
+  fThread.Wake;
+end;
+
+function TLongThread.IsRunning: boolean;
+begin
+  Result := fThread.IsRunning;
+end;
+
+function TLongThread.getTerminateFlag: boolean;
+begin
+  Result := fThread.getTerminateFlag;
+end;
+
+procedure TLongThread.setTerminateFlag(const value: boolean);
+begin
+  fThread.setTerminateFlag(value);
+end;
+
 function TLongThread.IsMatch(const LongThread: ILongThread): boolean;
 begin
   Result := LongThread=fLongThread;
@@ -77,8 +128,16 @@ end;
 
 constructor TLongThread.Create( const LongThread: ILongThread );
 begin
-  inherited Create( HandleThread, nil );
+  inherited Create;
   fLongThread := LongThread;
+  fThread := TThread.Create( HandleThread, nil );
+end;
+
+destructor TLongThread.Destroy;
+begin
+  fThread := nil;
+  fLongThread := nil;
+  inherited Destroy;
 end;
 
 end.

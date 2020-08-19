@@ -42,15 +42,24 @@ uses
 ;
 
 type
-  TMessagedThread = class( TThread, IThread, IMessagedThreadHandler )
+  TMessagedThread = class( TInterfacedObject, IThread, IMessagedThreadHandler )
   private
+    fThread: IThread;
     fMessagedThread: IMessagedThread;
-    fSleepCS: ISignaledCriticalSection;
     fMessageChannels: IList<IMessageChannelReader>;
     fMessageChannelCS: ICriticalSection;
   private
     function GetMessage(out Message: TMessage): boolean;
     procedure HandleThread( const Thread: IThread );
+  strict private //- IThread -//
+    function getSleepCS: ISignaledCriticalSection;
+    procedure Acquire;
+    procedure Release;
+    procedure Sleep;
+    procedure Wake;
+    function IsRunning: boolean;
+    function getTerminateFlag: boolean;
+    procedure setTerminateFlag( const value: boolean );
   strict private //- IMessagedThreadHandler -//
     function getMessagedThread: IMessagedThread;
     function IsMatch(const MessagedThread: IMessagedThread): boolean;
@@ -77,8 +86,11 @@ var
   idx: nativeuint;
 begin
   Result := False;
+  if not assigned(fMessageChannelCS) then exit;
+  if not assigned(fMessageChannels) then exit;
   fMessageChannelCS.Acquire;
   try
+    if fMessageChannels.Count=0 then exit;
     for idx := 0 to pred(fMessageChannels.Count) do begin
       if not fMessageChannels[idx].getMessagesPending then continue;
       Result := fMessageChannels[idx].getNextMessage(Message);
@@ -94,19 +106,59 @@ var
   Message: TMessage;
 begin
   repeat
-    fSleepCS.Acquire;
+    Thread.Acquire;
     try
       repeat
         if Thread.getTerminateFlag then exit;
         if not GetMessage(Message) then begin
-          fSleepCS.Sleep;
+          Thread.Sleep;
         end;
         until GetMessage(Message);
     finally
-      fSleepCS.Release;
+      Thread.Release;
     end;
     fMessagedThread.HandleMessage(Message);
   until False;
+end;
+
+function TMessagedThread.getSleepCS: ISignaledCriticalSection;
+begin
+  Result := fThread.getSleepCS;
+end;
+
+procedure TMessagedThread.Acquire;
+begin
+  fThread.Acquire;
+end;
+
+procedure TMessagedThread.Release;
+begin
+  fThread.Release;
+end;
+
+procedure TMessagedThread.Sleep;
+begin
+  fThread.Sleep;
+end;
+
+procedure TMessagedThread.Wake;
+begin
+  fThread.Wake;
+end;
+
+function TMessagedThread.IsRunning: boolean;
+begin
+  Result := fThread.IsRunning;
+end;
+
+function TMessagedThread.getTerminateFlag: boolean;
+begin
+  Result := fThread.getTerminateFlag;
+end;
+
+procedure TMessagedThread.setTerminateFlag(const value: boolean);
+begin
+  fThread.setTerminateFlag( value );
 end;
 
 function TMessagedThread.getMessagedThread: IMessagedThread;
@@ -139,7 +191,7 @@ begin
       end;
     end;
     //- else
-    NewChannel := TMessageChannelReader.Create( fSleepCS );
+    NewChannel := TMessageChannelReader.Create( fThread.getSleepCS );
     fMessageChannels.Add(NewChannel);
     Result := NewChannel as IMessageChannel;
   finally
@@ -149,17 +201,17 @@ end;
 
 constructor TMessagedThread.Create( const MessagedThread: IMessagedThread; const SleepCS: ISignaledCriticalSection );
 begin
-  inherited Create( HandleThread, SleepCS );
-  fSleepCS := SleepCS;
+  inherited Create;
   fMessageChannels := TList<IMessageChannelReader>.Create;
   fMessageChannelCS := TCriticalSection.Create;
   fMessagedThread := MessagedThread;
+  fThread := TThread.Create( HandleThread, SleepCS );
 end;
 
 destructor TMessagedThread.Destroy;
 begin
+  fThread := nil;
   fMessagedThread := nil;
-  fSleepCS := nil;
   fMessageChannelCS := nil;
   fMessageChannels := nil;
   inherited Destroy;

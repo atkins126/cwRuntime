@@ -52,6 +52,9 @@ type
   IThread = interface
     ['{9BD6445C-2E48-4A89-B642-D72A84365151}']
 
+    //- Returns a reference to the critical section which is used to sleep the thread.
+    function getSleepCS: ISignaledCriticalSection;
+
     //- Acquire the signaled critical section of the
     //- thread pool to which this thread belongs.
     procedure Acquire;
