@@ -12,6 +12,9 @@
         <Projects Include="samples\cwDynLib\LoadLibSample\cwDynLib_LoadLibSample_Berlin.dproj">
             <Dependencies/>
         </Projects>
+        <Projects Include="samples\cwSockets\01-EchoServer\EchoServer_Berlin.dproj">
+            <Dependencies/>
+        </Projects>
     </ItemGroup>
     <ProjectExtensions>
         <Borland.Personality>Default.Personality.12</Borland.Personality>
@@ -47,14 +50,23 @@
     <Target Name="cwDynLib_LoadLibSample_Berlin:Make">
         <MSBuild Projects="samples\cwDynLib\LoadLibSample\cwDynLib_LoadLibSample_Berlin.dproj" Targets="Make"/>
     </Target>
+    <Target Name="EchoServer_Berlin">
+        <MSBuild Projects="samples\cwSockets\01-EchoServer\EchoServer_Berlin.dproj"/>
+    </Target>
+    <Target Name="EchoServer_Berlin:Clean">
+        <MSBuild Projects="samples\cwSockets\01-EchoServer\EchoServer_Berlin.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="EchoServer_Berlin:Make">
+        <MSBuild Projects="samples\cwSockets\01-EchoServer\EchoServer_Berlin.dproj" Targets="Make"/>
+    </Target>
     <Target Name="Build">
-        <CallTarget Targets="pkg_cwruntime_Berlin;lib_testLoadLib_Berlin;cwDynLib_LoadLibSample_Berlin"/>
+        <CallTarget Targets="pkg_cwruntime_Berlin;lib_testLoadLib_Berlin;cwDynLib_LoadLibSample_Berlin;EchoServer_Berlin"/>
     </Target>
     <Target Name="Clean">
-        <CallTarget Targets="pkg_cwruntime_Berlin:Clean;lib_testLoadLib_Berlin:Clean;cwDynLib_LoadLibSample_Berlin:Clean"/>
+        <CallTarget Targets="pkg_cwruntime_Berlin:Clean;lib_testLoadLib_Berlin:Clean;cwDynLib_LoadLibSample_Berlin:Clean;EchoServer_Berlin:Clean"/>
     </Target>
     <Target Name="Make">
-        <CallTarget Targets="pkg_cwruntime_Berlin:Make;lib_testLoadLib_Berlin:Make;cwDynLib_LoadLibSample_Berlin:Make"/>
+        <CallTarget Targets="pkg_cwruntime_Berlin:Make;lib_testLoadLib_Berlin:Make;cwDynLib_LoadLibSample_Berlin:Make;EchoServer_Berlin:Make"/>
     </Target>
     <Import Project="$(BDS)\Bin\CodeGear.Group.Targets" Condition="Exists('$(BDS)\Bin\CodeGear.Group.Targets')"/>
 </Project>

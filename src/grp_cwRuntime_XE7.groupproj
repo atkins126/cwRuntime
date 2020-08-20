@@ -12,6 +12,9 @@
         <Projects Include="samples\cwDynLib\LoadLibSample\cwDynLib_LoadLibSample_XE7.dproj">
             <Dependencies/>
         </Projects>
+        <Projects Include="samples\cwSockets\01-EchoServer\EchoServer_XE7.dproj">
+            <Dependencies/>
+        </Projects>
     </ItemGroup>
     <ProjectExtensions>
         <Borland.Personality>Default.Personality.12</Borland.Personality>
@@ -47,14 +50,23 @@
     <Target Name="cwDynLib_LoadLibSample_XE7:Make">
         <MSBuild Projects="samples\cwDynLib\LoadLibSample\cwDynLib_LoadLibSample_XE7.dproj" Targets="Make"/>
     </Target>
+    <Target Name="EchoServer_XE7">
+        <MSBuild Projects="samples\cwSockets\01-EchoServer\EchoServer_XE7.dproj"/>
+    </Target>
+    <Target Name="EchoServer_XE7:Clean">
+        <MSBuild Projects="samples\cwSockets\01-EchoServer\EchoServer_XE7.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="EchoServer_XE7:Make">
+        <MSBuild Projects="samples\cwSockets\01-EchoServer\EchoServer_XE7.dproj" Targets="Make"/>
+    </Target>
     <Target Name="Build">
-        <CallTarget Targets="pkg_cwruntime_XE7;lib_testLoadLib_XE7;cwDynLib_LoadLibSample_XE7"/>
+        <CallTarget Targets="pkg_cwruntime_XE7;lib_testLoadLib_XE7;cwDynLib_LoadLibSample_XE7;EchoServer_XE7"/>
     </Target>
     <Target Name="Clean">
-        <CallTarget Targets="pkg_cwruntime_XE7:Clean;lib_testLoadLib_XE7:Clean;cwDynLib_LoadLibSample_XE7:Clean"/>
+        <CallTarget Targets="pkg_cwruntime_XE7:Clean;lib_testLoadLib_XE7:Clean;cwDynLib_LoadLibSample_XE7:Clean;EchoServer_XE7:Clean"/>
     </Target>
     <Target Name="Make">
-        <CallTarget Targets="pkg_cwruntime_XE7:Make;lib_testLoadLib_XE7:Make;cwDynLib_LoadLibSample_XE7:Make"/>
+        <CallTarget Targets="pkg_cwruntime_XE7:Make;lib_testLoadLib_XE7:Make;cwDynLib_LoadLibSample_XE7:Make;EchoServer_XE7:Make"/>
     </Target>
     <Import Project="$(BDS)\Bin\CodeGear.Group.Targets" Condition="Exists('$(BDS)\Bin\CodeGear.Group.Targets')"/>
 </Project>
