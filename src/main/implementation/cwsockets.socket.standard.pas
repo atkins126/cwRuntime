@@ -191,7 +191,7 @@ begin
   Result := TStatus.Unknown;
   fHandle := sktSocket( SocketDomainToInt(fDomain), SocketKindToInt(fKind), PacketProtocolToInt(fProtocol) );
   if fHandle=INVALID_SOCKET then begin
-    Result := TStatus.Return(stSocketError,['create socket',GetLastError().AsString]);
+    Result := TStatus(stSocketError).Return(['create socket',GetLastError().AsString]);
     exit;
   end;
   Result := TStatus.Success;
@@ -284,7 +284,7 @@ begin
     //- Bind
     retCode := sktBind( fHandle, Address.DataPtr, Address.Size );
     if retCode<>0 then begin
-      Result := TStatus.Return(stSocketError,['bind',retCode.AsString]);
+      Result := TStatus(stSocketError).Return(['bind',retCode.AsString]);
       exit;
     end;
     fAddress := NetworkAddress.IPAddress;
@@ -381,7 +381,7 @@ begin
     AddrSize := Address.Size;
     retCode := sktConnect( fHandle, Address.DataPtr, AddrSize );
     if retCode<>0 then begin
-        Result := TStatus.Return(stSocketError,[GetLastError().AsString]);
+        Result := TStatus(stSocketError).Return([GetLastError().AsString]);
       exit;
     end;
     fAddress := NetworkAddress.IPAddress;
@@ -406,7 +406,7 @@ begin
   end;
   retCode := sktShutdown(fHandle,Opts);
   if retCode<>0 then begin
-    Result := TStatus.Return(stSocketError,['shutdown socket',retCode.AsString]);
+    Result := TStatus(stSocketError).Return(['shutdown socket',retCode.AsString]);
     exit;
   end;
   Result := TStatus.Success;
@@ -418,7 +418,7 @@ var
 begin
   retCode := sktCloseSocket(fHandle);
   if retCode<>0 then begin
-    Result := TStatus.Return(stSocketError,[retCode.AsString]);
+    Result := TStatus(stSocketError).Return([retCode.AsString]);
     exit;
   end;
   fHandle := INVALID_SOCKET;
@@ -455,7 +455,7 @@ begin
       DataSize := {$warnings off} Data.Size - TotalSent; {$warnings on} //- Delphi signed/unsigned warning W1073
       Sent := sktSend(fHandle,DataPtr,DataSize,0); // todo - correct flags
       if Sent = SOCKET_ERROR then begin
-        Result := TStatus.Return(stSocketError,[GetLastError().AsString]);
+        Result := TStatus(stSocketError).Return([GetLastError().AsString]);
         exit;
       end;
       TotalSent := TotalSent + Sent;
@@ -496,7 +496,7 @@ begin
       Result := TStatus.Success;
       exit;
     end;
-    Result := TStatus.Return(stSocketError,[retCode.AsString]);
+    Result := TStatus(stSocketError).Return([retCode.AsString]);
     exit;
   end;
   Data.Size := Recvd;
@@ -520,7 +520,7 @@ begin
     Option := cBlockingDisabled;
   end;
   if ioctl(fHandle, FIONBIO, Option)=SOCKET_ERROR then begin
-    Result := TStatus.Return(stSocketError,[GetLastError().AsString]);
+    Result := TStatus(stSocketError).Return([GetLastError().AsString]);
     exit;
   end;
   fBlocking := Value;

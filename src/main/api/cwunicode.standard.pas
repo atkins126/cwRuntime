@@ -287,6 +287,7 @@ var
   srcCPSize: uint8;
   BreakOut: boolean;
 begin
+  Result := 0;
   //- Ensure supported format
   if (SourceFormat = TUnicodeFormat.utfUnknown) or
      (TargetFormat = TUnicodeFormat.utfUnknown) then begin
@@ -729,6 +730,7 @@ procedure TUnicodeString.setAsString(const value: string);
 var
   TmpSize: nativeuint;
 begin
+  TmpSize := 0;
   EnsureInitialized;
   (fInitialized as IUTFStringData).FreeBuffer;
   if Value='' then begin

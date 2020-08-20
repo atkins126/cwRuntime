@@ -72,7 +72,6 @@ procedure TLongThread.HandleThread(const Thread: IThread);
 var
   KeepGoing: boolean;
 begin
-  KeepGoing := True;
   repeat
     if Thread.getTerminateFlag then exit;
     if not assigned(fLongThread) then exit;

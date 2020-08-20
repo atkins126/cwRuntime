@@ -93,15 +93,15 @@ type
 
     class function Unknown: TStatus; static;
     class function Success: TStatus; static;
-    class procedure Raize( const Status: TStatus ); overload; static;
-    class procedure Raize( const Status: TStatus; const Parameters: array of string ); overload; static;
     procedure Raize; overload;
     procedure Raize( const Parameters: array of string ); overload;
-    class function Return( const Status: TStatus ): TStatus; overload; static;
-    class function Return( const Status: TStatus; const Parameters: array of string ): TStatus; overload; static;
     function Return: TStatus; overload;
     function Return( const Parameters: array of string ): TStatus; overload;
+    {$ifdef fpc}
     class procedure Register(const a: ansistring); static;
+    {$else}
+    class procedure Register(const a: string); static;
+    {$endif}
   end;
 
 {$endregion}
@@ -128,7 +128,11 @@ end;
 
 procedure EStatus.setMessage(const value: string);
 begin
+  {$ifdef fpc}
   inherited Message := ansistring(value);
+  {$else}
+  inherited Message := value;
+  {$endif}
 end;
 
 class operator TStatus.Implicit(const a: TStatus): string;
@@ -144,16 +148,26 @@ end;
 class operator TStatus.Implicit(const a: ansistring): TStatus;
 begin
   if not TMessageDictionary.ReadGUID(a,Result.GUID) then begin
+  {$ifdef fpc}
     raise
       EInvalidStatusGUID.Create(a);
+  {$else}
+    raise
+      EInvalidStatusGUID.Create(string(a));
+  {$endif}
   end;
 end;
 
 class operator TStatus.Explicit(const a: ansistring): TStatus;
 begin
   if not TMessageDictionary.ReadGUID(a,Result.GUID) then begin
+  {$ifdef fpc}
     raise
       EInvalidStatusGUID.Create(a);
+  {$else}
+    raise
+      EInvalidStatusGUID.Create(string(a));
+  {$endif}
   end;
 end;
 
@@ -164,9 +178,14 @@ end;
 
 class operator TStatus.Implicit(const a: string): TStatus;
 begin
-  if not TMessageDictionary.ReadGUID(a,Result.GUID) then begin
+  if not TMessageDictionary.ReadGUID(ansistring(a),Result.GUID) then begin
+    {$ifdef fpc}
+    raise
+      EInvalidStatusGUID.Create(ansistring(a));
+    {$else}
     raise
       EInvalidStatusGUID.Create(a);
+    {$endif}
   end;
 end;
 
@@ -177,9 +196,14 @@ end;
 
 class operator TStatus.Explicit(const a: string): TStatus;
 begin
-  if not TMessageDictionary.ReadGUID(a,Result.GUID) then begin
+  if not TMessageDictionary.ReadGUID(ansistring(a),Result.GUID) then begin
+    {$ifdef fpc}
+    raise
+      EInvalidStatusGUID.Create(ansistring(a));
+    {$else}
     raise
       EInvalidStatusGUID.Create(a);
+    {$endif}
   end;
 end;
 
@@ -203,8 +227,13 @@ var
   bGUID: TGUID;
 begin
   if not TMessageDictionary.ReadGUID(b,bGUID) then begin
+    {$ifdef fpc}
     raise
       EInvalidStatusGUID.Create(b);
+    {$else}
+    raise
+      EInvalidStatusGUID.Create(string(b));
+    {$endif}
   end;
   Result := IsEqualGUID(a.GUID,bGUID);
 end;
@@ -214,8 +243,13 @@ var
   bGUID: TGUID;
 begin
   if not TMessageDictionary.ReadGUID(b,bGUID) then begin
+    {$ifdef fpc}
     raise
       EInvalidStatusGUID.Create(b);
+    {$else}
+    raise
+      EInvalidStatusGUID.Create(string(b));
+    {$endif}
   end;
   Result := not IsEqualGUID(a.GUID,bGUID);
 end;
@@ -225,8 +259,13 @@ var
   aGUID: TGUID;
 begin
   if not TMessageDictionary.ReadGUID(a,aGUID) then begin
+    {$ifdef fpc}
     raise
       EInvalidStatusGUID.Create(a);
+    {$else}
+    raise
+      EInvalidStatusGUID.Create(string(a));
+    {$endif}
   end;
   Result := IsEqualGUID(aGUID,b.GUID);
 end;
@@ -236,8 +275,13 @@ var
   aGUID: TGUID;
 begin
   if not TMessageDictionary.ReadGUID(a,aGUID) then begin
+    {$ifdef fpc}
     raise
       EInvalidStatusGUID.Create(a);
+    {$else}
+    raise
+      EInvalidStatusGUID.Create(string(a));
+    {$endif}
   end;
   Result := not IsEqualGUID(aGUID,b.GUID);
 end;
@@ -292,8 +336,13 @@ begin
   if Length(Parameters)<>0 then begin
     ParameterizeMessage( Parameters );
   end;
+  {$ifdef fpc}
   raise
     EStatus.Create(ansistring(GetText()));
+  {$else}
+  raise
+    EStatus.Create(GetText());
+  {$endif}
 end;
 
 procedure TStatus.Raize;
@@ -301,39 +350,31 @@ begin
   Raize([]);
 end;
 
-class procedure TStatus.Raize(const Status: TStatus; const Parameters: array of string);
-begin
-  Status.Raize(Parameters);
-end;
-
-class procedure TStatus.Raize(const Status: TStatus);
-begin
-  Status.Raize([]);
-end;
-
-class function TStatus.Return(const Status: TStatus; const Parameters: array of string): TStatus;
-begin
-  Result := Status.Return(Parameters);
-end;
-
-class function TStatus.Return(const Status: TStatus): TStatus;
-begin
-  Result := Status.Return([]);
-end;
-
+{$ifdef fpc}
 class procedure TStatus.Register(const a: ansistring);
+{$else}
+class procedure TStatus.Register(const a: string);
+{$endif}
 var
   GUID: TGUID;
   StatusText: string;
 begin
   try
+    {$ifdef fpc}
     if not TMessageDictionary.SplitStatusText(a,GUID,StatusText) then exit;
+    {$else}
+    if not TMessageDictionary.SplitStatusText(ansistring(a),GUID,StatusText) then exit;
+    {$endif}
   except
     on E: Exception do exit;
     else exit;
   end;
   TMessageDictionary.RegisterEntry(GUID,StatusText);
 end;
+
+initialization
+  TStatus.Register(stSuccess);
+  TStatus.Register(stUnknown);
 
 end.
 

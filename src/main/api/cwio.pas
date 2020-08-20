@@ -36,7 +36,6 @@ unit cwIO;
 interface
 uses
   cwUnicode
-, cwStatus
 ;
 
 type

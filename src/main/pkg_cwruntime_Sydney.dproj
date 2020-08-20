@@ -81,7 +81,6 @@
         <GenDll>true</GenDll>
         <GenPackage>true</GenPackage>
         <DCC_Namespace>System;Xml;Data;Datasnap;Web;Soap;$(DCC_Namespace)</DCC_Namespace>
-        <DCC_CBuilderOutput>All</DCC_CBuilderOutput>
         <SanitizedProjectName>pkg_cwruntime_Sydney</SanitizedProjectName>
         <DCC_UnitSearchPath>.\api;.\implementation;$(DCC_UnitSearchPath)</DCC_UnitSearchPath>
         <DCC_Description>cwRuntime by Craig Chapman for ChapmanWorld LLC</DCC_Description>

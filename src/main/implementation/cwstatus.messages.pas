@@ -228,8 +228,11 @@ begin
   //- Read off closing brace
   if Source[idx]<>'}' then exit;
   GUIDStr := GUIDStr + '}';
-  inc(idx);
+  {$ifdef fpc}
   GUID := StringToGUID(ansistring(GuidStr));
+  {$else}
+  GUID := StringToGUID(GuidStr);
+  {$endif}
   Result := True;
 end;
 

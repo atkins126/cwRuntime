@@ -32,9 +32,12 @@
 unit cwVectors;
 {$ifdef fpc}
   {$mode delphiunicode}
-  {$modeswitch arrayoperators-}
-  {.$coperators on}
-  {.$modeswitch advancedrecords+}
+//- Delphi insists on parsing the following conditional, despite {$ifdef fpc} above.
+//- So had to comment the conditional, will cause warning for earlier FPC versions which
+//- do not support modeswitch arrayoperators.
+//  {$if (FPC_VERSION>=3) and (FPC_RELEASE>=2)}
+    {$modeswitch arrayoperators-}
+//  {$endif}
 {$endif}
 
 interface

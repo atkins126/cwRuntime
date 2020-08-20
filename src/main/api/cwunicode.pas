@@ -33,9 +33,6 @@ unit cwUnicode;
 {$ifdef fpc}{$mode delphiunicode}{$endif}
 
 interface
-uses
-  cwStatus
-;
 
 {$region ' Status texts'}
 resourcestring

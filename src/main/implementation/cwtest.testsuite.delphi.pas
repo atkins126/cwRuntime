@@ -133,7 +133,6 @@ var
   TestCase: TTestCase;
   IgnoreStr: string;
 begin
-  Result := TTestResult.trError;
   //-
   TestCase := TestCaseClass.Create;
   try

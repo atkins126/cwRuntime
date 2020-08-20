@@ -201,7 +201,7 @@ begin
   inherited Create;
   fCount := Items;
   fItemSize := sizeof(T);
-  fBuffer := TBuffer.Create( fCount*sizeof(T), Align16 );
+  {$warnings off} fBuffer := TBuffer.Create( fCount*sizeof(T), Align16 ); {$warnings on}
 end;
 
 destructor TTypedBuffer<T>.Destroy;

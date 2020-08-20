@@ -589,7 +589,7 @@ begin
   fMessagedPoolCS.Acquire;
   try
     if fMessagedPool.KeyExists[ThreadName] then begin
-      TStatus.Raize(stMessagedThreadUniqueName,[ThreadName]);
+      TStatus(stMessagedThreadUniqueName).Raize([ThreadName]);
     end;
     fMessagedPool[ThreadName] := TMessagedThread.Create( MessagedThread, TSignaledCriticalSection.Create );
   finally
