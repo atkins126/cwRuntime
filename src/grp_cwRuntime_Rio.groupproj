@@ -6,6 +6,12 @@
         <Projects Include="main\pkg_cwruntime_Rio.dproj">
             <Dependencies/>
         </Projects>
+        <Projects Include="samples\cwDynLib\LoadLibSample\lib_testLoadLib_Rio.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="samples\cwDynLib\LoadLibSample\cwDynLib_LoadLibSample_Rio.dproj">
+            <Dependencies/>
+        </Projects>
     </ItemGroup>
     <ProjectExtensions>
         <Borland.Personality>Default.Personality.12</Borland.Personality>
@@ -23,14 +29,32 @@
     <Target Name="pkg_cwruntime_Rio:Make">
         <MSBuild Projects="main\pkg_cwruntime_Rio.dproj" Targets="Make"/>
     </Target>
+    <Target Name="lib_testLoadLib_Rio">
+        <MSBuild Projects="samples\cwDynLib\LoadLibSample\lib_testLoadLib_Rio.dproj"/>
+    </Target>
+    <Target Name="lib_testLoadLib_Rio:Clean">
+        <MSBuild Projects="samples\cwDynLib\LoadLibSample\lib_testLoadLib_Rio.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="lib_testLoadLib_Rio:Make">
+        <MSBuild Projects="samples\cwDynLib\LoadLibSample\lib_testLoadLib_Rio.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="cwDynLib_LoadLibSample_Rio">
+        <MSBuild Projects="samples\cwDynLib\LoadLibSample\cwDynLib_LoadLibSample_Rio.dproj"/>
+    </Target>
+    <Target Name="cwDynLib_LoadLibSample_Rio:Clean">
+        <MSBuild Projects="samples\cwDynLib\LoadLibSample\cwDynLib_LoadLibSample_Rio.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="cwDynLib_LoadLibSample_Rio:Make">
+        <MSBuild Projects="samples\cwDynLib\LoadLibSample\cwDynLib_LoadLibSample_Rio.dproj" Targets="Make"/>
+    </Target>
     <Target Name="Build">
-        <CallTarget Targets="pkg_cwruntime_Rio"/>
+        <CallTarget Targets="pkg_cwruntime_Rio;lib_testLoadLib_Rio;cwDynLib_LoadLibSample_Rio"/>
     </Target>
     <Target Name="Clean">
-        <CallTarget Targets="pkg_cwruntime_Rio:Clean"/>
+        <CallTarget Targets="pkg_cwruntime_Rio:Clean;lib_testLoadLib_Rio:Clean;cwDynLib_LoadLibSample_Rio:Clean"/>
     </Target>
     <Target Name="Make">
-        <CallTarget Targets="pkg_cwruntime_Rio:Make"/>
+        <CallTarget Targets="pkg_cwruntime_Rio:Make;lib_testLoadLib_Rio:Make;cwDynLib_LoadLibSample_Rio:Make"/>
     </Target>
     <Import Project="$(BDS)\Bin\CodeGear.Group.Targets" Condition="Exists('$(BDS)\Bin\CodeGear.Group.Targets')"/>
 </Project>

@@ -37,14 +37,14 @@ resourcestring
 
 function ReturnParameterized: TStatus;
 begin
-  Result := TStatus.Return(stParameterizedMessage,['X','Y']);
+  Result := TStatus(stParameterizedMessage).Return(['X','Y']);
 end;
 
 begin
   Writeln('A parameterized message replaces it''s placeholders with the provided parameter strings.');
   Writeln('In this next message, parameters A and B are set to ''2'' and ''5'' respectively.');
   Writeln;
-  Writeln(string( TStatus.Return(stParameterizedMessage,['2','5'])));
+  Writeln(string( TStatus(stParameterizedMessage).Return(['2','5'])));
   Writeln;
   Writeln('Such parameterized status values may also be returned from a function.');
   Writeln('This function returns the same message with A and B set to ''X'' and ''Y'' respectively.');

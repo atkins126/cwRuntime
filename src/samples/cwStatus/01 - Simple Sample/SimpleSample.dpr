@@ -109,7 +109,7 @@ begin
 
   //- Demonstrate raise on status - direct
   try
-    TStatus.Raize(stException2);
+    TStatus(stException2).Raize;
   except
     on E: EStatus do begin
       Writeln('Exception: '+e.message);
