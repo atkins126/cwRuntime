@@ -86,3 +86,4 @@ backup
 doc/html
 *.deployproj
 *.xml
+*.vrc

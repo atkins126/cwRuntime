@@ -61,14 +61,14 @@
     </PropertyGroup>
     <PropertyGroup Condition="'$(Base)'!=''">
         <Manifest_File>None</Manifest_File>
-        <DCC_BplOutput>..\..\..\out\lib\bpl</DCC_BplOutput>
-        <DCC_UnitSearchPath>..\..\..\out\lib\$(Platform)\$(Config);.\testcases;$(DCC_UnitSearchPath)</DCC_UnitSearchPath>
+        <DCC_BplOutput>..\..\..\..\out\lib\bpl</DCC_BplOutput>
+        <DCC_UnitSearchPath>..\..\..\main\api;..\..\..\main\implementation;.\testcases;$(DCC_UnitSearchPath)</DCC_UnitSearchPath>
         <VerInfo_Locale>1033</VerInfo_Locale>
         <VerInfo_Keys>CompanyName=;FileDescription=;FileVersion=1.0.0.0;InternalName=;LegalCopyright=;LegalTrademarks=;OriginalFilename=;ProductName=;ProductVersion=1.0.0.0;Comments=</VerInfo_Keys>
         <DCC_Namespace>System;Xml;Data;Datasnap;Web;Soap;$(DCC_Namespace)</DCC_Namespace>
         <SanitizedProjectName>cwTest_SampleTests_XE6</SanitizedProjectName>
-        <DCC_DcuOutput>..\..\..\out\lib\$(Platform)\$(Config)</DCC_DcuOutput>
-        <DCC_ExeOutput>..\..\..\out\bin\$(Platform)\$(Config)</DCC_ExeOutput>
+        <DCC_DcuOutput>..\..\..\..\out\lib\$(Platform)\$(Config)</DCC_DcuOutput>
+        <DCC_ExeOutput>..\..\..\..\out\bin\$(Platform)\$(Config)</DCC_ExeOutput>
         <DCC_E>false</DCC_E>
         <DCC_N>false</DCC_N>
         <DCC_S>false</DCC_S>
