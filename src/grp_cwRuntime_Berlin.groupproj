@@ -27,6 +27,9 @@
         <Projects Include="samples\cwTest\Sample Tests\cwTest_SampleTests_Berlin.dproj">
             <Dependencies/>
         </Projects>
+        <Projects Include="samples\cwThreading\01 - Running Tasks\RunningTasks_Berlin.dproj">
+            <Dependencies/>
+        </Projects>
     </ItemGroup>
     <ProjectExtensions>
         <Borland.Personality>Default.Personality.12</Borland.Personality>
@@ -107,14 +110,23 @@
     <Target Name="cwTest_SampleTests_Berlin:Make">
         <MSBuild Projects="samples\cwTest\Sample Tests\cwTest_SampleTests_Berlin.dproj" Targets="Make"/>
     </Target>
+    <Target Name="RunningTasks_Berlin">
+        <MSBuild Projects="samples\cwThreading\01 - Running Tasks\RunningTasks_Berlin.dproj"/>
+    </Target>
+    <Target Name="RunningTasks_Berlin:Clean">
+        <MSBuild Projects="samples\cwThreading\01 - Running Tasks\RunningTasks_Berlin.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="RunningTasks_Berlin:Make">
+        <MSBuild Projects="samples\cwThreading\01 - Running Tasks\RunningTasks_Berlin.dproj" Targets="Make"/>
+    </Target>
     <Target Name="Build">
-        <CallTarget Targets="pkg_cwruntime_Berlin;lib_testLoadLib_Berlin;cwDynLib_LoadLibSample_Berlin;EchoServer_Berlin;EchoClient_Berlin;SimpleSample_Berlin;ParameterizedState_Berlin;cwTest_SampleTests_Berlin"/>
+        <CallTarget Targets="pkg_cwruntime_Berlin;lib_testLoadLib_Berlin;cwDynLib_LoadLibSample_Berlin;EchoServer_Berlin;EchoClient_Berlin;SimpleSample_Berlin;ParameterizedState_Berlin;cwTest_SampleTests_Berlin;RunningTasks_Berlin"/>
     </Target>
     <Target Name="Clean">
-        <CallTarget Targets="pkg_cwruntime_Berlin:Clean;lib_testLoadLib_Berlin:Clean;cwDynLib_LoadLibSample_Berlin:Clean;EchoServer_Berlin:Clean;EchoClient_Berlin:Clean;SimpleSample_Berlin:Clean;ParameterizedState_Berlin:Clean;cwTest_SampleTests_Berlin:Clean"/>
+        <CallTarget Targets="pkg_cwruntime_Berlin:Clean;lib_testLoadLib_Berlin:Clean;cwDynLib_LoadLibSample_Berlin:Clean;EchoServer_Berlin:Clean;EchoClient_Berlin:Clean;SimpleSample_Berlin:Clean;ParameterizedState_Berlin:Clean;cwTest_SampleTests_Berlin:Clean;RunningTasks_Berlin:Clean"/>
     </Target>
     <Target Name="Make">
-        <CallTarget Targets="pkg_cwruntime_Berlin:Make;lib_testLoadLib_Berlin:Make;cwDynLib_LoadLibSample_Berlin:Make;EchoServer_Berlin:Make;EchoClient_Berlin:Make;SimpleSample_Berlin:Make;ParameterizedState_Berlin:Make;cwTest_SampleTests_Berlin:Make"/>
+        <CallTarget Targets="pkg_cwruntime_Berlin:Make;lib_testLoadLib_Berlin:Make;cwDynLib_LoadLibSample_Berlin:Make;EchoServer_Berlin:Make;EchoClient_Berlin:Make;SimpleSample_Berlin:Make;ParameterizedState_Berlin:Make;cwTest_SampleTests_Berlin:Make;RunningTasks_Berlin:Make"/>
     </Target>
     <Import Project="$(BDS)\Bin\CodeGear.Group.Targets" Condition="Exists('$(BDS)\Bin\CodeGear.Group.Targets')"/>
 </Project>
