@@ -29,7 +29,7 @@
 /// <summary>
 ///   Sample application to demonstrate loading a dynamic library with cwDynLib.
 /// </summary>
-program cwDynLib_LoadLibSample;
+program cwDynLib_LoadLibSample_XE7;
 uses
   cwDynLib
 , cwDynLib.Standard
