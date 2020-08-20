@@ -21,6 +21,9 @@
         <Projects Include="samples\cwStatus\01 - Simple Sample\SimpleSample_Seattle.dproj">
             <Dependencies/>
         </Projects>
+        <Projects Include="samples\cwStatus\02 - Parameterized\ParameterizedState_Seattle.dproj">
+            <Dependencies/>
+        </Projects>
     </ItemGroup>
     <ProjectExtensions>
         <Borland.Personality>Default.Personality.12</Borland.Personality>
@@ -83,14 +86,23 @@
     <Target Name="SimpleSample_Seattle:Make">
         <MSBuild Projects="samples\cwStatus\01 - Simple Sample\SimpleSample_Seattle.dproj" Targets="Make"/>
     </Target>
+    <Target Name="ParameterizedState_Seattle">
+        <MSBuild Projects="samples\cwStatus\02 - Parameterized\ParameterizedState_Seattle.dproj"/>
+    </Target>
+    <Target Name="ParameterizedState_Seattle:Clean">
+        <MSBuild Projects="samples\cwStatus\02 - Parameterized\ParameterizedState_Seattle.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="ParameterizedState_Seattle:Make">
+        <MSBuild Projects="samples\cwStatus\02 - Parameterized\ParameterizedState_Seattle.dproj" Targets="Make"/>
+    </Target>
     <Target Name="Build">
-        <CallTarget Targets="pkg_cwruntime_Seattle;lib_testLoadLib_Seattle;cwDynLib_LoadLibSample_Seattle;EchoServer_Seattle;EchoClient_Seattle;SimpleSample_Seattle"/>
+        <CallTarget Targets="pkg_cwruntime_Seattle;lib_testLoadLib_Seattle;cwDynLib_LoadLibSample_Seattle;EchoServer_Seattle;EchoClient_Seattle;SimpleSample_Seattle;ParameterizedState_Seattle"/>
     </Target>
     <Target Name="Clean">
-        <CallTarget Targets="pkg_cwruntime_Seattle:Clean;lib_testLoadLib_Seattle:Clean;cwDynLib_LoadLibSample_Seattle:Clean;EchoServer_Seattle:Clean;EchoClient_Seattle:Clean;SimpleSample_Seattle:Clean"/>
+        <CallTarget Targets="pkg_cwruntime_Seattle:Clean;lib_testLoadLib_Seattle:Clean;cwDynLib_LoadLibSample_Seattle:Clean;EchoServer_Seattle:Clean;EchoClient_Seattle:Clean;SimpleSample_Seattle:Clean;ParameterizedState_Seattle:Clean"/>
     </Target>
     <Target Name="Make">
-        <CallTarget Targets="pkg_cwruntime_Seattle:Make;lib_testLoadLib_Seattle:Make;cwDynLib_LoadLibSample_Seattle:Make;EchoServer_Seattle:Make;EchoClient_Seattle:Make;SimpleSample_Seattle:Make"/>
+        <CallTarget Targets="pkg_cwruntime_Seattle:Make;lib_testLoadLib_Seattle:Make;cwDynLib_LoadLibSample_Seattle:Make;EchoServer_Seattle:Make;EchoClient_Seattle:Make;SimpleSample_Seattle:Make;ParameterizedState_Seattle:Make"/>
     </Target>
     <Import Project="$(BDS)\Bin\CodeGear.Group.Targets" Condition="Exists('$(BDS)\Bin\CodeGear.Group.Targets')"/>
 </Project>
