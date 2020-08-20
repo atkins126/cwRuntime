@@ -15,6 +15,9 @@
         <Projects Include="samples\cwSockets\01-EchoServer\EchoServer_Tokyo.dproj">
             <Dependencies/>
         </Projects>
+        <Projects Include="samples\cwSockets\02_EchoClient\EchoClient_Tokyo.dproj">
+            <Dependencies/>
+        </Projects>
     </ItemGroup>
     <ProjectExtensions>
         <Borland.Personality>Default.Personality.12</Borland.Personality>
@@ -59,14 +62,23 @@
     <Target Name="EchoServer_Tokyo:Make">
         <MSBuild Projects="samples\cwSockets\01-EchoServer\EchoServer_Tokyo.dproj" Targets="Make"/>
     </Target>
+    <Target Name="EchoClient_Tokyo">
+        <MSBuild Projects="samples\cwSockets\02_EchoClient\EchoClient_Tokyo.dproj"/>
+    </Target>
+    <Target Name="EchoClient_Tokyo:Clean">
+        <MSBuild Projects="samples\cwSockets\02_EchoClient\EchoClient_Tokyo.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="EchoClient_Tokyo:Make">
+        <MSBuild Projects="samples\cwSockets\02_EchoClient\EchoClient_Tokyo.dproj" Targets="Make"/>
+    </Target>
     <Target Name="Build">
-        <CallTarget Targets="pkg_cwruntime_Tokyo;lib_testLoadLib_Tokyo;cwDynLib_LoadLibSample_Tokyo;EchoServer_Tokyo"/>
+        <CallTarget Targets="pkg_cwruntime_Tokyo;lib_testLoadLib_Tokyo;cwDynLib_LoadLibSample_Tokyo;EchoServer_Tokyo;EchoClient_Tokyo"/>
     </Target>
     <Target Name="Clean">
-        <CallTarget Targets="pkg_cwruntime_Tokyo:Clean;lib_testLoadLib_Tokyo:Clean;cwDynLib_LoadLibSample_Tokyo:Clean;EchoServer_Tokyo:Clean"/>
+        <CallTarget Targets="pkg_cwruntime_Tokyo:Clean;lib_testLoadLib_Tokyo:Clean;cwDynLib_LoadLibSample_Tokyo:Clean;EchoServer_Tokyo:Clean;EchoClient_Tokyo:Clean"/>
     </Target>
     <Target Name="Make">
-        <CallTarget Targets="pkg_cwruntime_Tokyo:Make;lib_testLoadLib_Tokyo:Make;cwDynLib_LoadLibSample_Tokyo:Make;EchoServer_Tokyo:Make"/>
+        <CallTarget Targets="pkg_cwruntime_Tokyo:Make;lib_testLoadLib_Tokyo:Make;cwDynLib_LoadLibSample_Tokyo:Make;EchoServer_Tokyo:Make;EchoClient_Tokyo:Make"/>
     </Target>
     <Import Project="$(BDS)\Bin\CodeGear.Group.Targets" Condition="Exists('$(BDS)\Bin\CodeGear.Group.Targets')"/>
 </Project>
