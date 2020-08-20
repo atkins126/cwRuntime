@@ -150,7 +150,7 @@ begin
   fSleepCS := SleepCS;
   fHandle := CreateThread(nil,0,@InternalHandler,Self,0,fThreadID);
   if fHandle=0 then begin
-    TStatus.Raize(stThreadCreateFailed);
+    TStatus(stThreadCreateFailed).Raize;
   end;
   //if AffinityMask>0 then begin
   //  SetThreadAffinityMask(fHandle,AffinityMask);

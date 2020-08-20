@@ -85,7 +85,7 @@ begin
   if not SleepConditionVariableSRW(fCondition, fMutex, INFINITE, 0) then begin
     Error:=GetLastError;
     if Error<>ERROR_TIMEOUT then begin
-      TStatus.Raize(stThreadSleepFailed);
+      TStatus(stThreadSleepFailed).Raize;
     end;
   end;
 end;

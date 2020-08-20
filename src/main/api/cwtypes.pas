@@ -761,7 +761,7 @@ var
   D: uint32;
 begin
   {$ifndef fpc}
-  {$if CompilerVersion>30}
+  {$if CompilerVersion>31}
     D := SysUtils.StrToUInt(Self);
   {$else}
     D := SysUtils.StrToInt(Self);
@@ -776,7 +776,7 @@ end;
 function TStringHelper.AsUint32: uint32;
 begin
   {$ifndef fpc}
-  {$if CompilerVersion>30}
+  {$if CompilerVersion>31}
     Result := SysUtils.StrToUInt(Self);
   {$else}
     Result := SysUtils.StrToInt(Self);
@@ -789,7 +789,7 @@ end;
 function TStringHelper.AsUint64: uint64;
 begin
   {$ifndef fpc}
-  {$if CompilerVersion>30}
+  {$if CompilerVersion>31}
     Result := SysUtils.StrToUInt64(Self);
   {$else}
     Result := SysUtils.StrToInt64(Self);
@@ -804,7 +804,7 @@ var
   D: uint32;
 begin
   {$ifndef fpc}
-  {$if CompilerVersion>30}
+  {$if CompilerVersion>31}
     D := SysUtils.StrToUInt(Self);
   {$else}
     D := SysUtils.StrToInt(Self);

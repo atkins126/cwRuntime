@@ -6221,7 +6221,7 @@ end;
 class operator sVector2.Add( const a: sVector2; const b: array of single ): sVector2;
 begin
   if length(b)<>2 then begin
-    TStatus.Raize(stInvalidArrayForVector);
+    TStatus(stInvalidArrayForVector).Raize;
   end;
   Result.X := a.X + b[0];
   Result.Y := a.Y + b[1];
@@ -6230,7 +6230,7 @@ end;
 class operator sVector2.Add( const a: array of single; const b: sVector2 ): sVector2;
 begin
   if length(a)<>2 then begin
-    TStatus.Raize(stInvalidArrayForVector);
+    TStatus(stInvalidArrayForVector).Raize;
   end;
   Result.X := b.X + a[0];
   Result.Y := b.Y + a[1];
@@ -6257,7 +6257,7 @@ end;
 class operator sVector2.Divide( const a: sVector2; const b: array of single ): sVector2;
 begin
   if length(b)<>2 then begin
-    TStatus.Raize(stInvalidArrayForVector);
+    TStatus(stInvalidArrayForVector).Raize;
   end;
   Result.X := a.X / b[0];
   Result.Y := a.Y / b[1];
@@ -6266,7 +6266,7 @@ end;
 class operator sVector2.Divide( const a: array of single; const b: sVector2 ): sVector2;
 begin
   if length(a)<>2 then begin
-    TStatus.Raize(stInvalidArrayForVector);
+    TStatus(stInvalidArrayForVector).Raize;
   end;
   Result.X := a[0] / b.X;
   Result.Y := a[1] / b.Y;
@@ -6283,7 +6283,7 @@ var
 begin
   L := Length(a);
   if (L>2) or (L=0) then begin
-    TStatus.Raize(stInvalidArrayForVector);
+    TStatus(stInvalidArrayForVector).Raize;
   end;
   {$hints off} Move(A[0],Result,sizeof(single)*L); {$hints on} //- FPC, Result not initialized (it is)
 end;
@@ -6294,7 +6294,7 @@ var
 begin
   L := Length(a);
   if (L>2) or (L=0) then begin
-    TStatus.Raize(stInvalidArrayForVector);
+    TStatus(stInvalidArrayForVector).Raize;
   end;
   {$hints off} Move(A[0],Result,sizeof(single)*L); {$hints on} //- FPC, Result not initialized (it is)
 end;
@@ -6320,7 +6320,7 @@ end;
 class operator sVector2.Multiply( const a: sVector2; const b: array of single ): sVector2;
 begin
   if length(b)<>2 then begin
-    TStatus.Raize(stInvalidArrayForVector);
+    TStatus(stInvalidArrayForVector).Raize;
   end;
   Result.X := a.X * b[0];
   Result.Y := a.Y * b[1];
@@ -6329,7 +6329,7 @@ end;
 class operator sVector2.Multiply( const a: array of single; const b: sVector2 ): sVector2;
 begin
   if length(a)<>2 then begin
-    TStatus.Raize(stInvalidArrayForVector);
+    TStatus(stInvalidArrayForVector).Raize;
   end;
   Result.X := a[0] * b.X;
   Result.Y := a[1] * b.Y;
@@ -6347,7 +6347,7 @@ end;
 class operator sVector2.Subtract( const a: sVector2; const b: array of single ): sVector2;
 begin
   if length(b)<>2 then begin
-    TStatus.Raize(stInvalidArrayForVector);
+    TStatus(stInvalidArrayForVector).Raize;
   end;
   Result.X := a.X - b[0];
   Result.Y := a.Y - b[1];
@@ -6356,7 +6356,7 @@ end;
 class operator sVector2.Subtract( const a: array of single; const b: sVector2 ): sVector2;
 begin
   if length(a)<>2 then begin
-    TStatus.Raize(stInvalidArrayForVector);
+    TStatus(stInvalidArrayForVector).Raize;
   end;
   Result.X := a[0] - b.X;
   Result.Y := a[1] - b.Y;
@@ -6402,7 +6402,7 @@ end;
 class operator dVector2.Add( const a: dVector2; const b: array of double ): dVector2;
 begin
   if length(b)<>2 then begin
-    TStatus.Raize(stInvalidArrayForVector);
+    TStatus(stInvalidArrayForVector).Raize;
   end;
   Result.X := a.X + b[0];
   Result.Y := a.Y + b[1];
@@ -6411,7 +6411,7 @@ end;
 class operator dVector2.Add( const a: array of double; const b: dVector2 ): dVector2;
 begin
   if length(a)<>2 then begin
-    TStatus.Raize(stInvalidArrayForVector);
+    TStatus(stInvalidArrayForVector).Raize;
   end;
   Result.X := b.X + a[0];
   Result.Y := b.Y + a[1];
@@ -6438,7 +6438,7 @@ end;
 class operator dVector2.Divide( const a: dVector2; const b: array of double ): dVector2;
 begin
   if length(b)<>2 then begin
-    TStatus.Raize(stInvalidArrayForVector);
+    TStatus(stInvalidArrayForVector).Raize;
   end;
   Result.X := a.X / b[0];
   Result.Y := a.Y / b[1];
@@ -6447,7 +6447,7 @@ end;
 class operator dVector2.Divide( const a: array of double; const b: dVector2 ): dVector2;
 begin
   if length(a)<>2 then begin
-    TStatus.Raize(stInvalidArrayForVector);
+    TStatus(stInvalidArrayForVector).Raize;
   end;
   Result.X := a[0] / b.X;
   Result.Y := a[1] / b.Y;
@@ -6464,7 +6464,7 @@ var
 begin
   L := Length(a);
   if (L>2) or (L=0) then begin
-    TStatus.Raize(stInvalidArrayForVector);
+    TStatus(stInvalidArrayForVector).Raize;
   end;
   {$hints off} Move(A[0],Result,sizeof(double)*L); {$hints on} //- FPC, Result not initialized (it is)
 end;
@@ -6475,7 +6475,7 @@ var
 begin
   L := Length(a);
   if (L>2) or (L=0) then begin
-    TStatus.Raize(stInvalidArrayForVector);
+    TStatus(stInvalidArrayForVector).Raize;
   end;
   {$hints off} Move(A[0],Result,sizeof(double)*L); {$hints on} //- FPC, Result not initialized (it is)
 end;
@@ -6501,7 +6501,7 @@ end;
 class operator dVector2.Multiply( const a: dVector2; const b: array of double ): dVector2;
 begin
   if length(b)<>2 then begin
-    TStatus.Raize(stInvalidArrayForVector);
+    TStatus(stInvalidArrayForVector).Raize;
   end;
   Result.X := a.X * b[0];
   Result.Y := a.Y * b[1];
@@ -6510,7 +6510,7 @@ end;
 class operator dVector2.Multiply( const a: array of double; const b: dVector2 ): dVector2;
 begin
   if length(a)<>2 then begin
-    TStatus.Raize(stInvalidArrayForVector);
+    TStatus(stInvalidArrayForVector).Raize;
   end;
   Result.X := a[0] * b.X;
   Result.Y := a[1] * b.Y;
@@ -6528,7 +6528,7 @@ end;
 class operator dVector2.Subtract( const a: dVector2; const b: array of double ): dVector2;
 begin
   if length(b)<>2 then begin
-    TStatus.Raize(stInvalidArrayForVector);
+    TStatus(stInvalidArrayForVector).Raize;
   end;
   Result.X := a.X - b[0];
   Result.Y := a.Y - b[1];
@@ -6537,7 +6537,7 @@ end;
 class operator dVector2.Subtract( const a: array of double; const b: dVector2 ): dVector2;
 begin
   if length(a)<>2 then begin
-    TStatus.Raize(stInvalidArrayForVector);
+    TStatus(stInvalidArrayForVector).Raize;
   end;
   Result.X := a[0] - b.X;
   Result.Y := a[1] - b.Y;
@@ -6583,7 +6583,7 @@ end;
 class operator eVector2.Add( const a: eVector2; const b: array of extended ): eVector2;
 begin
   if length(b)<>2 then begin
-    TStatus.Raize(stInvalidArrayForVector);
+    TStatus(stInvalidArrayForVector).Raize;
   end;
   Result.X := a.X + b[0];
   Result.Y := a.Y + b[1];
@@ -6592,7 +6592,7 @@ end;
 class operator eVector2.Add( const a: array of extended; const b: eVector2 ): eVector2;
 begin
   if length(a)<>2 then begin
-    TStatus.Raize(stInvalidArrayForVector);
+    TStatus(stInvalidArrayForVector).Raize;
   end;
   Result.X := b.X + a[0];
   Result.Y := b.Y + a[1];
@@ -6619,7 +6619,7 @@ end;
 class operator eVector2.Divide( const a: eVector2; const b: array of extended ): eVector2;
 begin
   if length(b)<>2 then begin
-    TStatus.Raize(stInvalidArrayForVector);
+    TStatus(stInvalidArrayForVector).Raize;
   end;
   Result.X := a.X / b[0];
   Result.Y := a.Y / b[1];
@@ -6628,7 +6628,7 @@ end;
 class operator eVector2.Divide( const a: array of extended; const b: eVector2 ): eVector2;
 begin
   if length(a)<>2 then begin
-    TStatus.Raize(stInvalidArrayForVector);
+    TStatus(stInvalidArrayForVector).Raize;
   end;
   Result.X := a[0] / b.X;
   Result.Y := a[1] / b.Y;
@@ -6645,7 +6645,7 @@ var
 begin
   L := Length(a);
   if (L>2) or (L=0) then begin
-    TStatus.Raize(stInvalidArrayForVector);
+    TStatus(stInvalidArrayForVector).Raize;
   end;
   {$hints off} Move(A[0],Result,sizeof(extended)*L); {$hints on} //- FPC, Result not initialized (it is)
 end;
@@ -6656,7 +6656,7 @@ var
 begin
   L := Length(a);
   if (L>2) or (L=0) then begin
-    TStatus.Raize(stInvalidArrayForVector);
+    TStatus(stInvalidArrayForVector).Raize;
   end;
   Result.X := A[0];
   Result.Y := A[1];
@@ -6683,7 +6683,7 @@ end;
 class operator eVector2.Multiply( const a: eVector2; const b: array of extended ): eVector2;
 begin
   if length(b)<>2 then begin
-    TStatus.Raize(stInvalidArrayForVector);
+    TStatus(stInvalidArrayForVector).Raize;
   end;
   Result.X := a.X * b[0];
   Result.Y := a.Y * b[1];
@@ -6692,7 +6692,7 @@ end;
 class operator eVector2.Multiply( const a: array of extended; const b: eVector2 ): eVector2;
 begin
   if length(a)<>2 then begin
-    TStatus.Raize(stInvalidArrayForVector);
+    TStatus(stInvalidArrayForVector).Raize;
   end;
   Result.X := a[0] * b.X;
   Result.Y := a[1] * b.Y;
@@ -6710,7 +6710,7 @@ end;
 class operator eVector2.Subtract( const a: eVector2; const b: array of extended ): eVector2;
 begin
   if length(b)<>2 then begin
-    TStatus.Raize(stInvalidArrayForVector);
+    TStatus(stInvalidArrayForVector).Raize;
   end;
   Result.X := a.X - b[0];
   Result.Y := a.Y - b[1];
@@ -6719,7 +6719,7 @@ end;
 class operator eVector2.Subtract( const a: array of extended; const b: eVector2 ): eVector2;
 begin
   if length(a)<>2 then begin
-    TStatus.Raize(stInvalidArrayForVector);
+    TStatus(stInvalidArrayForVector).Raize;
   end;
   Result.X := a[0] - b.X;
   Result.Y := a[1] - b.Y;
@@ -6767,7 +6767,7 @@ end;
 class operator sVector3.Add( const a: sVector3; const b: array of single ): sVector3;
 begin
   if length(b)<>3 then begin
-    TStatus.Raize(stInvalidArrayForVector);
+    TStatus(stInvalidArrayForVector).Raize;
   end;
   Result.X := a.X + b[0];
   Result.Y := a.Y + b[1];
@@ -6777,7 +6777,7 @@ end;
 class operator sVector3.Add( const a: array of single; const b: sVector3 ): sVector3;
 begin
   if length(a)<>3 then begin
-    TStatus.Raize(stInvalidArrayForVector);
+    TStatus(stInvalidArrayForVector).Raize;
   end;
   Result.X := a[0] + b.X;
   Result.Y := a[1] + b.Y;
@@ -6815,7 +6815,7 @@ end;
 class operator sVector3.Divide( const a: sVector3; const b: array of single ): sVector3;
 begin
   if length(b)<>3 then begin
-    TStatus.Raize(stInvalidArrayForVector);
+    TStatus(stInvalidArrayForVector).Raize;
   end;
   Result.X := a.X / b[0];
   Result.Y := a.Y / b[1];
@@ -6825,7 +6825,7 @@ end;
 class operator sVector3.Divide( const a: array of single; const b: sVector3 ): sVector3;
 begin
   if length(a)<>3 then begin
-    TStatus.Raize(stInvalidArrayForVector);
+    TStatus(stInvalidArrayForVector).Raize;
   end;
   Result.X := a[0] / b.X;
   Result.Y := a[1] / b.Y;
@@ -6865,7 +6865,7 @@ var
 begin
   L := Length(a);
   if (L>3) or (L=0) then begin
-    TStatus.Raize(stInvalidArrayForVector);
+    TStatus(stInvalidArrayForVector).Raize;
   end;
   {$hints off} Move(A[0],Result,sizeof(single)*L); {$hints on} //- FPC, Result not initialized (it is)
 end;
@@ -6876,7 +6876,7 @@ var
 begin
   L := Length(a);
   if (L>3) or (L=0) then begin
-    TStatus.Raize(stInvalidArrayForVector);
+    TStatus(stInvalidArrayForVector).Raize;
   end;
   {$hints off} Move(A[0],Result,sizeof(single)*L); {$hints on} //- FPC, Result not initialized (it is)
 end;
@@ -6890,7 +6890,7 @@ end;
 class operator sVector3.Multiply( const a: sVector3; const b: array of single ): sVector3;
 begin
   if length(b)<>3 then begin
-    TStatus.Raize(stInvalidArrayForVector);
+    TStatus(stInvalidArrayForVector).Raize;
   end;
   Result.X := a.X * b[0];
   Result.Y := a.Y * b[1];
@@ -6900,7 +6900,7 @@ end;
 class operator sVector3.Multiply( const a: array of single; const b: sVector3 ): sVector3;
 begin
   if length(a)<>3 then begin
-    TStatus.Raize(stInvalidArrayForVector);
+    TStatus(stInvalidArrayForVector).Raize;
   end;
   Result.X := a[0] * b.X;
   Result.Y := a[1] * b.Y;
@@ -6934,7 +6934,7 @@ end;
 class operator sVector3.Subtract( const a: sVector3; const b: array of single ): sVector3;
 begin
   if length(b)<>3 then begin
-    TStatus.Raize(stInvalidArrayForVector);
+    TStatus(stInvalidArrayForVector).Raize;
   end;
   Result.X := a.X - b[0];
   Result.Y := a.Y - b[1];
@@ -6944,7 +6944,7 @@ end;
 class operator sVector3.Subtract( const a: array of single; const b: sVector3 ): sVector3;
 begin
   if length(a)<>3 then begin
-    TStatus.Raize(stInvalidArrayForVector);
+    TStatus(stInvalidArrayForVector).Raize;
   end;
   Result.X := a[0] - b.X;
   Result.Y := a[1] - b.Y;
@@ -6996,7 +6996,7 @@ end;
 class operator dVector3.Add( const a: dVector3; const b: array of double ): dVector3;
 begin
   if length(b)<>3 then begin
-    TStatus.Raize(stInvalidArrayForVector);
+    TStatus(stInvalidArrayForVector).Raize;
   end;
   Result.X := a.X + b[0];
   Result.Y := a.Y + b[1];
@@ -7006,7 +7006,7 @@ end;
 class operator dVector3.Add( const a: array of double; const b: dVector3 ): dVector3;
 begin
   if length(a)<>3 then begin
-    TStatus.Raize(stInvalidArrayForVector);
+    TStatus(stInvalidArrayForVector).Raize;
   end;
   Result.X := a[0] + b.X;
   Result.Y := a[1] + b.Y;
@@ -7044,7 +7044,7 @@ end;
 class operator dVector3.Divide( const a: dVector3; const b: array of double ): dVector3;
 begin
   if length(b)<>3 then begin
-    TStatus.Raize(stInvalidArrayForVector);
+    TStatus(stInvalidArrayForVector).Raize;
   end;
   Result.X := a.X / b[0];
   Result.Y := a.Y / b[1];
@@ -7054,7 +7054,7 @@ end;
 class operator dVector3.Divide( const a: array of double; const b: dVector3 ): dVector3;
 begin
   if length(a)<>3 then begin
-    TStatus.Raize(stInvalidArrayForVector);
+    TStatus(stInvalidArrayForVector).Raize;
   end;
   Result.X := a[0] / b.X;
   Result.Y := a[1] / b.Y;
@@ -7094,7 +7094,7 @@ var
 begin
   L := Length(a);
   if (L>3) or (L=0) then begin
-    TStatus.Raize(stInvalidArrayForVector);
+    TStatus(stInvalidArrayForVector).Raize;
   end;
   {$hints off} Move(A[0],Result,sizeof(double)*L); {$hints on} //- FPC, Result not initialized (it is)
 end;
@@ -7105,7 +7105,7 @@ var
 begin
   L := Length(a);
   if (L>3) or (L=0) then begin
-    TStatus.Raize(stInvalidArrayForVector);
+    TStatus(stInvalidArrayForVector).Raize;
   end;
   {$hints off} Move(A[0],Result,sizeof(double)*L); {$hints on} //- FPC, Result not initialized (it is)
 end;
@@ -7119,7 +7119,7 @@ end;
 class operator dVector3.Multiply( const a: dVector3; const b: array of double ): dVector3;
 begin
   if length(b)<>3 then begin
-    TStatus.Raize(stInvalidArrayForVector);
+    TStatus(stInvalidArrayForVector).Raize;
   end;
   Result.X := a.X * b[0];
   Result.Y := a.Y * b[1];
@@ -7129,7 +7129,7 @@ end;
 class operator dVector3.Multiply( const a: array of double; const b: dVector3 ): dVector3;
 begin
   if length(a)<>3 then begin
-    TStatus.Raize(stInvalidArrayForVector);
+    TStatus(stInvalidArrayForVector).Raize;
   end;
   Result.X := a[0] * b.X;
   Result.Y := a[1] * b.Y;
@@ -7163,7 +7163,7 @@ end;
 class operator dVector3.Subtract( const a: dVector3; const b: array of double ): dVector3;
 begin
   if length(b)<>3 then begin
-    TStatus.Raize(stInvalidArrayForVector);
+    TStatus(stInvalidArrayForVector).Raize;
   end;
   Result.X := a.X - b[0];
   Result.Y := a.Y - b[1];
@@ -7173,7 +7173,7 @@ end;
 class operator dVector3.Subtract( const a: array of double; const b: dVector3 ): dVector3;
 begin
   if length(a)<>3 then begin
-    TStatus.Raize(stInvalidArrayForVector);
+    TStatus(stInvalidArrayForVector).Raize;
   end;
   Result.X := a[0] - b.X;
   Result.Y := a[1] - b.Y;
@@ -7225,7 +7225,7 @@ end;
 class operator eVector3.Add( const a: eVector3; const b: array of extended ): eVector3;
 begin
   if length(b)<>3 then begin
-    TStatus.Raize(stInvalidArrayForVector);
+    TStatus(stInvalidArrayForVector).Raize;
   end;
   Result.X := a.X + b[0];
   Result.Y := a.Y + b[1];
@@ -7235,7 +7235,7 @@ end;
 class operator eVector3.Add( const a: array of extended; const b: eVector3 ): eVector3;
 begin
   if length(a)<>3 then begin
-    TStatus.Raize(stInvalidArrayForVector);
+    TStatus(stInvalidArrayForVector).Raize;
   end;
   Result.X := a[0] + b.X;
   Result.Y := a[1] + b.Y;
@@ -7273,7 +7273,7 @@ end;
 class operator eVector3.Divide( const a: eVector3; const b: array of extended ): eVector3;
 begin
   if length(b)<>3 then begin
-    TStatus.Raize(stInvalidArrayForVector);
+    TStatus(stInvalidArrayForVector).Raize;
   end;
   Result.X := a.X / b[0];
   Result.Y := a.Y / b[1];
@@ -7283,7 +7283,7 @@ end;
 class operator eVector3.Divide( const a: array of extended; const b: eVector3 ): eVector3;
 begin
   if length(a)<>3 then begin
-    TStatus.Raize(stInvalidArrayForVector);
+    TStatus(stInvalidArrayForVector).Raize;
   end;
   Result.X := a[0] / b.X;
   Result.Y := a[1] / b.Y;
@@ -7323,7 +7323,7 @@ var
 begin
   L := Length(a);
   if (L>3) or (L=0) then begin
-    TStatus.Raize(stInvalidArrayForVector);
+    TStatus(stInvalidArrayForVector).Raize;
   end;
   Result.X := A[0];
   Result.Y := A[1];
@@ -7336,7 +7336,7 @@ var
 begin
   L := Length(a);
   if (L>3) or (L=0) then begin
-    TStatus.Raize(stInvalidArrayForVector);
+    TStatus(stInvalidArrayForVector).Raize;
   end;
   {$hints off} Move(A[0],Result,sizeof(extended)*L); {$hints on} //- FPC, Result not initialized (it is)
 end;
@@ -7350,7 +7350,7 @@ end;
 class operator eVector3.Multiply( const a: eVector3; const b: array of extended ): eVector3;
 begin
   if length(b)<>3 then begin
-    TStatus.Raize(stInvalidArrayForVector);
+    TStatus(stInvalidArrayForVector).Raize;
   end;
   Result.X := a.X * b[0];
   Result.Y := a.Y * b[1];
@@ -7360,7 +7360,7 @@ end;
 class operator eVector3.Multiply( const a: array of extended; const b: eVector3 ): eVector3;
 begin
   if length(a)<>3 then begin
-    TStatus.Raize(stInvalidArrayForVector);
+    TStatus(stInvalidArrayForVector).Raize;
   end;
   Result.X := a[0] * b.X;
   Result.Y := a[1] * b.Y;
@@ -7394,7 +7394,7 @@ end;
 class operator eVector3.Subtract( const a: eVector3; const b: array of extended ): eVector3;
 begin
   if length(b)<>3 then begin
-    TStatus.Raize(stInvalidArrayForVector);
+    TStatus(stInvalidArrayForVector).Raize;
   end;
   Result.X := a.X - b[0];
   Result.Y := a.Y - b[1];
@@ -7404,7 +7404,7 @@ end;
 class operator eVector3.Subtract( const a: array of extended; const b: eVector3 ): eVector3;
 begin
   if length(a)<>3 then begin
-    TStatus.Raize(stInvalidArrayForVector);
+    TStatus(stInvalidArrayForVector).Raize;
   end;
   Result.X := a[0] - b.X;
   Result.Y := a[1] - b.Y;
@@ -7458,7 +7458,7 @@ end;
 class operator sVector4.Add( const a: sVector4; const b: array of single ): sVector4;
 begin
   if length(b)<>4 then begin
-    TStatus.Raize(stInvalidArrayForVector);
+    TStatus(stInvalidArrayForVector).Raize;
   end;
   Result.X := a.X + b[0];
   Result.Y := a.Y + b[1];
@@ -7469,7 +7469,7 @@ end;
 class operator sVector4.Add( const a: array of single; const b: sVector4 ): sVector4;
 begin
   if length(a)<>4 then begin
-    TStatus.Raize(stInvalidArrayForVector);
+    TStatus(stInvalidArrayForVector).Raize;
   end;
   Result.X := a[0] + b.X;
   Result.Y := a[1] + b.Y;
@@ -7504,7 +7504,7 @@ end;
 class operator sVector4.Divide( const a: sVector4; const b: array of single ): sVector4;
 begin
   if length(b)<>4 then begin
-    TStatus.Raize(stInvalidArrayForVector);
+    TStatus(stInvalidArrayForVector).Raize;
   end;
   Result.X := a.X / b[0];
   Result.Y := a.Y / b[1];
@@ -7515,7 +7515,7 @@ end;
 class operator sVector4.Divide( const a: array of single; const b: sVector4 ): sVector4;
 begin
   if length(a)<>4 then begin
-    TStatus.Raize(stInvalidArrayForVector);
+    TStatus(stInvalidArrayForVector).Raize;
   end;
   Result.X := a[0] / b.X;
   Result.Y := a[1] / b.Y;
@@ -7537,7 +7537,7 @@ end;
 class operator sVector4.Multiply( const a: sVector4; const b: array of single ): sVector4;
 begin
   if length(b)<>4 then begin
-    TStatus.Raize(stInvalidArrayForVector);
+    TStatus(stInvalidArrayForVector).Raize;
   end;
   Result.X := a.X * b[0];
   Result.Y := a.Y * b[1];
@@ -7548,7 +7548,7 @@ end;
 class operator sVector4.Multiply( const a: array of single; const b: sVector4 ): sVector4;
 begin
   if length(a)<>4 then begin
-    TStatus.Raize(stInvalidArrayForVector);
+    TStatus(stInvalidArrayForVector).Raize;
   end;
   Result.X := a[0] * b.X;
   Result.Y := a[1] * b.Y;
@@ -7586,7 +7586,7 @@ end;
 class operator sVector4.Subtract( const a: sVector4; const b: array of single ): sVector4;
 begin
   if length(b)<>4 then begin
-    TStatus.Raize(stInvalidArrayForVector);
+    TStatus(stInvalidArrayForVector).Raize;
   end;
   Result.X := a.X - b[0];
   Result.Y := a.Y - b[1];
@@ -7597,7 +7597,7 @@ end;
 class operator sVector4.Subtract( const a: array of single; const b: sVector4 ): sVector4;
 begin
   if length(a)<>4 then begin
-    TStatus.Raize(stInvalidArrayForVector);
+    TStatus(stInvalidArrayForVector).Raize;
   end;
   Result.X := a[0] - b.X;
   Result.Y := a[1] - b.Y;
@@ -7684,7 +7684,7 @@ var
 begin
   L := Length(a);
   if (L>4) or (L=0) then begin
-    TStatus.Raize(stInvalidArrayForVector);
+    TStatus(stInvalidArrayForVector).Raize;
   end;
   {$hints off} Move(A[0],Result,sizeof(single)*L); {$hints on} //- FPC, Result not initialized (it is)
 end;
@@ -7695,7 +7695,7 @@ var
 begin
   L := Length(a);
   if (L>4) or (L=0) then begin
-    TStatus.Raize(stInvalidArrayForVector);
+    TStatus(stInvalidArrayForVector).Raize;
   end;
   {$hints off} Move(A[0],Result,sizeof(single)*L); {$hints on} //- FPC, Result not initialized (it is)
 end;
@@ -7723,7 +7723,7 @@ end;
 class operator dVector4.Add( const a: dVector4; const b: array of double ): dVector4;
 begin
   if length(b)<>4 then begin
-    TStatus.Raize(stInvalidArrayForVector);
+    TStatus(stInvalidArrayForVector).Raize;
   end;
   Result.X := a.X + b[0];
   Result.Y := a.Y + b[1];
@@ -7734,7 +7734,7 @@ end;
 class operator dVector4.Add( const a: array of double; const b: dVector4 ): dVector4;
 begin
   if length(a)<>4 then begin
-    TStatus.Raize(stInvalidArrayForVector);
+    TStatus(stInvalidArrayForVector).Raize;
   end;
   Result.X := a[0] + b.X;
   Result.Y := a[1] + b.Y;
@@ -7769,7 +7769,7 @@ end;
 class operator dVector4.Divide( const a: dVector4; const b: array of double ): dVector4;
 begin
   if length(b)<>4 then begin
-    TStatus.Raize(stInvalidArrayForVector);
+    TStatus(stInvalidArrayForVector).Raize;
   end;
   Result.X := a.X / b[0];
   Result.Y := a.Y / b[1];
@@ -7780,7 +7780,7 @@ end;
 class operator dVector4.Divide( const a: array of double; const b: dVector4 ): dVector4;
 begin
   if length(a)<>4 then begin
-    TStatus.Raize(stInvalidArrayForVector);
+    TStatus(stInvalidArrayForVector).Raize;
   end;
   Result.X := a[0] / b.X;
   Result.Y := a[1] / b.Y;
@@ -7802,7 +7802,7 @@ end;
 class operator dVector4.Multiply( const a: dVector4; const b: array of double ): dVector4;
 begin
   if length(b)<>4 then begin
-    TStatus.Raize(stInvalidArrayForVector);
+    TStatus(stInvalidArrayForVector).Raize;
   end;
   Result.X := a.X * b[0];
   Result.Y := a.Y * b[1];
@@ -7813,7 +7813,7 @@ end;
 class operator dVector4.Multiply( const a: array of double; const b: dVector4 ): dVector4;
 begin
   if length(a)<>4 then begin
-    TStatus.Raize(stInvalidArrayForVector);
+    TStatus(stInvalidArrayForVector).Raize;
   end;
   Result.X := a[0] * b.X;
   Result.Y := a[1] * b.Y;
@@ -7851,7 +7851,7 @@ end;
 class operator dVector4.Subtract( const a: dVector4; const b: array of double ): dVector4;
 begin
   if length(b)<>4 then begin
-    TStatus.Raize(stInvalidArrayForVector);
+    TStatus(stInvalidArrayForVector).Raize;
   end;
   Result.X := a.X - b[0];
   Result.Y := a.Y - b[1];
@@ -7862,7 +7862,7 @@ end;
 class operator dVector4.Subtract( const a: array of double; const b: dVector4 ): dVector4;
 begin
   if length(a)<>4 then begin
-    TStatus.Raize(stInvalidArrayForVector);
+    TStatus(stInvalidArrayForVector).Raize;
   end;
   Result.X := a[0] - b.X;
   Result.Y := a[1] - b.Y;
@@ -7949,7 +7949,7 @@ var
 begin
   L := Length(a);
   if (L>4) or (L=0) then begin
-    TStatus.Raize(stInvalidArrayForVector);
+    TStatus(stInvalidArrayForVector).Raize;
   end;
   {$hints off} Move(A[0],Result,sizeof(double)*L); {$hints on} //- FPC, Result not initialized (it is)
 end;
@@ -7960,7 +7960,7 @@ var
 begin
   L := Length(a);
   if (L>4) or (L=0) then begin
-    TStatus.Raize(stInvalidArrayForVector);
+    TStatus(stInvalidArrayForVector).Raize;
   end;
   {$hints off} Move(A[0],Result,sizeof(double)*L); {$hints on} //- FPC, Result not initialized (it is)
 end;
@@ -7988,7 +7988,7 @@ end;
 class operator eVector4.Add( const a: eVector4; const b: array of extended ): eVector4;
 begin
   if length(b)<>4 then begin
-    TStatus.Raize(stInvalidArrayForVector);
+    TStatus(stInvalidArrayForVector).Raize;
   end;
   Result.X := a.X + b[0];
   Result.Y := a.Y + b[1];
@@ -7999,7 +7999,7 @@ end;
 class operator eVector4.Add( const a: array of extended; const b: eVector4 ): eVector4;
 begin
   if length(a)<>4 then begin
-    TStatus.Raize(stInvalidArrayForVector);
+    TStatus(stInvalidArrayForVector).Raize;
   end;
   Result.X := a[0] + b.X;
   Result.Y := a[1] + b.Y;
@@ -8034,7 +8034,7 @@ end;
 class operator eVector4.Divide( const a: eVector4; const b: array of extended ): eVector4;
 begin
   if length(b)<>4 then begin
-    TStatus.Raize(stInvalidArrayForVector);
+    TStatus(stInvalidArrayForVector).Raize;
   end;
   Result.X := a.X / b[0];
   Result.Y := a.Y / b[1];
@@ -8045,7 +8045,7 @@ end;
 class operator eVector4.Divide( const a: array of extended; const b: eVector4 ): eVector4;
 begin
   if length(a)<>4 then begin
-    TStatus.Raize(stInvalidArrayForVector);
+    TStatus(stInvalidArrayForVector).Raize;
   end;
   Result.X := a[0] / b.X;
   Result.Y := a[1] / b.Y;
@@ -8067,7 +8067,7 @@ end;
 class operator eVector4.Multiply( const a: eVector4; const b: array of extended ): eVector4;
 begin
   if length(b)<>4 then begin
-    TStatus.Raize(stInvalidArrayForVector);
+    TStatus(stInvalidArrayForVector).Raize;
   end;
   Result.X := a.X * b[0];
   Result.Y := a.Y * b[1];
@@ -8078,7 +8078,7 @@ end;
 class operator eVector4.Multiply( const a: array of extended; const b: eVector4 ): eVector4;
 begin
   if length(a)<>4 then begin
-    TStatus.Raize(stInvalidArrayForVector);
+    TStatus(stInvalidArrayForVector).Raize;
   end;
   Result.X := a[0] * b.X;
   Result.Y := a[1] * b.Y;
@@ -8116,7 +8116,7 @@ end;
 class operator eVector4.Subtract( const a: eVector4; const b: array of extended ): eVector4;
 begin
   if length(b)<>4 then begin
-    TStatus.Raize(stInvalidArrayForVector);
+    TStatus(stInvalidArrayForVector).Raize;
   end;
   Result.X := a.X - b[0];
   Result.Y := a.Y - b[1];
@@ -8127,7 +8127,7 @@ end;
 class operator eVector4.Subtract( const a: array of extended; const b: eVector4 ): eVector4;
 begin
   if length(a)<>4 then begin
-    TStatus.Raize(stInvalidArrayForVector);
+    TStatus(stInvalidArrayForVector).Raize;
   end;
   Result.X := a[0] - b.X;
   Result.Y := a[1] - b.Y;
@@ -8214,7 +8214,7 @@ var
 begin
   L := Length(a);
   if (L>4) or (L=0) then begin
-    TStatus.Raize(stInvalidArrayForVector);
+    TStatus(stInvalidArrayForVector).Raize;
   end;
   Result.X := A[0];
   Result.Y := A[1];
@@ -8228,7 +8228,7 @@ var
 begin
   L := Length(a);
   if (L>4) or (L=0) then begin
-    TStatus.Raize(stInvalidArrayForVector);
+    TStatus(stInvalidArrayForVector).Raize;
   end;
   {$hints off} Move(A[0],Result,sizeof(extended)*L); {$hints on} //- FPC, Result not initialized (it is)
 end;

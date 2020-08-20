@@ -76,11 +76,11 @@ type
   ///  </summary>
   TDictionary<K,V> = record
     {$ifdef fpc}
-    class function Create( const KeyCompare: TCompareGlobal<K>; const Granularity: nativeuint = 32; const isOrdered: boolean = false; const isPruned: boolean = false ): IDictionary<K,V>; static; overload;
-    class function Create( const KeyCompare: TCompareOfObject<K>; const Granularity: nativeuint = 32; const isOrdered: boolean = false; const isPruned: boolean = false ): IDictionary<K,V>; static; overload;
-    class function Create( const KeyCompare: TCompareNested<K>; const Granularity: nativeuint = 32; const isOrdered: boolean = false; const isPruned: boolean = false ): IDictionary<K,V>; static; overload;
+    class function Create( const KeyCompare: TCompareGlobal<K>; const Granularity: nativeuint = 32; const isOrdered: boolean = false; const isPruned: boolean = false ): IDictionary<K,V>; overload; static;
+    class function Create( const KeyCompare: TCompareOfObject<K>; const Granularity: nativeuint = 32; const isOrdered: boolean = false; const isPruned: boolean = false ): IDictionary<K,V>; overload; static;
+    class function Create( const KeyCompare: TCompareNested<K>; const Granularity: nativeuint = 32; const isOrdered: boolean = false; const isPruned: boolean = false ): IDictionary<K,V>; overload; static;
     {$else}
-    class function Create( const KeyCompare: TCompare<K>; const Granularity: nativeuint = 32; const isOrdered: boolean = false; const isPruned: boolean = false ): IDictionary<K,V>; static; overload;
+    class function Create( const KeyCompare: TCompare<K>; const Granularity: nativeuint = 32; const isOrdered: boolean = false; const isPruned: boolean = false ): IDictionary<K,V>; overload; static;
     {$endif}
 
   end;
@@ -140,9 +140,9 @@ end;
 {$endif}
 
 {$ifndef fpc}
-class function TDictionary<K,V>.Create( const KeyCompare: TCompare<K>; const Granularity: nativeuint = 32; const isOrdered: boolean = false; const isPruned: boolean = false ): IDictionary<K,V>; static;
+class function TDictionary<K,V>.Create( const KeyCompare: TCompare<K>; const Granularity: nativeuint = 32; const isOrdered: boolean = false; const isPruned: boolean = false ): IDictionary<K,V>;
 begin
-  Result := TStandardDictionary<K,V>.Create( KeyComare, Granularity, isOrdered, isPruned );
+  Result := TStandardDictionary<K,V>.Create( KeyCompare, Granularity, isOrdered, isPruned );
 end;
 {$endif}
 

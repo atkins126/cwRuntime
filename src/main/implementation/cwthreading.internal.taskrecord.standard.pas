@@ -54,6 +54,11 @@ type
   end;
 
 implementation
+{$ifdef MSWINDOWS}
+uses
+  cwWin32.Kernel32
+;
+{$endif}
 
 procedure TTaskRecord.Execute;
 begin

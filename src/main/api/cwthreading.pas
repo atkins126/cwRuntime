@@ -137,7 +137,7 @@ type
   ///   execute call have completed. See IThreadSystem.Execute().
   /// </summary>
   {$ifndef fpc}
-  TOnComplete = reference to proceudure;
+  TOnComplete = reference to procedure;
   {$else}
   /// <exclude/>
   TOnCompleteGlobal = procedure;
@@ -160,7 +160,7 @@ type
   ///   describes the portion of the loop that it is responsible for. <br/>
   /// </summary>
   {$ifndef fpc}
-  TOnExecute = reference to proceudure( const start: nativeuint; const stop: nativeuint );
+  TOnExecute = reference to procedure( const start: nativeuint; const stop: nativeuint );
   {$else}
   /// <exclude/>
   TOnExecuteGlobal = procedure( const start: nativeuint; const stop: nativeuint );
@@ -293,23 +293,23 @@ type
     /// <summary>
     ///   This overload of Create() enables the creation of a message without any parameters.
     /// </summary>
-    class function Create( const Value: nativeuint ): TMessage; static; overload;
+    class function Create( const Value: nativeuint ): TMessage; overload; static;
     /// <summary>
     ///   This overload of Create() enables the creation of a message a single parameter.
     /// </summary>
-    class function Create( const Value: nativeuint; A: TMessageParameter ): TMessage; static; overload;
+    class function Create( const Value: nativeuint; A: TMessageParameter ): TMessage; overload; static;
     /// <summary>
     ///   This overload of Create() enables the creation of a message two parameters.
     /// </summary>
-    class function Create( const Value: nativeuint; A, B: TMessageParameter ): TMessage; static; overload;
+    class function Create( const Value: nativeuint; A, B: TMessageParameter ): TMessage; overload; static;
     /// <summary>
     ///   This overload of Create() enables the creation of a message three parameters.
     /// </summary>
-    class function Create( const Value: nativeuint; A, B, C: TMessageParameter ): TMessage; static; overload;
+    class function Create( const Value: nativeuint; A, B, C: TMessageParameter ): TMessage; overload; static;
     /// <summary>
     ///   This overload of Create() enables the creation of a message four parameters.
     /// </summary>
-    class function Create( const Value: nativeuint; A, B, C, D: TMessageParameter ): TMessage; static; overload;
+    class function Create( const Value: nativeuint; A, B, C, D: TMessageParameter ): TMessage; overload; static;
   end;
 
 {$endregion}
@@ -682,7 +682,7 @@ type
     ///    A messaged thread may also be terminated by removing it from the
     ///    thread system with a call to IThreadSystem.Remove().
     ///  </summary>
-    procedure Execute( const ThreadName: string; const MessagedThread: IMessagedThread );
+    procedure Execute( const ThreadName: string; const MessagedThread: IMessagedThread ); overload;
 
     ///  <summary>
     ///    Returns an instance of IMessageChannel which may be used to

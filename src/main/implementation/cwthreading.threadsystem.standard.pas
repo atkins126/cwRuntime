@@ -98,7 +98,7 @@ type
     procedure Execute( const Threads: array of ILongThread ); overload;
 
   strict private //- IThreadingSystem (MessagedThread execution) -//
-    procedure Execute( const ThreadName: string; const MessagedThread: IMessagedThread );
+    procedure Execute( const ThreadName: string; const MessagedThread: IMessagedThread ); overload;
     function getMessageChannel( const ThreadName: string ): IMessageChannel;
 
   strict private //- IThreadingSystem (Remaining) -//
@@ -119,6 +119,9 @@ uses
 , cwThreading.Internal.ForLoopTask.Standard
 , cwThreading.Internal.Thread.LongThread
 , cwThreading.Internal.Thread.MessagedThread
+{$ifndef fpc}
+, SysUtils // for CPUCount
+{$endif}
 {$ifdef MSWINDOWS}
 , cwWin32.Kernel32
 , cwThreading.CriticalSection.Windows
@@ -133,7 +136,7 @@ uses
 {$region ' Task Execution'}
 
 {$ifndef fpc}
-procedure TThreadSystem.Execute(const Tasks: array of ITask; const WhenDone: TTasksCompleteNotification );
+procedure TThreadSystem.Execute(const Tasks: array of ITask; const WhenDone: TOnComplete );
 begin
   if Length(Tasks)=0 then exit;
   fTaskPool.AddTaskSet(Tasks,WhenDone);
@@ -167,15 +170,31 @@ end;
 procedure TThreadSystem.Execute(const Tasks: array of ITask; const WaitFor: boolean = FALSE);
 var
   Complete: boolean;
+
+  {$ifdef fpc}
   procedure DoOnComplete;
   begin
     Complete := True;
     fMainThreadSleepCS.Wake;
   end;
+  {$endif}
+
 begin
   if Length(Tasks)=0 then exit;
   Complete := False;
+
+  {$ifdef fpc}
   fTaskPool.AddTaskSet(Tasks,doOnComplete);
+  {$else}
+  fTaskPool.AddTaskSet(Tasks,
+    procedure()
+    begin
+      Complete := True;
+      fMainThreadSleepCS.Wake;
+    end
+  );
+  {$endif}
+
   if WaitFor then begin
     fMainThreadSleepCS.Acquire;
     try
@@ -306,7 +325,7 @@ end;
 {$endif}
 
 {$ifndef fpc}
-procedure TThreadSystem.Execute( const TotalWorkItems: nativeuint; const OnExecuteAction: TOnExecute; const WhenDone: TOnComplete ); overload;
+procedure TThreadSystem.Execute( const TotalWorkItems: nativeuint; const OnExecuteAction: TOnExecute; const WhenDone: TOnComplete );
 var
   Tasks: TTaskArray;
 begin
@@ -320,7 +339,7 @@ end;
 {$endif}
 
 {$ifndef fpc}
-procedure TThreadSystem.Execute( const TotalWorkItems: nativeuint; const OnExecuteAction: TOnExecute; const WaitFor: boolean = False ); overload;
+procedure TThreadSystem.Execute( const TotalWorkItems: nativeuint; const OnExecuteAction: TOnExecute; const WaitFor: boolean = False );
 var
   Tasks: TTaskArray;
 begin
@@ -554,7 +573,7 @@ begin
         dec(ShutdownMSRemaining);
       end;
       if (fLongPool[idx].IsRunning) then begin
-        TStatus.Raize(stThreadTerminteFailed);
+        TStatus(stThreadTerminteFailed).Raize;
       end;
     end;
   finally
@@ -614,7 +633,7 @@ begin
         fMessagedPool.GetValueByIndex(idx).Wake;
       end;
       if (fMessagedPool.GetValueByIndex(idx).IsRunning) then begin
-        TStatus.Raize(stThreadTerminteFailed);
+        TStatus(stThreadTerminteFailed).Raize;
       end;
     end;
   finally
@@ -675,7 +694,11 @@ constructor TThreadSystem.Create;
 begin
   inherited Create;
   fMainThreadSleepCS := TSignaledCriticalSection.Create;
+  {$ifndef fpc}
+  fTaskPool := TTaskPool.Create( CPUCount * 2 );
+  {$else}
   fTaskPool := TTaskPool.Create( GetCPUCount * 2 );
+  {$endif}
   fLongPoolCS := TCriticalSection.Create;
   fLongPool := TList<ILongThreadMatcher>.Create;
   fMessagedPool := TDictionary<string,IMessagedThreadHandler>.Create({$ifdef fpc}@{$endif}TCompare.CompareStrings);

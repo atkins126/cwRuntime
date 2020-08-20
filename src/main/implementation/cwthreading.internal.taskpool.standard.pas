@@ -47,14 +47,14 @@ type
     procedure ThreadHandler( const Thread: IThread );
   strict private //- IThreadPool -//
     {$ifndef fpc}
-    procedure AddTaskSet( const Tasks: array of ITask; const WhenDone: TOnComplete );
+    procedure AddTaskSet( const Tasks: array of ITask; const WhenDone: TOnComplete ); overload;
     {$else}
     procedure AddTaskSet( const Tasks: array of ITask; const WhenDone: TOnCompleteGlobal ); overload;
     procedure AddTaskSet( const Tasks: array of ITask; const WhenDone: TOnCompleteOfObject ); overload;
     procedure AddTaskSet( const Tasks: array of ITask; const WhenDone: TOnCompleteNested ); overload;
     {$endif}
     function getThreadCount: nativeuint;
-    procedure AddTaskSet( const Tasks: array of ITask );
+    procedure AddTaskSet( const Tasks: array of ITask ); overload;
   public
     constructor Create( const ThreadCount: nativeuint ); reintroduce;
     destructor Destroy; override;
@@ -91,7 +91,7 @@ begin
 end;
 
 {$ifndef fpc}
-procedure TTaskPool.AddTaskSet( const Tasks: array of ITask; const WhenDone: TTasksCompleteNotification );
+procedure TTaskPool.AddTaskSet(const Tasks: array of ITask; const WhenDone: TOnComplete);
 begin
   fTasksets.AddTaskSet( TTaskSet.Create( Tasks, WhenDone) );
   fThreadPool.Wake;

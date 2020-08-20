@@ -169,13 +169,13 @@ type
   ITaskPool = interface
     ['{482327E1-94FD-4C6B-A85C-99FB8C489252}']
     {$ifndef fpc}
-    procedure AddTaskSet( const TaskSet: ITaskSet; const WhenDone: TOnComplete );
+    procedure AddTaskSet( const Tasks: array of ITask; const WhenDone: TOnComplete ); overload;
     {$else}
     procedure AddTaskSet( const Tasks: array of ITask; const WhenDone: TOnCompleteGlobal ); overload;
     procedure AddTaskSet( const Tasks: array of ITask; const WhenDone: TOnCompleteOfObject ); overload;
     procedure AddTaskSet( const Tasks: array of ITask; const WhenDone: TOnCompleteNested ); overload;
     {$endif}
-    procedure AddTaskSet( const Tasks: array of ITask );
+    procedure AddTaskSet( const Tasks: array of ITask ); overload;
     //- Returns the number of threads in the pool.
     function getThreadCount: nativeuint;
   end;

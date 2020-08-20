@@ -75,7 +75,7 @@ end;
 procedure TTimer.internalGetResolution;
 begin
   if not QueryPerformanceFrequency(fTicksPerSecond) then begin
-    TStatus.Raize(stNoHighPrecisionTimer);
+    TStatus(stNoHighPrecisionTimer).Raize;
   end;
 end;
 

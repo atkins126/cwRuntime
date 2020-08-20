@@ -124,7 +124,7 @@ constructor TTaskSet.Create(const Tasks: array of ITask);
 begin
   inherited Create;
   {$ifndef fpc}
-  fWhenDone := WhenDone;
+  fWhenDone := nil;
   {$else}
   fWhenDoneG := nil;
   fWhenDoneO := nil;

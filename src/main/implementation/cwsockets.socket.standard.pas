@@ -586,7 +586,7 @@ begin
     sdIPv4: Buffer := IPv4AddressBuffer;
     sdIPv6: Buffer := IPv6AddressBuffer;
     else begin
-      Result := TStatus.Return(stUnsupportedAddressFormat);
+      Result := stUnsupportedAddressFormat;
       exit;
     end;
   end;

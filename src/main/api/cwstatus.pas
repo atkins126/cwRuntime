@@ -77,6 +77,8 @@ type
     class operator Explicit(const a: TStatus): string;
     class operator Implicit(const a: ansistring): TStatus;
     class operator Explicit(const a: ansistring): TStatus;
+    class operator Implicit(const a: string): TStatus;
+    class operator Explicit(const a: string): TStatus;
 
     class operator Implicit(const a: TStatus): Boolean;
     class operator Explicit(const a: TStatus): Boolean;
@@ -91,14 +93,14 @@ type
 
     class function Unknown: TStatus; static;
     class function Success: TStatus; static;
-    procedure Raize( const Parameters: array of string ); overload;
-    procedure Raize; overload;
-    class procedure Raize( const Status: TStatus; const Parameters: array of string ); overload; static;
     class procedure Raize( const Status: TStatus ); overload; static;
-    function Return( const Parameters: array of string ): TStatus; overload;
-    function Return: TStatus; overload;
-    class function Return( const Status: TStatus; const Parameters: array of string ): TStatus; overload; static;
+    class procedure Raize( const Status: TStatus; const Parameters: array of string ); overload; static;
+    procedure Raize; overload;
+    procedure Raize( const Parameters: array of string ); overload;
     class function Return( const Status: TStatus ): TStatus; overload; static;
+    class function Return( const Status: TStatus; const Parameters: array of string ): TStatus; overload; static;
+    function Return: TStatus; overload;
+    function Return( const Parameters: array of string ): TStatus; overload;
     class procedure Register(const a: ansistring); static;
   end;
 
@@ -160,9 +162,25 @@ begin
   Result := IsEqualGUID(cSuccess,a.GUID);
 end;
 
+class operator TStatus.Implicit(const a: string): TStatus;
+begin
+  if not TMessageDictionary.ReadGUID(a,Result.GUID) then begin
+    raise
+      EInvalidStatusGUID.Create(a);
+  end;
+end;
+
 class operator TStatus.Explicit(const a: TStatus): Boolean;
 begin
   Result := IsEqualGUID(cSuccess,a.GUID);
+end;
+
+class operator TStatus.Explicit(const a: string): TStatus;
+begin
+  if not TMessageDictionary.ReadGUID(a,Result.GUID) then begin
+    raise
+      EInvalidStatusGUID.Create(a);
+  end;
 end;
 
 class operator TStatus.LogicalNot(const a: TStatus): Boolean;

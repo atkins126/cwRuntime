@@ -59,13 +59,16 @@ type
 implementation
 uses
   cwCollections.Standard
+{$ifdef MSWINDOWS}
+, cwWin32.Kernel32
+{$endif}
 ;
 
 function TMessageChannelReader.PostMessage(const Message: TMessage): TStatus;
 begin
   Result := TStatus.Unknown;
   if GetCurrentThreadID<>fThreadID then begin
-    TStatus.Raize( stPostMessageDeniedToThread );
+    TStatus(stPostMessageDeniedToThread).Raize;
   end;
   if not fMessagesPending.Push(Message) then begin
     Result := stThreadMessageChannelFull;
@@ -78,7 +81,7 @@ function TMessageChannelReader.SendMessage(const Message: TMessage): TStatus;
 begin
   Result := TStatus.Unknown;
   if GetCurrentThreadID<>fThreadID then begin
-    TStatus.Raize( stPostMessageDeniedToThread );
+    TStatus(stPostMessageDeniedToThread).Raize;
   end;
   if not fMessagesPending.Push(Message) then begin
     Result := stThreadMessageChannelFull;

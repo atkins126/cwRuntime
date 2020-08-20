@@ -95,7 +95,7 @@ begin
         dec(StartupMSRemaining);
       end;
       if not NewThread.IsRunning then begin
-        TStatus.Raize(stThreadStartupFailed);
+        TStatus(stThreadStartupFailed).Raize;
       end;
       fThreads.Add( NewThread );
     end;
@@ -131,7 +131,7 @@ begin
       end;
     end;
     if (fThreads[idx].IsRunning) then begin
-      TStatus.Raize(stThreadTerminteFailed);
+      TStatus(stThreadTerminteFailed).Raize;
     end;
   end;
 end;

@@ -74,6 +74,7 @@ uses
   cwCollections.Standard
 , cwThreading.Internal.MessageChannelReader.Standard
 {$ifdef MSWINDOWS}
+, cwWin32.Kernel32
 , cwThreading.CriticalSection.Windows
 {$else}
 , cwThreading.CriticalSection.Posix
