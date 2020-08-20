@@ -18,6 +18,9 @@
         <Projects Include="samples\cwSockets\02_EchoClient\EchoClient_Sydney.dproj">
             <Dependencies/>
         </Projects>
+        <Projects Include="samples\cwStatus\01 - Simple Sample\SimpleSample_Sydney.dproj">
+            <Dependencies/>
+        </Projects>
     </ItemGroup>
     <ProjectExtensions>
         <Borland.Personality>Default.Personality.12</Borland.Personality>
@@ -71,14 +74,23 @@
     <Target Name="EchoClient_Sydney:Make">
         <MSBuild Projects="samples\cwSockets\02_EchoClient\EchoClient_Sydney.dproj" Targets="Make"/>
     </Target>
+    <Target Name="SimpleSample_Sydney">
+        <MSBuild Projects="samples\cwStatus\01 - Simple Sample\SimpleSample_Sydney.dproj"/>
+    </Target>
+    <Target Name="SimpleSample_Sydney:Clean">
+        <MSBuild Projects="samples\cwStatus\01 - Simple Sample\SimpleSample_Sydney.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="SimpleSample_Sydney:Make">
+        <MSBuild Projects="samples\cwStatus\01 - Simple Sample\SimpleSample_Sydney.dproj" Targets="Make"/>
+    </Target>
     <Target Name="Build">
-        <CallTarget Targets="pkg_cwruntime_Sydney;lib_testLoadLib_Sydney;cwDynLib_LoadLibSample_Sydney;EchoServer_Sydney;EchoClient_Sydney"/>
+        <CallTarget Targets="pkg_cwruntime_Sydney;lib_testLoadLib_Sydney;cwDynLib_LoadLibSample_Sydney;EchoServer_Sydney;EchoClient_Sydney;SimpleSample_Sydney"/>
     </Target>
     <Target Name="Clean">
-        <CallTarget Targets="pkg_cwruntime_Sydney:Clean;lib_testLoadLib_Sydney:Clean;cwDynLib_LoadLibSample_Sydney:Clean;EchoServer_Sydney:Clean;EchoClient_Sydney:Clean"/>
+        <CallTarget Targets="pkg_cwruntime_Sydney:Clean;lib_testLoadLib_Sydney:Clean;cwDynLib_LoadLibSample_Sydney:Clean;EchoServer_Sydney:Clean;EchoClient_Sydney:Clean;SimpleSample_Sydney:Clean"/>
     </Target>
     <Target Name="Make">
-        <CallTarget Targets="pkg_cwruntime_Sydney:Make;lib_testLoadLib_Sydney:Make;cwDynLib_LoadLibSample_Sydney:Make;EchoServer_Sydney:Make;EchoClient_Sydney:Make"/>
+        <CallTarget Targets="pkg_cwruntime_Sydney:Make;lib_testLoadLib_Sydney:Make;cwDynLib_LoadLibSample_Sydney:Make;EchoServer_Sydney:Make;EchoClient_Sydney:Make;SimpleSample_Sydney:Make"/>
     </Target>
     <Import Project="$(BDS)\Bin\CodeGear.Group.Targets" Condition="Exists('$(BDS)\Bin\CodeGear.Group.Targets')"/>
 </Project>

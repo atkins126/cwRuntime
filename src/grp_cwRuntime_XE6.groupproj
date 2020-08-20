@@ -18,6 +18,9 @@
         <Projects Include="samples\cwSockets\02_EchoClient\EchoClient_XE6.dproj">
             <Dependencies/>
         </Projects>
+        <Projects Include="samples\cwStatus\01 - Simple Sample\SimpleSample_XE6.dproj">
+            <Dependencies/>
+        </Projects>
     </ItemGroup>
     <ProjectExtensions>
         <Borland.Personality>Default.Personality.12</Borland.Personality>
@@ -71,14 +74,23 @@
     <Target Name="EchoClient_XE6:Make">
         <MSBuild Projects="samples\cwSockets\02_EchoClient\EchoClient_XE6.dproj" Targets="Make"/>
     </Target>
+    <Target Name="SimpleSample_XE6">
+        <MSBuild Projects="samples\cwStatus\01 - Simple Sample\SimpleSample_XE6.dproj"/>
+    </Target>
+    <Target Name="SimpleSample_XE6:Clean">
+        <MSBuild Projects="samples\cwStatus\01 - Simple Sample\SimpleSample_XE6.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="SimpleSample_XE6:Make">
+        <MSBuild Projects="samples\cwStatus\01 - Simple Sample\SimpleSample_XE6.dproj" Targets="Make"/>
+    </Target>
     <Target Name="Build">
-        <CallTarget Targets="pkg_cwruntime_XE6;lib_testLoadLib_XE6;cwDynLib_LoadLibSample_XE6;EchoServer_XE6;EchoClient_XE6"/>
+        <CallTarget Targets="pkg_cwruntime_XE6;lib_testLoadLib_XE6;cwDynLib_LoadLibSample_XE6;EchoServer_XE6;EchoClient_XE6;SimpleSample_XE6"/>
     </Target>
     <Target Name="Clean">
-        <CallTarget Targets="pkg_cwruntime_XE6:Clean;lib_testLoadLib_XE6:Clean;cwDynLib_LoadLibSample_XE6:Clean;EchoServer_XE6:Clean;EchoClient_XE6:Clean"/>
+        <CallTarget Targets="pkg_cwruntime_XE6:Clean;lib_testLoadLib_XE6:Clean;cwDynLib_LoadLibSample_XE6:Clean;EchoServer_XE6:Clean;EchoClient_XE6:Clean;SimpleSample_XE6:Clean"/>
     </Target>
     <Target Name="Make">
-        <CallTarget Targets="pkg_cwruntime_XE6:Make;lib_testLoadLib_XE6:Make;cwDynLib_LoadLibSample_XE6:Make;EchoServer_XE6:Make;EchoClient_XE6:Make"/>
+        <CallTarget Targets="pkg_cwruntime_XE6:Make;lib_testLoadLib_XE6:Make;cwDynLib_LoadLibSample_XE6:Make;EchoServer_XE6:Make;EchoClient_XE6:Make;SimpleSample_XE6:Make"/>
     </Target>
     <Import Project="$(BDS)\Bin\CodeGear.Group.Targets" Condition="Exists('$(BDS)\Bin\CodeGear.Group.Targets')"/>
 </Project>
