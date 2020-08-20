@@ -6,6 +6,12 @@
         <Projects Include="main\pkg_cwruntime_Berlin.dproj">
             <Dependencies/>
         </Projects>
+        <Projects Include="samples\cwDynLib\LoadLibSample\lib_testLoadLib_Berlin.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="samples\cwDynLib\LoadLibSample\cwDynLib_LoadLibSample_Berlin.dproj">
+            <Dependencies/>
+        </Projects>
     </ItemGroup>
     <ProjectExtensions>
         <Borland.Personality>Default.Personality.12</Borland.Personality>
@@ -23,14 +29,32 @@
     <Target Name="pkg_cwruntime_Berlin:Make">
         <MSBuild Projects="main\pkg_cwruntime_Berlin.dproj" Targets="Make"/>
     </Target>
+    <Target Name="lib_testLoadLib_Berlin">
+        <MSBuild Projects="samples\cwDynLib\LoadLibSample\lib_testLoadLib_Berlin.dproj"/>
+    </Target>
+    <Target Name="lib_testLoadLib_Berlin:Clean">
+        <MSBuild Projects="samples\cwDynLib\LoadLibSample\lib_testLoadLib_Berlin.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="lib_testLoadLib_Berlin:Make">
+        <MSBuild Projects="samples\cwDynLib\LoadLibSample\lib_testLoadLib_Berlin.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="cwDynLib_LoadLibSample_Berlin">
+        <MSBuild Projects="samples\cwDynLib\LoadLibSample\cwDynLib_LoadLibSample_Berlin.dproj"/>
+    </Target>
+    <Target Name="cwDynLib_LoadLibSample_Berlin:Clean">
+        <MSBuild Projects="samples\cwDynLib\LoadLibSample\cwDynLib_LoadLibSample_Berlin.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="cwDynLib_LoadLibSample_Berlin:Make">
+        <MSBuild Projects="samples\cwDynLib\LoadLibSample\cwDynLib_LoadLibSample_Berlin.dproj" Targets="Make"/>
+    </Target>
     <Target Name="Build">
-        <CallTarget Targets="pkg_cwruntime_Berlin"/>
+        <CallTarget Targets="pkg_cwruntime_Berlin;lib_testLoadLib_Berlin;cwDynLib_LoadLibSample_Berlin"/>
     </Target>
     <Target Name="Clean">
-        <CallTarget Targets="pkg_cwruntime_Berlin:Clean"/>
+        <CallTarget Targets="pkg_cwruntime_Berlin:Clean;lib_testLoadLib_Berlin:Clean;cwDynLib_LoadLibSample_Berlin:Clean"/>
     </Target>
     <Target Name="Make">
-        <CallTarget Targets="pkg_cwruntime_Berlin:Make"/>
+        <CallTarget Targets="pkg_cwruntime_Berlin:Make;lib_testLoadLib_Berlin:Make;cwDynLib_LoadLibSample_Berlin:Make"/>
     </Target>
     <Import Project="$(BDS)\Bin\CodeGear.Group.Targets" Condition="Exists('$(BDS)\Bin\CodeGear.Group.Targets')"/>
 </Project>

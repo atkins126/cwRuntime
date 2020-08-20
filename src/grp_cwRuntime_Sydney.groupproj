@@ -6,6 +6,12 @@
         <Projects Include="main\pkg_cwruntime_Sydney.dproj">
             <Dependencies/>
         </Projects>
+        <Projects Include="samples\cwDynLib\LoadLibSample\lib_testLoadLib_Sydney.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="samples\cwDynLib\LoadLibSample\cwDynLib_LoadLibSample_Sydney.dproj">
+            <Dependencies/>
+        </Projects>
     </ItemGroup>
     <ProjectExtensions>
         <Borland.Personality>Default.Personality.12</Borland.Personality>
@@ -23,14 +29,32 @@
     <Target Name="pkg_cwruntime_Sydney:Make">
         <MSBuild Projects="main\pkg_cwruntime_Sydney.dproj" Targets="Make"/>
     </Target>
+    <Target Name="lib_testLoadLib_Sydney">
+        <MSBuild Projects="samples\cwDynLib\LoadLibSample\lib_testLoadLib_Sydney.dproj"/>
+    </Target>
+    <Target Name="lib_testLoadLib_Sydney:Clean">
+        <MSBuild Projects="samples\cwDynLib\LoadLibSample\lib_testLoadLib_Sydney.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="lib_testLoadLib_Sydney:Make">
+        <MSBuild Projects="samples\cwDynLib\LoadLibSample\lib_testLoadLib_Sydney.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="cwDynLib_LoadLibSample_Sydney">
+        <MSBuild Projects="samples\cwDynLib\LoadLibSample\cwDynLib_LoadLibSample_Sydney.dproj"/>
+    </Target>
+    <Target Name="cwDynLib_LoadLibSample_Sydney:Clean">
+        <MSBuild Projects="samples\cwDynLib\LoadLibSample\cwDynLib_LoadLibSample_Sydney.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="cwDynLib_LoadLibSample_Sydney:Make">
+        <MSBuild Projects="samples\cwDynLib\LoadLibSample\cwDynLib_LoadLibSample_Sydney.dproj" Targets="Make"/>
+    </Target>
     <Target Name="Build">
-        <CallTarget Targets="pkg_cwruntime_Sydney"/>
+        <CallTarget Targets="pkg_cwruntime_Sydney;lib_testLoadLib_Sydney;cwDynLib_LoadLibSample_Sydney"/>
     </Target>
     <Target Name="Clean">
-        <CallTarget Targets="pkg_cwruntime_Sydney:Clean"/>
+        <CallTarget Targets="pkg_cwruntime_Sydney:Clean;lib_testLoadLib_Sydney:Clean;cwDynLib_LoadLibSample_Sydney:Clean"/>
     </Target>
     <Target Name="Make">
-        <CallTarget Targets="pkg_cwruntime_Sydney:Make"/>
+        <CallTarget Targets="pkg_cwruntime_Sydney:Make;lib_testLoadLib_Sydney:Make;cwDynLib_LoadLibSample_Sydney:Make"/>
     </Target>
     <Import Project="$(BDS)\Bin\CodeGear.Group.Targets" Condition="Exists('$(BDS)\Bin\CodeGear.Group.Targets')"/>
 </Project>

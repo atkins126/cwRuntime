@@ -29,7 +29,7 @@
 /// <summary>
 ///   Sample library for testing cwDynlib.
 /// </summary>
-library lib_testLoadLib_XE7;
+library lib_testLoadLib;
 {$ifdef fpc}{$mode delphiunicode}{$endif}
 
 function Add( const A: nativeuint; const B: nativeuint ): nativeuint; {$ifdef MSWINDOWS} stdcall; {$else} cdecl; {$endif} export;
