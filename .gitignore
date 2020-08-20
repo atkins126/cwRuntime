@@ -85,3 +85,4 @@ src/projects/pkg_cwRuntime.otares
 backup
 doc/html
 *.deployproj
+*.xml
