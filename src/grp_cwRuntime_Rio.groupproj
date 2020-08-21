@@ -33,6 +33,9 @@
         <Projects Include="samples\cwThreading\02 - Parallel For Loop\ParallelFor_Rio.dproj">
             <Dependencies/>
         </Projects>
+        <Projects Include="samples\cwThreading\03 - Long Threads\LongThreads_Rio.dproj">
+            <Dependencies/>
+        </Projects>
     </ItemGroup>
     <ProjectExtensions>
         <Borland.Personality>Default.Personality.12</Borland.Personality>
@@ -131,14 +134,23 @@
     <Target Name="ParallelFor_Rio:Make">
         <MSBuild Projects="samples\cwThreading\02 - Parallel For Loop\ParallelFor_Rio.dproj" Targets="Make"/>
     </Target>
+    <Target Name="LongThreads_Rio">
+        <MSBuild Projects="samples\cwThreading\03 - Long Threads\LongThreads_Rio.dproj"/>
+    </Target>
+    <Target Name="LongThreads_Rio:Clean">
+        <MSBuild Projects="samples\cwThreading\03 - Long Threads\LongThreads_Rio.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="LongThreads_Rio:Make">
+        <MSBuild Projects="samples\cwThreading\03 - Long Threads\LongThreads_Rio.dproj" Targets="Make"/>
+    </Target>
     <Target Name="Build">
-        <CallTarget Targets="pkg_cwruntime_Rio;lib_testLoadLib_Rio;cwDynLib_LoadLibSample_Rio;EchoServer_Rio;EchoClient_Rio;SimpleSample_Rio;ParameterizedState_Rio;cwTest_SampleTests_Rio;RunningTasks_Rio;ParallelFor_Rio"/>
+        <CallTarget Targets="pkg_cwruntime_Rio;lib_testLoadLib_Rio;cwDynLib_LoadLibSample_Rio;EchoServer_Rio;EchoClient_Rio;SimpleSample_Rio;ParameterizedState_Rio;cwTest_SampleTests_Rio;RunningTasks_Rio;ParallelFor_Rio;LongThreads_Rio"/>
     </Target>
     <Target Name="Clean">
-        <CallTarget Targets="pkg_cwruntime_Rio:Clean;lib_testLoadLib_Rio:Clean;cwDynLib_LoadLibSample_Rio:Clean;EchoServer_Rio:Clean;EchoClient_Rio:Clean;SimpleSample_Rio:Clean;ParameterizedState_Rio:Clean;cwTest_SampleTests_Rio:Clean;RunningTasks_Rio:Clean;ParallelFor_Rio:Clean"/>
+        <CallTarget Targets="pkg_cwruntime_Rio:Clean;lib_testLoadLib_Rio:Clean;cwDynLib_LoadLibSample_Rio:Clean;EchoServer_Rio:Clean;EchoClient_Rio:Clean;SimpleSample_Rio:Clean;ParameterizedState_Rio:Clean;cwTest_SampleTests_Rio:Clean;RunningTasks_Rio:Clean;ParallelFor_Rio:Clean;LongThreads_Rio:Clean"/>
     </Target>
     <Target Name="Make">
-        <CallTarget Targets="pkg_cwruntime_Rio:Make;lib_testLoadLib_Rio:Make;cwDynLib_LoadLibSample_Rio:Make;EchoServer_Rio:Make;EchoClient_Rio:Make;SimpleSample_Rio:Make;ParameterizedState_Rio:Make;cwTest_SampleTests_Rio:Make;RunningTasks_Rio:Make;ParallelFor_Rio:Make"/>
+        <CallTarget Targets="pkg_cwruntime_Rio:Make;lib_testLoadLib_Rio:Make;cwDynLib_LoadLibSample_Rio:Make;EchoServer_Rio:Make;EchoClient_Rio:Make;SimpleSample_Rio:Make;ParameterizedState_Rio:Make;cwTest_SampleTests_Rio:Make;RunningTasks_Rio:Make;ParallelFor_Rio:Make;LongThreads_Rio:Make"/>
     </Target>
     <Import Project="$(BDS)\Bin\CodeGear.Group.Targets" Condition="Exists('$(BDS)\Bin\CodeGear.Group.Targets')"/>
 </Project>

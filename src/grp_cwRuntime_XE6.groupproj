@@ -33,6 +33,9 @@
         <Projects Include="samples\cwThreading\02 - Parallel For Loop\ParallelFor_XE6.dproj">
             <Dependencies/>
         </Projects>
+        <Projects Include="samples\cwThreading\03 - Long Threads\LongThreads_XE6.dproj">
+            <Dependencies/>
+        </Projects>
     </ItemGroup>
     <ProjectExtensions>
         <Borland.Personality>Default.Personality.12</Borland.Personality>
@@ -131,14 +134,23 @@
     <Target Name="ParallelFor_XE6:Make">
         <MSBuild Projects="samples\cwThreading\02 - Parallel For Loop\ParallelFor_XE6.dproj" Targets="Make"/>
     </Target>
+    <Target Name="LongThreads_XE6">
+        <MSBuild Projects="samples\cwThreading\03 - Long Threads\LongThreads_XE6.dproj"/>
+    </Target>
+    <Target Name="LongThreads_XE6:Clean">
+        <MSBuild Projects="samples\cwThreading\03 - Long Threads\LongThreads_XE6.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="LongThreads_XE6:Make">
+        <MSBuild Projects="samples\cwThreading\03 - Long Threads\LongThreads_XE6.dproj" Targets="Make"/>
+    </Target>
     <Target Name="Build">
-        <CallTarget Targets="pkg_cwruntime_XE6;lib_testLoadLib_XE6;cwDynLib_LoadLibSample_XE6;EchoServer_XE6;EchoClient_XE6;SimpleSample_XE6;ParameterizedState_XE6;cwTest_SampleTests_XE6;RunningTasks_XE6;ParallelFor_XE6"/>
+        <CallTarget Targets="pkg_cwruntime_XE6;lib_testLoadLib_XE6;cwDynLib_LoadLibSample_XE6;EchoServer_XE6;EchoClient_XE6;SimpleSample_XE6;ParameterizedState_XE6;cwTest_SampleTests_XE6;RunningTasks_XE6;ParallelFor_XE6;LongThreads_XE6"/>
     </Target>
     <Target Name="Clean">
-        <CallTarget Targets="pkg_cwruntime_XE6:Clean;lib_testLoadLib_XE6:Clean;cwDynLib_LoadLibSample_XE6:Clean;EchoServer_XE6:Clean;EchoClient_XE6:Clean;SimpleSample_XE6:Clean;ParameterizedState_XE6:Clean;cwTest_SampleTests_XE6:Clean;RunningTasks_XE6:Clean;ParallelFor_XE6:Clean"/>
+        <CallTarget Targets="pkg_cwruntime_XE6:Clean;lib_testLoadLib_XE6:Clean;cwDynLib_LoadLibSample_XE6:Clean;EchoServer_XE6:Clean;EchoClient_XE6:Clean;SimpleSample_XE6:Clean;ParameterizedState_XE6:Clean;cwTest_SampleTests_XE6:Clean;RunningTasks_XE6:Clean;ParallelFor_XE6:Clean;LongThreads_XE6:Clean"/>
     </Target>
     <Target Name="Make">
-        <CallTarget Targets="pkg_cwruntime_XE6:Make;lib_testLoadLib_XE6:Make;cwDynLib_LoadLibSample_XE6:Make;EchoServer_XE6:Make;EchoClient_XE6:Make;SimpleSample_XE6:Make;ParameterizedState_XE6:Make;cwTest_SampleTests_XE6:Make;RunningTasks_XE6:Make;ParallelFor_XE6:Make"/>
+        <CallTarget Targets="pkg_cwruntime_XE6:Make;lib_testLoadLib_XE6:Make;cwDynLib_LoadLibSample_XE6:Make;EchoServer_XE6:Make;EchoClient_XE6:Make;SimpleSample_XE6:Make;ParameterizedState_XE6:Make;cwTest_SampleTests_XE6:Make;RunningTasks_XE6:Make;ParallelFor_XE6:Make;LongThreads_XE6:Make"/>
     </Target>
     <Import Project="$(BDS)\Bin\CodeGear.Group.Targets" Condition="Exists('$(BDS)\Bin\CodeGear.Group.Targets')"/>
 </Project>

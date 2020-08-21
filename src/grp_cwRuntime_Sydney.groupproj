@@ -33,6 +33,9 @@
         <Projects Include="samples\cwThreading\02 - Parallel For Loop\ParallelFor_Sydney.dproj">
             <Dependencies/>
         </Projects>
+        <Projects Include="samples\cwThreading\03 - Long Threads\LongThreads_Sydney.dproj">
+            <Dependencies/>
+        </Projects>
     </ItemGroup>
     <ProjectExtensions>
         <Borland.Personality>Default.Personality.12</Borland.Personality>
@@ -131,14 +134,23 @@
     <Target Name="ParallelFor_Sydney:Make">
         <MSBuild Projects="samples\cwThreading\02 - Parallel For Loop\ParallelFor_Sydney.dproj" Targets="Make"/>
     </Target>
+    <Target Name="LongThreads_Sydney">
+        <MSBuild Projects="samples\cwThreading\03 - Long Threads\LongThreads_Sydney.dproj"/>
+    </Target>
+    <Target Name="LongThreads_Sydney:Clean">
+        <MSBuild Projects="samples\cwThreading\03 - Long Threads\LongThreads_Sydney.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="LongThreads_Sydney:Make">
+        <MSBuild Projects="samples\cwThreading\03 - Long Threads\LongThreads_Sydney.dproj" Targets="Make"/>
+    </Target>
     <Target Name="Build">
-        <CallTarget Targets="pkg_cwruntime_Sydney;lib_testLoadLib_Sydney;cwDynLib_LoadLibSample_Sydney;EchoServer_Sydney;EchoClient_Sydney;SimpleSample_Sydney;ParameterizedState_Sydney;cwTest_SampleTests_Sydney;RunningTasks_Sydney;ParallelFor_Sydney"/>
+        <CallTarget Targets="pkg_cwruntime_Sydney;lib_testLoadLib_Sydney;cwDynLib_LoadLibSample_Sydney;EchoServer_Sydney;EchoClient_Sydney;SimpleSample_Sydney;ParameterizedState_Sydney;cwTest_SampleTests_Sydney;RunningTasks_Sydney;ParallelFor_Sydney;LongThreads_Sydney"/>
     </Target>
     <Target Name="Clean">
-        <CallTarget Targets="pkg_cwruntime_Sydney:Clean;lib_testLoadLib_Sydney:Clean;cwDynLib_LoadLibSample_Sydney:Clean;EchoServer_Sydney:Clean;EchoClient_Sydney:Clean;SimpleSample_Sydney:Clean;ParameterizedState_Sydney:Clean;cwTest_SampleTests_Sydney:Clean;RunningTasks_Sydney:Clean;ParallelFor_Sydney:Clean"/>
+        <CallTarget Targets="pkg_cwruntime_Sydney:Clean;lib_testLoadLib_Sydney:Clean;cwDynLib_LoadLibSample_Sydney:Clean;EchoServer_Sydney:Clean;EchoClient_Sydney:Clean;SimpleSample_Sydney:Clean;ParameterizedState_Sydney:Clean;cwTest_SampleTests_Sydney:Clean;RunningTasks_Sydney:Clean;ParallelFor_Sydney:Clean;LongThreads_Sydney:Clean"/>
     </Target>
     <Target Name="Make">
-        <CallTarget Targets="pkg_cwruntime_Sydney:Make;lib_testLoadLib_Sydney:Make;cwDynLib_LoadLibSample_Sydney:Make;EchoServer_Sydney:Make;EchoClient_Sydney:Make;SimpleSample_Sydney:Make;ParameterizedState_Sydney:Make;cwTest_SampleTests_Sydney:Make;RunningTasks_Sydney:Make;ParallelFor_Sydney:Make"/>
+        <CallTarget Targets="pkg_cwruntime_Sydney:Make;lib_testLoadLib_Sydney:Make;cwDynLib_LoadLibSample_Sydney:Make;EchoServer_Sydney:Make;EchoClient_Sydney:Make;SimpleSample_Sydney:Make;ParameterizedState_Sydney:Make;cwTest_SampleTests_Sydney:Make;RunningTasks_Sydney:Make;ParallelFor_Sydney:Make;LongThreads_Sydney:Make"/>
     </Target>
     <Import Project="$(BDS)\Bin\CodeGear.Group.Targets" Condition="Exists('$(BDS)\Bin\CodeGear.Group.Targets')"/>
 </Project>

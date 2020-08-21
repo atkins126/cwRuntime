@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CONFIG>
   <ProjectGroup FileVersion="1">
-    <Targets Count="9">
+    <Targets Count="11">
       <Target0 FileName="main\pkg_cwruntime_lazarus_2_0_8.lpk"/>
       <Target1 FileName="samples\cwDynLib\LoadLibSample\lib_testLoadLib_Lazarus_2_0_8.lpi">
         <BuildModes Count="1"/>
@@ -35,6 +35,14 @@
         <BuildModes Count="1"/>
         <Mode1 Name="default"/>
       </Target8>
+      <Target9 FileName="samples\cwThreading\02 - Parallel For Loop\ParallelFor_Lazarus_2_0_8.lpi">
+        <BuildModes Count="1"/>
+        <Mode1 Name="default"/>
+      </Target9>
+      <Target10 FileName="samples\cwThreading\03 - Long Threads\LongThreads_Lazarus_2_0_8.lpi">
+        <BuildModes Count="1"/>
+        <Mode1 Name="default"/>
+      </Target10>
     </Targets>
   </ProjectGroup>
 </CONFIG>

@@ -26,7 +26,7 @@
   IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 *)
 {$endif}
-program LongThreads_Lazarus_2_0_10;
+program LongThreads;
 uses
   sysutils //- for sleep()
 , cwThreading

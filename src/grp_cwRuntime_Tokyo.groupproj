@@ -33,6 +33,9 @@
         <Projects Include="samples\cwThreading\02 - Parallel For Loop\ParallelFor_Tokyo.dproj">
             <Dependencies/>
         </Projects>
+        <Projects Include="samples\cwThreading\03 - Long Threads\LongThreads_Tokyo.dproj">
+            <Dependencies/>
+        </Projects>
     </ItemGroup>
     <ProjectExtensions>
         <Borland.Personality>Default.Personality.12</Borland.Personality>
@@ -131,14 +134,23 @@
     <Target Name="ParallelFor_Tokyo:Make">
         <MSBuild Projects="samples\cwThreading\02 - Parallel For Loop\ParallelFor_Tokyo.dproj" Targets="Make"/>
     </Target>
+    <Target Name="LongThreads_Tokyo">
+        <MSBuild Projects="samples\cwThreading\03 - Long Threads\LongThreads_Tokyo.dproj"/>
+    </Target>
+    <Target Name="LongThreads_Tokyo:Clean">
+        <MSBuild Projects="samples\cwThreading\03 - Long Threads\LongThreads_Tokyo.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="LongThreads_Tokyo:Make">
+        <MSBuild Projects="samples\cwThreading\03 - Long Threads\LongThreads_Tokyo.dproj" Targets="Make"/>
+    </Target>
     <Target Name="Build">
-        <CallTarget Targets="pkg_cwruntime_Tokyo;lib_testLoadLib_Tokyo;cwDynLib_LoadLibSample_Tokyo;EchoServer_Tokyo;EchoClient_Tokyo;SimpleSample_Tokyo;ParameterizedState_Tokyo;cwTest_SampleTests_Tokyo;RunningTasks_Tokyo;ParallelFor_Tokyo"/>
+        <CallTarget Targets="pkg_cwruntime_Tokyo;lib_testLoadLib_Tokyo;cwDynLib_LoadLibSample_Tokyo;EchoServer_Tokyo;EchoClient_Tokyo;SimpleSample_Tokyo;ParameterizedState_Tokyo;cwTest_SampleTests_Tokyo;RunningTasks_Tokyo;ParallelFor_Tokyo;LongThreads_Tokyo"/>
     </Target>
     <Target Name="Clean">
-        <CallTarget Targets="pkg_cwruntime_Tokyo:Clean;lib_testLoadLib_Tokyo:Clean;cwDynLib_LoadLibSample_Tokyo:Clean;EchoServer_Tokyo:Clean;EchoClient_Tokyo:Clean;SimpleSample_Tokyo:Clean;ParameterizedState_Tokyo:Clean;cwTest_SampleTests_Tokyo:Clean;RunningTasks_Tokyo:Clean;ParallelFor_Tokyo:Clean"/>
+        <CallTarget Targets="pkg_cwruntime_Tokyo:Clean;lib_testLoadLib_Tokyo:Clean;cwDynLib_LoadLibSample_Tokyo:Clean;EchoServer_Tokyo:Clean;EchoClient_Tokyo:Clean;SimpleSample_Tokyo:Clean;ParameterizedState_Tokyo:Clean;cwTest_SampleTests_Tokyo:Clean;RunningTasks_Tokyo:Clean;ParallelFor_Tokyo:Clean;LongThreads_Tokyo:Clean"/>
     </Target>
     <Target Name="Make">
-        <CallTarget Targets="pkg_cwruntime_Tokyo:Make;lib_testLoadLib_Tokyo:Make;cwDynLib_LoadLibSample_Tokyo:Make;EchoServer_Tokyo:Make;EchoClient_Tokyo:Make;SimpleSample_Tokyo:Make;ParameterizedState_Tokyo:Make;cwTest_SampleTests_Tokyo:Make;RunningTasks_Tokyo:Make;ParallelFor_Tokyo:Make"/>
+        <CallTarget Targets="pkg_cwruntime_Tokyo:Make;lib_testLoadLib_Tokyo:Make;cwDynLib_LoadLibSample_Tokyo:Make;EchoServer_Tokyo:Make;EchoClient_Tokyo:Make;SimpleSample_Tokyo:Make;ParameterizedState_Tokyo:Make;cwTest_SampleTests_Tokyo:Make;RunningTasks_Tokyo:Make;ParallelFor_Tokyo:Make;LongThreads_Tokyo:Make"/>
     </Target>
     <Import Project="$(BDS)\Bin\CodeGear.Group.Targets" Condition="Exists('$(BDS)\Bin\CodeGear.Group.Targets')"/>
 </Project>
