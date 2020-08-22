@@ -167,23 +167,23 @@ begin
   fSleepCS := SleepCS;
   //- Define and create thread.
   if pthread_attr_init({$ifdef fpc}@{$endif}attr)<>0 then begin
-    TStatus.Raize(stThreadAttrInitFailed,[errno.AsString]);
+    TStatus(stThreadAttrInitFailed).Raize([errno.AsString]);
   end;
   if pthread_attr_setstacksize({$ifdef fpc}@{$endif}attr,cDefaultStackSize)<>0 then begin
-    TStatus.Raize(stThreadStackSetFailed,[errno.AsString]);
+    TStatus(stThreadStackSetFailed).Raize([errno.AsString]);
   end;
   if pthread_create({$ifdef fpc}@{$endif}fHandle,{$ifdef fpc}@{$endif}attr,@InternalHandler,self)<>0 then begin
-    TStatus.Raize(stThreadCreateFailed,[errno.AsString]);
+    TStatus(stThreadCreateFailed).Raize([errno.AsString]);
   end;
   if pthread_attr_destroy({$ifdef fpc}@{$endif}attr)<>0 then begin
-    TStatus.Raize(stThreadAttrFnitFailed,[errno.AsString]);
+    TStatus(stThreadAttrFnitFailed).Raize([errno.AsString]);
   end;
 end;
 
 destructor TThread.Destroy;
 begin
   if pthread_join(fHandle, nil)<>0 then begin
-    TStatus.Raize(stThreadJoinFailed,[errno.AsString]);
+    TStatus(stThreadJoinFailed).Raize([errno.AsString]);
   end;
   fSleepCS := nil;
   inherited Destroy;

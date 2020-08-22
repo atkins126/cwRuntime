@@ -76,7 +76,7 @@ constructor TCriticalSection.Create;
 begin
   inherited Create;
   if pthread_mutex_init({$ifdef fpc}@{$endif}fMutex, nil)<>0 then begin
-    TStatus.Raize(stCreateMutxFailed,[errno.AsString]);
+    TStatus(stCreateMutxFailed).Raize([errno.AsString]);
   end;
 end;
 

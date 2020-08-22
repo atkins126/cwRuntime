@@ -79,10 +79,10 @@ constructor TSignaledCriticalSection.Create;
 begin
   inherited Create;
   if pthread_mutex_init({$ifdef fpc}@{$endif}fMutex, nil)<>0 then begin
-    TStatus.Raize(stInitMutexFailed,[errno.AsString]);
+    TStatus(stInitMutexFailed).Raize([errno.AsString]);
   end;
   if pthread_cond_init({$ifdef fpc}@{$endif}fCondition,nil)<>0 then begin
-    TStatus.Raize(stInitConditionVariableFailed,[errno.AsString]);
+    TStatus(stInitConditionVariableFailed).Raize([errno.AsString]);
   end;
 end;
 
@@ -101,7 +101,7 @@ end;
 procedure TSignaledCriticalSection.Sleep;
 begin
   if pthread_cond_wait({$ifdef fpc}@{$endif}fCondition,{$ifdef fpc}@{$endif}fMutex)<>0 then begin
-    TStatus.Raize(stThreadSleepFailed,[errno.AsString])
+    TStatus(stThreadSleepFailed).Raize([errno.AsString])
   end;
 end;
 
