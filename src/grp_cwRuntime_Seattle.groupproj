@@ -36,6 +36,9 @@
         <Projects Include="samples\cwThreading\03 - Long Threads\LongThreads_Seattle.dproj">
             <Dependencies/>
         </Projects>
+        <Projects Include="samples\cwThreading\04 - Messaged Threads\MessagedThreads_Seattle.dproj">
+            <Dependencies/>
+        </Projects>
     </ItemGroup>
     <ProjectExtensions>
         <Borland.Personality>Default.Personality.12</Borland.Personality>
@@ -143,14 +146,23 @@
     <Target Name="LongThreads_Seattle:Make">
         <MSBuild Projects="samples\cwThreading\03 - Long Threads\LongThreads_Seattle.dproj" Targets="Make"/>
     </Target>
+    <Target Name="MessagedThreads_Seattle">
+        <MSBuild Projects="samples\cwThreading\04 - Messaged Threads\MessagedThreads_Seattle.dproj"/>
+    </Target>
+    <Target Name="MessagedThreads_Seattle:Clean">
+        <MSBuild Projects="samples\cwThreading\04 - Messaged Threads\MessagedThreads_Seattle.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="MessagedThreads_Seattle:Make">
+        <MSBuild Projects="samples\cwThreading\04 - Messaged Threads\MessagedThreads_Seattle.dproj" Targets="Make"/>
+    </Target>
     <Target Name="Build">
-        <CallTarget Targets="pkg_cwruntime_Seattle;lib_testLoadLib_Seattle;cwDynLib_LoadLibSample_Seattle;EchoServer_Seattle;EchoClient_Seattle;SimpleSample_Seattle;ParameterizedState_Seattle;cwTest_SampleTests_Seattle;RunningTasks_Seattle;ParallelFor_Seattle;LongThreads_Seattle"/>
+        <CallTarget Targets="pkg_cwruntime_Seattle;lib_testLoadLib_Seattle;cwDynLib_LoadLibSample_Seattle;EchoServer_Seattle;EchoClient_Seattle;SimpleSample_Seattle;ParameterizedState_Seattle;cwTest_SampleTests_Seattle;RunningTasks_Seattle;ParallelFor_Seattle;LongThreads_Seattle;MessagedThreads_Seattle"/>
     </Target>
     <Target Name="Clean">
-        <CallTarget Targets="pkg_cwruntime_Seattle:Clean;lib_testLoadLib_Seattle:Clean;cwDynLib_LoadLibSample_Seattle:Clean;EchoServer_Seattle:Clean;EchoClient_Seattle:Clean;SimpleSample_Seattle:Clean;ParameterizedState_Seattle:Clean;cwTest_SampleTests_Seattle:Clean;RunningTasks_Seattle:Clean;ParallelFor_Seattle:Clean;LongThreads_Seattle:Clean"/>
+        <CallTarget Targets="pkg_cwruntime_Seattle:Clean;lib_testLoadLib_Seattle:Clean;cwDynLib_LoadLibSample_Seattle:Clean;EchoServer_Seattle:Clean;EchoClient_Seattle:Clean;SimpleSample_Seattle:Clean;ParameterizedState_Seattle:Clean;cwTest_SampleTests_Seattle:Clean;RunningTasks_Seattle:Clean;ParallelFor_Seattle:Clean;LongThreads_Seattle:Clean;MessagedThreads_Seattle:Clean"/>
     </Target>
     <Target Name="Make">
-        <CallTarget Targets="pkg_cwruntime_Seattle:Make;lib_testLoadLib_Seattle:Make;cwDynLib_LoadLibSample_Seattle:Make;EchoServer_Seattle:Make;EchoClient_Seattle:Make;SimpleSample_Seattle:Make;ParameterizedState_Seattle:Make;cwTest_SampleTests_Seattle:Make;RunningTasks_Seattle:Make;ParallelFor_Seattle:Make;LongThreads_Seattle:Make"/>
+        <CallTarget Targets="pkg_cwruntime_Seattle:Make;lib_testLoadLib_Seattle:Make;cwDynLib_LoadLibSample_Seattle:Make;EchoServer_Seattle:Make;EchoClient_Seattle:Make;SimpleSample_Seattle:Make;ParameterizedState_Seattle:Make;cwTest_SampleTests_Seattle:Make;RunningTasks_Seattle:Make;ParallelFor_Seattle:Make;LongThreads_Seattle:Make;MessagedThreads_Seattle:Make"/>
     </Target>
     <Import Project="$(BDS)\Bin\CodeGear.Group.Targets" Condition="Exists('$(BDS)\Bin\CodeGear.Group.Targets')"/>
 </Project>

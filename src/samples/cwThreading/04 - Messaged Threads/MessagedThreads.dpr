@@ -26,10 +26,9 @@
   IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 *)
 {$endif}
-program MessagedThreads_Lazarus_2_0_10;
+program MessagedThreads;
 uses
-  crt
-, sysutils // for sleep()
+  sysutils // for sleep()
 , cwThreading
 , cwThreading.Standard
 ;
@@ -72,14 +71,15 @@ begin
 end;
 
 var
+  aStr: string;
   CH: char;
   AudioChannel: IMessageChannel;
   VideoChannel: IMessageChannel;
 
 begin
   //- Create threads which may be sent messages.
-  ThreadSystem.Execute('audio',TAudioSubSystem.Create);
-  ThreadSystem.Execute('video',TVideoSubSystem.Create);
+  ThreadSystem.Execute('audio',TAudioSubSystem.Create());
+  ThreadSystem.Execute('video',TVideoSubSystem.Create());
 
   //- Get message channels for main thread to send messages on.
   //- Note: These channels are for the exclusive use of the main thread,
@@ -89,7 +89,6 @@ begin
 
   //- Now lets give the user a menu and start sending messages to our threads.
   repeat
-    clrscr;
     Writeln('Select from the following options: ');
     Writeln('       u/U: Increase audio volume.');
     Writeln('       d/D: Decrease audio volume.');
@@ -99,7 +98,9 @@ begin
     Writeln('       x/X: To exit the program.');
     Writeln;
 
-    CH := ReadKey;
+    Write('>');
+    Readln(aStr);
+    CH := aStr[1];
     case ch of
       'u','U': AudioChannel.PostMessage( TMessage.Create( MSG_AUDIO_VOL_UP, 0, 0, 0, 0   ));
       'd','D': AudioChannel.PostMessage( TMessage.Create( MSG_AUDIO_VOL_DOWN, 0, 0 ,0 ,0 ));
@@ -109,6 +110,8 @@ begin
       'x','X': break;
     end;
     Sleep(500);
+    Writeln;
+    Writeln;
     Writeln;
   until False;
 end.

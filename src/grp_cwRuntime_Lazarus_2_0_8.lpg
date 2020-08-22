@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CONFIG>
   <ProjectGroup FileVersion="1">
-    <Targets Count="11">
+    <Targets Count="12">
       <Target0 FileName="main\pkg_cwruntime_lazarus_2_0_8.lpk"/>
       <Target1 FileName="samples\cwDynLib\LoadLibSample\lib_testLoadLib_Lazarus_2_0_8.lpi">
         <BuildModes Count="1"/>
@@ -43,6 +43,10 @@
         <BuildModes Count="1"/>
         <Mode1 Name="default"/>
       </Target10>
+      <Target11 FileName="samples\cwThreading\04 - Messaged Threads\MessagedThreads_Lazarus_2_0_8.lpi">
+        <BuildModes Count="1"/>
+        <Mode1 Name="default"/>
+      </Target11>
     </Targets>
   </ProjectGroup>
 </CONFIG>
