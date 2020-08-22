@@ -118,7 +118,10 @@ begin
     finally
       Thread.Release;
     end;
-    fMessagedThread.HandleMessage(Message);
+    if Thread.getTerminateFlag then exit;
+    if assigned(fMessagedThread) then begin
+      fMessagedThread.HandleMessage(Message);
+    end;
   until False;
 end;
 

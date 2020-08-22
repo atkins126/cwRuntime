@@ -614,25 +614,28 @@ const
 var
   idx: nativeuint;
   ShutdownMSRemaining: nativeuint;
+  Handler: IMessagedThreadHandler;
 begin
   if fMessagedPool.Count = 0 then exit;
   fMessagedPoolCS.Acquire;
   try
     for idx := 0 to pred(fMessagedPool.Count) do begin
-      if not fMessagedPool.GetValueByIndex(idx).IsRunning then continue;
-      fMessagedPool.GetValueByIndex(idx).setTerminateFlag(TRUE);
-      fMessagedPool.GetValueByIndex(idx).Wake;
+      Handler := fMessagedPool.GetValueByIndex(idx);
+      if not assigned(Handler) then continue;
+      if not Handler.IsRunning then continue;
+      Handler.setTerminateFlag(TRUE);
+      Handler.Wake;
       ShutdownMSRemaining := cShutdownTimeoutMS;
-      while (fMessagedPool.GetValueByIndex(idx).IsRunning) and (ShutdownMSRemaining>0) do begin
+      while (Handler.IsRunning) and (ShutdownMSRemaining>0) do begin
         {$ifdef MSWINDOWS}
         Sleep(1);
         {$else}
         fpSleep(1);
         {$endif}
         dec(ShutdownMSRemaining);
-        fMessagedPool.GetValueByIndex(idx).Wake;
+        Handler.Wake;
       end;
-      if (fMessagedPool.GetValueByIndex(idx).IsRunning) then begin
+      if (Handler.IsRunning) then begin
         TStatus(stThreadTerminteFailed).Raize;
       end;
     end;
