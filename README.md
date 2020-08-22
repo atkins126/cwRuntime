@@ -1,6 +1,7 @@
 # cwRuntime
 
-* Currently undergoing some major edits on the master branch, please see cwRuntime/legacy branch for previous stable.
+* Currently undergoing some major edits on the master branch, including rebuild of the CI.
+* Everything but cwLog should be working again, there may be some new issues in cwThreading due to a rewrite/redesign.
 
 Compiler agnostic and cross platform collection of utility libraries for Delphi and Freepascal.
 
