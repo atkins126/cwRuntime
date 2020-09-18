@@ -83,7 +83,6 @@ const
   cTaskSets = 20;
 var
   idx: nativeuint;
-  TaskSet: ITaskSet;
   FetchedTaskRecord: ITaskRecord;
   TaskArray: array[0..cTestTasks] of ITask;
   RetrievedCount: nativeuint;

@@ -99,7 +99,7 @@ begin
   // Act:
   Message := nInt;
   // Assert:
-  TTest.Expect( nativeuint(iMSG_TEST), MSG_TEST.Value );
+  TTest.Expect( nativeuint(iMSG_TEST), Message.Value );
 end;
 
 procedure TTestMessage.ExplicitNativeuintToMessage;
@@ -112,7 +112,7 @@ begin
   // Act:
   Message := TMessage( nInt );
   // Assert:
-  TTest.Expect( nativeuint(iMSG_TEST), MSG_TEST.Value );
+  TTest.Expect( nativeuint(iMSG_TEST), Message.Value );
 end;
 
 
