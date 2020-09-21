@@ -101,11 +101,11 @@ var
   ptr: pointer;
 begin
   // Arrange:
-  param.Param := nativeuint( cTestPointerValue );
+  {$hints off} param.Param := nativeuint( cTestPointerValue ); {$hints on}
   // Act:
   ptr := param;
   // Assert:
-  TTest.Expect(nativeuint(cTestPointerValue),nativeuint(ptr));
+  {$hints off} TTest.Expect(nativeuint(cTestPointerValue),nativeuint(ptr)); {$hints on}
 end;
 
 procedure TTestMessageParameter.ExplicitParameterToPointer;
@@ -114,11 +114,11 @@ var
   ptr: pointer;
 begin
   // Arrange:
-  param.Param := nativeuint( cTestPointerValue );
+  {$hints off} param.Param := nativeuint( cTestPointerValue ); {$hints on}
   // Act:
   ptr := pointer( param );
   // Assert:
-  TTest.Expect(nativeuint(cTestPointerValue),nativeuint(ptr));
+  {$hints off} TTest.Expect(nativeuint(cTestPointerValue),nativeuint(ptr)); {$hints on}
 end;
 
 procedure TTestMessageParameter.ImplicitNativeuintToParameter;
@@ -158,7 +158,7 @@ begin
   // Act:
   param := ptr;
   // Assert:
-  TTest.Expect(nativeuint(cTestPointerValue),param.Param);
+  {$hints off} TTest.Expect(nativeuint(cTestPointerValue),param.Param); {$hints on}
 end;
 
 procedure TTestMessageParameter.ExplicitPointerToParameter;
@@ -171,7 +171,7 @@ begin
   // Act:
   param := TMessageParameter( ptr );
   // Assert:
-  TTest.Expect(nativeuint(cTestPointerValue),param.Param);
+  {$hints off} TTest.Expect(nativeuint(cTestPointerValue),param.Param); {$hints on}
 end;
 
 

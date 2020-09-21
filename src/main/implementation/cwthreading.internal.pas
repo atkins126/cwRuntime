@@ -228,6 +228,51 @@ type
 
 {$endregion}
 
+{$region ' IScheduledThreadWrapper'}
+
+type
+  ///    Wraps an IScheduledTask in order to track the
+  ///    time which has passed since it's previous
+  ///    execution, and execute it as required.
+  ///    The implementation of IScheduledTaskWrapper
+  ///    hosts the dedicated thread which runs the
+  ///    task when instructed to do so via the
+  ///    execute method.
+  IScheduledTaskWrapper = interface
+    ['{BE9F8EC3-6649-4215-8F54-3ECBE75DAEB3}']
+
+    ///  Returns a reference to the scheduled task instance.
+    function getScheduledTask: IScheduledTask;
+
+    ///  Returns the Delta-time (in seconds) between the time at
+    ///  which the scheduler thread began and the time that the
+    ///  scheduled task was last executed. Note: If a scheduled
+    ///  task has an interval of zero seconds, the last executed
+    ///  value will be updated each time the task is passed over
+    ///  due to being disabled.
+    function getLastExecuted: nativeuint;
+
+    ///  Sets the Delta-time (in seconds) between the last time at
+    ///  which the scheduler thread began and the last time that
+    ///  the scheduled task was run (or was passed over due to
+    ///  having an interval of zero seconds).
+    procedure setLastExecuted( const value: nativeuint );
+
+    ///  The scheduler calls this method to execute the
+    ///  referenced scheduled task. This method runs the
+    ///  referenced scheduled task if the DeltaSeconds value is
+    ///  greater than the interval + the last executed value.
+    ///  The last executed value is updated (regardless of the
+    ///  scheduled task being run), to the new DeltaSeconds value.
+    ///  NOTE: DeltaSeconds is the delta between the task scheduler
+    ///  being started, and the current time - it is NOT the Delta
+    ///  between task last executed time and the current time.
+    procedure RunTask( const DeltaSeconds: nativeuint );
+
+  end;
+
+{$endregion}
+
 implementation
 
 end.

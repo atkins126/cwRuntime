@@ -29,7 +29,7 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS &quot;AS IS&
 IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 "/>
     <Version Major="1"/>
-    <Files Count="71">
+    <Files Count="72">
       <Item1>
         <Filename Value="api\cwio.pas"/>
         <UnitName Value="cwIO"/>
@@ -314,6 +314,10 @@ IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT,
         <Filename Value="implementation\cwwin32.advapi32.pas"/>
         <UnitName Value="cwWin32.AdvAPI32"/>
       </Item71>
+      <Item72>
+        <Filename Value="implementation\cwthreading.scheduledtaskwrapper.standard.pas"/>
+        <UnitName Value="cwthreading.scheduledtaskwrapper.standard"/>
+      </Item72>
     </Files>
     <RequiredPkgs Count="1">
       <Item1>

@@ -51,9 +51,16 @@ type
     fLongPoolCS: ICriticalSection;
     fMessagedPool: IDictionary<string,IMessagedThreadHandler>;
     fMessagedPoolCS: ICriticalSection;
+
+    fScheduledTasks: IList<IScheduledTaskWrapper>;
+    fScheduledTasksCS: ICriticalSection;
+    fSchedulerThread: IThread;
+    fSchedulerCS: ISignaledCriticalSection;
+    fSchedulerDeltaSeconds: nativeuint;
   private
     procedure TerminateLongThreads;
     procedure TerminateMessagedThreads;
+    procedure HandleScheduledTasks( const Thread: IThread );
   private
     {$ifndef fpc}
     function DivideWorkload(const TotalWorkItems: nativeuint; const OnExecuteAction: TOnExecute): TTaskArray;
@@ -97,6 +104,9 @@ type
   strict private //- IThreadingSystem (LongThread execution) -//
     procedure Execute( const Threads: array of ILongThread ); overload;
 
+  strict private //- IThreadingSystem (Scheduled Task execution) - //
+    procedure Execute( const ScheduledTask: IScheduledTask ); overload;
+
   strict private //- IThreadingSystem (MessagedThread execution) -//
     procedure Execute( const ThreadName: string; const MessagedThread: IMessagedThread ); overload;
     function getMessageChannel( const ThreadName: string ): IMessageChannel;
@@ -119,6 +129,7 @@ uses
 , cwThreading.Internal.ForLoopTask.Standard
 , cwThreading.Internal.Thread.LongThread
 , cwThreading.Internal.Thread.MessagedThread
+, cwThreading.ScheduledTaskWrapper.Standard
 {$ifndef fpc}
 , SysUtils // for CPUCount
 {$endif}
@@ -126,10 +137,12 @@ uses
 , cwWin32.Kernel32
 , cwThreading.CriticalSection.Windows
 , cwThreading.SignaledCriticalSection.Windows
+, cwThreading.Internal.Thread.Windows
 {$else}
 , BaseUnix
 , cwThreading.CriticalSection.Posix
 , cwThreading.SignaledCriticalSection.Posix
+, cwThreading.Internal.Thread.Posix
 {$endif}
 ;
 
@@ -518,6 +531,48 @@ end;
 
 {$endregion}
 
+{$region ' ScheduledTasks'}
+
+procedure TThreadSystem.HandleScheduledTasks(const Thread: IThread);
+var
+  idx: nativeuint;
+begin
+  Thread.Acquire;
+  try
+    repeat
+      Thread.Sleep;
+      inc(fSchedulerDeltaSeconds);
+      fScheduledTasksCS.Acquire;
+      try
+        for idx := 0 to pred( fScheduledTasks.Count ) do begin
+         fScheduledTasks[idx].RunTask(fSchedulerDeltaSeconds);
+        end;
+      finally
+        fScheduledTasksCS.Release;
+      end;
+    until False;
+  finally
+    Thread.Release;
+  end;
+end;
+
+procedure TThreadSystem.Execute(const ScheduledTask: IScheduledTask);
+begin
+  if not assigned(ScheduledTask) then exit;
+  if not assigned(fSchedulerThread) then begin
+    fSchedulerThread := TThread.Create( HandleScheduledTasks, fSchedulerCS );
+    fSchedulerDeltaSeconds := 0;
+  end;
+  fScheduledTasksCS.Acquire;
+  try
+    fScheduledTasks.Add( TScheduledTaskWrapper.Create(ScheduledTask, fSchedulerDeltaSeconds) );
+  finally
+    fScheduledTasksCS.Release;
+  end;
+end;
+
+{$endregion}
+
 {$region ' Long thread execution '}
 
 procedure TThreadSystem.Execute(const Threads: array of ILongThread);
@@ -706,6 +761,10 @@ begin
   fLongPool := TList<ILongThreadMatcher>.Create;
   fMessagedPool := TDictionary<string,IMessagedThreadHandler>.Create({$ifdef fpc}@{$endif}TCompare.CompareStrings);
   fMessagedPoolCS := TCriticalSection.Create;
+  fScheduledTasks := TList<IScheduledTaskWrapper>.Create;
+  fScheduledTasksCS := TCriticalSection.Create;
+  fSchedulerThread := nil; // created as required.
+  fSchedulerCS := TSignaledCriticalSection.Create( 1000 );
 end;
 
 destructor TThreadSystem.Destroy;
@@ -718,6 +777,10 @@ begin
   fLongPoolCS := nil;
   fMessagedPool := nil;
   fMessagedPoolCS := nil;
+  fSchedulerThread := nil;
+  fScheduledTasks := nil;
+  fScheduledTasksCS := nil;
+  fSchedulerCS := nil;
   inherited Destroy;
 end;
 

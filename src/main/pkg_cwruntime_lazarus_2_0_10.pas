@@ -37,7 +37,8 @@ uses
   cwCollections.List.Standard, cwCollections.RingBuffer.Standard, 
   cwCollections.Stack.Standard, cwCollections.StringList.Standard, 
   cwHeap.Heap.Posix, cwWin32.Constants, cwWin32.GDI32, cwWin32.Kernel32, 
-  cwWin32.Types, cwWin32.User32, cwWin32.AdvAPI32;
+  cwWin32.Types, cwWin32.User32, cwWin32.AdvAPI32, 
+  cwThreading.ScheduledTaskWrapper.Standard;
 
 implementation
 
