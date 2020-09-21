@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CONFIG>
   <ProjectGroup FileVersion="1">
-    <Targets Count="13">
+    <Targets Count="14">
       <Target0 FileName="main\pkg_cwruntime_lazarus_2_0_10.lpk"/>
       <Target1 FileName="samples\cwDynLib\LoadLibSample\lib_testLoadLib_Lazarus_2_0_10.lpi">
         <BuildModes Count="1"/>
@@ -49,8 +49,12 @@
       </Target11>
       <Target12 FileName="tests\test_cwRuntime_Lazarus_2_0_10.lpi">
         <BuildModes Count="1"/>
-        <Mode1 Name="Default"/>
+        <Mode1 Name="default"/>
       </Target12>
+      <Target13 FileName="samples\cwThreading\05 - ScheduledTasks\ScheduledTasks_Lazarus_2_0_10.lpi">
+        <BuildModes Count="1"/>
+        <Mode1 Name="default"/>
+      </Target13>
     </Targets>
   </ProjectGroup>
 </CONFIG>

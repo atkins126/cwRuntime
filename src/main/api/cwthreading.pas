@@ -188,6 +188,56 @@ type
     ///  </summary>
     procedure Execute;
   end;
+
+{$endregion}
+
+{$region ' IScheduledTask'}
+
+type
+  ///  <summary>
+  ///    Provide an implementation of IScheduledTask to be performed
+  ///    on a regular interval. <br/>
+  ///    The thread system will give the scheduled task its own dedicted
+  ///    thread in which to execute, however, that thread will be put to
+  ///    sleep until the interval of the task has passed. Your
+  ///    implementation supplies the required interval in seconds. <br/>
+  ///  </summary>
+  IScheduledTask = interface
+    ['{48403219-2598-417C-860E-D1A77F840539}']
+
+    ///  <summary>
+    ///    Returns the interval (in seconds) at which the scheduled task
+    ///    will be executed. <br/>
+    ///    Note: If your implementation returns a value of zero seconds,
+    ///    it will not be executed by the thread system until it returns
+    ///    another value. This effectively disables the task. <br/>
+    ///    Getter for the IntervalSeconds property.
+    ///  </summary>
+    function getIntervalSeconds: nativeuint;
+
+    ///  <summary>
+    ///    Sets the interval (in seconds) at which the scheduled task will
+    ///    be executed. <br/>
+    ///    Note: Setting a value of zero seconds, assuming the implementation
+    ///    permits it, will effectively disable the task by removing it from
+    ///    the schedule. <br/>
+    ///    Setter for the IntervalSeonds property.
+    ///  </summary>
+    procedure setIntervalSeconds( const Interval: nativeuint );
+
+    ///  <summary>
+    ///    The method of your implementation which will be executed on the
+    ///    specified interval.
+    ///  </summary>
+    procedure Execute( const DeltaSeconds: nativeuint );
+
+    ///  <summary>
+    ///    Gets / Sets the interval (in seconds) at which the scheduled task
+    ///    will be executed. <br/>
+    ///  </summary>
+    property IntervalSeconds: nativeuint read getIntervalSeconds write setIntervalSeconds;
+  end;
+
 {$endregion}
 
 {$region ' Thread '}
@@ -683,6 +733,20 @@ type
     ///    thread system with a call to IThreadSystem.Remove().
     ///  </summary>
     procedure Execute( const ThreadName: string; const MessagedThread: IMessagedThread ); overload;
+
+    ///  <summary>
+    ///    This overload of the execute message adds a scheduled task to the threading system. <br/>
+    ///    The sceduled task returns an interval (in seconds) from its
+    ///    IScheduledTask.getIntervalSeconds() method, or the IScheduledTask.IntervalSeconds
+    ///    property. The thread system will then execute the scheduled task regularly at the
+    ///    specified interval. <br/>
+    ///    The scheduled task is executed in its own dedicated thread, however, the thread is
+    ///    put to sleep between intervals. <br/>
+    ///    The first ScheduledTask added to the thread system also causes the creation of
+    ///    the scheduler thread, which will also be removed if all of the scheduled tasks
+    ///    are removed.
+    ///  </summary>
+    procedure Execute( const ScheduledTask: IScheduledTask ); overload;
 
     ///  <summary>
     ///    Returns an instance of IMessageChannel which may be used to

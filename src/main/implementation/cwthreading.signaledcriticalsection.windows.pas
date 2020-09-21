@@ -35,12 +35,14 @@ uses
   cwStatus
 , cwThreading
 , cwWin32.Types
+, cwWin32.Constants
 ;
 
 
 type
   TSignaledCriticalSection = class( TInterfacedObject, ISignaledCriticalSection )
   private
+    fTimeout: uint32;
     fMutex: TSRWLOCK;
     fCondition: TCONDITION_VARIABLE;
   private //- ISignaledCriticalSection -//
@@ -49,7 +51,7 @@ type
     procedure Sleep;
     procedure Wake;
   public
-    constructor Create; reintroduce;
+    constructor Create( const SleepTimeoutSeconds: uint32 = INFINITE ); reintroduce;
   end;
 
 {$endif}
@@ -57,7 +59,6 @@ implementation
 {$ifdef MSWINDOWS}
 uses
   cwTypes
-, cwWin32.Constants
 , cwWin32.Kernel32
 ;
 
@@ -66,11 +67,12 @@ begin
   AcquireSRWLockExclusive(fMutex);
 end;
 
-constructor TSignaledCriticalSection.Create;
+constructor TSignaledCriticalSection.Create( const SleepTimeoutSeconds: uint32 );
 begin
   inherited Create;
   InitializeSRWLock(fMutex);
   InitializeConditionVariable(fCondition);
+  fTimeout := SleepTimeoutSeconds;
 end;
 
 procedure TSignaledCriticalSection.Release;
@@ -82,7 +84,7 @@ procedure TSignaledCriticalSection.Sleep;
 var
   Error: uint32;
 begin
-  if not SleepConditionVariableSRW(fCondition, fMutex, INFINITE, 0) then begin
+  if not SleepConditionVariableSRW(fCondition, fMutex, fTimeout, 0) then begin
     Error:=GetLastError;
     if Error<>ERROR_TIMEOUT then begin
       TStatus(stThreadSleepFailed).Raize;
