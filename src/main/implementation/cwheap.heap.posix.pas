@@ -63,7 +63,6 @@ const
 {$ifdef LINUX}
 const
   cLibCName = 'libc.so';
-  cPrefix = '';
 {$endif}
 {$endregion}
 

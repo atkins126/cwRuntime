@@ -33,6 +33,9 @@ uses
 , cwThreading.Standard
 ;
 
+var
+  ConsoleCS: ICriticalSection;
+
 type
   TClockTickSchedule = class( TInterfacedObject, IScheduledTask )
   private
@@ -57,7 +60,12 @@ end;
 
 procedure TClockTickSchedule.Execute(const DeltaSeconds: nativeuint);
 begin
-  Writeln( DeltaSeconds.AsString, ' tick' );
+  ConsoleCS.Acquire;
+  try
+    Writeln( DeltaSeconds.AsString, ' tick' );
+  finally
+    ConsoleCS.Release;
+  end;
 end;
 
 constructor TClockTickSchedule.Create(const InitialInterval: uint32);
@@ -70,6 +78,10 @@ const
   cTwo = 2;
 
 begin
+  //- Console writeln() needs to be locked, for tasks which do not require
+  //- access to shared resource, such a CS lock is not required.
+  ConsoleCS := TCriticalSection.Create;
+
   //- Create threads which may be sent messages.
   ThreadSystem.Execute( TClockTickSchedule.Create( cTwo ) );
 

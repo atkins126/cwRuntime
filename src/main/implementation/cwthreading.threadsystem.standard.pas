@@ -544,6 +544,7 @@ begin
       inc(fSchedulerDeltaSeconds);
       fScheduledTasksCS.Acquire;
       try
+        if fScheduledTasks.Count=0 then continue;
         for idx := 0 to pred( fScheduledTasks.Count ) do begin
          fScheduledTasks[idx].RunTask(fSchedulerDeltaSeconds);
         end;

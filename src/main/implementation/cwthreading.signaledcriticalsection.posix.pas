@@ -41,8 +41,15 @@ uses
 ;
 
 type
+  TTimeSpec = record
+    seconds: nativeint;
+    nanoseconds: nativeint;
+  end;
+
+type
   TSignaledCriticalSection = class( TInterfacedObject, ISignaledCriticalSection )
   private
+    fTimespec: TTimeSpec;
     fMutex: pthread_mutex_t;
     fCondition: pthread_cond_t;
   strict private //- ISignaledCriticalSection -//
@@ -51,7 +58,7 @@ type
     procedure Sleep;
     procedure Wake;
   public
-    constructor Create; reintroduce;
+    constructor Create( const SleepTimeoutSeconds: uint32 = 0 ); reintroduce;
     destructor Destroy; override;
   end;
 
@@ -70,14 +77,19 @@ uses
 {$endif}
 ;
 
+const
+  cNanoSecondsPerMillisecond = 1000000;
+
 procedure TSignaledCriticalSection.Acquire;
 begin
   pthread_mutex_lock({$ifdef fpc}@{$endif}fMutex);
 end;
 
-constructor TSignaledCriticalSection.Create;
+constructor TSignaledCriticalSection.Create( const SleepTimeoutSeconds: uint32 = 0 );
 begin
   inherited Create;
+  fTimespec.Seconds := 0;
+  fTimespec.NanoSeconds := cNanoSecondsPerMillisecond * SleepTimeoutSeconds;
   if pthread_mutex_init({$ifdef fpc}@{$endif}fMutex, nil)<>0 then begin
     TStatus(stInitMutexFailed).Raize([errno.AsString]);
   end;
@@ -100,8 +112,16 @@ end;
 
 procedure TSignaledCriticalSection.Sleep;
 begin
-  if pthread_cond_wait({$ifdef fpc}@{$endif}fCondition,{$ifdef fpc}@{$endif}fMutex)<>0 then begin
-    TStatus(stThreadSleepFailed).Raize([errno.AsString])
+  if (fTimeSpec.Seconds=0) and (fTimeSpec.NanoSeconds=0) then begin
+    if pthread_cond_wait({$ifdef fpc}@{$endif}fCondition,{$ifdef fpc}@{$endif}fMutex)<>0 then begin
+      TStatus(stThreadSleepFailed).Raize([errno.AsString]);
+    end;
+  end else begin
+    if pthread_cond_timedwait({$ifdef fpc}@{$endif}fCondition,{$ifdef fpc}@{$endif}fMutex,@fTimespec)<>0 then begin
+       if errno=0 then exit;
+       if errno=ESysETIMEDOUT then exit;
+      TStatus(stThreadSleepFailed).Raize([errno.AsString]);
+    end;
   end;
 end;
 

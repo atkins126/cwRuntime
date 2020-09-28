@@ -38,7 +38,7 @@
     <Version Value="11"/>
     <PathDelim Value="\"/>
     <Target>
-      <Filename Value="..\..\..\..\out\bin\$(TargetCPU)-$(TargetOS)\$(BuildMode)\MessagedThreads"/>
+      <Filename Value="..\..\..\..\out\bin\$(TargetCPU)-$(TargetOS)\$(BuildMode)\ScheduledTasks"/>
     </Target>
     <SearchPaths>
       <IncludeFiles Value="$(ProjOutDir)"/>

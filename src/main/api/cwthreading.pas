@@ -39,7 +39,7 @@ uses
 
 {$region ' Status messages'}
 const
-  stThreadSleepFailed           = '{66B2F278-764D-4746-92A1-06BC71C1A5DD} Failed to put thread to sleep.';
+  stThreadSleepFailed           = '{66B2F278-764D-4746-92A1-06BC71C1A5DD} Failed to put thread to sleep (%errno%).';
   stErrorInsertingTasks         = '{6281E70E-88EE-45BD-AA5E-133668655ACC} Failed to insert tasks into task pool, pool corrupted?';
   stThreadTerminteFailed        = '{F4C513FD-683B-4CE0-8B52-0E89C4C8AD83} Failed to terminate thread.';
   stThreadStartupFailed         = '{1F66A81D-7507-4263-A9B3-455A7AEC12B6} Failed to start threads.';
