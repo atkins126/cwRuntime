@@ -765,7 +765,7 @@ begin
   fScheduledTasks := TList<IScheduledTaskWrapper>.Create;
   fScheduledTasksCS := TCriticalSection.Create;
   fSchedulerThread := nil; // created as required.
-  fSchedulerCS := TSignaledCriticalSection.Create( 1000 );
+  fSchedulerCS := TSignaledCriticalSection.Create( 1 );
 end;
 
 destructor TThreadSystem.Destroy;

@@ -28,13 +28,12 @@
 {$endif}
 program ScheduledTasks_Lazarus;
 uses
-  cwTypes
+  sysutils
+, crt
+, cwTypes
 , cwThreading
 , cwThreading.Standard
 ;
-
-var
-  ConsoleCS: ICriticalSection;
 
 type
   TClockTickSchedule = class( TInterfacedObject, IScheduledTask )
@@ -60,12 +59,7 @@ end;
 
 procedure TClockTickSchedule.Execute(const DeltaSeconds: nativeuint);
 begin
-  ConsoleCS.Acquire;
-  try
-    Writeln( DeltaSeconds.AsString, ' tick' );
-  finally
-    ConsoleCS.Release;
-  end;
+  Writeln( DeltaSeconds.AsString, ' second tick - (press [esc] to exit.)' );
 end;
 
 constructor TClockTickSchedule.Create(const InitialInterval: uint32);
@@ -78,16 +72,12 @@ const
   cTwo = 2;
 
 begin
-  //- Console writeln() needs to be locked, for tasks which do not require
-  //- access to shared resource, such a CS lock is not required.
-  ConsoleCS := TCriticalSection.Create;
-
-  //- Create threads which may be sent messages.
+  //- Create a scheduled task to fire every 2 seconds.
   ThreadSystem.Execute( TClockTickSchedule.Create( cTwo ) );
 
   //- Repeat readln to block main thread while schedule executes.
   repeat
-    Readln;
+    if ReadKey = #27 then exit;
   until False;
 
 end.

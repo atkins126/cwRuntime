@@ -41,15 +41,9 @@ uses
 ;
 
 type
-  TTimeSpec = record
-    seconds: nativeint;
-    nanoseconds: nativeint;
-  end;
-
-type
   TSignaledCriticalSection = class( TInterfacedObject, ISignaledCriticalSection )
   private
-    fTimespec: TTimeSpec;
+    fSleepTimeoutSeconds: uint32;
     fMutex: pthread_mutex_t;
     fCondition: pthread_cond_t;
   strict private //- ISignaledCriticalSection -//
@@ -71,14 +65,12 @@ uses
 {$ifdef fpc}
 , pthreads
 , BaseUnix
+, Linux
 {$else}
 , Posix.pthread
 , Posix.errno
 {$endif}
 ;
-
-const
-  cNanoSecondsPerMillisecond = 1000000;
 
 procedure TSignaledCriticalSection.Acquire;
 begin
@@ -88,8 +80,7 @@ end;
 constructor TSignaledCriticalSection.Create( const SleepTimeoutSeconds: uint32 = 0 );
 begin
   inherited Create;
-  fTimespec.Seconds := 0;
-  fTimespec.NanoSeconds := cNanoSecondsPerMillisecond * SleepTimeoutSeconds;
+  fSleepTimeoutSeconds := SleepTimeoutSeconds;
   if pthread_mutex_init({$ifdef fpc}@{$endif}fMutex, nil)<>0 then begin
     TStatus(stInitMutexFailed).Raize([errno.AsString]);
   end;
@@ -111,17 +102,23 @@ begin
 end;
 
 procedure TSignaledCriticalSection.Sleep;
+var
+  retval: int32;
+  ts: Timespec;
 begin
-  if (fTimeSpec.Seconds=0) and (fTimeSpec.NanoSeconds=0) then begin
+  if fSleepTimeoutSeconds=0 then begin
     if pthread_cond_wait({$ifdef fpc}@{$endif}fCondition,{$ifdef fpc}@{$endif}fMutex)<>0 then begin
-      TStatus(stThreadSleepFailed).Raize([errno.AsString]);
+      TStatus(stThreadSleepFailed).Raize;
     end;
   end else begin
-    if pthread_cond_timedwait({$ifdef fpc}@{$endif}fCondition,{$ifdef fpc}@{$endif}fMutex,@fTimespec)<>0 then begin
-       if errno=0 then exit;
-       if errno=ESysETIMEDOUT then exit;
-      TStatus(stThreadSleepFailed).Raize([errno.AsString]);
-    end;
+    clock_gettime(CLOCK_REALTIME, @ts);
+    ts.tv_sec := ts.tv_sec+fSleepTimeoutSeconds;
+    repeat
+      retval := pthread_cond_timedwait({$ifdef fpc}@{$endif}fCondition,{$ifdef fpc}@{$endif}fMutex,@ts);
+      if retval=ESysETIMEDOUT then exit;
+    until (RetVal<>0);
+    if RetVal=0 then exit;
+    TStatus(stThreadSleepFailed).Raize;
   end;
 end;
 
