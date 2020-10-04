@@ -41,10 +41,6 @@ Still To-Do:
 	* cwCollections - IStringList to get serialize/deserialze methods for save to file, load from file.	
 	* Documentation needs work.
 	* cwLog is absent after a refactor, to be restored.
-	* Lazarus 2.0.8 but too many features require FPC 3.2.0 which is the compiler used in Lazarus 2.0.10,
-	  Lazarus 2.0.10 is the minimum requirement.
-	* New feature for 'scheduled tasks' in threading library, now builds for non-windows targets, but still has usage issues. 
-	  Suspected race condition, need to look in more detail.
 	
 Installation & Usage:
 
