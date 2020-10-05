@@ -53,26 +53,4 @@ Each feature may then be used by adding two units to your uses list. For example
 
 Usage videos will be uploaded to youtube soon :- https://youtube.com/c/ChapmanWorldOnTube.
 
-CI Migration Status:
-
-	* Delphi
-		Win32        - Builds
-		Win64        - Builds / Unit Tested
-		Linux_x86_64 - Builds / Unit Tested
-		Android      - Builds
-		MacOS        - Builds
-		iOS          - Builds
-
-	* Lazarus
-		Win32        - Builds / Unit Tested
-		Win64        - Builds / Unit Tested
-		Linux_x86_64 - Builds / Unit Tested
-		Linux_i386   - Builds / Unit Tested
-		Linux_ARM    - Builds / Unit Tested
-		Linux_AARCH  - Builds / Unit Tested
-		Android      - TBD
-		MacOS        - TBD
-		iOS          - TBD ? possible ?
-		 
-
 Notes: For cross compiling to Linux from Windows, see issue #8
