@@ -28,7 +28,9 @@
 {$endif}
 program ScheduledTasks_Lazarus;
 uses
-  cwTypes
+  sysutils
+, crt
+, cwTypes
 , cwThreading
 , cwThreading.Standard
 ;
@@ -57,7 +59,7 @@ end;
 
 procedure TClockTickSchedule.Execute(const DeltaSeconds: nativeuint);
 begin
-  Writeln( DeltaSeconds.AsString, ' tick' );
+  Writeln( DeltaSeconds.AsString, ' second tick - (press [esc] to exit.)' );
 end;
 
 constructor TClockTickSchedule.Create(const InitialInterval: uint32);
@@ -70,12 +72,12 @@ const
   cTwo = 2;
 
 begin
-  //- Create threads which may be sent messages.
+  //- Create a scheduled task to fire every 2 seconds.
   ThreadSystem.Execute( TClockTickSchedule.Create( cTwo ) );
 
   //- Repeat readln to block main thread while schedule executes.
   repeat
-    Readln;
+    if ReadKey = #27 then exit;
   until False;
 
 end.

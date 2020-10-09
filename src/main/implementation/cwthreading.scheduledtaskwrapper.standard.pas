@@ -46,7 +46,6 @@ type
     fScheduledTask: IScheduledTask;
     fLastExecuted: nativeuint;
     fDeltaSeconds: nativeuint;
-    fTerminated: boolean;
     fThreadState: TScheduledThreadState;
   private
     procedure ExecuteThread( const Thread: IThread );

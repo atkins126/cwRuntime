@@ -43,6 +43,7 @@ uses
 type
   TSignaledCriticalSection = class( TInterfacedObject, ISignaledCriticalSection )
   private
+    fSleepTimeoutSeconds: uint32;
     fMutex: pthread_mutex_t;
     fCondition: pthread_cond_t;
   strict private //- ISignaledCriticalSection -//
@@ -51,7 +52,7 @@ type
     procedure Sleep;
     procedure Wake;
   public
-    constructor Create; reintroduce;
+    constructor Create( const SleepTimeoutSeconds: uint32 = 0 ); reintroduce;
     destructor Destroy; override;
   end;
 
@@ -64,6 +65,7 @@ uses
 {$ifdef fpc}
 , pthreads
 , BaseUnix
+, Linux
 {$else}
 , Posix.pthread
 , Posix.errno
@@ -75,9 +77,10 @@ begin
   pthread_mutex_lock({$ifdef fpc}@{$endif}fMutex);
 end;
 
-constructor TSignaledCriticalSection.Create;
+constructor TSignaledCriticalSection.Create( const SleepTimeoutSeconds: uint32 = 0 );
 begin
   inherited Create;
+  fSleepTimeoutSeconds := SleepTimeoutSeconds;
   if pthread_mutex_init({$ifdef fpc}@{$endif}fMutex, nil)<>0 then begin
     TStatus(stInitMutexFailed).Raize([errno.AsString]);
   end;
@@ -99,9 +102,23 @@ begin
 end;
 
 procedure TSignaledCriticalSection.Sleep;
+var
+  retval: int32;
+  ts: Timespec;
 begin
-  if pthread_cond_wait({$ifdef fpc}@{$endif}fCondition,{$ifdef fpc}@{$endif}fMutex)<>0 then begin
-    TStatus(stThreadSleepFailed).Raize([errno.AsString])
+  if fSleepTimeoutSeconds=0 then begin
+    if pthread_cond_wait({$ifdef fpc}@{$endif}fCondition,{$ifdef fpc}@{$endif}fMutex)<>0 then begin
+      TStatus(stThreadSleepFailed).Raize;
+    end;
+  end else begin
+    clock_gettime(CLOCK_REALTIME, @ts);
+    ts.tv_sec := ts.tv_sec+fSleepTimeoutSeconds;
+    repeat
+      retval := pthread_cond_timedwait({$ifdef fpc}@{$endif}fCondition,{$ifdef fpc}@{$endif}fMutex,@ts);
+      if retval=ESysETIMEDOUT then exit;
+    until (RetVal<>0);
+    if RetVal=0 then exit;
+    TStatus(stThreadSleepFailed).Raize;
   end;
 end;
 
